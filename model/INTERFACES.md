@@ -1,0 +1,85 @@
+# annnä Model — INTERFACES (two seams)
+
+*The model layer sits between the harness (above, its consumer) and model providers (below, its supply). Both seams are contracts; neither side is trusted.*
+
+---
+
+## 1. Upward — the harness seam (this layer SATISFIES it)
+
+The contract is **owned and defined by `../harness/INTERFACES.md §2`** — not duplicated here. This layer implements the producer side:
+
+| Harness call | Producer obligation (see SPEC) |
+|---|---|
+| `normalize(utterance, context)` | intent from the §2 vocabulary only; fields raw; `ambiguities` per §3; context-only (no memory) |
+| `narrate(structure)` | fidelity per §4; voice per §6 |
+| judgment | bounded per §5 |
+
+Two properties of that seam this layer must preserve, never weaken:
+- **Per-call selectable** — nothing here may assume a single model across calls.
+- **Untrusted output** — the harness schema-validates at the seam (SPEC §8); this layer never bypasses that by "guaranteeing" its own output.
+
+## 2. Downward — the provider seam
+
+### 2.1 Provider contract (primary: OpenRouter)
+```
+complete(model_id, messages, output_schema) -> structured JSON | error(malformed|refused|timeout)
+```
+- Chat-completions with **enforced structured output** (JSON schema per call type). One API shape for every model — that uniformity is why OpenRouter is the primary supply: swapping `model_id` is the whole swap.
+
+### 2.2 Routing config (the layer's one real artifact)
+```
+routing: {
+  <call_type>: { model_id, fallback_model_id, max_cost_per_call, timeout_ms, provider: openrouter | byo-chatgpt }
+}
+// timeout_ms defaults: 10_000 attended (a console turn), 30_000 unattended (trigger firings —
+//   nobody is waiting, and the fallback hop still runs). Timeout → fallback_model_id per SPEC §8.
+// call_type = normalize | narrate | judgment (judgment rides inside the other two's calls;
+//   listed so a future split stays representable)
+```
+- **Config, never code.** A routing change (new model, new fallback, provider flip) requires re-qualification (`EVALS.md §3`) and nothing else.
+- `byo-chatgpt` is a **slot**: valid only for attended console calls; trigger firings always resolve to an `openrouter` binding (SPEC §7). The slot's auth/OAuth mechanics are app-seam work, integrated at `BUILD.md` Step 5.
+
+### 2.3 Stub
+The harness build already defines the model stub (`../harness/INTERFACES.md §5`): scripted structured outputs keyed per scenario. This layer's eval scaffold reuses the same shape in reverse — golden inputs, graded outputs.
+
+### 2.4 Per-call output schemas (the `output_schema` argument, v0 — frozen at `BUILD.md` Step 1)
+
+The concrete JSON Schemas passed to `complete()`. v0 unblocks the Step 0 eval scaffold; the Step 1 freeze reconciles them against the built harness's dispatch shape (SPEC §1's compound-utterance note) — until then the shapes below are the contract as designed.
+
+**`normalize`:**
+```json
+{
+  "type": "object", "additionalProperties": false,
+  "required": ["intent", "fields", "ambiguities"],
+  "properties": {
+    "intent":      { "enum": ["commitment.create","commitment.edit","commitment.complete","commitment.cancel","commitment.confirm","commitment.mark","board.query","board.edit","rule.author","rule.edit","rule.override","proposal.respond","answer.provide","grant.give","grant.revoke","exception.record","sop.author","shared.author","shared.publish","notify.request","session.control"] },
+    "fields":      { "type": "object" },
+    "ambiguities": { "type": "array", "items": {
+      "type": "object", "additionalProperties": false,
+      "required": ["question", "readings"],
+      "properties": { "question": {"type": "string"}, "readings": {"type": "array", "items": {"type": "string"}, "minItems": 2} }
+    } }
+  }
+}
+```
+- The `intent` enum **is** SPEC §2's vocabulary — one source; an edit there is an edit here (same review).
+- `fields` stays schema-open by design: values are raw-as-heard (SPEC §1); per-intent key expectations are the §2 table's rows, enforced by the harness's own seam validation, not by the provider.
+- A compound utterance returns an ordered `sequence` array of `{intent, fields}` pairs in place of the single pair; the exact encoding is what Step 1 freezes.
+
+**`narrate`:**
+```json
+{ "type": "object", "additionalProperties": false,
+  "required": ["text"], "properties": { "text": { "type": "string" } } }
+```
+Judgment has no schema of its own — it rides inside the two calls (SPEC §1).
+
+---
+
+## 3. What this layer OWNS (for contrast)
+
+- The **intent vocabulary** (SPEC §2) and the per-call **output schemas**.
+- The **prompt/instruction assets** (authored at BUILD Step 2, versioned like code).
+- The **routing config** and its qualification state.
+- The **exam** (`EVALS.md`) and its graded sets.
+
+Everything correctness-critical is above (harness floor/loop) or beside (engine truth) — never here.

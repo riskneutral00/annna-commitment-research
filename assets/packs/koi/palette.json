@@ -1,0 +1,54 @@
+{
+  "name": "koi",
+  "master": "koi.jpg",
+  "luminance": 0.47,
+  "colorfulness": 0.44,
+  "suggestedMode": "light",
+  "dominants": [
+    {
+      "hex": "#e18620",
+      "share": 0.517
+    },
+    {
+      "hex": "#265656",
+      "share": 0.17
+    },
+    {
+      "hex": "#cfb79b",
+      "share": 0.135
+    },
+    {
+      "hex": "#661612",
+      "share": 0.084
+    },
+    {
+      "hex": "#9a7b56",
+      "share": 0.076
+    },
+    {
+      "hex": "#efc62d",
+      "share": 0.017
+    }
+  ],
+  "semantic": {
+    "Vibrant": "#e18620",
+    "Muted": "#9a7b56",
+    "DarkVibrant": "#661612",
+    "DarkMuted": "#265656",
+    "LightVibrant": "#efc62d",
+    "LightMuted": "#cfb79b"
+  },
+  "accent": "#c46d00",
+  "accentDeep": "#a34f00",
+  "ambientDark": [
+    "#002b2c",
+    "#001d1d"
+  ],
+  "ambientLight": [
+    "#fce9d4",
+    "#eedcc7"
+  ],
+  "tintDarkAlpha": 0.46,
+  "tintLightAlpha": 0.51,
+  "lqip": "data:image/webp;base64,UklGRsQBAABXRUJQVlA4ILgBAAAQCgCdASoYACQAPu1kq04ppaQiKqwBMB2JbACsMoMkIJTz6NlAVzicCMP7TEwJU/3aFZRM7IFNXYynqpSvVpgS4nSbEYZEYCcPxnBe8ouzqtLRmcqFeeM1cAD+rDhOpS8F4YwLWn9tQwPnR1jMAjYGL8e3i1Qe5bCMhCBujYJCGZ9H1IXhnDPm7mzdz+JPqmvzNRFs1j+oeQpfZNDantEQnF0aS1zjuezyJCKS9Aj+HKVWW9ew2UVNfsvuYogIWmXfb7l2h4SUtYyefiHI1q6o0/vL6Ky4lcUiCrm7OAMh+rRZp4wrO5YjkC0Vh+uggIPimVPYQJ0ba4yRM2LkD0kvcZfsmPrHbg6qxtee3NOphkn0f9VxSHefQ/qj3zMO4RY94v/JqQ72UF/AbMuTrqXzWMPw7ff/q+IAddIMVoXiyMBKFVtcmnQzL2GW/1u23WtBZOHIFnzGxFNJbL27LuulsCeOR0dnUfU59+QLVdQzETxeTQV9gDAfLI2JlSL5rSHk2aQtfAkWzozofq+EBMBh15cYhaecAYJAm0dnzME7o5muLDrMnrw/OSCBW+YKmkKJ+f/mHq9AAA=="
+}

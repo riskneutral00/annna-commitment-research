@@ -1,0 +1,48 @@
+# PR — NOTES (open items)
+
+*Scratchpad per repo convention: never authoritative; the package files are. Items leave this list by being absorbed into a file, relocated to an inward package's NOTES, or done.*
+
+## Open
+
+- **Alpaca SVG** — not yet drawn. Brief and construction constraints in `BRAND.md §The mark`. Until it exists, surfaces use the dashed-roundel placeholder (see `mock/landing.html`). **Prior art exists**: the previous build shipped a raster alpaca face — see `~/Desktop/annnä/docs/vibe-slice-archive/keep/14-landing-newalpaca.png` (large) and `28-koi-calendar.png` (in-header roundel), **outside this repo, on the founder's machine** — provenance only; nothing here depends on seeing them. Note a tension to resolve when drawing: the prior mark is soft-cute (fluffy, pink topknot); BRAND's brief says "quiet, not cute." Matt's call which spirit the SVG follows — the brief bends to him, not the reverse.
+- **Typeface ratification** — `BRAND.md` sets criteria (one humanist sans, clean **ä**, tabular figures); the mockup uses a system stack (Seravek / Avenir Next fallback chain) as a stand-in. A licensed face should be chosen and recorded in BRAND before any printed or heavily-branded material.
+- **Domain** — undecided. The wordmark fallback law (`annna` where **ä** is impossible) lives in BRAND; the domain choice will follow it.
+- **Landing State 1 stills** — start capturing dated screenshots the moment the harness renders anything real (LANDING §state 1). Progress stills only ever show things that exist.
+- **V1 usage video** — the ruled lead carrier. One continuous take of a real person using annnä; narration follows worry-first (MESSAGING §pitches). Plan the shoot when the app is usable end-to-end; never autoplays.
+- **GitHub social preview** — generate per `REPO-FACADE.md` once the alpaca SVG exists.
+- **Email capture** — deliberately absent from State 0 (nothing to announce yet). Revisit at State 1.
+
+## Questions test readers asked that copy can't answer (routed to product/spec)
+
+*From the 2026-08-06 adversarial pass — three stranger-persona readers (tutor, dive-shop owner, investor). Each is a real product question; the PR package must not invent answers.*
+
+- **"Reachable" under bad signal** — the README's clean run places "the top free reachable freelancer"; a dive pro asked what reachable means when half his freelancers are on boats for days. Response timeout, fallback order, and escalate-to-owner behavior need a spec answer (harness/engine).
+- **Freelancer counter/decline** — can a freelancer ask a question or counter a rate before accepting, or only accept/decline? "No negotiation thread" reads as owner-friendly and freelancer-hostile at once.
+- **Medical-flag conversations** — a flagged dive medical should route to a required human conversation, not silent document collection (liability, DAN/insurer expectations). Check against user-stories + security.
+- **Tutor-world channels** — a tutor's friction is WhatsApp threads and platform bookings (iTalki/Preply), not phone calls; nothing anywhere speaks to platform coexistence. Copy now adapts the friction noun (MESSAGING), but the product question stands.
+
+## Investor-readiness gaps (raw material only Matt can supply)
+
+*The investor persona's verdict was PASS, for reasons copy can't fix:*
+
+- **One named design partner or pilot commitment** — the concentric-circle strategy (tutors, dive pros, the therapist) doubles as this; getting one "yes, I'll be first" on record converts the whole story.
+- **Build timeline + who builds** — the "no app yet" answer needs a milestone plan and team shape beside it before any investor meeting.
+- **Competitive one-pager** — Calendly, Acuity, Fresha, Cal.com, Mindbody, Motion et al., and why multi-party coordination is a different category.
+
+## Also flagged
+
+- **`assets/masters/dark.jpg` subject check** — the fact-checker opened it: a hooded figure on a walkway in a lit tunnel, previously described outwardly as "a night reef" (wrong). README + BRAND now say "a lamplit tunnel." Confirm with Matt whether this master is the intended long-term skin or a placeholder to be reshot.
+- **State 0 conversion trade-off** — the holding page's only action is a GitHub link, which a non-technical tutor can't act on. Deliberate (nothing to announce yet), but it means State 0 converts no first-users; revisit alongside the email-capture item at State 1.
+
+## Decided (recorded in files)
+
+- Photography is contained, never wallpaper — full-bleed photo backdrops rejected as overwhelming (Matt, 2026-08-06); page grounds are koi-derived ambients; the skins are showcased inside the video/stills → `BRAND.md §Imagery`, `LANDING.md`.
+
+- Lead carrier = the product in use (video; stills until then; vacant holding page now) → `LANDING.md`.
+- Pitch order = worry first → `MESSAGING.md §pitches`.
+- Brand color = koi-derived, no new hexes → `BRAND.md §Color`.
+- Alpaca = the brand mark → `BRAND.md §The mark`.
+- Voice = neutral like water; four banned registers → `VOICE.md`.
+- The name is never explained → `IDENTITY.md §Personification` (standing rule).
+
+**`IDENTITY.md:63` re-read against FR-B and FR4 — it stands unchanged (2026-08-06).** The line is *"no notifications designed to bring you back."* FR-B removed the internal console-silent rule and FR4 makes escalation email default-on, so a sweep will keep surfacing this line. It is **not** a contradiction, and the reason is in the wording: the promise is about notifications whose *purpose is re-engagement* — attention-farming. An escalation email says *a booking is stuck and nobody answered*; a surfaced trigger card says *this happened while you were out*. Those exist to **discharge** the user's attention, not to capture it — which is the same claim as *"the goal is for the user to feel like there is nothing on their schedule."* A future sweep should re-derive this rather than strike the line; if annnä ever ships something whose purpose *is* re-engagement, the line is what has to go, not this note.

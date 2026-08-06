@@ -1,0 +1,54 @@
+{
+  "name": "nudi",
+  "master": "nudi.jpg",
+  "luminance": 0.18,
+  "colorfulness": 0.7,
+  "suggestedMode": "dark",
+  "dominants": [
+    {
+      "hex": "#315917",
+      "share": 0.498
+    },
+    {
+      "hex": "#24452b",
+      "share": 0.459
+    },
+    {
+      "hex": "#bdce8d",
+      "share": 0.027
+    },
+    {
+      "hex": "#749d1e",
+      "share": 0.013
+    },
+    {
+      "hex": "#7c9474",
+      "share": 0.003
+    },
+    {
+      "hex": "#5b6b2d",
+      "share": 0
+    }
+  ],
+  "semantic": {
+    "Vibrant": "#749d1e",
+    "Muted": "#7c9474",
+    "DarkVibrant": "#315917",
+    "DarkMuted": "#24452b",
+    "LightVibrant": "#bdce8d",
+    "LightMuted": "#5b6b2d"
+  },
+  "accent": null,
+  "accentDeep": null,
+  "ambientDark": [
+    "#03240c",
+    "#001602"
+  ],
+  "ambientLight": [
+    "#e3ecd2",
+    "#d6dec5"
+  ],
+  "tintDarkAlpha": 0.36,
+  "tintLightAlpha": 0.6,
+  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwBACdASoYABUAPu1kq02ppaSiMBgMATAdiWQAvzgQ70A4ewIee38IxEorLu6ZOAAA/uLa5gU3LKFkkDpiHGwYdExpED5tK9AIyy3P9L0TsaSsYSKb8YKV19h8nt1qmIvIKDAA"
+}

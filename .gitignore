@@ -1,0 +1,34 @@
+.DS_Store
+.tmp/
+
+# Agent working directories — planning scratch, not corpus.
+# These reference local machine paths and superseded working documents;
+# they must never reach the public repo via `git add -A`.
+.sisyphus/
+
+# Patch series targeting the sibling implementation repo. Kept on disk,
+# deliberately unpublished: it governs nothing here and describes the
+# internals of a repository this repo's readers cannot see.
+patches/
+
+# Session post-mortem on plan authority — process artifact, not a design
+# lock. Cites working documents that were never published.
+.specs/deep-interview-plan-authority.md
+
+# Founder's personal identity interview — private thinking, recorded
+# indecision, and a standing rule whose publication defeats its own purpose.
+# Kept on disk; never published.
+.specs/deep-interview-pr-identity.md
+
+# BMAD symlinks into the local home directory — machine-specific,
+# meaningless in any other checkout.
+_bmad
+_bmad-output
+
+# Agent-skill configuration — tooling, not corpus. Consistent with the
+# rest of the process artifacts kept off the public repo.
+docs/agents/
+
+# Local Claude Code and skill working files — per-machine state.
+.claude/settings.local.json
+.scratch/

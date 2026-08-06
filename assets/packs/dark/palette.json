@@ -1,0 +1,54 @@
+{
+  "name": "dark",
+  "master": "dark.jpg",
+  "luminance": 0.03,
+  "colorfulness": 0.13,
+  "suggestedMode": "dark",
+  "dominants": [
+    {
+      "hex": "#0c0404",
+      "share": 0.838
+    },
+    {
+      "hex": "#b9b6d6",
+      "share": 0.081
+    },
+    {
+      "hex": "#6c6484",
+      "share": 0.054
+    },
+    {
+      "hex": "#44342c",
+      "share": 0.027
+    },
+    {
+      "hex": "#bf3f3f",
+      "share": 0
+    },
+    {
+      "hex": "#dd9b9b",
+      "share": 0
+    }
+  ],
+  "semantic": {
+    "Vibrant": "#bf3f3f",
+    "Muted": "#6c6484",
+    "DarkVibrant": "#0c0404",
+    "DarkMuted": "#44342c",
+    "LightVibrant": "#dd9b9b",
+    "LightMuted": "#b9b6d6"
+  },
+  "accent": null,
+  "accentDeep": null,
+  "ambientDark": [
+    "#0b0200",
+    "#040000"
+  ],
+  "ambientLight": [
+    "#e4e4ee",
+    "#d7d7e1"
+  ],
+  "tintDarkAlpha": 0.31,
+  "tintLightAlpha": 0.64,
+  "lqip": "data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAABwAwCdASoYABIAPu1kqk2ppaQiMAgBMB2JaQAAW+s7t6gOJoAA/vQZM3ZYv14SnyZyf7tObrVkYamIu3FAAAAA"
+}
