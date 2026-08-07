@@ -37,7 +37,7 @@ The enumerated intents `normalize` may return — **derived from the harness's t
 | `rule.author` | type, raw operand, target, proposed scope | rule write (diff) |
 | `rule.edit` | rule ref, change or revoke | rule write (impact surface first) |
 | `rule.override` | conflicting rule ref, reason | own-rule override, stored with reason |
-| `proposal.respond` | accept \| narrow(scope) \| reject | elicitation store |
+| `proposal.respond` | accept \| narrow(scope) \| reject \| reject-permanently | elicitation store |
 | `answer.provide` | the answer to a pending elicitation question | store-routing (Rule/Grant/field/Exception) |
 | `grant.give` | action_class, scope, expiry | Grant object |
 | `grant.revoke` | grant ref | Grant revoke (impact surface) |
@@ -48,7 +48,7 @@ The enumerated intents `normalize` may return — **derived from the harness's t
 | `notify.request` | recipient, payload ref | `notify_and_await` (**outward**) |
 | `session.control` | save \| resume \| abandon | T2 interview state |
 
-Field schemas stay **raw at this seam** (strings/numbers as heard); typing is `typed_value`/engine work. This table freezes only at `BUILD.md` Step 1, against the built harness's tool contract.
+Field schemas stay **raw at this seam** (strings/numbers as heard); typing is `typed_value`/engine work. This table freezes only at `BUILD.md` Step 1, against the built harness's tool contract. `reject-permanently` is a distinct response, not a stronger `reject`: `reject` declines this proposal, `reject-permanently` declines the pattern for good and writes a `PatternDecline` (`../harness/SPEC.md §3.10`). Without the fourth member the model has no way to report the difference and the harness has no way to store it.
 
 ## 3. Ambiguity calibration
 
@@ -82,7 +82,7 @@ Every factual claim in `narrate` output must trace to a field in the input struc
 
 **Tertiary — BYO API keys (FR5, 2026-08-06 — the ban is reversed).** An owner may bind their own provider key through the **same routing config** (`INTERFACES.md §2`): a key is a `{call_type → model_id}` binding whose credential happens to be theirs. No new mechanism, no second code path. **The binding lives in the routing config; the key itself does not** — it is a held credential and lives in the vault under `../security/SPEC.md §3.1` (member 2), with the same custody, revocation and erasure rules as the calendar refresh token.
 
-**The confinement — *drafted, not ruled* (`../archive/08-founder-rulings-2026-08-06.md` §Provenance): BYO powers *attended console calls only*.** FR5 reversed the ban; the attended-only confinement below was authored on the founder's behalf and is provisional. App-supplied models **always** back trigger firings. Two independent reasons, either of which alone is sufficient:
+**The confinement — *founder-ruled 2026-08-07* (wayfinder #3; registry `../archive/08-founder-rulings-2026-08-06.md` §2026-08-07): BYO powers *attended console calls only*.** FR5 reversed the ban; the attended-only confinement below, first drafted on the founder's behalf, was ratified as written. App-supplied models **always** back trigger firings. Two independent reasons, either of which alone is sufficient:
 
 1. **Mechanical (the subscription case):** the 3 a.m. loop runs server-side with no user session, so subscription-bound access physically cannot serve it.
 2. **Qualification (the API-key case, and the more important one):** a user-supplied model is an **ungraded path to the same seam.** Every app-supplied binding must clear the exam (`EVALS.md`) before it goes live — that is what makes the invention floor and the judgment boundaries mean anything. A BYO model has cleared nothing. Confining it to **attended** turns means a human is present, reading the output, at the moment an unqualified model speaks. Unattended, nobody is. *An unqualified model may never act while nobody is watching.*

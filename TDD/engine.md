@@ -12,7 +12,7 @@ The engine is deterministic math over a store — the same inputs always give th
    - **Commit is atomic** (A2): after any failed commit, the store is byte-identical to before it.
    - **No mutable balance** (K1): every owed/credit figure is derivable from the record; no write path stores a running balance.
    - **Exactly one winner** (A1): N racing commits for one unit → exactly one success, N−1 structured conflicts.
-3. **The scenario suite** — every `SCENARIOS.md` item (families **A** races · **B** latches · **Q** quota · **T** travel/buffers · **M** recurrence · **P** resolve/projections · **X** reshuffle · **K** money · **S** shared projection · **G** consistency · **I** the cross-owner bind · **W** multi-day decomposition + course templates · **V** the travel envelope · **O** minimum occupancy · **Z** swap) as a named executable test, ID in the test name. *(`W`, not `D`, for multi-day — the harness's D-family is the floor, and two D-series across the two suites would be unreadable.)*
+3. **The scenario suite** — every `SCENARIOS.md` item (families **A** races · **B** latches · **Q** quota · **T** travel/buffers · **M** recurrence · **P** resolve/projections · **X** reshuffle · **K** money · **S** shared projection · **G** consistency · **I** the cross-owner share · **W** multi-day decomposition + course templates · **V** the travel envelope · **O** minimum occupancy · **Z** swap) as a named executable test, ID in the test name. *(`W`, not `D`, for multi-day — the harness's D-family is the floor, and two D-series across the two suites would be unreadable.)*
 
 ## Determinism harness
 

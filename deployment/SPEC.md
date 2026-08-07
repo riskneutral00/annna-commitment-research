@@ -1,6 +1,6 @@
 # annnä Deployment — SPEC (the discipline of the build)
 
-*"Deployment" here is the whole discipline that gets code from a builder's keyboard to production: repos, environments, branches, merges, worktrees, concurrency. **This file governs the future code repo, not this one** — this research repo keeps its direct-to-main flow (founder ruling 2026-08-06). Everything below binds the code repo from its first commit. Tech-neutral throughout: "the host", "the CI service", "the model provider" — substrates are named at the seams (`INTERFACES.md §3`) and ordered in `BUILD.md`. Hardened by adversarial review round one, 2026-08-06 (`NOTES.md` holds the record).*
+*"Deployment" here is the whole discipline that gets code from a builder's keyboard to production: repos, environments, branches, merges, worktrees, concurrency. **This file governs the build in this repo** — ruled in place 2026-08-07; the repo keeps its direct-to-main flow (founder rulings 2026-08-06/07), so branch/PR/worktree sections below are superseded where they conflict and await a re-scope pass. Everything below binds the build from its first code commit. Tech-neutral throughout: "the host", "the CI service", "the model provider" — substrates are named at the seams (`INTERFACES.md §3`) and ordered in `BUILD.md`. Hardened by adversarial review round one, 2026-08-06 (`NOTES.md` holds the record).*
 
 ---
 
@@ -62,6 +62,8 @@ Deployment says **"concurrent"**, never "parallel".
   - Ownership check: the PR touches one layer folder + its tests, nothing else (B2) — the orchestrator's **ops lane** (§5) is the one exemption, for non-layer, non-vendored root config.
   - The vendored spec tree untouched, except by re-pin PRs whose exemption is a human-cast approval, never an author-applied label (S1).
   - Protection is a **repository ruleset with an empty bypass list** — admins and the orchestrator identity included; direct pushes to main are refused for everyone (B3).
+  - **Gate-coverage: every `[MUST]`/`[ENGINE]` scenario names a BUILD step, and every BUILD-named gate ID is a real scenario.** A required check runs `scripts/gate-coverage.mjs` over each layer's `SCENARIOS.md × BUILD.md`; an orphan (scenario with no BUILD home) or a phantom (gated ID no scenario defines) fails it (B8). This mechanizes the standing rule that a `[MUST]` enforced only by prose is not a rule — the checker is the machine that refuses a stale gate list, run in CI against the vendored spec tree.
+  - **Determinism: the suite replays byte-identical.** The full layer suite runs **twice** and its transcripts are byte-compared; divergence fails the build — the harness's L2 determinism (`../harness/SCENARIOS.md L2`) lifted to a process gate (B9). The byte-compare is realized at harness-build time, when transcripts first exist.
 - **Review law: adversarial, never self-approved.** **The mechanical half (B4):** the reviewer identity's approval is required, and a required check — triggered on review events, reading the latest non-author review body — fails unless it carries a **structured verdict**: named findings, or an explicit *attempted to falsify; nothing found*. A bare approve fails. **The discipline half:** the reviewer session is prompted to **falsify, not approve** (the discipline this design survived — two rounds, 93 findings, `../archive/`); intent can't be CI-checked, so it is drilled: sampled verdicts must show real falsification attempts (B6), and a planted red-team PR — a secret-read or new-egress change — must be caught (B7).
 - **Merge → deploy: continuous; dark once live.** From app Step 0 onward, merge to main deploys production on every merge, behind R7's access gate, until a launch ruling (DR-2). A deploy pipeline exercised from the first deployable commit cannot rot — "the swap is the exam" generalizes to **the deploy is the exam** (Z1, run at app Step 0).
 
@@ -117,6 +119,8 @@ Everything else is reversible-by-revert and needs no ceremony (Z2 proves the rev
 | One PR = one BUILD step (or named checkpoint) of one layer | §4 (scope law + ownership check) |
 | PR author and approver are distinct identities | §4 (builder bot · reviewer bot · human) |
 | A bare approve cannot merge | §4 (verdict-presence check, B4) |
+| Every `[MUST]`/`[ENGINE]` scenario names a BUILD step (no orphan/phantom) | §4 (gate-coverage check, B8) |
+| The suite replays byte-identical | §4 (twice-run byte-compare, B9) |
 | Direct push and bypass are refused for everyone | §4 (ruleset, empty bypass list) |
 | One builder session = one worktree = one branch = one layer | §5 (identity law; same-host git refusal) |
 | The orchestration runtime runs only at its pinned hash | `INTERFACES.md §4` (pin + refuse-on-mismatch, W4) |

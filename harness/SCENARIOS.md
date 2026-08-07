@@ -13,6 +13,8 @@
 - **A3 [MUST]** — *Given* a task ("email the report by Friday"), *then* `temporal_type = task` (end has role `deadline`, no occupying interval) and it completes **by action**, not by the clock.
 - **A4 [MUST / poka-yoke]** — *Given* a board at capacity 1 with an active commitment 3–4pm, *when* a second commitment tries to consume it 3–4pm, *then* `commit` returns `conflict` and no double-book exists. `[ENGINE]` for the enforcement; harness must surface the conflict, not swallow it.
 - **A5 [MUST / tasks reserve nothing]** — *Given* a start-only task at 19:00 (no end), *then* availability over that time is **unchanged** (a marker, not a reservation); *given* the same entry as an event 19:00–19:30 plus a 5-min buffer rule, *then* availability splits around 18:55–19:35. Same substrate, no extra machinery.
+- **A6 [MUST / hand-edit transits the floor]** — *Given* the owner edits a commitment **by hand** on the board (direct manipulation, not an utterance — the app riser's *"edit by hand or by talking,"* `../app/SPEC.md §1` "Everything else is a riser"), *then* the write still transits `CRUD_Commitment` under the floor: a reversible field edit runs at full autonomy, and a hand-edit that would cross the line (e.g. changing a confirmed booking's counterparty-facing time) is gated **exactly as the utterance path is**. The app collects the edit and hands it to the harness untouched; the floor's applicability does not depend on whether the change arrived by hand or by talking.
+- **A7 [MUST / tool return validated]** — *Given* a tool returns a value that does **not** match its declared return schema, *then* the harness surfaces a **structured error** and does not pass the malformed return to the model. Assert no raw or unvalidated return ever reaches the model consumer — the return leg is validated exactly as the call leg is typed (`SPEC.md §5`).
 
 ## B. Buffers, rules, elicitation basics
 
@@ -21,6 +23,9 @@
 - **B3 [MUST / gap-4]** — *Given* an utterance the model returns with `ambiguities` non-empty, *then* the agent asks a single clarifying question and does not guess.
 - **B4 [MUST / reversible → act]** — *Given* a reversible, inferable action (create a draft, move an internal block), *then* the agent acts without asking (the floor is the act/ask line).
 - **B5 [MUST / quota]** — *Given* the owner says "no student can book more than 10 hours a month," *then* the agent proposes with scope and writes `Rule{type: quota, operand: 10h/month, scope: per-customer}`; *when* a booking would take a student to 11 hours, *then* the engine-stub verdict (refuse) is **surfaced at the picker**, not swallowed — the hour is refused before it can be booked.
+- **B6 [MUST / the noticed-pattern offer]** — *Given* the owner's self-improvement setting is on **and its repetition threshold set to the fixture's value** (§6 — the threshold is a stored parameter, not a constant), *when* the owner hand-sets the same field to the same value enough times to cross that stored threshold on a console turn, *then* the agent proposes — **inline on that turn** — a Rule at a named scope, showing the current value and the proposed one, and on accept an **ordinary Rule** is written with no special marking. The stored result is indistinguishable from the same rule elicited by B1.
+- **B7 [MUST / absence: the offer cannot escape its box]** — assert, against the tool contract and the assembled-context spy, all of the following are **absent**, not merely unused: (1) **no** noticed-pattern proposal is ever produced by a trigger firing — only by a console turn; (2) **no** proposal of type Grant or Exception is ever produced by this path; (3) the detection **never appears in the assembled context** handed to the model; (4) with a slice containing five `guest`-tagged repetitions and zero `owner`-tagged ones, **no** offer is produced; (5) with the owner's self-improvement setting absent, **nothing detects and nothing is offered**. Mirror of the D9/N2 absence style: assert the affordance does not exist.
+- **B8 [MUST / a decline is remembered]** — *Given* the owner declines a noticed-pattern proposal, *then* a `PatternDecline` is stored (`SPEC.md §3.10`, persisted through the existing `commit` verb — assert **no new seam verb** appears in the tool contract) and a re-offer **proposing the same value** is not offered again — assert its absence on a subsequent qualifying turn. *Given* a later offer at the same `pattern_key` **proposing a different value** (a new `proposed_value_hash`), *then* it **is** offered. *Given* the owner chose "don't ask me again" (`permanent: true`), *then* **no** proposal on that `pattern_key` is offered for **any** value — assert absence — and the record is **revocable**, after which offers resume. *Given* a narrowed acceptance (G2's scope behaviour), *then* the offer does **not** return on a different instance — the decline, not the scope ladder, is what silences it.
 
 ## C. Status — latched acts over derived conditions
 
@@ -31,7 +36,7 @@
 - **C5 [MUST]** — *Given* an event whose end has passed with no `actual_end`, *then* `completed` derives true automatically.
 - **C6 [MUST]** — *Given* a bike due Sunday 17:00 returned **Saturday 10:00**, *when* `actual_end = Sat 10:00` is written, *then* it is stored (no `≥ scheduled end` rejection) and `completed = actual_end`. The unit frees at the actual return, not the scheduled one.
 - **C7 [MUST]** — *Given* "boat must be back by Friday 17:00" (end role `terminal-constraint`), *then* it is **not** typed as an occupy-nothing task; the terminal constraint is honored and the boat is not booked out across Friday afternoon.
-- **C8 [MUST / the clocked offer]** — *Given* a job offered to an instructor on Review with an operator-authored response window (`expires_at`), *when* the window passes unanswered, *then* `expired_at` latches, the lapse fires the trigger loop, and the offer **cascades to the next ranked name**; *when* the first instructor taps "yes" late, *then* the offer stays `expired` — the late yes does not revive it (C2's invariant, applied to a person's answer).
+- **C8 [MUST / the clocked offer]** — *Given* a job offered to an instructor on Review with `expires_at` set from the offer's creator-set hold (§3.4; `../engine/SPEC.md §7.1`), *when* the window passes unanswered, *then* `expired_at` latches, the lapse fires the trigger loop, and the offer **cascades to the next ranked name**; *when* the first instructor taps "yes" late, *then* the offer stays `expired` — the late yes does not revive it (C2's invariant, applied to a person's answer).
 
 - **C9 [MUST / the park cannot self-clear]** — *Given* a commitment parked by an unattended firing (D4/K2), *when* the loop fires again and the blocking condition now looks satisfiable, *then* the park stays set and the act does **not** retry — `needs_human.cleared_by` is written only by a human act, and the commitment is surfaced as parked regardless of what `status` derives to. `[ENGINE]` rejects an `engine`/`llm`-authored clear; the harness must not model the park as derivable-away (C2's discipline, applied to the park).
 
@@ -48,6 +53,9 @@
 - **D9 [MUST / destruction class empty]** — assert that **no tool in the contract declares the `destruction` reversibility class** (mirror of N2): cancellation is a latch and writes are diff-only, so nothing in the harness can destroy the sole record.
 - **D10 [MUST / auto-accept is a Grant]** — *Given* an owner's setup answer *"accept bookings from my regulars,"* *then* a **Grant** is stored (`SPEC.md §7`) and every act it authorizes carries `basis: grant#` — assert that **no authorization path exists other than grant-or-live-confirmation**, structurally. A second mechanism would be a second place to look for who allowed an act.
 - **D11 [MUST / auto-accept does not widen]** — *Given* that Grant, *when* a booking arrives from someone outside its scope, *then* there is no basis and the agent asks. Scope is matched, never inferred toward.
+- **D18 [MUST / confirmation is content-bound]** — *Given* the owner confirms an across-the-line act ("send Maria the 3 pm move"), *when* an argument changes before it fires (3 pm → 4 pm), *then* the changed act has **no basis** — the prior confirmation does not carry it — and the agent asks again. Assert `basis` records the confirmed tool + canonicalized args, so an approve-then-swap-args cannot read as authorized after the fact (`SPEC.md §7`, rules 2/4).
+- **D19 [MUST / fail closed on an undeclared tool]** — *Given* a tool whose reversibility class is **undeclared or unclassifiable**, *when* the agent would call it, *then* it is treated as **across-the-line** — it asks, and never runs unattended on the guess that it was reversible. Assert the floor fails **closed**, never open (`SPEC.md §7` rule 5). The type-level impossibility of a missing declaration is M2's job (BUILD Step 2); this is the runtime backstop.
+- **D20 [MUST / the floor property]** — the floor's invariant as a **property-based test** (`../TDD/harness.md`): *no outward act ever occurs without a matching basis, under any tool-call sequence.* Over arbitrary interleavings of tool calls, confirmations, and grants, assert every across-the-line effect the spies recorded carries `{who, basis, when}` whose basis actually matches — a content-bound live confirmation (D18) or a scope-matched grant (D11). Names the harness's one property (the analogue of the engine's property-tested invariants); the executable test is written at build time. **Home: `SPEC.md §7`** — no new law.
 
 ## D′. Escalation (the on-call ladder, `SPEC.md §3.9`)
 
@@ -81,6 +89,9 @@
 - **G4 [MUST / T2 go-live]** — a governed board goes live only when structural coverage is met OR every remaining hole is a recorded exception; a silent hole blocks go-live.
 - **G5 [MUST / interview state]** — a T2 authoring session can save/resume/abandon; partial policy persists as `draft` (disabled) rules.
 - **G6 [MUST / template-Lego]** — *Given* the owner describes a shareable thing ("students book my teaching hours"), *then* the agent proposes the **nearest known template pre-shaped** (a lesson form with the right fields); a field add and a field remove both round-trip; the finalized form is **frozen** (generate-once) so every recipient gets the identical thing.
+- **G6b [MUST / pin survives re-proposal]** — *Given* the owner **hand-sets** a field during generative-UI authoring, *when* the agent subsequently re-proposes the form (a fresh suggestion, or an added field elsewhere), *then* the hand-set field is **pinned** — user-owned and immune to regeneration — and survives unchanged; the re-proposal cannot clobber it (SPEC §5). Freeze-at-finalization (G6) is the whole-form version; this is the mid-session, field-level version.
+- **G8 [MUST / save-as-bundle]** — *Given* a T2 authoring session (complete or in progress — `draft` rules project too, `../engine/SPEC.md §1.7a`), *when* the owner saves it as a template bundle, *then* the harness invokes the bundle **shape-projection** as an **internal `calculate`-class read** (SPEC §6; `../engine/SPEC.md §1.7a`), the emitted document validates as a `../marketplace/SPEC.md §1.2` bundle with operands **blanked or marked publisher's-choice**, the operation declares `internal` and does **not** publish, and **re-projecting the same session yields an identical bundle** (L2's determinism). Points to `../marketplace/SCENARIOS.md I6` for the authoring≡hand-authored equivalence law (not restated here).
+- **G9 [MUST / the authoring fence] `[ENGINE]`** — *Given* the bundle projection, *then* it **cannot select** any counterparty, booking, history, ledger, or personal-data field — the authoring twin of `../marketplace/SCENARIOS.md F3` ("the fields do not exist"). The harness's part is only that it **hands the engine a representable request**; the projection's selectable-set enforcement is verified engine-side (`../engine/SCENARIOS.md` S3). `[ENGINE]`
 - **G7 [MUST / SOP lifecycle]** — *Given* the owner uploads or names an SOP (a bundle of kinds + rules, SPEC §3.6), *then* it gains document identity through `CRUD_SOP`; its rules govern exactly as directly-authored ones (same precedence law); and *when* it is detached from a kind, commitments already made keep the terms they were made under — forward-only, like every rule edit.
 
 ## H. Orders, groups, guest flow
@@ -96,20 +107,25 @@
 
 ## I. Handshake
 
-- **I1 [MUST]** — *Given* two on-app users, *when* one books the other, *then* it resolves as two H1 instances reconciled by the engine handshake (no separate harness path invoked). *(The engine half is `../engine/SCENARIOS.md` I1–I7; the two must agree or the swap is a lie. Mechanism: `../engine/SPEC.md §7.1`.)*
-- **I2 [MUST / no new seam verb]** — assert the bind path calls **only** the five pinned engine obligations (`INTERFACES.md §1`): the proposal arrives through `resolve` and applies through `commit(proposal_ref)`. A sixth verb would break the zero-harness-changes swap law — this is the harness-side guard on it.
-- **I3 [MUST / counterparty's floor]** — *Given* an incoming bind offer, *then* accepting is an **across-the-line act on the counterparty's side**: it fires only on a live confirmation or a matching Grant (D10). *Given* neither, *then* the offer expires and **nothing binds**. Silence is not acceptance.
-- **I4 [MUST / offer is an ordinary trigger]** — the incoming offer fires the **existing** trigger loop; assert no bind-specific harness path exists.
+- **I1 [MUST]** — *Given* two on-app users, *when* one books the other, *then* it resolves as two H1 instances working **the same one creator-owned commitment** through the engine share seam (no separate harness path invoked, no mirrored second record). *(The engine half is `../engine/SCENARIOS.md` I1–I7; the two must agree or the swap is a lie. Mechanism: `../engine/SPEC.md §7.1`.)*
+- **I2 [MUST / no new seam verb]** — assert the share path calls **only** the five pinned engine obligations (`INTERFACES.md §1`): the offer arrives through `resolve` and applies through `commit(proposal_ref)`. A sixth verb would break the zero-harness-changes swap law — this is the harness-side guard on the one-machine ruling (#2).
+- **I3 [MUST / counterparty's floor]** — *Given* an incoming share offer, *then* accepting is an **across-the-line act on the counterparty's side**: it fires only on a live confirmation or a matching accept-mode Grant (fits-schedule or per-person — D10). *Given* neither, *then* the offer's hold runs out and **nothing lands on the counterparty's board**. Silence is not acceptance.
+- **I4 [MUST / offer is an ordinary trigger]** — the incoming offer fires the **existing** trigger loop; assert no share-specific harness path exists.
 
 ## K. Loop verification (check-work)
 
-- **K1 [MUST]** — *Given* a turn whose commit produced stored structure that diverges from the normalized intent (stub returns a mismatched state), *then* the agent **detects the mismatch via read-back** and does not terminate claiming success — it re-enters the loop (bounded) or raises.
+- **K1 [MUST / bounded, attended]** — *Given* a turn whose commit produced stored structure that diverges from the normalized intent (stub returns a mismatched state on every read), *then* the agent detects the mismatch via read-back and does not terminate claiming success; it re-enters the loop **exactly once** and then surfaces the mismatch to the owner as a gap. Assert across the whole turn: **at most two commits**, and **exactly one outward send** — the re-entry re-commits but never re-fires an act already attributed (`SPEC.md §7`).
 - **K2 [MUST / unattended]** — *Given* a trigger firing with no human present whose effect fails verification against the engine re-read, *then* the firing does not finish silently — it **parks** the commitment in a needs-human state (consistent with D4). Completion is never claimed unverified.
+- **K3 [MUST / the loop terminates, and nothing escalates]** — *Given* a **trigger** firing whose engine re-read mismatches on every attempt, *then* the firing terminates in bounded attempts and **parks** the commitment. Assert the absences: **no act was re-fired** (the outward stub recorded exactly one call), and **no Escalation object was created** — a verification mismatch has no route to the ladder, because the ladder answers a missing basis and nothing here is missing a basis (`SPEC.md §3.9`).
 
 ## L. Context assembly
 
 - **L1 [MUST / self-sufficient firing]** — *Given* a trigger fires with no conversation (a hold expiry at 03:00), *then* the assembled context contains the **handoff frame** — the trigger event, the affected commitment's stored structure, and the covering rules/stored answers — and the firing completes (or parks) without needing any conversational history.
 - **L2 [MUST / no residue, deterministic]** — *Given* the same trigger fired twice (replay), *then* the assembled context is **identical both times** — built from stored structure only, carrying no prior-turn conversational residue.
+- **L3 [MUST / bounded slice, deterministic degradation]** — *Given* a firing whose relevant slice would exceed the context budget (a busy governed board: a large SOP, an N-member order, six scope levels of covering rules), *then* the slice is truncated **deterministically** by the priority order (nearest scope first — the §6 ladder), the **same truncation on replay** (L2 holds), and the firing either remains **self-sufficient** or **parks** (D4) — it never proceeds on a silently-truncated context.
+- **L4 [MUST / spotlight tags]** — *Given* a firing whose assembled context mixes owner text with guest/import/document text, *then* **every** assembled string carries its `owner | guest | import | document` source tag, stamped at the door that admitted it; assert a guest/import/document string is **never** tagged `owner`. Layer-1 spotlighting (`SPEC.md §8`; `INTERFACES.md §2.1`) — the labeling wall, asserted **on the wire**, not on model obedience.
+- **L5 [MUST / dual-model isolation]** — *Given* an untrusted stranger channel (guest-returned free text, or an uploaded SOP document), *then* the raw stranger text is read only by a **quarantined, tool-less model** that returns a structured summary, and the privileged tool-bearing model's context contains **only that summary — never the raw text** (spy on what the privileged model was shown). Layer-2 isolation (`SPEC.md §8`, FD-2); assert an obeyed non-owner instruction fails the scenario. The quarantine suite is **seeded from a named injection-fixture corpus** — public-benchmark-sourced, declared throwaway, committed to the **code repo's** harness test tree at build time (`../security/SPEC.md §5`); **no attack strings live in this spec repo**.
+- **L6 [MUST / deictic view-context]** — *Given* the app stamps a console utterance with view-context `{surface, visible_range?, selected_ref?}` (`SPEC.md §8`; `INTERFACES.md §2.1`), *when* the owner says a **deictic** utterance ("push this back an hour") with a card selected, *then* the referent resolves against the stamped `selected_ref` **deterministically** — no guess, no conversation. *Given* no `selected_ref` and an ambiguous "this", *then* the agent asks (gap-4), never guesses. The app-side companion — that the stamp is actually emitted — is `../app/SCENARIOS.md C5`.
 
 ## N. Money as records
 
@@ -140,20 +156,28 @@ Run against the finished harness; record pass/fail as an out-of-sample measure. 
 | Status latches + the clocked offer (§3.4) | C1–C8 |
 | The park — neither latch nor status; human-cleared only (§3.4) | C9, D4, K2 |
 | Temporal roles — events consume, tasks don't (§3.4) | A5, C7 |
-| Reversibility floor (§7) | D1–D8 |
+| Reversibility floor (§7) | D1–D8, D18 (confirmation content-bound), D19 (fail-closed on undeclared), D20 (the floor property) |
+| Direct-manipulation write transits the floor (§7; `../app/SPEC.md §1`) | A6 |
 | Document-derived authorization (§7) | D8 |
 | Cancellation asymmetry + implicit recurrence (§6–7) | H7–H8 |
 | M2 gate (§3.4, §6) | E1–E3 |
-| Elicitation (§6) | B1–B5, G1–G6 |
+| Elicitation (§6) | B1–B8, G1–G6 |
 | Quota rule (§3.5) | B5 |
 | Conflict/versioning — forward-only at every level (§3.5, §9) | F1–F5 |
 | Orders + group half-clear (§3.7) | H1–H3, H5 |
 | Guest flow / no H3 / per-recipient token (§2, §3.6) | H4, H6 |
 | Handshake (§2) | I1 |
-| Loop turn+trigger + check-work (§4) | D4, H4, K1–K2 |
+| Loop turn+trigger + check-work (§4) | D4, H4, K1–K3 |
 | Context assembly (§8) | L1–L2 |
+| Bounded slice — finite budget, deterministic degradation (§8) | L3 |
+| Provenance quarantine — spotlight tags + dual-model isolation (§8) | L4, L5 |
+| View-context stamping — deictic referent (§8; `../app/SPEC.md §1`) | L6 (harness), `../app/SCENARIOS.md C5` (app companion) |
 | Money as records (§3.8) | N1–N2 |
-| Tool contract + reversibility class (§5) | D1–D2, D7, D9, H4, N2 |
+| Tool contract + reversibility class (§5) | D1–D2, D7, D9, H4, N2, A7 (return-leg validated) |
 | Template-matching generative-UI (§5, §6) | G6 |
+| Generative-UI pin/lock — hand-set field survives re-proposal (§5) | G6b |
+| FR38 save-as-bundle projection + authoring fence (§6; `../marketplace/SPEC.md §1.2`/§2) | G8, G9 |
 | Proposal round-trip over the engine seam (§4–§7 composed; `../engine/SPEC.md §7`) | P1 |
 | Held-out generality (§9) | J1–J5 |
+| The noticed-pattern offer — inline, non-blocking, owner-tagged only (§6) | B6, B7 |
+| PatternDecline — a decline is remembered, revocably (§3.10) | B8, `../app/SCENARIOS.md` C7 |

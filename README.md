@@ -176,7 +176,7 @@ The load-bearing idea is the split between **Model** and **Engine**. If you dele
 
 **Build order:** Harness first (against stubs, no real model needed) → Engine to satisfy the harness's seams → App to render the surfaces → **qualify real models last**, because good prompts need a real harness to test against.
 
-A fifth package, [`marketplace/`](marketplace/) — the store's open half (skins, business-in-a-box templates) — sits beside the layers and **builds last**: it consumes all four and adds no new seam verbs. Its bookend is [`deployment/`](deployment/) — the discipline of the build itself (environments, PRs, worktrees, concurrent builder sessions) — which governs the future code repo and **builds first**, before harness Step 0.
+A fifth package, [`marketplace/`](marketplace/) — the store's open half (skins, business-in-a-box templates) — sits beside the layers and **builds last**: it consumes all four and adds no new seam verbs. Its bookend is [`deployment/`](deployment/) — the discipline of the build itself (environments, PRs, worktrees, concurrent builder sessions) — which governs the build in this repo and **builds first**, before harness Step 0.
 
 ---
 
@@ -204,7 +204,7 @@ A product that asks for your whole life — and holds your customers' passports 
 | [`model/`](model/) | The contract any LLM must satisfy, and the exam that proves it |
 | [`marketplace/`](marketplace/) | The open half of the store — skin-pack and template-bundle formats, the install law, and the seams to the closed marketplace service |
 | [`security/`](security/) | The cross-cutting security law — threat model, tokens, the PII vault, injection quarantine, compliance posture; its README doubles as the external security-posture doc |
-| [`deployment/`](deployment/) | The discipline of the build — environments, PR strategy, worktrees, concurrent builder sessions; governs the future code repo, and **builds first** |
+| [`deployment/`](deployment/) | The discipline of the build — environments, PR strategy, worktrees, concurrent builder sessions; governs the build in this repo, and **builds first** |
 | [`PR/`](PR/) | The outward identity package — who annnä is and how it speaks; every public surface derives from it. Adds no product behavior; where it overlaps design, it inherits from `app/DESIGN.md`, never the reverse |
 | [`assets/`](assets/) | The four shipped skin masters + approved palettes, and the admin pack pipeline |
 | [`user-stories/`](user-stories/) | **The requirements source-of-truth** — five end-to-end situations |
@@ -240,7 +240,7 @@ Some of these use in-house shorthand. Plainly:
 | Harness / Engine / App / Model specs | ✅ All four packages complete, with acceptance suites |
 | Skin/appearance model + marketplace spec | ✅ Specced — appearance law in `app/DESIGN.md`, store in `marketplace/` |
 | Security law + compliance posture | ✅ Specced — `security/`, gating the layers' builds; legal review is a named gate |
-| Build discipline | ✅ Specced — `deployment/`, governing the future code repo; builds first |
+| Build discipline | ✅ Specced — `deployment/`, governing the build in this repo; builds first |
 | Testing strategy | ✅ Written across all four suites |
 | **Application code** | ❌ **None** — the only executable is the small admin asset pipeline in [`assets/`](assets/) |
 
@@ -248,11 +248,10 @@ The design was deliberately attacked twice before being called done — structur
 
 **Next step:** build the harness against stubs, per [`harness/BUILD.md`](harness/BUILD.md).
 
-**And it happens elsewhere.** The first build — including the runner that executes the
-`SCENARIOS.md` suites as real tests — lives in a **separate code repo**, governed by
-[`deployment/`](deployment/) from its first commit. Nothing is coded into this one. This
-repo stays what it is: the specification, frozen enough to build against and readable
-without a toolchain.
+**And now it happens here.** The first build — including the runner that executes the
+`SCENARIOS.md` suites as real tests — happens in **this** repo, governed by
+[`deployment/`](deployment/) from its first commit. The specification stays the source of
+truth; the code grows alongside it.
 
 ---
 
@@ -292,7 +291,7 @@ Everything above is the orientation. The operational instructions:
   BUILD.md       the ordered implementation plan, each step naming its gating scenarios
 ```
 
-Deliberate deviations from that shape: the **model** package's acceptance file is `EVALS.md` (graded evals, because models are qualified rather than built); the **app** package adds `DESIGN.md` (carried design law); and `harness/`, `app/`, `marketplace/`, and `deployment/` each carry a `NOTES.md` — a backlog scratchpad of items already absorbed into the spec, plus anything still open. The **deployment** package is a process spec, not a layer: it governs the *future code repo* (this repo keeps direct-to-main), builds first of all, and its scenarios use `[MUST]` (mechanically enforced) and `[DRILL]` (executed once, recorded) in place of `[HELD-OUT]`. Cross-cutting security laws live in `security/SPEC.md`; layer SPECs point to them, never copy. `NOTES.md` is never authoritative; build from `SPEC.md`.
+Deliberate deviations from that shape: the **model** package's acceptance file is `EVALS.md` (graded evals, because models are qualified rather than built); the **app** package adds `DESIGN.md` (carried design law); and `harness/`, `app/`, `marketplace/`, and `deployment/` each carry a `NOTES.md` — a backlog scratchpad of items already absorbed into the spec, plus anything still open. The **deployment** package is a process spec, not a layer: it governs the build in this repo (which keeps direct-to-main), builds first of all, and its scenarios use `[MUST]` (mechanically enforced) and `[DRILL]` (executed once, recorded) in place of `[HELD-OUT]`. Cross-cutting security laws live in `security/SPEC.md`; layer SPECs point to them, never copy. `NOTES.md` is never authoritative; build from `SPEC.md`.
 
 - **To build a layer:** open its folder and follow that read order. Start with [`harness/BUILD.md`](harness/BUILD.md) — the harness is built and tested first, in isolation, against stubs including a scripted model stub.
 - **To write or extend tests:** start in [`user-stories/`](user-stories/). Those are the top of the hierarchy; per-layer `SCENARIOS.md` files derive from them, and [`TDD/`](TDD/) says what kind of executable test each criterion becomes.

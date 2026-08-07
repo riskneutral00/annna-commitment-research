@@ -32,3 +32,10 @@ docs/agents/
 # Local Claude Code and skill working files — per-machine state.
 .claude/settings.local.json
 .scratch/
+
+# Engine build — Convex/node local & secret state (build-in-place)
+node_modules/
+.env.local
+.env
+# Local guard pin: names a machine-specific dev deployment, not corpus
+.convex-deployment

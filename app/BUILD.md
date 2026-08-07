@@ -9,7 +9,7 @@ Next.js app + Convex + Clerk wired; Astryx installed **pinned, no postinstall ap
 The wallpaper canvas, the board on it, blocks from stored payloads, date-row navigation, frontier-extension requests, `+N` overflow, due chips, mobile rack + bottom bar; skin packs + palette tokens, boring mode, the opacity dial, no-flash landing. Gate: **C1, C6, S1, S2, S4, S7**, design-law checklist (board laws, islands, photo rules, breathing blocks, §Appearance).
 
 ## Step 2 — Console
-The draggable card / pill, utterance in → seam → narrate out, proposal cards, surface stamping. Gate: **C3, C5**, design-law checklist (console laws, card anatomy).
+The draggable card / pill, utterance in → seam → narrate out, proposal cards, surface stamping. Gate: **C3, C5, C7**, design-law checklist (console laws, card anatomy).
 
 ## Step 3 — Risers
 The single overlay primitive with sink/rise motion; the commitment form riser first (creation form = detail form), then rules, Plan, settings. Gate: **C2, C4**, design-law checklist (overlay + whisper dim + motion restraint).
@@ -18,7 +18,7 @@ The single overlay primitive with sink/rise motion; the commitment form riser fi
 The manifest (vetted Astryx subset, named list), schema validation against the meta-schema, node→component mapping, rejected-render path. Gate: **U1–U4**.
 
 ## Step 5 — Guest pages + tokens
-Token routes, month at-a-glance, day drill-in, published form rendering, submission → `on_form_return`, dead-token page, consent capture; token law + vault uploads per `../security/BUILD.md` Steps 3–4. Gate: **G1–G7**, security **T-family + V1** (the public-link gate).
+Token routes, month at-a-glance, day drill-in, published form rendering, submission → `on_form_return`, dead-token page, consent capture; token law + vault uploads per `../security/BUILD.md` Steps 3–4. Gate: **G1–G8**, security **T-family + V1** (the public-link gate).
 
 ## Step 6 — Delivery
 Resend integration + token links, hand-me-the-link composition, event recording, ask-once channel storage. Gate: **D1–D6**.

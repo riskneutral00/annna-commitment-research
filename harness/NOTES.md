@@ -16,4 +16,4 @@
 
 ## Still open
 
-*(Nothing — the last open item folded 2026-08-06.)*
+- **`engine/SPEC.md §1.3` gains an `owner` author member when next edited.** Provenance's `author` vocabulary gained `owner` at its one normative home (`SPEC.md §3.4`), so no `engine/` edit was made from this pass. `../engine/SPEC.md §1.3` stays true as written — its inline author list is illustrative, and §3.4 is the home — but whoever next edits that section should add `owner` where it enumerates authors. Not a blocker: nothing in the engine spec enumerates the full vocabulary.

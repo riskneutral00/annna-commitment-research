@@ -104,20 +104,47 @@ Ruled against the DR/addressing gap review. Same series, continuing FR22.
 
 ---
 
+## FR26–FR36 — the fifth sitting, 2026-08-07 (the wayfinder map)
+
+Ruled through the wayfinder decision map (GitHub issues #1–#12 on this repo; each ruling's full record is its ticket's resolution comment). Same series, continuing FR25.
+
+| # | Ruling | Where it lives |
+|---|---|---|
+| **FR26** | **One commitment, always — the bind handshake redrawn, not ratified.** There is exactly one commitment object regardless of how many people are involved; **whoever creates it owns it, and ownership does not transfer** (at this time). It reaches other boards and eyes only through engine-minted **grants**. The drafted paired-commitments pair-write is dead; Google Calendar's one-event-with-guests is the stated precedent, the incumbent two-records-reconciled shape explicitly rejected | `engine/SPEC.md §7.1` (issue #2) |
+| **FR27** | **The hold is the creator's setting.** The share form carries a hold-duration field: **default 5 minutes, range 0–24 hours**, 0 = no reservation. While offered, the targeted window is held for that duration, then freed | `engine/SPEC.md §7.1` (issue #2) |
+| **FR28** | **Three accept modes, user-chosen:** auto-accept what fits the schedule · auto-accept per person · always manual. The first two are ordinary stored Grants; silence never books anyone | `engine/SPEC.md §7.1`, `harness/SPEC.md §7` (issue #2) |
+| **FR29** | **One machine.** The same code path serves own-board and cross-owner bookings — a cross-owner booking is an ordinary booking needing one more yes; no dedicated cross-tenant entry point | `engine/SPEC.md §7.1` (issue #2) |
+| **FR30** | **The grant vocabulary:** three rungs (availability — the default exposure · details · edit); a grant attaches to one commitment or one board and is held by a person or a link token; no group grants, no manage-sharing rung; edit is per-grant direct-or-approval, defaulted direct | `engine/SPEC.md §7.1` (issue #12) |
+| **FR31** | **BYO attended-only, ratified.** The 2026-08-06 drafted confinement stands as written | `model/SPEC.md §7` (issue #3) |
+| **FR32** | **The catalog surface renders in the viewing owner's stored language**, English fallback where untranslated | `marketplace/SPEC.md §6` (issue #4) |
+| **FR33** | **No-show is always a human mark;** the policy is a creator-set per-commitment field binding at booking under §1.5 | `engine/SPEC.md §1.9` (issue #5) |
+| **FR34** | **Reachable = responded within the offer's hold window;** ranked walk one candidate at a time; exhaustion parks to the owner. A decline always carries a structured reason; the re-offer is the only counter | `harness/SPEC.md §3.4` clocked-offer law, `engine/SPEC.md §7.1` (issues #7, #8) |
+| **FR35** | **A precondition may require a recorded human conversation; its violation parks as a human decision** — documents alone never satisfy it. Wiring a domain flag (e.g. dive medical) to it is template configuration, not platform law | `engine/SPEC.md §3` precondition row (issue #9) |
+| **FR36** | **Calendar import v1:** Google, Microsoft, iCloud (app-specific password), ICS links; the connect flow is the console conversation; copy at the industry minimum, no extra disclosure | `app/SPEC.md §9` (issues #10, #11) |
+
+**Also answered in the same sitting, recorded on their tickets rather than numbered:** the store-probe domain brief (issue #6 — agent-suggests discovery, Sofia templates-only, empty-account install) — story inputs, not spec law.
+
+## FR37–FR38 — same day, after the map
+
+| # | Ruling | Where it lives |
+|---|---|---|
+| **FR37** | **Domain content is user-built proof, not founder-ruled spec.** User stories and their domain designs — F7's courses and F20's boat minimum among them — are validated by the founder building them *as a user* inside the app, proving any user could build them; no founder ruling is owed on them, ever. The platform owes only the enabling mechanisms (template expansion `engine/SPEC.md §1.12`, clock-triggered rules `engine/SPEC.md §3`) | `engine/SPEC.md §1.12` and `§3` stamps |
+| **FR38** | **We build the tools, never the templates — the law is authorship, not shipping.** The product is the application — engine, harness, app, marketplace. **First-priority acceptance: a user can author a template through their agent** and share it to the marketplace. Every template named in the user stories and READMEs **may ship as a production default for all users** — but only after the founder, as administrator, has built it *through the application*, because each one is the proof that any user could. Claude/developers never author a domain template; the founder's prove → save → ship path is the existing admin-only supply law (`marketplace/SPEC.md §0`/`§2`) worn as a workflow. Development carve-out: domain content may exist during development **only as declared throwaway** — named as scaffold before it is built, stripped before ship, rebuilt through the application as the proof. Undeclared domain scaffold is a violation | this registry entry; binds `marketplace/SPEC.md §2` (Publish/authoring) + §0 (admin-only supply), `engine/SCENARIOS.md` W5 (expansion-equivalence) → `marketplace/SCENARIOS.md` I6 (authoring-equivalence), user-stories/README framing |
+
 ## Provenance — which decisions were the founder's, and which were drafted
 
 *Added 2026-08-06. This section exists because a ruling label carries authority, and a reader cannot otherwise tell an answered question from a drafted one. Recording it is cheaper than reconstructing it later, and impossible to reconstruct once the working sessions are gone.*
 
-**Founder-originated.** FR1–FR13, FR-A/FR-B/FR-C, FR14–FR18, FR19–FR22 and FR23–FR25 above are all **answers the founder gave**. Each closed a question that was put to him directly. The registry entries above record the answers, not proposals.
+**Founder-originated.** FR1–FR13, FR-A/FR-B/FR-C, FR14–FR18, FR19–FR22, FR23–FR25 and FR26–FR38 above are all **answers the founder gave**. Each closed a question that was put to him directly. The registry entries above record the answers, not proposals.
 
 **Drafted on the founder's behalf, and not separately ratified.** A repair pass on 2026-08-06 authored **thirteen design decisions** directly into spec text, because the instruction was to complete the plan rather than stop midway. They are real architecture calls, not wording fixes, and they carry no ruling label of their own. The four with the largest blast radius are named here; the rest are diffused through the same pass:
 
 | Decision | Where it lives |
 |---|---|
-| **The cross-owner bind handshake** — the corpus's largest hole, resolved so it adds **no seam verb**: a bind is `resolve` over the counterparty's published projection, applied by the existing `commit(proposal_ref)`, with an engine-minted `BindProposal` as the one legal two-tenant object | `engine/SPEC.md §7.1` |
-| **F7 → `KindTemplate`** — a saved course is authoring-time vocabulary that *expands into* `order` + `depends_on`, so §1.8's "no third mechanism" survives | `engine/SPEC.md §1.12` |
-| **F20 → `min-occupancy`** — the menu's only rule evaluated at a clock trigger, whose violation is an owner decision rather than a refusal | `engine/SPEC.md §3` |
-| **BYO confinement to attended-only** — the load-bearing reason is *qualification*, not session mechanics: a user's own model is an ungraded path to the same seam | `model/SPEC.md §7` |
+| **The cross-owner bind handshake** — the corpus's largest hole, drafted as paired commitments with an engine-minted `BindProposal`. **Superseded 2026-08-07: FR26–FR29 redrew this seam** (one commitment, grants, creator-set holds); the no-seam-verb stance survived into the ruling, the pair-write did not | `engine/SPEC.md §7.1` (now founder-ruled) |
+| **F7 → `KindTemplate`** — a saved course is authoring-time vocabulary that *expands into* `order` + `depends_on`, so §1.8's "no third mechanism" survives. **Scoped 2026-08-07 (FR37): no ratification owed** — the mechanism stands; the course content is user-built proof | `engine/SPEC.md §1.12` |
+| **F20 → `min-occupancy`** — the menu's only rule evaluated at a clock trigger, whose violation is an owner decision rather than a refusal. **Scoped 2026-08-07 (FR37): no ratification owed** — the mechanism stands; the boat is user-built proof | `engine/SPEC.md §3` |
+| **BYO confinement to attended-only** — the load-bearing reason is *qualification*, not session mechanics: a user's own model is an ungraded path to the same seam. **Ratified as written 2026-08-07 (FR31)** | `model/SPEC.md §7` (now founder-ruled) |
 
 **Also applied without prior ratification:** the **`FR#` rename** itself. The plan reserved it for the founder; the repair pass applied it because the collision had become concrete — `R7` meant "Convex ratified" here and "production refuses anonymous access" in `deployment/SCENARIOS.md`. Only founder-ruling citation sites were renamed; scenario IDs are file-local and were untouched. One word reverses it.
 

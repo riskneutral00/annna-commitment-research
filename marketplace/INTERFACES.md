@@ -14,7 +14,7 @@ The store's infrastructure — catalog, curation, payments, entitlements, licens
 - `assets.sign(pack, account) → short-lived URLs` — licensed derivatives, entitled accounts only.
 - `transaction.begin / transaction.complete` — **post-alpha**; the only calls whose substance is the closed service's own, and they live entirely behind this seam. The open half never sees their contents — it observes the resulting entitlement state and nothing else (`SPEC.md §5`).
 
-**CI discipline (carried): mocked always.** No closed-service call ever runs in CI. This repo stubs the **whole service**: a canned catalog (the shipped four skins, **one store-skin fixture**, and the two seed templates), an entitlement map that covers the fixture for one account and not another, and a **test signer that mints genuinely expiring URLs** — never a dead stub, because the signed-URL laws (E1/E4) must be *executable* against the mock, not vacuously green. **The mock is the contract test** — the service must honor these shapes, versioned; a shape change is a version, never a silent break.
+**CI discipline (carried): mocked always.** No closed-service call ever runs in CI. This repo stubs the **whole service**: a canned catalog (the shipped four skins, **one store-skin fixture**, and the two seed templates — **throwaway fixtures**, FR38: mock content, never a shipped default), an entitlement map that covers the fixture for one account and not another, and a **test signer that mints genuinely expiring URLs** — never a dead stub, because the signed-URL laws (E1/E4) must be *executable* against the mock, not vacuously green. **The mock is the contract test** — the service must honor these shapes, versioned; a shape change is a version, never a silent break.
 
 ## §2. To the app (upward)
 
@@ -31,7 +31,7 @@ The store's infrastructure — catalog, curation, payments, entitlements, licens
 ## §4. To the engine
 
 - An installed template writes **only constructs the engine already accepts**: kinds, rules from the closed menu, Shared shapes, boards — with fork provenance recorded in history. An off-menu rule shape was already refused at the install door (`SPEC.md §3`), upstream of the engine's own refusal; the door is a courtesy, the engine is the law.
-- **The engine is not marketplace-aware** — deliberately. No marketplace field, flag, or table exists in engine truth. Note recorded in `SPEC.md §7`: the engine's no-export ruling and admin-only supply hold together.
+- **The engine is not marketplace-aware** — deliberately. No marketplace field, flag, or table exists in engine truth. Note recorded in `SPEC.md §7`: the no-export ruling holds because a bundle is **authored as a data-free §1.2 shape, not extracted from a populated board**, and it re-opens together with user publishing (OR-28) — no-export and admin-only supply hold together.
 
 ## §5. Stub strategy
 

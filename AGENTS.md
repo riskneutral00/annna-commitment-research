@@ -1,6 +1,6 @@
 # AGENTS.md — operating instructions for agents in this repo
 
-**This repo is a specification corpus. There is no application code, no tests, and no CI.** 122 markdown files plus one asset script (`assets/make-pack.mjs`). Nothing here executes. Read that as a standing caveat on everything below.
+**This repo is a specification corpus — its source of truth is markdown.** Two things now execute: `engine/` carries real TypeScript and a vitest suite (the Step-0 scaffold), and two Node scripts run outside it — `assets/make-pack.mjs` and `deployment/scripts/gate-coverage.mjs` (the gate-coverage law, `deployment/SCENARIOS.md B8`). Everything else — **134** markdown spec files (`find . -name '*.md'` excluding `.git/`, `node_modules/`, `.tmp/`, and untracked `docs/`) — is specification, not code; untracked `docs/` raises the working-tree total. Read that as a standing caveat on everything below.
 
 ## Authority order
 
@@ -19,7 +19,7 @@
   BUILD.md       the ordered implementation plan, each step naming its gating scenarios
 ```
 
-Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (carried design law) · `harness/`, `app/`, `marketplace/`, `deployment/` carry `NOTES.md` · `deployment/` is a process spec governing the *future code repo*, not a layer.
+Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (carried design law) · `harness/`, `app/`, `marketplace/`, `deployment/` carry `NOTES.md` · `deployment/` is a process spec governing the build in this repo (ruled in place 2026-08-07), not a layer.
 
 ## Citation conventions that will otherwise trip you
 
@@ -45,6 +45,10 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 - **One normative home per rule** (FR13). Every restatement cites the home. If you add a rule, put it in exactly one place and point at it from everywhere else.
 
 ## Agent skills
+
+### Contradiction sweep
+
+`.claude/skills/contradiction-sweep/` — after any multi-file spec pass and before committing spec changes, sweep for survivors of the edit: dead vocabulary, diverging restatements, unresolvable citations, seam pairs that disagree. Report-only; fixes are a separate ask.
 
 ### Issue tracker
 

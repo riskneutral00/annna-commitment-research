@@ -1,0 +1,22 @@
+{
+  "name": "engine",
+  "version": "1.0.0",
+  "description": "annnä is four layers — **Model / Harness / Engine / App** (the full map: [`../README.md`](../README.md)) — and this folder is the Engine: **the only layer where truth lives**. It is the persistent store (commitments, boards, rules, grants, latches, shared artifacts, orders) plus the deterministic math on it (availability, gaps, travel, quotas, placement). It is **built**, not imported; its only client is the **Harness**, which calls it through a seam pinned before this design existed (`../harness/INTERFACES.md §1`). The engine never talks to the model, a user, or a third party.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "convex": "^1.43.0"
+  },
+  "devDependencies": {
+    "@edge-runtime/vm": "^5.0.0",
+    "convex-test": "^0.0.55",
+    "vitest": "^4.1.10"
+  }
+}

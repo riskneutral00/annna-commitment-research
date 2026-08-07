@@ -10,7 +10,7 @@ Produce the **full app spec package** — `app/README.md · SPEC.md · INTERFACE
 
 1. **Deliverable** — full spec package now.
 2. **Platform** — **mobile-first web app**; one app serves owner and guest. (The guest link is a web page regardless.)
-3. **Framework** — **Next.js**. Astro researched and rejected for this app: Astro's strength is mostly-static sites; annnä's owner surface is a live, authenticated, real-time app — in Astro it would become one giant React island. (Astro remains a fine future choice for the `annna.dev` marketing page only.) Both use React; Next.js *is* React.
+3. **Framework** — **Next.js**. Static-first site frameworks were researched and rejected: annnä's owner surface is a live, authenticated, real-time app, not a mostly-static site — in a static-first framework it would become one giant React island. Next.js *is* React.
 4. **Backend** — **Convex** (real-time store + server functions; live board updates for free; matches a prior production system and the prior build; satisfies the engine's substrate needs — transactions, append-only writes).
 5. **Auth** — **Clerk** for owners. Guests never have accounts: tokenized URLs outside auth, matching the engine's per-recipient token design.
 6. **UI kit** — **Astryx + glass theme** (Meta's agent-ready design system). This carries forward the prior build's ruling (2026-07-25, Option 1 strict adoption; glass rides as a theme without forking). Astryx is the substrate of the FIXED component catalog: an agent-readable, documented set of vetted components — exactly the harness's "LLM composes, never invents widgets" rule. Honest cost: beta churn, Meta dependency.
@@ -39,7 +39,7 @@ Produce the **full app spec package** — `app/README.md · SPEC.md · INTERFACE
 
 - Native mobile apps (wrapper possible later).
 - Automated SMS / LINE / WhatsApp sending (v1 = email + forwarded links).
-- The `annna.dev` marketing site (separate artifact; Astro candidate).
+- The `annna.dev` marketing site (separate artifact).
 - Multi-model UI or BYO-key surfaces (supply is app-provided; see memory/model docs). **Superseded by founder ruling FR5** — the BYO-key ban is reversed; BYO API keys are in scope (positive spec home: `../model/SPEC.md`).
 - Offline-first operation.
 
@@ -56,7 +56,7 @@ Produce the **full app spec package** — `app/README.md · SPEC.md · INTERFACE
 |---|---|---|
 | 1 | Deliverable? | Full app spec package |
 | 2 | Platform? | Mobile-first web app; asked for full stack interview |
-| 3 | Framework? | Next.js (Astro researched — wrong tool for a live app; both use React) |
+| 3 | Framework? | Next.js (static-first frameworks researched — wrong tool for a live app) |
 | 4 | Backend? | Convex |
 | 5 | Auth? | Clerk; guests = tokenized URLs, no accounts |
 | 6 | UI kit? | Astryx + glass theme (Meta, agent-ready; prior ruling carried forward) |

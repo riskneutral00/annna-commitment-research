@@ -17,7 +17,7 @@ Every obligation of `../harness/INTERFACES.md §3`, mapped to where this package
 | §3.3 `on_form_return(reply) → Event` — trigger source, token attribution | `SPEC.md §5` (submission), `§6` (recording) |
 | §3.4 App-only views, no harness logic | `SPEC.md §7` (the four disowned views plus appearance, read-only by construction) |
 
-**Events the app emits back** — all through existing seam shapes, zero new verbs: form returns (`on_form_return`), delivery results (recorded events, §6), owner confirmations/dismissals of surfaced cards (ordinary utterance/act inputs to the loop). The app also stamps each console utterance with the active canvas state so the harness's standing frame carries the correct `surface` (`SPEC.md §1`) — this rides the existing `normalize` context contract, not a new call.
+**Events the app emits back** — all through existing seam shapes, zero new verbs: form returns (`on_form_return`), delivery results (recorded events, §6), owner confirmations/dismissals of surfaced cards (ordinary utterance/act inputs to the loop). The app also stamps each console utterance with the active canvas state — the **view-context** `{surface, visible_range?, selected_ref?}` — so the harness's standing frame carries the correct `surface` **and the deictic referent** ("push this back an hour" resolves against `selected_ref`) (`SPEC.md §1`; `../harness/INTERFACES.md §2.1`). This rides the existing `normalize` context contract, not a new call.
 
 **Zero new seam verbs, zero harness changes.** If building ever demands one, stop and flag — that contradicts the lock in `../.specs/deep-interview-app.md`.
 
