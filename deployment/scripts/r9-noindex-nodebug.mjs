@@ -9,14 +9,20 @@
 // a flag that is only ever written about is not a reachable flag. This file is
 // excluded for the same reason: it names the patterns it hunts.
 // The NOINDEX half needs a rung config to assert against. There is none yet
-// (no vercel.json, no next.config.*), so it reports as not-yet-constructible
+// (no wrangler.toml, no wrangler.jsonc), so it reports as not-yet-constructible
 // instead of passing quietly, and becomes a real assertion at BUILD Step 2 when
 // the preview rung exists.
+//
+// The filename list below IS this gate's definition of "a rung config", so it
+// tracks the host: it named Vercel's and Next's files until FD-11 ruled
+// Cloudflare, and a host change that forgets this line leaves the gate looking
+// for a file nothing will ever write — permanently not-yet-constructible, which
+// reads like patience and is actually a dead gate.
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 
 const FLAGS = ["(SKIP|DISABLE|BYPASS)_AUTH", "AUTH_(SKIP|DISABLE|BYPASS)", "DEBUG" + "_MODE", "ALLOW" + "_ANONYMOUS"];
-const RUNG_CONFIGS = ["vercel.json", "next.config.js", "next.config.mjs", "next.config.ts"];
+const RUNG_CONFIGS = ["wrangler.toml", "wrangler.jsonc", "wrangler.json"];
 
 // git grep skips binaries and honours pathspec exclusions; exit 1 means no match.
 const hit = spawnSync(

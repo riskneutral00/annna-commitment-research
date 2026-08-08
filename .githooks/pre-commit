@@ -5,7 +5,7 @@
 # fire now (FD-6 reversed 2026-08-08), and this is the one that can still refuse.
 #
 # It is not automatic on clone — `git config core.hooksPath .githooks` once, per
-# checkout (AGENTS.md, "The one green command").
+# checkout (deployment/README.md, "The one green command").
 #
 # S2 lives in `npm run check` and reads the staged set, which exists here and
 # almost nowhere else, so the whole gate is one line.

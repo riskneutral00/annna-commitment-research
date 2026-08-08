@@ -15,7 +15,12 @@ import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 const WORKFLOWS = ".github/workflows";
-const DEPLOY_SECRET = /secrets\.[A-Z0-9_]*(DEPLOY|PROD|VERCEL|CLERK_SECRET|RESEND|CONVEX_DEPLOY)[A-Z0-9_]*/g;
+// Provider names accumulate here and are never removed. FD-11 moved hosting to
+// Cloudflare, and CLOUDFLARE_API_TOKEN matched nothing in the old list — a host
+// swap that forgets this line leaves the gate green while it stops catching the
+// one thing it exists to catch. VERCEL stays for the same reason in reverse: a
+// leftover token from a former provider is still a deploy secret.
+const DEPLOY_SECRET = /secrets\.[A-Z0-9_]*(DEPLOY|PROD|CLOUDFLARE|VERCEL|CLERK_SECRET|RESEND|CONVEX_DEPLOY)[A-Z0-9_]*/g;
 
 // A job is `  name:` at two spaces under `jobs:`; `environment:` anywhere in it
 // puts it behind a protected environment. Deliberately a shallow scan, not a
@@ -50,6 +55,15 @@ if (process.argv.includes("--selfcheck")) {
     ["the same job behind an environment is not", unprotectedJobsWithDeploySecrets(guarded).length === 0],
     ["a job with no secrets is not", unprotectedJobsWithDeploySecrets(clean).length === 0],
     ["the finding names the job", unprotectedJobsWithDeploySecrets(bare)[0][0] === "build"],
+    // The current host's token, asserted by name. Added with FD-11 because the
+    // pattern silently matched no Cloudflare secret before it, and a matcher
+    // nothing exercises is a matcher nobody notices is wrong.
+    [
+      "the current host's deploy token is caught",
+      unprotectedJobsWithDeploySecrets(
+        "\njobs:\n  build:\n    steps:\n      - run: echo ${{ secrets.CLOUDFLARE_API_TOKEN }}\n",
+      ).length === 1,
+    ],
     // The bypass this gate shipped with: a decoy `environment:` inside a step.
     [
       "a step-level environment: does NOT protect the job",

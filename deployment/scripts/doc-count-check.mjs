@@ -37,18 +37,4 @@ for (const [file, claimed, actual, what] of wrong) {
 }
 if (wrong.length) process.exit(1);
 
-// AGENTS.md is injected on every agent turn, so its length is a cost every
-// reader pays every turn — and the 2026 context-file ablations find no
-// correctness gain to buy with it. The ceiling is a RATCHET, not a target: it
-// can only be raised by a deliberate one-line diff in this file, which forces
-// "what did I delete?" to be answered before anything is added.
-const CEILING = 1500;
-const words = readFileSync("AGENTS.md", "utf8").split(/\s+/).filter(Boolean).length;
-if (words > CEILING) {
-  console.log(`\nDOC-COUNT FAIL — AGENTS.md is ${words} words, over the ${CEILING}-word ceiling.`);
-  console.log(`  Delete before you add, or raise CEILING in this file on purpose.`);
-  process.exit(1);
-}
-console.log(
-  `\nDOC-COUNT OK — ${tracked} tracked .md, as claimed; AGENTS.md ${words}/${CEILING} words`,
-);
+console.log(`\nDOC-COUNT OK — ${tracked} tracked .md, as claimed`);
