@@ -20,17 +20,16 @@ import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert";
 import { fileURLToPath } from "node:url";
+// Not gates, and deliberately unlisted — declared once, in `not-a-gate.mjs`,
+// with a reason per entry. This file used to carry its own copy while
+// `claim-check.mjs` carried another; `gate-wiring.mjs` now asserts there is
+// only the one.
+import { NOT_A_GATE } from "./not-a-gate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const SCRIPTS = "deployment/scripts";
 const ROSTER = "deployment/README.md";
 const HEADING = "## The one green command";
-
-// Not gates, and deliberately unlisted. Each needs a reason, because "it is not
-// a gate" is exactly the sentence someone reaches for to silence a real one.
-const NOT_A_GATE = {
-  "transcript-reporter.mjs": "the vitest reporter B9 reads; it emits, it never refuses",
-};
 
 // The roster section: this heading to the next `## `. Shared with the selfcheck.
 export function rosterSection(text) {
@@ -92,7 +91,7 @@ const wrongly = onDisk.filter((f) => named.has(f) && f in NOT_A_GATE);
 for (const f of undocumented) {
   console.log(`\nROSTER FAIL — ${SCRIPTS}/${f} exists and ${ROSTER} never names it.`);
   console.log(`  A gate nobody documented is a gate nobody knows to keep. Describe it, or declare it`);
-  console.log(`  in this script's NOT_A_GATE with the reason it cannot refuse anything.`);
+  console.log(`  in not-a-gate.mjs with the reason it cannot refuse anything.`);
 }
 for (const f of phantom) {
   console.log(`\nROSTER FAIL — ${ROSTER} describes \`${f}\`, which does not exist in ${SCRIPTS}/.`);

@@ -24,6 +24,11 @@ import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert";
 import { fileURLToPath } from "node:url";
+// Which files in the folder are not gates is declared once, in `not-a-gate.mjs`,
+// and imported here. It used to be declared locally here AND in
+// `roster-check.mjs` — two copies feeding two counts, agreeing by luck.
+// `gate-wiring.mjs` now asserts there is only the one.
+import { NOT_A_GATE } from "./not-a-gate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (f) => fs.readFileSync(path.join(ROOT, f), "utf8");
@@ -55,29 +60,26 @@ export const num = (t) => {
   return TENS[a] !== undefined && ONES[b] !== undefined && ONES[b] < 10 ? TENS[a] + ONES[b] : undefined;
 };
 
-// `transcript-reporter.mjs` is a reporter a suite imports, not a gate that can
-// refuse anything. It is the only non-gate in the folder; anything else new is
-// a gate and must be enumerated.
-const NOT_A_GATE = new Set(["transcript-reporter.mjs"]);
-
 // Parse the distinct `<name>.mjs` tokens out of a stretch of prose, in order.
 const scripts = (s) => [...new Set([...s.matchAll(/`([a-z0-9-]+\.mjs)`/g)].map((m) => m[1]))];
 
 // Each check returns { ok, label, detail }.
 const CHECKS = [
   function gateInventory() {
-    // AGENTS.md states the count and NOT the roster, deliberately: the roster's
-    // normative home is package.json's check chain, which is executable. A prose
-    // copy of an executable list is a copy that goes stale, and it did — twice in
-    // one day. Counting the folder is what makes the remaining number honest.
+    // AGENTS.md states the count and NOT the roster, deliberately. The division
+    // is roster-check.mjs's: `package.json` owns the wiring and the order,
+    // because it is executable; `deployment/README.md` owns the roster — WHY
+    // each gate exists. A prose copy of either is a copy that goes stale, and
+    // one did, twice in one day. Counting the folder is what makes the
+    // remaining number honest.
     const m = read("AGENTS.md").match(/([a-z-]+) process gates sit in `deployment\/scripts\/`/);
     if (!m) return { ok: false, label: "AGENTS.md gate count", detail: "no longer states its gate count in a parseable form" };
     const actual = fs
       .readdirSync(path.join(ROOT, "deployment/scripts"))
-      .filter((f) => f.endsWith(".mjs") && !NOT_A_GATE.has(f)).length;
+      .filter((f) => f.endsWith(".mjs") && !(f in NOT_A_GATE)).length;
     return num(m[1]) === actual
       ? { ok: true, label: "AGENTS.md gate count", detail: `${actual} gates, as claimed` }
-      : { ok: false, label: "AGENTS.md gate count", detail: `AGENTS.md claims ${num(m[1])}; deployment/scripts/ holds ${actual} (excluding ${[...NOT_A_GATE].join(", ")})` };
+      : { ok: false, label: "AGENTS.md gate count", detail: `AGENTS.md claims ${num(m[1])}; deployment/scripts/ holds ${actual} (excluding ${Object.keys(NOT_A_GATE).join(", ")})` };
   },
 
   function declaredHosts() {
