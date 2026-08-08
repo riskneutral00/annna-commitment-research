@@ -31,6 +31,8 @@
 
 ## Also flagged
 
+- **`MESSAGING.md`'s pitches still open from the retired self-description (2026-08-08, deliberately not fixed).** `IDENTITY.md` §What it is now names *"annnä is an agent-first commitment harness"* as the sentence every outward surface opens from. Two pitches predate it and contradict it: the 10s — *"Your calendar is replaced by an agent you talk to"* — and the 30s — *"annnä is a conversational agent that holds it instead."* They are **derived outward copy**, which is exactly what the freeze covers, so they were left alone rather than quietly rewritten. **What is not stale:** the ruled worry-first order in both pitches is correct and unaffected — only the noun is. Rewrite them in the pass that lifts or scopes the freeze, alongside `PRD.md` §11 Q2's third mechanism.
+
 - **`assets/masters/dark.jpg` subject check** — the fact-checker opened it: a hooded figure on a walkway in a lit tunnel, previously described outwardly as "a night reef" (wrong). README + BRAND now say "a lamplit tunnel." Confirm with Matt whether this master is the intended long-term skin or a placeholder to be reshot.
 - **State 0 conversion trade-off** — the holding page's only action is a GitHub link, which a non-technical tutor can't act on. Deliberate (nothing to announce yet), but it means State 0 converts no first-users; revisit alongside the email-capture item at State 1.
 

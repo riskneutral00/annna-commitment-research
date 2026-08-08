@@ -6,6 +6,8 @@
 > **What the freeze does not do:** it does not suspend the derivation rule below. Anything outward that ships while this is frozen is still derived from `IDENTITY.md`, and an ungrounded claim still doesn't ship.
 >
 > **One exception, ruled 2026-08-08:** [`BRIEF.md`](BRIEF.md) was authored after the freeze and lands inside it. It carries the corpus's only success criteria and only risk register — content with no other home — and is otherwise pointers rather than new outward copy. The exception is this file and no other.
+>
+> **What the freeze never covered, said plainly because it was read too widely once:** the freeze is on *authoring new outward material*, and two things in this package are neither. [`IDENTITY.md`](IDENTITY.md) is the **source** every outward surface derives from — when identity itself changes, this is where the change lands, or the derivation rule below has nothing to derive from. And [`REPO-FACADE.md`](REPO-FACADE.md)'s description line carries its own standing rule that it *"is rewritten each time that stops being true."* Both were edited 2026-08-08 for the agent-first thesis; neither needed an exception and neither was given one. Everything derived from them — pitches, landing copy, narration, store text — stays frozen.
 
 The outward-facing identity of annnä: who the product is, how it speaks, and what every public surface derives from. **The derivation rule:** nothing outward — landing page, repo copy, pitch, store text, video narration — is written from scratch; it is derived from this package, and if a claim isn't grounded in `IDENTITY.md`, it doesn't ship.
 

@@ -1,11 +1,11 @@
 # AGENTS.md — operating instructions for agents in this repo
 
-**This repo is a specification corpus — its source of truth is markdown.** Code now executes in a few places: `engine/` and `harness/` each carry real TypeScript and a vitest suite (both at Step 0); `engine/scripts/reactive-push-check.mjs` probes the reactive-push criterion against a live Convex deployment (normative home: `engine/BUILD.md` Step 0, I4); `assets/make-pack.mjs` builds the admin asset pack; `model/spike/run-nset.mjs` is an executable OpenRouter runner that **spends money** on every execution and is deliberately unrun (FD-5, and `deployment/SPEC.md §8` DR-7); and twenty-five process gates sit in `deployment/scripts/` — each wired to an `npm` script in `package.json`, which is executable and therefore the only copy that cannot go stale (what each is for: "The one green command"). Everything else is specification, not code: **132** tracked markdown files (`git ls-files '*.md'` — what a clone contains, and the count `README.md` states). A working checkout also carries gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent for every reader and no count of it is asserted (FD-10). Read that as a standing caveat on everything below.
+**This repo is a specification corpus — its source of truth is markdown.** Code now executes in a few places: `engine/` and `harness/` each carry real TypeScript and a vitest suite (both at Step 0); `engine/scripts/reactive-push-check.mjs` probes the reactive-push criterion against a live Convex deployment (normative home: `engine/BUILD.md` Step 0, I4); `assets/make-pack.mjs` builds the admin asset pack; `model/spike/run-nset.mjs` is an executable OpenRouter runner that **spends money** on every execution and is deliberately unrun (FD-5, and `deployment/SPEC.md §8` DR-7); and twenty-five process gates sit in `deployment/scripts/` — each wired to an `npm` script in `package.json`, which is executable and therefore the only copy that cannot go stale (what each is for: "The one green command"). Everything else is specification, not code: **133** tracked markdown files (`git ls-files '*.md'` — what a clone contains, and the count `README.md` states). A working checkout also carries gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent for every reader and no count of it is asserted (FD-10). Read that as a standing caveat on everything below.
 
 ## Authority order
 
-1. **A layer's `SPEC.md` is the source of truth.** Build from it.
-2. **`archive/` is history, not authority.** It records how the design was reached — the founding research and two adversarial critiques. It is there to *justify*, not to build from. Where `archive/` and a layer `SPEC.md` disagree, **the SPEC wins**. `archive/` is 17% of the corpus and sorts first in recursive grep, so a naive search will surface superseded material before live material. Check which side of that line your hit falls on before you use it.
+1. **A `SPEC` is the source of truth.** Build from it. `SPEC` is a tier `INDEX.md` grades, not a location — root files carry it too.
+2. **`archive/` is history, not authority.** It records how the design was reached. It is there to *justify*, not to build from. Where `archive/` and a `SPEC` disagree, **the SPEC wins**. It sorts first in recursive grep, so a naive search will surface superseded material before live material. Check which side your hit falls on.
 3. **`NOTES.md` is never authoritative** — a backlog scratchpad of items absorbed into the spec, plus anything still open.
 
 ## Package shape
@@ -33,6 +33,7 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 - **`FR#` = founder rulings.** Registry: `RULINGS.md`. `FR-B` and `FR9` are the same ruling; the corpus cites `FR-B` only.
 - **`FD#` = founder decisions made inside a build phase** — same registry, its own section. The two series are independent and neither renumbers the other, so a citation must say which it means.
 - **`OR-##` = open rulings.** Three exist — OR-28, OR-29, OR-39 — each fully defined where it is used. The numbering is non-contiguous; missing numbers were never assigned.
+- **`RQ-##` = product requirements** (with `SM-#`, `UJ-`). Home: `PRD.md`. Deliberately not `FR#` — reusing that label would rebuild the collision the `R#` → `FR#` rename ended.
 - **Some spec sections were drafted by an agent and are marked as such.** Where a section carries a drafted-not-ratified marker, treat its reasoning as a proposal, not as settled law.
 
 ## Where to start
@@ -46,7 +47,7 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 ## Two standing constraints
 
 - **Documentation states readiness, never schedule** (FR2). A checklist of conditions is allowed; "start after Phase 3" is not. Do not add dates or sequencing promises.
-- **One normative home per rule** (FR13). Every restatement cites the home. If you add a rule, put it in exactly one place and point at it from everywhere else.
+- **One normative home per rule** (FR13). Every restatement cites the home. If you add a rule, put it in exactly one place and point at it from everywhere else. **Two `SPEC`s in conflict: the rule's home wins; if neither claims it, ask.**
 
 ## Standing discipline
 

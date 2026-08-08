@@ -6,7 +6,7 @@
 
 ## The description line (GitHub "About")
 
-> A conversational agent that replaces the calendar. Design specification, complete and adversarially reviewed; the build has begun. The aim: a schedule that feels like there is nothing on it.
+> An agent-first commitment harness. You talk; it holds what you promised and does the work the promise implies. Design specification, complete and adversarially reviewed; the build has begun. The aim: a schedule that feels like there is nothing on it.
 
 ## Topics
 

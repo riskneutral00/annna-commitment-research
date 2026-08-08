@@ -32,6 +32,7 @@
 | PR/README.md | derived | The PR package's read order and its FROZEN status |
 | PR/REPO-FACADE.md | SPEC | How the repository itself presents as the storefront: description, topics, README's job, commercial silence |
 | PR/VOICE.md | SPEC | The tone law for every outward word — "neutral like water", and the banned registers |
+| PRD.md | SPEC | That annnä is an agent-first commitment harness for peace of mind — both senses of agent-first, capability parity for the owner's own agents, and the requirement that a full board not read as a wall |
 | README.md | derived | The repo's front page: what annnä is, the one-week-run-twice proof, the layer map, current build state |
 | RULINGS.md | index | The FR and FD ruling registry — what each ruling decided and which file holds it. Never a home itself |
 | TDD/README.md | derived | The testing strategy: which kind of test each part gets, and in what order |

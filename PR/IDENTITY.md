@@ -10,6 +10,12 @@
 
 Not productivity. Not scale. Not output. The product succeeds when its owner's life gets quieter — when the coordination that used to eat their day is gone, and the schedule that used to crowd their head is held somewhere trustworthy instead.
 
+## What it is (the sentence every outward surface opens from)
+
+> **annnä is an agent-first commitment harness.**
+
+*Grounded here 2026-08-08 so the claim can ship; the full definition and its requirements are `../PRD.md`.* **Agent-first** in two senses at once: a person states intent and an agent does the work, and the person's own agent can call annnä directly through the same tools the app uses, under the same permissions. **Harness** in both of its ordinary senses: what you put on something powerful so it can be steered, and what a person clips into so they cannot fall. The agent is harnessed — it can say a number, and nothing correctness-critical will accept one. The owner is harnessed — nothing reaches another person without their explicit yes.
+
 ## The promise (what we say it does)
 
 > **The goal is for your schedule to feel like there is nothing on it.**

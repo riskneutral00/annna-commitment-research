@@ -8,7 +8,7 @@
 
 ## 0. What annnä is
 
-annnä is an **AI-first commitment app**: a reimagined calendar (**the Board**) driven by a conversational agent the user talks to through a **console**. The user speaks; the agent creates and edits **commitments** on the Board. It is **standalone** — import IN is allowed, there is **no export/sync OUT** beyond a legal minimum (defined at `../security/SPEC.md §8`), and the design assumes a user's *entire* schedule eventually lives in annnä (meals, workouts, cycle, work — all just commitments/presets on one substrate).
+annnä is an **agent-first commitment harness** — what that means, in both of its senses, is `../PRD.md` §1 and is not restated here. What the harness layer takes from it: the user talks to the agent through a **console**, and the agent creates and edits **commitments** on the **Board**. It is **standalone** — import IN is allowed, there is **no export/sync OUT** beyond a legal minimum (defined at `../security/SPEC.md §8`), and the design assumes a user's *entire* schedule eventually lives in annnä (meals, workouts, cycle, work — all just commitments/presets on one substrate).
 
 **AI is owner-side only.** The only party who talks to an agent is the board owner. Off-app parties (a student booking, a renter, a stakeholder confirming availability) interact through a **traditional, board-blind exported form** — no agent, no LLM — exactly like a pre-AI web app; their returned data flows back to the owner's agent.
 
