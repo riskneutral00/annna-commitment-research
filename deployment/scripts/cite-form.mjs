@@ -19,8 +19,10 @@
 //   - Targets under `archive/`. Archive is history: frozen adversarial reviews
 //     and dated records that are not edited, so their line numbers are stable
 //     by construction. Note this exempts the citation's TARGET, not its author —
-//     `archive/08-founder-rulings-2026-08-06.md` is an actively edited registry,
-//     and its citations OUT of archive are checked like anyone else's.
+//     a file under `archive/` citing OUT of archive is checked like anyone else.
+//     The FR/FD registry used to be the one live file in there and the standing
+//     exception to "archive does not move"; it left for `../../RULINGS.md` on
+//     2026-08-08, so the exemption is now exactly what it says it is.
 //
 // Resolution mirrors how the corpus actually writes citations (`AGENTS.md`:
 // "Section citations mix relative and repo-root-relative forms") — try relative

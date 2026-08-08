@@ -28,6 +28,12 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (f) => fs.readFileSync(path.join(ROOT, f), "utf8");
 
+// The FR/FD registry. It sat at `archive/08-founder-rulings-2026-08-06.md` until
+// 2026-08-08 and moved to the root because it is a live index and `../../AGENTS.md`
+// declares archive/ non-authoritative — resolving a citation meant first reasoning
+// about whether the hit counted.
+const REGISTRY = "RULINGS.md";
+
 // Claims are written as words, not digits, in this corpus's prose.
 // Compound words are COMPUTED, not enumerated. An earlier version listed them
 // one at a time and stopped at "twenty-two"; the gate count reached twenty-three
@@ -88,8 +94,8 @@ const CHECKS = [
   function deploymentScenarioCount() {
     // FD-4's headline. Only the right-hand number is checkable — the left counts
     // a file revision that no longer exists.
-    const claim = read("archive/08-founder-rulings-2026-08-06.md").match(/re-scoped (\d+)→(\d+) scenarios/);
-    if (!claim) return { ok: false, label: "FD-4 scenario count", detail: "the registry no longer states the re-scope in a parseable form" };
+    const claim = read(REGISTRY).match(/re-scoped (\d+)→(\d+) scenarios/);
+    if (!claim) return { ok: false, label: "FD-4 scenario count", detail: `${REGISTRY} no longer states the re-scope in a parseable form` };
     const actual = read("deployment/SCENARIOS.md").split("\n").filter((l) => /^\s*-\s*\*\*[A-Z]\d+\b/.test(l)).length;
     return Number(claim[2]) === actual
       ? { ok: true, label: "FD-4 scenario count", detail: `deployment holds ${actual}, as claimed` }
