@@ -17,7 +17,7 @@ Two series were in play the same day and they were briefly both called `R#`:
 
 **`FR-A` / `FR-B` / `FR-C` are lettered, and that is not a typo.** They were made *after* FR1–FR13, to close decisions those had left open. They are kept lettered rather than renumbered because the corpus already cites them by letter and silently renumbering a live citation is the failure mode this whole file exists to prevent.
 
-**`FR-B` and `FR9` are the same ruling.** FR9 was the first statement (*"the rule is removed; I don't know when or how yet"*); FR-B is the final one, with the execution consequences attached. **The corpus cites `FR-B`.** `FR9` appears nowhere in the repo and should not be introduced.
+**`FR-B` and `FR9` are the same ruling.** FR9 was the first statement (*"the rule is removed; I don't know when or how yet"*); FR-B is the final one, with the execution consequences attached. **The corpus cites `FR-B`.** No file cites `FR9` as a live label. Outside this paragraph the label appears in exactly two places, and both exist only to say it is `FR-B`: the registry row below, and `AGENTS.md`'s ruling vocabulary. Do not add a third.
 
 ---
 
