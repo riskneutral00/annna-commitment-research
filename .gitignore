@@ -39,3 +39,6 @@ node_modules/
 .env
 # Local guard pin: names a machine-specific dev deployment, not corpus
 .convex-deployment
+
+# Harness build — node modules for the layer's own suite
+harness/node_modules/

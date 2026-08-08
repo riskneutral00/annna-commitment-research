@@ -1,0 +1,25 @@
+name: check
+
+# One always-run aggregator job. No path filters, deliberately: on this
+# substrate a skipped required check reports as success, so a filtered gate
+# is worse than no gate (deployment/SPEC.md §4, B1's footgun clause).
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    name: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      # Every layer with a suite, because `npm run check` runs them all and a
+      # missing install reads as a red gate rather than as a missing install.
+      - run: npm ci --prefix engine
+      - run: npm ci --prefix harness
+      - run: npm run check

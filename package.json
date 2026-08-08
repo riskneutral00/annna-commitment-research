@@ -1,0 +1,27 @@
+{
+  "name": "annna-commitment-research",
+  "private": true,
+  "description": "Specification corpus. `npm run check` is the repo's one green command — the CI floor declared by deployment/SPEC.md §4.",
+  "scripts": {
+    "check": "npm run check:gates && npm run check:paths && npm run check:hermetic && npm run check:modelkey && npm run check:rungs && npm run check:closed && npm run check:seed && npm run check:credfloor && npm run check:secrets && npm run check:swap && npm run check:egress && npm run check:engine && npm run check:harness && npm run check:determinism && npm run check:reactive && npm run check:size && npm run check:shape && npm run check:docs",
+    "check:gates": "node deployment/scripts/gate-coverage.mjs --selfcheck && node deployment/scripts/gate-coverage.mjs",
+    "check:paths": "node deployment/scripts/s2-path-class.mjs",
+    "check:hermetic": "node deployment/scripts/s3-no-outside-spec.mjs",
+    "check:modelkey": "node deployment/scripts/r3-workflow-lint.mjs",
+    "check:rungs": "node deployment/scripts/r9-noindex-nodebug.mjs",
+    "check:closed": "node deployment/scripts/r2-closed-service.mjs --selfcheck && node deployment/scripts/r2-closed-service.mjs",
+    "check:seed": "node deployment/scripts/r4-one-seed-door.mjs --selfcheck && node deployment/scripts/r4-one-seed-door.mjs",
+    "check:credfloor": "node deployment/scripts/r6-deploy-secret-scoping.mjs --selfcheck && node deployment/scripts/r6-deploy-secret-scoping.mjs",
+    "check:secrets": "node deployment/scripts/x1-secret-grep.mjs",
+    "check:swap": "node deployment/scripts/q3-swap-diff.mjs --selfcheck",
+    "check:egress": "node deployment/scripts/egress-lint.mjs --selfcheck && node deployment/scripts/egress-lint.mjs",
+    "check:engine": "npm --prefix engine test",
+    "check:harness": "npm --prefix harness test",
+    "check:determinism": "node deployment/scripts/b9-twice-run.mjs --selfcheck && node deployment/scripts/b9-twice-run.mjs",
+    "check:reactive": "if [ -n \"$CONVEX_URL\" ]; then node engine/scripts/reactive-push-check.mjs \"$CONVEX_URL\"; else echo '\\nREACTIVE-PUSH SKIPPED — no CONVEX_URL. The check needs a live Convex deployment (engine/BUILD.md Step 0, I4); it runs where one exists and is unrunnable where one does not.'; fi",
+    "check:size": "node deployment/scripts/size-guard.mjs",
+    "check:shape": "node deployment/scripts/package-shape.mjs --selfcheck && node deployment/scripts/package-shape.mjs",
+    "check:docs": "node deployment/scripts/doc-count-check.mjs",
+    "verdicts": "node deployment/scripts/b4-verdict-check.mjs --selfcheck && node deployment/scripts/b4-verdict-check.mjs --since=c802396"
+  }
+}

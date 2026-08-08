@@ -12,14 +12,28 @@
 //   node deployment/scripts/gate-coverage.mjs            full run over all layers
 //   node deployment/scripts/gate-coverage.mjs --selfcheck  assert-based self-test
 //
-// Parsing contract (verified against all four layers 2026-08-07):
+// ORPHANS are reported for [MUST] scenarios only — the rule this script
+// mechanizes is "every [MUST] scenario names its gating step", and requiring a
+// BUILD home for every tag was stricter than the law. Side effect to know
+// about: a [HELD-OUT] or [DRILL] scenario with no BUILD home is now silently
+// allowed. Every one of them has a home today; if one is ever added without
+// one, nothing here will say so. Only harness ([HELD-OUT]) and deployment
+// ([DRILL]) carry non-MUST tags at all — every other layer states "Every
+// scenario is MUST" in its own SCENARIOS.md header — so the filter can only
+// ever bite in those two.
+//
+// Parsing contract (verified against all six walked layers 2026-08-07):
 //   scenario def line:  `- **<ID> [ ...tag... ] ...`  ID = [A-Z]\d+[a-z]?
 //   tag:  [MUST] / [HELD-OUT] / [ENGINE] (harness) · [MUST] / [DRILL] (deployment) ·
-//         descriptive-only, all-MUST (engine, app)
+//         descriptive-only (engine, app, marketplace, security) — those files
+//         state "Every scenario is MUST" in their own header, so an untagged
+//         def line is a MUST, not an exemption.
 //   BUILD home: any mention of the ID (Verify:/Gate: line or step body), ranges
-//         like `D12–D17` and `S1–S3` expanded. PHANTOMs are filtered to families
-//         that the layer actually defines, so prose tokens (harness "M2", engine
-//         "M3", deployment "X1") are not mistaken for broken scenario refs.
+//         like `D12–D17` and `S1–S3` expanded, and `X-family` expanded to every
+//         X ID the layer defines (`security/BUILD.md` gates "T-family, P-family,
+//         R1, R3"). PHANTOMs are filtered to families that the layer actually
+//         defines, so prose tokens (harness "M2", engine "M3", deployment "X1")
+//         are not mistaken for broken scenario refs.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -33,6 +47,8 @@ const LAYERS = [
   { name: "harness", scenarios: "harness/SCENARIOS.md", build: "harness/BUILD.md" },
   { name: "engine", scenarios: "engine/SCENARIOS.md", build: "engine/BUILD.md" },
   { name: "app", scenarios: "app/SCENARIOS.md", build: "app/BUILD.md" },
+  { name: "marketplace", scenarios: "marketplace/SCENARIOS.md", build: "marketplace/BUILD.md" },
+  { name: "security", scenarios: "security/SCENARIOS.md", build: "security/BUILD.md" },
 ];
 
 // Scenario definitions: id -> { tag, engine }. A def line starts a list item
@@ -53,8 +69,10 @@ function scenarioDefs(text) {
 
 // Every scenario ID a BUILD text names, with ranges expanded. A lone trailing
 // "s" is a plural ("two H1s"), never a real suffix (real suffixes are a/b), so it
-// is dropped rather than read as its own ID.
-function buildIds(text) {
+// is dropped rather than read as its own ID. `defs` is the layer's scenario set:
+// `X-family` can only be expanded against it, since the text alone does not say
+// which X IDs exist.
+function buildIds(text, defs = new Map()) {
   const ids = new Set();
   const TOKEN = /\b([A-Z])(\d+)([a-z]?)\b/g;
   let m;
@@ -70,6 +88,10 @@ function buildIds(text) {
     const n2 = +m[4];
     if (fam2 !== fam || n2 < n1 || n2 - n1 > 50) continue;
     for (let n = n1; n <= n2; n++) ids.add(fam + n);
+  }
+  const FAMILY = /\b([A-Z])-family\b/g;
+  while ((m = FAMILY.exec(text))) {
+    for (const id of defs.keys()) if (id[0] === m[1]) ids.add(id);
   }
   return ids;
 }
@@ -87,10 +109,10 @@ function gateLines(text) {
 function checkLayer(layer) {
   const defs = scenarioDefs(fs.readFileSync(path.join(ROOT, layer.scenarios), "utf8"));
   const buildText = fs.readFileSync(path.join(ROOT, layer.build), "utf8");
-  const homed = buildIds(buildText); // whole build: J-family etc. are named in step bodies
-  const gated = buildIds(gateLines(buildText)); // gate lines only: where a phantom would live
+  const homed = buildIds(buildText, defs); // whole build: J-family etc. are named in step bodies
+  const gated = buildIds(gateLines(buildText), defs); // gate lines only: where a phantom would live
   const families = new Set([...defs.keys()].map((id) => id[0]));
-  const orphans = [...defs.keys()].filter((id) => !homed.has(id));
+  const orphans = [...defs.keys()].filter((id) => defs.get(id).tag === "MUST" && !homed.has(id));
   const phantoms = [...gated].filter((id) => families.has(id[0]) && !defs.has(id));
   return { defs, orphans, phantoms };
 }
@@ -102,16 +124,23 @@ function selfcheck() {
   assert.deepStrictEqual([...defs.keys()], ["X1", "X2", "X3"], "parses three IDs");
   assert.strictEqual(defs.get("X3").tag, "HELD-OUT", "reads HELD-OUT tag");
 
+  // Mirrors checkLayer: only a [MUST] scenario without a BUILD home is an orphan.
+  const orphansOf = (ids) =>
+    [...defs.keys()].filter((i) => defs.get(i).tag === "MUST" && !ids.has(i));
+
   // Clean case: a range covers X2, X9 is a phantom, non-family M3 is ignored.
   const clean = buildIds("Verify: X1, X3. Also X2–X2. Phantom X9. Prose M3.");
-  const orph = [...defs.keys()].filter((i) => !clean.has(i));
   const phan = [...clean].filter((i) => fam.has(i[0]) && !defs.has(i));
-  assert.deepStrictEqual(orph, [], "no orphans when all gated");
+  assert.deepStrictEqual(orphansOf(clean), [], "no orphans when all gated");
   assert.deepStrictEqual(phan, ["X9"], "X9 flagged, M3 ignored (wrong family)");
 
-  // Negative: drop X2's gate -> X2 is an orphan.
-  const gap = buildIds("Verify: X1, X3.");
-  assert.ok([...defs.keys()].filter((i) => !gap.has(i)).includes("X2"), "missing gate -> orphan");
+  // Negative, mixed tags: X2 [MUST] is ungated -> orphan; X3 [HELD-OUT] is
+  // ungated too -> not an orphan (the MUST-only rule, and its side effect).
+  assert.deepStrictEqual(orphansOf(buildIds("Verify: X1.")), ["X2"], "MUST-only orphans");
+
+  // X-family expands against the layer's own defs, and only with them.
+  assert.deepStrictEqual(orphansOf(buildIds("Gate: X-family.", defs)), [], "X-family covers X1–X3");
+  assert.ok(!buildIds("Gate: X-family.").has("X1"), "no defs -> no family expansion");
 
   // Range expansion across a real family span.
   assert.ok(buildIds("D12–D17").has("D15"), "expands D12–D17");

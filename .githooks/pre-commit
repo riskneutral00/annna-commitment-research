@@ -1,0 +1,12 @@
+#!/bin/sh
+# The pre-landing mechanism deployment/SCENARIOS.md B1 pre-authorized: "a
+# pre-landing hook with its bypass accepted as the ceiling". It runs the
+# aggregator BEFORE the commit exists; the CI job runs it after the push. Both
+# fire now (FD-6 reversed 2026-08-08), and this is the one that can still refuse.
+#
+# It is not automatic on clone — `git config core.hooksPath .githooks` once, per
+# checkout (AGENTS.md, "The one green command").
+#
+# S2 lives in `npm run check` and reads the staged set, which exists here and
+# almost nowhere else, so the whole gate is one line.
+exec npm run check

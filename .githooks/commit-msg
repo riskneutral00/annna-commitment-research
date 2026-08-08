@@ -1,0 +1,9 @@
+#!/bin/sh
+# Q3's home (deployment/SPEC.md §6). The swap diff gate needs the commit
+# MESSAGE — a swap commit declares itself with a `Swap: <layer>` trailer — and
+# the message does not exist yet at pre-commit time, so this is a second hook
+# rather than another line in the first.
+#
+# Same ceiling as pre-commit: `--no-verify` skips both, and both need
+# `git config core.hooksPath .githooks` once per checkout (FD-7, SPEC.md §4).
+exec node deployment/scripts/q3-swap-diff.mjs "$1"
