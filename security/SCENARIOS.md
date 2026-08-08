@@ -52,7 +52,7 @@
 
 ## R — Abuse *(SPEC §10; B fleet)*
 - **R1 [hold-spam capped]** A scripted guest's burst of hold requests trips the per-token limit; the fleet remains bookable by others; existing holds stand.
-- **R2 [email kill-switch]** Send volume past the per-owner cap, or a bounce/complaint signal, halts further sends and surfaces the halt to the owner — no silent drop, no runaway.
+- **R2 [email send halt]** Send volume past the per-owner cap, or an owner's bounce rate past the declared threshold, halts that owner's further sends and surfaces the halt — no silent drop, no runaway. *Per **owner**, about volume. The per-**party** stop on a spam complaint is a different wall with a different threshold (`SPEC.md §10`, "Two stops"); it is derived and asserted in the harness, at `../harness/SCENARIOS.md` D22–D23.*
 - **R3 [idempotent double-tap]** A duplicate submission for the same guest-and-interval returns the existing hold — one hold, not two *(carried engine law, exercised from the wire)*.
 
 ## M — Admin *(SPEC §11)*

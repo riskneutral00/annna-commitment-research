@@ -29,9 +29,13 @@ TingTing works the front desk. Here is her week, both ways:
 
 **Today: close to two dozen phone calls**, a second boat chartered the morning of, a fifth day booked and re-booked, manifests rewritten three times, a mask chased across town.
 
-**With annnä: not one phone call between any of them.** The whole week is placed in a single pass against every instructor, boat, pool, tank and gear set at once — and placed *weeks ahead*, because the clashes that surface at 07:00 on the morning of were visible the day the booking was taken.
+**With annnä, once everyone in the week is on it: not one phone call between any of them.** The whole week is placed in a single pass against every instructor, boat, pool, tank and gear set at once — and placed *weeks ahead*, because the clashes that surface at 07:00 on the morning of were visible the day the booking was taken.
 
-> **One row waits.** Handing a customer to a shop annnä has no relationship with — the German course — is a **referral**, and referrals come after the first version. Everything else here is in it, including reaching people at *other* businesses: anyone already on annnä is reachable, which is what makes "no phone calls" true for the instructors, the boats, the pool and the gear. What waits is the reach to **strangers**, because passing someone's details to a business nobody has an agreement with is a legal question before it is an engineering one.
+> **Read that as the destination, not the first version.** The zero-phone-call week is what this looks like when the whole week is on annnä, and it is the demo worth building toward — it is not what the first version does, because on day one most of the people in that week are not on it.
+>
+> **What the first version actually does is the middle case, and it is specified as its own thing.** annnä places everything its network can reach, and for the edges it cannot reach it **prepares the call, records the answer, and offers an invite** — the owner still picks up the phone, but the call is prepared from the record instead of improvised, the answer lands in the same place every other fact lands, and nothing has to be remembered twice. The week goes from two dozen calls to a handful of prepared ones. That path is law at `harness/SPEC.md §2`, built at `harness/BUILD.md` Step 7, and gated by `harness/SCENARIOS.md` O1–O5. The story it comes from is [`user-stories/Situations/Situation-C/situation-5.md`](user-stories/Situations/Situation-C/situation-5.md) — written specifically as *the minimal-adoption world the product actually launches into*.
+>
+> **And one row waits longer than the rest.** Handing a customer to a shop annnä has no relationship with — the German course — is a **referral**, and referrals come after the first version. Reaching people at *other* businesses is in it: anyone already on annnä is reachable, and anyone who isn't gets the prepared call above. What waits is the reach to **strangers**, because passing someone's details to a business nobody has an agreement with is a legal question before it is an engineering one.
 
 ### What that looks like for each person in the week
 
@@ -183,7 +187,7 @@ The load-bearing idea is the split between **Model** and **Engine**. If you dele
 
 **Build order:** Harness first (against stubs, no real model needed) → Engine to satisfy the harness's seams → App to render the surfaces → **qualify real models last**, because good prompts need a real harness to test against.
 
-A fifth package, [`marketplace/`](marketplace/) — the store's open half (skins, business-in-a-box templates) — sits beside the layers and **builds last**: it consumes all four and adds no new seam verbs. Its bookend is [`deployment/`](deployment/) — the discipline of the build itself (environments, what may land on main, concurrent builder sessions) — which governs the build in this repo and **builds first**, before harness Step 0.
+A fifth package, [`marketplace/`](marketplace/) — the store's open half (skins, business-in-a-box templates) — sits beside the layers and **builds last**: it consumes all four and adds no new seam verbs. Its bookend is [`deployment/`](deployment/) — the discipline of the build itself (environments, what may land on main, concurrent builder sessions) — which governs the build in this repo and **builds alongside the layers, with its Steps 0–1 before any layer's Step 0**.
 
 ---
 
@@ -211,7 +215,7 @@ A product that asks for your whole life — and holds your customers' passports 
 | [`model/`](model/) | The contract any LLM must satisfy, and the exam that proves it |
 | [`marketplace/`](marketplace/) | The open half of the store — skin-pack and template-bundle formats, the install law, and the seams to the closed marketplace service |
 | [`security/`](security/) | The cross-cutting security law — threat model, tokens, the PII vault, injection quarantine, compliance posture; its README doubles as the external security-posture doc |
-| [`deployment/`](deployment/) | The discipline of the build — environments, what may land on main, the spec/code boundary; governs the build in this repo, and **builds first** |
+| [`deployment/`](deployment/) | The discipline of the build — environments, what may land on main, the spec/code boundary; governs the build in this repo, and **builds alongside, Steps 0–1 first** |
 | [`PR/`](PR/) | The outward identity package — who annnä is and how it speaks; every public surface derives from it. Adds no product behavior; where it overlaps design, it inherits from `app/DESIGN.md`, never the reverse |
 | [`assets/`](assets/) | The four shipped skin masters + approved palettes, and the admin pack pipeline |
 | [`user-stories/`](user-stories/) | **The requirements source-of-truth** — five end-to-end situations |
@@ -247,7 +251,7 @@ Some of these use in-house shorthand. Plainly:
 | Harness / Engine / App / Model specs | ✅ All four packages complete, with acceptance suites |
 | Skin/appearance model + marketplace spec | ✅ Specced — appearance law in `app/DESIGN.md`, store in `marketplace/` |
 | Security law + compliance posture | ✅ Specced — `security/`, gating the layers' builds; legal review is a named gate |
-| Build discipline | ✅ Specced — `deployment/`, governing the build in this repo; builds first |
+| Build discipline | ✅ Specced — `deployment/`, governing the build in this repo; builds alongside, Steps 0–1 first |
 | Testing strategy | ✅ Written across all four suites |
 | **Application code** | 🚧 **Begun** — Step-0 scaffolds and test suites in [`engine/`](engine/) and [`harness/`](harness/), plus the process gates in [`deployment/scripts/`](deployment/scripts/) and the admin asset pipeline in [`assets/`](assets/) |
 
@@ -294,7 +298,7 @@ Everything above is the orientation. The operational instructions:
   BUILD.md       the ordered implementation plan, each step naming its gating scenarios
 ```
 
-Deliberate deviations from that shape: the **model** package's acceptance file is `EVALS.md` (graded evals, because models are qualified rather than built); the **app** package adds `DESIGN.md` (carried design law); and `harness/`, `app/`, `marketplace/`, and `deployment/` each carry a `NOTES.md` — a backlog scratchpad of items already absorbed into the spec, plus anything still open. The **deployment** package is a process spec, not a layer: it governs the build in this repo (which keeps direct-to-main), builds first of all, and its scenarios use `[MUST]` (mechanically enforced) and `[DRILL]` (executed once, recorded) in place of `[HELD-OUT]`. Cross-cutting security laws live in `security/SPEC.md`; layer SPECs point to them, never copy. `NOTES.md` is never authoritative; build from `SPEC.md`.
+Deliberate deviations from that shape: the **model** package's acceptance file is `EVALS.md` (graded evals, because models are qualified rather than built); the **app** package adds `DESIGN.md` (carried design law); and `harness/`, `app/`, `marketplace/`, and `deployment/` each carry a `NOTES.md` — a backlog scratchpad of items already absorbed into the spec, plus anything still open. The **deployment** package is a process spec, not a layer: it governs the build in this repo (which keeps direct-to-main), builds alongside the layers with its Steps 0–1 before any layer's Step 0, and its scenarios use `[MUST]` (mechanically enforced) and `[DRILL]` (executed once, recorded) in place of `[HELD-OUT]`. Cross-cutting security laws live in `security/SPEC.md`; layer SPECs point to them, never copy. `NOTES.md` is never authoritative; build from `SPEC.md`.
 
 - **To build a layer:** open its folder and follow that read order. Start with [`harness/BUILD.md`](harness/BUILD.md) — the harness is built and tested first, in isolation, against stubs including a scripted model stub.
 - **To write or extend tests:** start in [`user-stories/`](user-stories/). Those are the top of the hierarchy; per-layer `SCENARIOS.md` files derive from them, and [`TDD/`](TDD/) says what kind of executable test each criterion becomes.

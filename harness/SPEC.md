@@ -260,6 +260,20 @@ PatternDecline {
 
 **It is visible.** Like any stored answer it is shown, editable and revocable from the same surface, so an owner who declined something months ago can find and undo it.
 
+### 3.11 Channel suppression — the per-party stop, and not the per-owner one
+
+*Two stops exist and they are not the same stop (`../security/SPEC.md §10`, "Two stops", split 2026-08-08 under FD-12). The **send halt** is per owner, about volume, and trips on a bounce rate. **Channel suppression** — this section — is per party, about consent, and trips on **one** complaint. Both thresholds are security's law; both readings are this layer's.*
+
+`../security/BUILD.md` Step 6 builds both, and `../app/SPEC.md §6` records the raw facts as events — `sent`, `delivered-failed`, `handed-to-owner`, and `complaint` — while deciding nothing about what any of them means. **Deciding is this layer's.** A bounce is a fact; "stop sending to this address" is a judgement about a fact, and §1's rule that the app holds no policy puts every such judgement here.
+
+**It is derived, not a new atom.** Suppression is computed from the delivery events already stored, against the volume and complaint thresholds declared in `../security/SPEC.md` — the threshold is security's law, the reading of it is the harness's act. Nothing new is stored, no sixth seam verb appears (`INTERFACES.md §4`, the I2 discipline), and no tool is added to §5's contract.
+
+**Its effect is a subtraction, and that is why the floor is untouched.** A suppressed party-and-channel makes an outward act naming them come back **unsent** — the identical shape to a party with no reachable stored address (`../app/SPEC.md §6`), which the loop already handles by taking the hand-me-the-link path. Suppression removes reach; it never creates any. So D20's floor property covers it **unextended**, on O4's reasoning: a path that needed its own floor rule would mean the floor was never a property.
+
+**A complaint latches, and nothing self-clears.** **One** spam complaint suppresses that party permanently — no rate, no averaging, at the first one (`../security/SPEC.md §10`, "Two stops"); a bounce run suppresses at security's declared bounce threshold. Re-enabling is an ordinary attributed owner act through the existing write path — never automatic, never on a timer, never because a later send happened to succeed. This is C9's discipline (a park never self-clears) applied to reach: the system does not restore a capability it withdrew on evidence, because the evidence has not changed.
+
+**The owner is told, once, per party.** Suppression is not silent — an act that comes back unsent surfaces as a gap the ordinary way, saying which party and why, so "they never replied" cannot be confused with "we stopped writing to them."
+
 ---
 
 ## 4. Responsibility 1 — the loop

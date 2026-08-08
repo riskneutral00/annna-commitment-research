@@ -2,6 +2,8 @@
 
 *The marketplace **builds last** — after all four layers. Gated on: the app stub-swap complete (`../app/SCENARIOS.md` Z2), the harness suite green (specifically the elicitation family B1/B2 and the floor family D, which the install crossing rides), and the engine's rule menu + Shared projection green. The closed service exists in this repo only as the CI mock (`INTERFACES.md §1/§5`).*
 
+> **FROZEN 2026-08-08 — Steps 0–5.** The whole package is specified and is not being built. The freeze's normative home, with its reasoning and resume condition, is [`README.md`](README.md); this line exists so the status report reads the same state a human reads here. Nothing below is deleted, weakened, or made optional, and gate-coverage still walks every scenario.
+
 ## Step 0 — Formats + the install door
 The two document schemas (skin pack, template bundle) and the install-door validator, including the two seed bundles ("Free Time Available", dive-center) as fixtures. These two seeds are **throwaway test fixtures, not production catalog content** (FR38, `../archive/08-founder-rulings-2026-08-06.md`): they exist only to exercise the format's span; any shipped version is founder-built through the app, and no developer authors a bundle. Gate: **F1–F5**.
 

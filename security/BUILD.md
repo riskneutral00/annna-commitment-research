@@ -16,6 +16,16 @@ With engine BUILD Step 1 (the object model): `owner_org` on every stored object,
 ## Step 3 — The vault
 After engine Step 0 (substrate pick); **before app Step 5** — the Situation B/C guest flows cannot be **completed or swapped** without it; they build against the documented mock. The vault substrate, the class table and clocks, encryption + key handling, the attestation/tombstone path, the crypto-shred keys. Gate: **V1–V3, V5**.
 
+---
+
+> **FROZEN 2026-08-08 — Steps 4–8 are specified, not being built. Nothing below is deleted, weakened, or made optional.**
+> **Why they can freeze:** every one of them rides an app step (`SPEC.md`'s riding pattern) — Step 4 rides app Step 5, Step 5 rides app 5–6, Step 6 rides app Step 6, Steps 7–8 are pre-alpha ops and compliance. **The app has not started.** These steps have nothing to ride yet, so freezing them names a state that already existed rather than creating one.
+> **Resume condition: each step unfreezes when the app step it rides begins.** Step 4 the moment app Step 5 is worked, and so on. No step here may be skipped because it was frozen.
+> **The two hard gates survive the freeze completely, and this is the point of writing "frozen" instead of "deferred":**
+> — **Step 4's printed gate stands: no public link goes live before T1–T6 are green.** A frozen step is not a green step. If a link would go live while Step 4 is frozen, Step 4 unfreezes; it does not get waived.
+> — **Step 8's formal legal review stands, unchanged and non-negotiable** — a hard gate, like a red scenario, that cannot be argued past by green suites and is not negotiable from inside the repo. Freezing the step it sits in changes nothing about it.
+> **Gate-coverage still walks every scenario below.** Frozen is a statement about what is being worked, never about what must hold.
+
 ## Step 4 — The token law
 With app Step 5 (guest pages + tokens). Minting, digest storage, lifetimes, revocation latches, enumeration safety, transport headers, per-IP/per-token limits. **The printed gate: no public link goes live before T1–T6 are green** — the carried adversarial-test contract. This is also where the two credential models first coexist, so the one-model-per-mutation law is proven here (M5). Gate: **T-family, P-family, R1, R3, M5**.
 
@@ -23,7 +33,9 @@ With app Step 5 (guest pages + tokens). Minting, digest storage, lifetimes, revo
 With app Steps 5–6: the evidence bundle at capture, version stamping, guardian variant, audit replay. Gate: **S1–S4**.
 
 ## Step 6 — Abuse limits & delivery caps
-With app Step 6 (delivery): named limits as declared objects, email volume caps, the bounce/complaint kill-switch. Gate: **R2**.
+With app Step 6 (delivery): named limits as declared objects, email volume caps, and **both stops** — the per-owner send halt (bounce rate) and the per-party channel suppression (one complaint), which are separate walls with separate thresholds (`SPEC.md §10`, "Two stops"). **This step owns the thresholds, not the decision** — reading them is the harness's (`../harness/SPEC.md §3.11`). Gate: **R2**.
+
+*The per-party stop is asserted in the harness's own suite, not here — its scenarios are that layer's and are gated by that layer's BUILD.*
 
 ## Step 7 — Admin hardening, DR drill & takeout
 Pre-alpha ops: the third identity + hardware-key MFA, the logged vault path, the one publish path, error-report scrubbing; the restore drill; the takeout export. Gate: **M-family, D1–D2, D5, V6**.

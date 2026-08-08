@@ -21,6 +21,12 @@
 
 *How the canvas gets its photo, and where the glass temperature comes from. Prior-build provenance: `DESIGN:701-712` (§2 Appearance model), plus the rulings named inline.*
 
+> **PARTLY FROZEN 2026-08-08. Nothing here is deleted.**
+> **Frozen:** everything that reaches the store — the gallery riser's entitlement states, paid packs, and any skin beyond the shipped set. Those wait on `../marketplace/`, which is frozen (`../marketplace/README.md`).
+> **Not frozen, and load-bearing:** the shipped four + Plain, the glass-temperature derivation, boring mode, the fave-four pop-out, the no-flash landing, and the **Scope** rule that appearance is display-only and never reaches a seam or a guest page. Those are ordinary app law and are built with the app.
+> **Resume condition:** the marketplace freeze lifts.
+> **The freeze deletes no scenario and weakens no gate** — S1–S7 stand as written and gate-coverage still walks them.
+
 - **Skin = photo pack + palette + derived glass.** A skin is a photo pack (`../assets/packs/<name>/`) whose approved `palette.json` derives the ambient ground gradient, the chrome accent, and the **glass temperature**. **The temperature derivation, exact:** glass = **warm** when the pack's `suggestedMode` is `light`, **dark** when it is `dark` — a rule computed from the stored field (written by the admin pipeline), never a per-name table; the shipped four are its worked examples (koi `light` → warm glass; dark, nudi and treestars `dark` → dark glass), and any future pack derives the same way (`../marketplace/SPEC.md §1.1` points here). Canvas-follows-photo *is* this derivation. The photo itself always runs raw inside the field panel (§Canvas & photo — no glass on the photo, ever).
 - **The shipped set is permanent.** Exactly **dark · koi · nudi · treestars** ship in every build forever, plus **Plain** — a CSS ground, not a pack, and **never a picker row** (photo-off is boring mode's job). **Koi is the default.** New packs enter only through the admin pipeline (`../assets/make-pack.mjs`); there is no user upload path. Additional skins are **paid**, sold through `../marketplace/`.
 - **Boring mode.** One press: photo off, solid content backing. Press again: the previous skin **and** opacity restore exactly — the stash persists across sessions. Picking any skin exits boring. The control is the wordless slashed-frame icon on the rail.

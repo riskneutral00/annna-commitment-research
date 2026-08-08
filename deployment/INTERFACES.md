@@ -27,7 +27,7 @@
 | Substrate | Role |
 |---|---|
 | **GitHub** | This repo · required checks (no path filters; the always-run `npm run check` aggregator) · **protected environments** (deploy, qualification — the human as required reviewer) · Actions · `gh` |
-| **Vercel** | Per-change preview rung (`SPEC.md §3`'s name for it) · production rung with **deployment protection** (R7) — production activates at app Step 0 |
+| **Cloudflare** | Per-change preview rung (`SPEC.md §3`'s name for it) · production rung with **access protection** (R7) — production activates at app Step 0. Ruled under FD-11, replacing Vercel; the rung law in `SPEC.md §3` names no provider and did not change |
 | **Convex** | Per-rung deployments + the per-rung env store (enumerable for R1/R5) |
 | **Clerk** | Per-rung auth instances |
 | **Resend** | Mail — sandbox below production |

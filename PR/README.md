@@ -1,5 +1,10 @@
 # PR — the identity package
 
+> **FROZEN 2026-08-08 — written, not being extended. Nothing here is deleted.**
+> **What is frozen:** authoring new outward material from this package — landing copy, pitch, video narration, store text. The package stays in the tree and stays authoritative for anything that *does* ship.
+> **Resume condition:** there is a running product to speak about — the app renders a real board a real owner can open. Identity written ahead of the thing it describes gets rewritten when the thing arrives.
+> **What the freeze does not do:** it does not suspend the derivation rule below. Anything outward that ships while this is frozen is still derived from `IDENTITY.md`, and an ungrounded claim still doesn't ship.
+
 The outward-facing identity of annnä: who the product is, how it speaks, and what every public surface derives from. **The derivation rule:** nothing outward — landing page, repo copy, pitch, store text, video narration — is written from scratch; it is derived from this package, and if a claim isn't grounded in `IDENTITY.md`, it doesn't ship.
 
 ## Read order

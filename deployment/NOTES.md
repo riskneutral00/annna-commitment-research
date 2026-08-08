@@ -75,7 +75,7 @@ An orchestration runtime (**Atomic**, `bastani-inc/atomic`) was on record as a m
 - **DR-2** — production exposure / launch. Post-build-phase.
 - **DR-3** — spec-change fast path. *No* on record; §1's batching (one spec commit per swap pass, not per lie) relieves the pressure that motivated it.
 - ~~**DR-4** — cross-host builder-session registry~~ — **moot 2026-08-08 (FD-4)**: the worktree/branch law it deferred is deleted, so there is nothing left to register.
-- **DR-5** — the engine's Step-0 scaffold landed before any deployment step did. Open: whether it waits for Steps 0–3 to close, or is retro-covered when the gates land (`SPEC.md §8`).
+- ~~**DR-5** — the engine's Step-0 scaffold landed before any deployment step did. Open: whether it waits for Steps 0–3 to close, or is retro-covered when the gates land.~~ **Closed 2026-08-08 (FD-14): retro-covered** — `SPEC.md §8`.
 - **DR-6** — the CI floor landed before deployment's own BUILD steps (`SPEC.md §8`).
 - ~~The reciprocal cite in `../security/SPEC.md §7` (env manifest as the enumeration of record)~~ — **closed 2026-08-06**: §7 now names the manifest as the enumeration of record.
 - The post-launch operations package (monitoring, on-call, incidents) — explicitly out of scope here, unwritten anywhere.

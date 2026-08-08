@@ -1,5 +1,10 @@
 # annnä Marketplace — spec package
 
+> **FROZEN 2026-08-08 — specified, not being built. Nothing here is deleted.**
+> **What is frozen:** this whole package — `SPEC.md`, `INTERFACES.md`, `SCENARIOS.md`, `BUILD.md`. No step of it is worked, and **no other package's build waits on it** — the dependency runs the other way: this package's own preamble gates it on app Step 8's stub-swap, and no layer's BUILD step gates on anything here. What *does* wait on it is **content**: `../app/DESIGN.md`'s store-facing appearance states and `../assets/`'s pipeline both name this freeze as what they wait for, and neither of them gates an app BUILD step either.
+> **Resume condition:** all four layers' stub-swaps are green and the app renders the shipped skins end to end — this package's own preamble already gates it on exactly that, so the freeze changes nothing about *what* unblocks it, only that nobody is working it in the meantime.
+> **What the freeze does not do:** it deletes no scenario, weakens no gate, and removes nothing from gate-coverage. A frozen spec is a spec waiting its turn, not a retired one. The app must keep working with this package **absent or unreachable** — the shipped four skins + Plain, and every installed template, keep working regardless (`../app/INTERFACES.md`), and that requirement is *not* frozen.
+
 annnä is four layers — **Model / Harness / Engine / App** (`../README.md`) — and this fifth package sits beside them: **the store**. One marketplace, two goods:
 
 - **Skins.** Photo backdrops that re-dress the board (`../app/DESIGN.md §Appearance`). Store images are licensed IP, delivered only to entitled accounts by the closed service. The four shipped skins + Plain are the permanent floor, present in every build and needing no entitlement.

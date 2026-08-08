@@ -26,7 +26,7 @@ Rides the harness's scripted-stub discipline ([`harness.md`](harness.md)) — a 
 - **V3, V4** — every read of a doctor's note logs `{who, basis, when}` (V3); a deletion request walks vault shred + crypto-shred + backup age-out and produces a completion attestation naming all three (V4).
 - **M1, M3** — every admin `vault.get` writes an audit entry (M1); an admin+owner mixed-credential mutation is refused (M3, §2's no-mixing law).
 - **S1–S4** — the consent evidence bundle: refused incomplete or missing (S1, S2), replayable by version (S3), captured as guardian consent for a minor's flow (S4).
-- **R2 [kill-switch]** — send volume past the per-owner cap, or a bounce/complaint signal, halts further sends and surfaces the halt.
+- **R2 [send halt]** — send volume past the per-owner cap, or an owner's bounce rate past the declared threshold, halts that owner's further sends and surfaces the halt. Per owner, about volume; the per-party complaint stop is the harness's (`../harness/SCENARIOS.md` D22–D23).
 - **D1 [restore drill]** — backup → clean deployment → the layer suites run green against the restored store.
 - **D2, D4** — an owner's takeout contains their board whole and nothing of any other tenant (D2); termination produces takeout then erasure on schedule, attested (D4, V4's path).
 

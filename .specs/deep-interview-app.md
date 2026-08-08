@@ -11,6 +11,8 @@ Produce the **full app spec package** — `app/README.md · SPEC.md · INTERFACE
 1. **Deliverable** — full spec package now.
 2. **Platform** — **mobile-first web app**; one app serves owner and guest. (The guest link is a web page regardless.)
 3. **Framework** — **Next.js**. Static-first site frameworks were researched and rejected: annnä's owner surface is a live, authenticated, real-time app, not a mostly-static site — in a static-first framework it would become one giant React island. Next.js *is* React.
+
+   > **Superseded 2026-08-08 by FD-11 — TanStack Start.** The transcript above is kept verbatim as the record of what was asked and answered on the day; it is history, in `archive/`'s sense, not live law. **The reasoning here was not overturned** — it rejected *static-first* frameworks, and TanStack Start is client-first React, so the answer this line gives to the question it was actually asked still holds. What changed is the choice inside the live-React family. Live home: `../app/INTERFACES.md`.
 4. **Backend** — **Convex** (real-time store + server functions; live board updates for free; matches a prior production system and the prior build; satisfies the engine's substrate needs — transactions, append-only writes).
 5. **Auth** — **Clerk** for owners. Guests never have accounts: tokenized URLs outside auth, matching the engine's per-recipient token design.
 6. **UI kit** — **Astryx + glass theme** (Meta's agent-ready design system). This carries forward the prior build's ruling (2026-07-25, Option 1 strict adoption; glass rides as a theme without forking). Astryx is the substrate of the FIXED component catalog: an agent-readable, documented set of vetted components — exactly the harness's "LLM composes, never invents widgets" rule. Honest cost: beta churn, Meta dependency.
@@ -26,6 +28,8 @@ Produce the **full app spec package** — `app/README.md · SPEC.md · INTERFACE
 9. **Done test** — every app SCENARIO passes **and** the real app replaces the harness's app stubs (render / publish / notify_and_await spies) with **zero harness changes**, harness suite green; plus one walkthrough per user story (Sofia's and Debra's app moments each renderable on the canvas).
 
 **Assumed (BUILD-only, flagged not asked):** hosting on Vercel — the default pairing for Next.js + Convex.
+
+> **Superseded 2026-08-08 by FD-11 — Cloudflare.** Kept verbatim, and it is the most load-bearing line in this file: the corpus recording, in its own words on the day, that the host was **inherited from a default and never actually asked**. That admission is exactly what made the swap cheap to reason about eighteen months of documents later, and it is why a flagged assumption is worth more than a quiet one. Live home: `../app/INTERFACES.md`.
 
 ## Constraints (pre-existing, not re-asked)
 
@@ -56,7 +60,7 @@ Produce the **full app spec package** — `app/README.md · SPEC.md · INTERFACE
 |---|---|---|
 | 1 | Deliverable? | Full app spec package |
 | 2 | Platform? | Mobile-first web app; asked for full stack interview |
-| 3 | Framework? | Next.js (static-first frameworks researched — wrong tool for a live app) |
+| 3 | Framework? | Next.js (static-first frameworks researched — wrong tool for a live app) — **superseded by FD-11, TanStack Start**; the static-first rejection stands |
 | 4 | Backend? | Convex |
 | 5 | Auth? | Clerk; guests = tokenized URLs, no accounts |
 | 6 | UI kit? | Astryx + glass theme (Meta, agent-ready; prior ruling carried forward) |

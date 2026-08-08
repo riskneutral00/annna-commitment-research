@@ -1,5 +1,10 @@
 # Shipped skin assets (extracted from the prior build, 2026-08-06)
 
+> **FROZEN 2026-08-08 — the shipped set is complete; the pipeline is not being extended. Nothing here is deleted.**
+> **What is frozen:** adding packs, and further work on `make-pack.mjs`. The four shipped packs and Plain are the permanent floor and are already here — they are **not** frozen, and the app consumes them normally.
+> **Resume condition:** a pack beyond the shipped four is actually needed — which, since additional skins are `../marketplace/`'s goods, means the marketplace freeze lifts first.
+> **What the freeze does not do:** it does not touch the appearance law those packs feed (`../app/DESIGN.md §Appearance`) or the requirement that the shipped four render in every build.
+
 The four shipped default skins — **dark, koi, nudi, treestars** — extracted from the
 prior build at `~/Desktop/annnä/assets/` — a tree **outside this repo**, on the founder's
 machine; the citation is provenance, not required reading, and the assets themselves are
