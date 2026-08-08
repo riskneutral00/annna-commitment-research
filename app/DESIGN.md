@@ -65,6 +65,7 @@
 - Anatomy: **tag chip → title → rule lines → optional meta strip → Confirm / Dismiss**; after confirm it collapses to a ✓ + one-line consequence (`DESIGN:738`).
 - Any autonomy change is itself an explicit approve-card — never acquired silently (`DESIGN:739`).
 - **Before/after variant**: for a standing-policy proposal the rule-lines slot renders two lines — current, then proposed — visually paired, and the card carries a third, quieter action alongside Confirm / Dismiss: **don't ask me again**. No new anatomy; the slot and the action strip already exist (behaviour: `../app/SPEC.md §3`, `../harness/SPEC.md §6`).
+- **Pending-decision variant**: a card raised by an engine `PendingDecision` renders its engine-named choices **as the action strip** — the same strip, one action per choice, labelled with the engine's own words. No new anatomy, and no app-authored label (behaviour: `../app/SPEC.md §3`, `../engine/SPEC.md §1.14`).
 
 ## Motion & iconography
 

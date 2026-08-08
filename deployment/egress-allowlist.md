@@ -1,0 +1,22 @@
+# Egress allowlist
+
+*The floor path named in `SPEC.md §7`. Outbound network calls in tracked code are confined to the files listed below; `scripts/egress-lint.mjs` fails the build on any other. **Adding a line here is a floor act** — a human reads it before it lands.*
+
+**Why this file is markdown.** It is spec-class, so S2 (`SCENARIOS.md`) refuses to let a widened allowlist ride in the same commit as the code that widens it. The permission lands first, alone, where it is the only thing to read. A `.json` or `.txt` allowlist would be code-class and an agent could grant itself egress and use it in one commit — which is the exact move this floor exists to catch (`NOTES.md` S4: *a prompt-injected builder needs a network path out*).
+
+## Allowed
+
+| Path | What it calls, and why it is allowed |
+|---|---|
+| `engine/scripts/reactive-push-check.mjs` | Subscribes to a live Convex deployment to prove the reactive-push criterion (`../engine/BUILD.md` Step 0, I4). It is a **process gate, not product code** — it never ships, and it is the one check that cannot be proven in memory (`SPEC.md §8` DR-6). |
+| `model/spike/run-nset.mjs` | Calls OpenRouter and **spends money on every execution** (FD-5; `SPEC.md §8` DR-7). Deliberately unrun, kept out-of-band from the wave order, and never on a product path. |
+
+## Not on the list, deliberately
+
+- **`engine/convex/**`** — Convex functions run *inside* the deployment; they make no outbound call today and needing one would be a design change, not a lint exception.
+- **`deployment/scripts/**`** — every process gate is static and local by construction (`SPEC.md §1`, S3: no gate fetches what it checks). A gate that reached the network could be lied to by the network.
+- **`assets/make-pack.mjs`** — reads and writes local files only.
+
+## Bound
+
+The lint reads **imports and call sites in tracked non-markdown files**. It does not and cannot prove network *absence* at runtime — that is S3's stated limit too (`SCENARIOS.md` S3: *egress absence is not provable on shared runners*). What it buys is that adding a network path to product code is a visible, separately-landed act rather than a line nobody noticed.

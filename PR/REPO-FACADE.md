@@ -6,7 +6,7 @@
 
 ## The description line (GitHub "About")
 
-> A conversational agent that replaces the calendar. Design specification, complete and adversarially reviewed — no application code yet. The aim: a schedule that feels like there is nothing on it.
+> A conversational agent that replaces the calendar. Design specification, complete and adversarially reviewed; the build has begun. The aim: a schedule that feels like there is nothing on it.
 
 ## Topics
 
@@ -29,7 +29,7 @@ The README is the repo's landing page and already does its work well. Division o
 
 ## Standing rules
 
-- **The repo never oversells its state.** "Design complete, implementation not started" is stated in the opening blockquote and stays there until it stops being true. The honest state *is* the pitch (MESSAGING §objections).
+- **The repo never oversells its state.** The opening blockquote states where the build actually is — "complete and adversarially reviewed; the build has begun" — and is rewritten each time that stops being true, never ahead of it. The honest state *is* the pitch (MESSAGING §objections).
 - **No commercial language on the facade.** Pricing, payment, revenue, and money mechanics do not appear in the README or any outward copy (VOICE §Commercial silence).
 - No badges beyond factual ones (license). No star-count furniture, no "roadmap" theater.
 - Release notes, if any, are plain records of what became true — they double as the landing page's State 1 progress stills (LANDING §state 1).

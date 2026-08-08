@@ -8,7 +8,7 @@ The harness is a loop of behavior — utterance in, decisions, tool calls, verif
 
 Behavioral tests are usually flaky because of live dependencies. Here every neighbor is a **scripted stub**:
 
-- **Model stub** — returns pre-written `normalize`/`narrate` outputs per test. No real model, no randomness, no cost. (The real model is tested separately, by evals — [`model.md`](model.md).)
+- **Model stub** — returns pre-written `normalize`/`narrate` outputs per test, **and `summarize`** (the quarantine read, [`../harness/INTERFACES.md §2.4`](../harness/INTERFACES.md)): a scripted `{summary, labels[]}` per quarantined input, **plus a failure fixture** — a scenario key that fails on every attempt including the fallback, so **L7**'s fail-closed path is reachable rather than vacuously green. Four scripted calls, not three; the stub's normative shape is [`../harness/INTERFACES.md §5`](../harness/INTERFACES.md) and [`../harness/BUILD.md`](../harness/BUILD.md) Step 0. No real model, no randomness, no cost. (The real model is tested separately, by evals — [`model.md`](model.md).)
 - **Engine stubs** — canned handles, scripted verdicts (the capacity check, the latch check), and canned `resolve` proposals: a placement, a compaction Proposal, an **offered share**, or a decline, all through the one signature.
 - **A steppable virtual clock** — the fourth stub, and the one the determinism claim below actually rests on. Hold and offer expiry (C8), parks, and the escalation ladder's rung timeouts (D12–D17) all advance because a test **steps** the clock. Nothing sleeps; no test waits on wall time.
 - **App stubs** — record-and-return **spies**: they capture every call (what was rendered, what was sent, to whom, on what basis) so tests assert on the recording.

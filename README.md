@@ -3,7 +3,7 @@
 **A conversational agent that replaces the calendar.** A schedule today is a load you carry in your head and a grid you maintain by hand. With annnä you talk — *"book an open-water course for these three days," "leave 5 minutes between lessons"* — and the agent creates, governs, and reconciles your commitments for you. The aim, stated plainly: **a schedule that feels like there is nothing on it** — because the coordination work leaves, and then the head no longer has to be where the schedule is kept.
 
 > ### 📋 This repository is a design specification, not a working application.
-> There is **no application code here yet** — 122 markdown files covering the research, the architecture, the user stories, the test strategy, and the public-facing identity, plus one small admin asset script (`assets/make-pack.mjs`). The build hasn't started. The point of this package is that it's complete enough to build *from*.
+> Almost all of it is specification — **130 markdown files** covering the research, the architecture, the user stories, the test strategy, and the public-facing identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 TypeScript scaffold with its test suite, and small Node scripts run the process gates (`deployment/scripts/`) and the admin asset pipeline (`assets/make-pack.mjs`). The point of this package is that it's complete enough to build *from*.
 
 ---
 
@@ -62,6 +62,13 @@ Four research streams — philosophy, contract law, calendar data models, task d
 **One `Commitment` object with orthogonal axes, where "event" and "task" are derived presets.** Nobody ever picks a type. The agent captures the axes from plain speech; the classification falls out.
 
 That result is the foundation everything else in this repo is built on. The full research is in [`archive/`](archive/).
+
+The same instrument was then turned on the corpus itself, and it is the one method here that would hold for anyone building anything:
+
+- **Building the same corpus twice, independently, and diffing the two.** Where two
+  isolated attempts converge, the design was forced by the problem; where they diverge,
+  someone made a choice and didn't notice they were making it. That diff is a sharper
+  instrument than any review, because it needs no reviewer to be right about anything.
 
 ---
 
@@ -163,7 +170,7 @@ Both goods are supplied by the maintainers only — there is no user upload — 
 
 ## How it's built: four layers
 
-*(All four are **specified**; none are coded yet. See [Status](#status) below.)*
+*(All four are **specified**. Code has begun and is early — the engine's Step-0 scaffold and the process scripts, nothing else. See [Status](#status) below.)*
 
 | Layer | What it's for | Where it comes from |
 |---|---|---|
@@ -176,7 +183,7 @@ The load-bearing idea is the split between **Model** and **Engine**. If you dele
 
 **Build order:** Harness first (against stubs, no real model needed) → Engine to satisfy the harness's seams → App to render the surfaces → **qualify real models last**, because good prompts need a real harness to test against.
 
-A fifth package, [`marketplace/`](marketplace/) — the store's open half (skins, business-in-a-box templates) — sits beside the layers and **builds last**: it consumes all four and adds no new seam verbs. Its bookend is [`deployment/`](deployment/) — the discipline of the build itself (environments, PRs, worktrees, concurrent builder sessions) — which governs the build in this repo and **builds first**, before harness Step 0.
+A fifth package, [`marketplace/`](marketplace/) — the store's open half (skins, business-in-a-box templates) — sits beside the layers and **builds last**: it consumes all four and adds no new seam verbs. Its bookend is [`deployment/`](deployment/) — the discipline of the build itself (environments, what may land on main, concurrent builder sessions) — which governs the build in this repo and **builds first**, before harness Step 0.
 
 ---
 
@@ -204,7 +211,7 @@ A product that asks for your whole life — and holds your customers' passports 
 | [`model/`](model/) | The contract any LLM must satisfy, and the exam that proves it |
 | [`marketplace/`](marketplace/) | The open half of the store — skin-pack and template-bundle formats, the install law, and the seams to the closed marketplace service |
 | [`security/`](security/) | The cross-cutting security law — threat model, tokens, the PII vault, injection quarantine, compliance posture; its README doubles as the external security-posture doc |
-| [`deployment/`](deployment/) | The discipline of the build — environments, PR strategy, worktrees, concurrent builder sessions; governs the build in this repo, and **builds first** |
+| [`deployment/`](deployment/) | The discipline of the build — environments, what may land on main, the spec/code boundary; governs the build in this repo, and **builds first** |
 | [`PR/`](PR/) | The outward identity package — who annnä is and how it speaks; every public surface derives from it. Adds no product behavior; where it overlaps design, it inherits from `app/DESIGN.md`, never the reverse |
 | [`assets/`](assets/) | The four shipped skin masters + approved palettes, and the admin pack pipeline |
 | [`user-stories/`](user-stories/) | **The requirements source-of-truth** — five end-to-end situations |
@@ -231,7 +238,7 @@ Some of these use in-house shorthand. Plainly:
 
 ## Status
 
-**Design complete. Implementation not started.**
+**Design complete. Implementation begun, and early.**
 
 | | State |
 |---|---|
@@ -242,7 +249,7 @@ Some of these use in-house shorthand. Plainly:
 | Security law + compliance posture | ✅ Specced — `security/`, gating the layers' builds; legal review is a named gate |
 | Build discipline | ✅ Specced — `deployment/`, governing the build in this repo; builds first |
 | Testing strategy | ✅ Written across all four suites |
-| **Application code** | ❌ **None** — the only executable is the small admin asset pipeline in [`assets/`](assets/) |
+| **Application code** | 🚧 **Begun** — Step-0 scaffolds and test suites in [`engine/`](engine/) and [`harness/`](harness/), plus the process gates in [`deployment/scripts/`](deployment/scripts/) and the admin asset pipeline in [`assets/`](assets/) |
 
 The design was deliberately attacked twice before being called done — structured adversarial reviews run by fleets of independent AI reviewers with no stake in the design (not external human audits; the kill lists are in [`archive/`](archive/)) — 93 findings raised across two rounds, 30 killed as unfounded, the rest worked through into the current packages. That history is in [`archive/`](archive/). The newer marketplace/appearance material took a third round of its own (2026-08-06): 46 findings raised, every one refuted — and then an audit of the refuters overturned four kills and surfaced five fresh gaps, all worked into the spec or recorded as open rulings in [`marketplace/NOTES.md`](marketplace/NOTES.md). The lesson stands both times: most attacks die, and the ones that survive are the ones worth having found.
 
@@ -255,16 +262,12 @@ truth; the code grows alongside it.
 
 ---
 
-## Three results that stand on their own
+## Two more results that stand on their own
 
-Most of this repo only makes sense as one design. Three things in it don't — they'd hold
-for anyone building anything, and are noted here so they aren't lost inside a dive-shop
-scheduling spec.
+Most of this repo only makes sense as one design. Two further things in it don't — they'd
+hold for anyone building anything, and are noted here so they aren't lost inside a
+dive-shop scheduling spec. (The third, the dual-build convergence diff, is above.)
 
-- **Building the same corpus twice, independently, and diffing the two.** Where two
-  isolated attempts converge, the design was forced by the problem; where they diverge,
-  someone made a choice and didn't notice they were making it. That diff is a sharper
-  instrument than any review, because it needs no reviewer to be right about anything.
 - **Holding a domain out.** Four of the five [Situations](user-stories/Situations/) were
   designed toward. The fifth was deliberately not — so it is the only honest test of
   whether the commitment primitive generalizes, rather than of how well it was fitted.

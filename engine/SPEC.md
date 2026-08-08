@@ -74,7 +74,8 @@ Engine-owned specifics:
 - **Canonical structure (settles the parked question):** `order` = ownership/cancellation grouping; `depends_on` = the scheduling edge. There is **no third mechanism** — decomposition children group under an order and sequence by `depends_on`.
 
 ### §1.9 Money marks
-- Money is a typed value (§2); `priced / owed / paid / settled` are **latched marks** `{by, at}`. **`owed` is derived** from commitment state, never an independently mutable number — cancel the visit and the record corrects itself (the $140 never owed).
+- Money is a typed value (§2); `priced / owed / paid / held / settled` are **latched marks** `{by, at}`. **`owed` is derived** from commitment state, never an independently mutable number — cancel the visit and the record corrects itself (the $140 never owed).
+- **`held` is the fifth mark** (founder-ruled 2026-08-07, D-B), and it was missing here while three files above this one in authority already carried it — `../harness/SPEC.md §3.8`, `../user-stories/README.md`, `../security/SPEC.md §2`. This line conforms to them; it is not a new decision. **What is still unspecified, deliberately not invented here:** what sets and clears the mark. The obvious pairing is the hold vocabulary (`../security/SPEC.md §3`: hold creation, hold expiry), but no file states it, so no file should be read as if it did — the mark exists, its trigger is an open question for whoever specifies deposits.
 - **`no-show` is always a human mark (founder-ruled 2026-08-07, #5).** The system may surface the fact — scheduled start passed, no check-in — but never declares a no-show itself; the owner marks it, attributed `{by, at}`. What a no-show then costs is the commitment's **no-show policy**, a creator-set field (nothing / deposit forfeit / full rate / custom) that, being money terms, **binds at booking** under §1.5 — edits govern forward only. The ledger records what the bound policy says is owed; collecting it stays outside (money tracked, never moved).
 - **No operation in this layer moves value.** The `value-transfer` class isn't forbidden here — it is *unconstructable*: no such entry point exists.
 
@@ -132,9 +133,27 @@ KindTemplate {
 *The `OnCall` and `Escalation` object **shapes** are the harness's — `../harness/SPEC.md §3.9` is their normative home. This section is only the engine's **storage** of them, because an `Escalation` must survive between the trigger that raises it and the `total_timeout` that parks it (different clock firings), and context is assembled from stored structure, never accumulated conversation (`../harness/SPEC.md §8`). It cannot live in harness memory; the engine holds it like every other stored object.*
 
 - **`OnCall`** — board-owner-scoped configuration (`ranked[]`, `step_timeout`, `total_timeout`, per-rung channels/quiet-hours), stored addressably like any owner setup answer (elicited harness-side, §6 ask-once). An owner with no list is the ordinary single-operator case, stored as an empty ladder — not an error.
-- **`Escalation`** — first-class stored object: `commitment`, `reason`, `raised_at`, `ladder_state {rung, notified_at}`, `status: open | answered | timed_out_parked`, `answered_by {who, basis, when}?`. The harness's ladder walk advances `ladder_state`; the engine **persists each advance**, so a replay reads the same ladder state (determinism, §0).
+- **`Escalation`** — first-class stored object: `commitment`, `reason`, `raised_at`, `ladder_state {rung, notified_at}`, `status: open | answered | timed_out_parked`, `answered_by -> principal?`. **`answered_by` is a reference to a principal, not an inline compound** — the `{who, basis, when}` triple lives on the **resulting act**, which is where the harness defines it (`../harness/SPEC.md §7`, the single normative home; §0 above says this section restates the harness and does not redefine it). Storing the triple here would have been a second, divergent home for an attribution the floor already stamps. The harness's ladder walk advances `ladder_state`; the engine **persists each advance**, so a replay reads the same ladder state (determinism, §0).
 - **Terminal status is write-once.** `answered` and `timed_out_parked` latch under §1.3's latch discipline — the store **rejects a write that reverts a set terminal status**, so an escalation cannot be silently reopened. `timed_out_parked` co-occurs with the commitment's `needs_human` park (§1.3), which only a human clears — the loop can never un-park itself.
 - **Reached through the existing verbs — no new seam verb.** The harness writes the object, advances the ladder, and latches the terminal status through `commit`; it reads open escalations and the on-call list through `calculate`. There is **no escalation-specific engine entry point** — the same guard the cross-owner share obeys (`../harness/SCENARIOS.md I2`; `../harness/INTERFACES.md §4`). *Notification itself is never authority* — the engine stores who was notified when; a basis is created only by the human's answer, captured the ordinary way (harness §7).
+
+### §1.14 PendingDecision — the question the engine records and never asks
+
+*§0's law says anything the engine cannot answer comes back as data — "a structured decline, a pending decision" — for the harness to route. The structured decline has an object. The pending decision did not, and an instruction with no object is not implementable (`../harness/SPEC.md §3.9`, verbatim precedent). This is that object, built as the **general primitive** rather than the `min-occupancy` case, because §0's law is general.*
+
+```
+PendingDecision {
+  id, commitment,
+  raised_by,                          // the rule type or trigger that raised it (e.g. `min-occupancy`)
+  choices: [ … ],                     // CLOSED set, ENGINE-NAMED — the whole menu, no free text
+  chosen { by, at }?                  // absent until a human answers; never written by the engine
+}
+```
+
+- **Written only by the engine, chosen only by a human.** The engine names the choices because only it knows which are legal; it never picks one, and there is no default. `chosen.by` has no `engine` or `llm` member — the same shape that makes a park unclearable by the loop (§1.3).
+- **It co-occurs with the `needs_human` park** (§1.3) and is **cleared only by a stored human choice**. The stored choice is what clears the park; no retry, timeout, or later firing absorbs it.
+- **The harness routes it; the engine does not surface it.** Reading it is an ordinary `calculate` read — **no new seam verb** (§0 sole-client, `../harness/INTERFACES.md §1`). Whether acting on the chosen option crosses the customer-facing line is the harness floor's question, never the engine's (`../harness/SPEC.md §7`).
+- **`Proposal.freed[].decision` (§1.11) is the pre-existing instance of this shape and stays where it is.** It is a `pending | keep-blocked | reopen` field inside a stored Proposal, gated by a passing pinned scenario (X5), and this section does **not** refactor it. Two instances of one shape is a known, deliberate near-duplicate; unifying them would be a separate scoped change, not a side effect of giving the primitive a name.
 
 ## §2. The type-value system (M3)
 
@@ -178,7 +197,7 @@ The closed value vocabulary — the only shapes a rule operand or correctness-cr
 | `admission` / `qualification` | comparator over attributes | board / kind | commit (intake) | occupant/executor attributes satisfy the predicate; else refused with the failing comparison |
 | `dependency` / `fallback` | board-ref list / ranked list | kind | resolve | required composition; ranked substitute chain on decline/lapse. **A `pin` is not a decline** — a pinned entry is excluded before candidate generation (below), so the chain never encounters it and simply generates from the alternatives that remain. Stated rather than inferred, because §8's clash test for this pair depends on it |
 | **`pin`** | boolean lock | party, commitment | **resolve only** | placements involving the pinned party are **excluded before candidate generation** — never proposed, never surfaced as a declinable option |
-| **`min-occupancy`** | (unit number `min`, lead duration `decide_by`) | board, kind | **clock trigger** at `start − decide_by` (never at intake or commit) | confirmed concurrent draw at the trigger instant ≥ `min`. **Violation is not a refusal:** on a shortfall the engine **writes the `needs_human` park and a pending-decision record** (§1.3) naming the open choices (run under minimum / cancel / extend the window) — and nothing more. The engine owns neither the notification nor the loop: the **harness's trigger loop** reads the park and routes the owner's decision (`../harness/SPEC.md §7`), because cancelling real people's bookings is an across-the-line act. The engine never auto-cancels a run, and never blocks a booking for being early |
+| **`min-occupancy`** | (unit number `min`, lead duration `decide_by`) | board, kind | **clock trigger** at `start − decide_by` (never at intake or commit) | confirmed concurrent draw at the trigger instant ≥ `min`. **Violation is not a refusal:** on a shortfall the engine **writes the `needs_human` park (§1.3) and a `PendingDecision` (§1.14)** naming the open choices (run under minimum / cancel / extend the window) — and nothing more. The engine owns neither the notification nor the loop: the **harness's trigger loop** reads the park and routes the owner's decision (`../harness/SPEC.md §7`), because cancelling real people's bookings is an across-the-line act. The engine never auto-cancels a run, and never blocks a booking for being early |
 
 **Precedence:** `governing > org > individual`; among same-level rules on one placement, **most restrictive wins**. Governing rules are non-overridable (recorded exception is the only forward path); own-rule conflicts take the override-with-reason path (§8) — **except unsatisfiable pairs, which no authority overrides** (§8 item 4).
 
@@ -295,10 +314,12 @@ The closed value vocabulary — the only shapes a rule operand or correctness-cr
 Commitment (share-relevant fields)
   owner            -> { tenant, board, principal }   // the creator; never transfers
   grants[]         -> ShareGrant { holder: person | token, rung, scope, edit_mode }   // engine-minted only
-  status           : draft | offered | placed | declined | expired | stale | …
+  status           : draft | offered | declined | expired | …
   hold             : duration                         // creator-set at share time: default 5 min, 0–24 h
   decline_reason                                      // structured; set only from `declined`
 ```
+
+**The status vocabulary's home is `../harness/SPEC.md §3.4`**, not here — the four values above are the share-relevant subset of that block, and a value this seam needs but does not print is read from there. Two values this list previously carried have been removed rather than reconciled: `placed` (a committed, accepted offer is `confirmed` as a latch and `active` as a derived condition — nothing needed a third name for it) and `stale` (an offer that ends at a commit-time conflict is not a status; item 5 below records it as a terminal event, and `stale` is reserved throughout this corpus for **computed artifacts** — handles §4, proposals §6/§9 — never for a commitment).
 
 The `grants[]` edge (each entry a `ShareGrant`) is the only structure in the store permitted to name a second tenant, and **no caller can construct one** — the engine mints it through this seam or it does not exist. That keeps the `../security/SPEC.md §9` invariant literal ("unconstructable by a caller") while making the crossing possible.
 
@@ -362,6 +383,7 @@ The `grants[]` edge (each entry a `ShareGrant`) is the only structure in the sto
 | One commitment, creator-owned; a cross-owner share stands on both boards or neither | §7.1 |
 | Only the engine mints a grant — the sole two-tenant edge; no caller can author one | §7.1 |
 | A run under its minimum parks for a human; the engine never auto-cancels | §3 (`min-occupancy`) |
+| A PendingDecision is never chosen by the engine — `chosen` is a human write or absent | §1.14 |
 | Unknown travel and no-feasible-placement are distinguishable in every decline | §5, §9 |
 
 ## §11. What the engine is NOT (non-goals & incoming pressure)

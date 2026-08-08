@@ -6,7 +6,7 @@ The model layer is the only layer we don't build — **models are selected and s
 
 Read in this order:
 
-1. **`SPEC.md`** — the contract: the three calls (producer side), the intent vocabulary, ambiguity calibration, narration fidelity, judgment boundaries, voice, supply & routing (OpenRouter primary; ChatGPT-subscription slot), failure behavior, and what this layer must never do.
+1. **`SPEC.md`** — the contract: the four calls (producer side), the intent vocabulary, ambiguity calibration, narration fidelity, judgment boundaries, voice, supply & routing (OpenRouter primary; ChatGPT-subscription slot), failure behavior, and what this layer must never do.
 2. **`INTERFACES.md`** — the two seams: upward (satisfy `../harness/INTERFACES.md §2`) and downward (the provider seam: OpenRouter + the routing config contract).
 3. **`EVALS.md`** — the exam (this layer's SCENARIOS equivalent — **graded, statistical**, not deterministic pass/fail): eval sets per call type, thresholds, and the qualification procedure every model/prompt/routing change must pass before going live.
 4. **`BUILD.md`** — the ordered plan. **Dependency-honest:** most steps want the *built* harness (real prompts against real traffic); only the eval scaffold and seed sets are useful before it.

@@ -22,10 +22,10 @@
 
 - Stand up the scenario runner with the virtual clock and the scripted travel provider.
 - **Verify:** an empty store boots; a diff writes and reads back with attribution; the clock steps; **a commit that changes a published projection reaches a subscriber without the subscriber asking** — the reactive-push row is checked here, not taken on trust, because it is the one criterion that fails silently by degrading into a polling loop rather than by erroring.
-- **`scripts/reactive-push-check.mjs` is a required CI gate, not an optional probe (I4).** It subscribes against a real dev deployment, commits, and asserts the subscriber was **pushed** the new value — the one thing `convex-test`'s in-memory harness cannot prove (it has no socket to push over). The in-memory suite passing is **not** sufficient evidence for the reactive-push row; this script must pass in CI, and it is re-confirmed at the Step 9 stub-swap when the app subscribes for real.
+- **`scripts/reactive-push-check.mjs` is a required gate, not an optional probe (I4)** — required *wherever a deployment exists to run it against*. It needs a live Convex deployment and CI has none, so `npm run check` runs it when `CONVEX_URL` names one and prints an explicit *skipped* line when nothing does; the honest state is recorded at `../deployment/SPEC.md §8` DR-6 rather than papered over. It subscribes against a real dev deployment, commits, and asserts the subscriber was **pushed** the new value — the one thing `convex-test`'s in-memory harness cannot prove (it has no socket to push over). The in-memory suite passing is **not** sufficient evidence for the reactive-push row; this script must pass against a deployment before the row is believed, and it is re-confirmed at the Step 9 stub-swap when the app subscribes for real.
 
 ## Step 1 — Object model & latches
-- Implement §1 objects (principal, board, commitment, rule, grant, shared, order, money marks, history, **OnCall/Escalation** — §1.13, the stored objects behind the harness on-call ladder; shape home `../harness/SPEC.md §3.9`). Write-once latches and no-delete enforced at the store layer — the escalation's terminal status (`answered`/`timed_out_parked`) latches under the same discipline.
+- Implement §1 objects (principal, board, commitment, rule, grant, shared, order, money marks, history, **OnCall/Escalation** — §1.13, the stored objects behind the harness on-call ladder; shape home `../harness/SPEC.md §3.9`; **PendingDecision** — §1.14, engine-written and human-chosen, `chosen` unwritable by any engine path, exercised at Step 7 by O2/O3). Write-once latches and no-delete enforced at the store layer — the escalation's terminal status (`answered`/`timed_out_parked`) latches under the same discipline.
 - **Verify:** B1–B3, **B4 (escalation persists across firings; terminal status write-once; only `commit`/`calculate` touched)**, K1–K2, A3.
 
 ## Step 2 — Type-value system (M3)
@@ -43,7 +43,7 @@
 
 ## Step 5 — `commit`
 - One-transaction checks, races, handle redemption, diff application; the apply-proposal and apply-offer variants (§6.5).
-- **Verify:** A1–A2, Q1 (commit side), B1 (lapse under the clock), **K1–K2 (owed derived, marks latched, no value moved)**, **O1 (an early booking below the minimum is never blocked at commit)**.
+- **Verify:** A1–A2, Q1 (commit side), B1 (lapse under the clock), **K1–K3 (owed derived, marks latched, no value moved, and no engine-declared `no-show` once the start has passed under the clock)**, **O1 (an early booking below the minimum is never blocked at commit)**.
 
 ## Step 6 — Recurrence & materialization
 - Pattern objects, rolling-horizon job, forward-only edits, bounded on-demand materialization, the §9 DST law.

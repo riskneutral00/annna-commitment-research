@@ -9,7 +9,7 @@ Next.js app + Convex + Clerk wired; Astryx installed **pinned, no postinstall ap
 The wallpaper canvas, the board on it, blocks from stored payloads, date-row navigation, frontier-extension requests, `+N` overflow, due chips, mobile rack + bottom bar; skin packs + palette tokens, boring mode, the opacity dial, no-flash landing. Gate: **C1, C6, S1, S2, S4, S7**, design-law checklist (board laws, islands, photo rules, breathing blocks, §Appearance).
 
 ## Step 2 — Console
-The draggable card / pill, utterance in → seam → narrate out, proposal cards, surface stamping. Gate: **C3, C5, C7**, design-law checklist (console laws, card anatomy).
+The draggable card / pill, utterance in → seam → narrate out, proposal cards, surface stamping. Gate: **C3, C5, C7, C8** (the pending-decision card: engine-named choices as the action strip, nothing applied client-side), design-law checklist (console laws, card anatomy).
 
 ## Step 3 — Risers
 The single overlay primitive with sink/rise motion; the commitment form riser first (creation form = detail form), then rules, Plan, settings. Gate: **C2, C4**, design-law checklist (overlay + whisper dim + motion restraint).

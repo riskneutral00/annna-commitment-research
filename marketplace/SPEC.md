@@ -77,7 +77,7 @@ Browse → preview → install. **Install = snapshot fork with provenance** (`cr
 ## §5. The closed-service lane
 
 - **Store transactions live entirely inside the closed service.** What the store transacts, and on what terms, are properties of that service and are **deliberately not specified in this repo** — no rails, no keys, no math, no stated terms. This repo's readers get the open half; the terms are not part of it.
-- **The lane distinction is a safety law, not a commercial one.** The product's money law — *money is tracked, never moved* — governs value **between users on boards**. A store transaction is a **different lane** and never touches a board's ledger records (`SCENARIOS.md` invariant, §8). **Points are never money** — stands regardless of what the store transacts.
+- **The lane distinction is a safety law, not a commercial one.** The product's money law — *money is tracked, never moved* — governs value **between users on boards**. A store transaction is a **different lane** and never touches a board's ledger records (indexed in §8's invariants ledger below). **Points are never money** — stands regardless of what the store transacts.
 - **Entitlement, not transaction, is what this repo models.** The open half sees exactly one fact: whether an account is entitled to an item (§4). How an entitlement was acquired, and how it ends, are the closed service's business — the open half reacts to the entitlement state and nothing else. That boundary is what keeps §4's revocation law free of any transaction detail.
 
 ## §6. Discovery (minimal by decision, 2026-08-06)

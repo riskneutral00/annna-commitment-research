@@ -1,4 +1,4 @@
-# Founder rulings — 2026-08-06 (the FR series registry)
+# Founder rulings — 2026-08-06 (the FR and FD series registry)
 
 > ⚠️ **This is an index, not law.** Unlike its neighbours in this folder it is *current*, not historical — but it is still **not the normative home** of anything. Per FR13 each rule has exactly one home; this file only says which. Reading a ruling's consequences means opening the file in the *Landed at* column. Where this index and a package `SPEC.md` disagree, **the package spec governs** and this file is the thing that is stale.
 
@@ -10,7 +10,7 @@
 
 Two series were in play the same day and they were briefly both called `R#`:
 
-- **`R#` = review findings** — from `annnä-commitment-review-2026-08-06.md`, external to this repo. Commit `d07e571` uses this sense. So do `deployment/SCENARIOS.md` (R1–R10) and `security/SPEC.md` (R1–R3), whose R-labels are **scenario IDs and unrelated to any ruling**.
+- **`R#` = review findings** — from `annnä-commitment-review-2026-08-06.md`, external to this repo. Commit `d07e571` uses this sense. So do `deployment/SCENARIOS.md` (R1–R11) and `security/SPEC.md` (R1–R3), whose R-labels are **scenario IDs and unrelated to any ruling**.
 - **`FR#` = founder rulings** — this file. Renamed from `R#` to `FR#` precisely to end that collision.
 
 **`FR-A` / `FR-B` / `FR-C` are lettered, and that is not a typo.** They were made *after* FR1–FR13, to close decisions those had left open. They are kept lettered rather than renumbered because the corpus already cites them by letter and silently renumbering a live citation is the failure mode this whole file exists to prevent.
@@ -130,6 +130,46 @@ Ruled through the wayfinder decision map (GitHub issues #1–#12 on this repo; e
 |---|---|---|
 | **FR37** | **Domain content is user-built proof, not founder-ruled spec.** User stories and their domain designs — F7's courses and F20's boat minimum among them — are validated by the founder building them *as a user* inside the app, proving any user could build them; no founder ruling is owed on them, ever. The platform owes only the enabling mechanisms (template expansion `engine/SPEC.md §1.12`, clock-triggered rules `engine/SPEC.md §3`) | `engine/SPEC.md §1.12` and `§3` stamps |
 | **FR38** | **We build the tools, never the templates — the law is authorship, not shipping.** The product is the application — engine, harness, app, marketplace. **First-priority acceptance: a user can author a template through their agent** and share it to the marketplace. Every template named in the user stories and READMEs **may ship as a production default for all users** — but only after the founder, as administrator, has built it *through the application*, because each one is the proof that any user could. Claude/developers never author a domain template; the founder's prove → save → ship path is the existing admin-only supply law (`marketplace/SPEC.md §0`/`§2`) worn as a workflow. Development carve-out: domain content may exist during development **only as declared throwaway** — named as scaffold before it is built, stripped before ship, rebuilt through the application as the proof. Undeclared domain scaffold is a violation | this registry entry; binds `marketplace/SPEC.md §2` (Publish/authoring) + §0 (admin-only supply), `engine/SCENARIOS.md` W5 (expansion-equivalence) → `marketplace/SCENARIOS.md` I6 (authoring-equivalence), user-stories/README framing |
+
+## FD1–FD3 — the harness-phase sitting, 2026-08-07 (the `FD#` series)
+
+**A second series, and the reason it is separate.** `FR#` numbers the rulings made in the sittings above, against audits and the wayfinder map. `FD#` numbers rulings made *inside a build phase*, where a design question surfaced from the work rather than from a review. The two series are independent and neither renumbers the other; a citation must name which series it means. The corpus already cites **FD-2** by label in four places, which is what made the absence of a registry entry a broken citation rather than a missing one.
+
+| # | Ruling | Where it lives |
+|---|---|---|
+| **FD-1** | **Save-as-bundle is a read-only shape projection, not a new seam verb.** A T2 authoring session projects into a `marketplace/SPEC.md §1.2` bundle through an internal `calculate`-class read with operands blanked; `draft` rules project too, and the same session projects an identical bundle every time. **The accepted residual:** a field's *name* is part of the shape the user authors, and no mechanical fence catches "John's medication list" — field names are a **publisher-review** item, valid exactly as long as the admin-only supply law stands | `engine/SPEC.md §1.7a` · gated at `harness/SCENARIOS.md` G8 |
+| **FD-2** | **Zero trust on stranger text — "assume everything is a prompt injection."** Guest-returned free text and uploaded SOP documents are read first by a **quarantined, tool-less model** returning only a structured summary; the privileged tool-bearing model never sees the raw text. Structural, not label-obedience; spotlighting stays underneath as defense-in-depth | `security/SPEC.md §5` (the law) · seam contract `harness/INTERFACES.md §2.4` · gated at `harness/SCENARIOS.md` L5, L7 |
+| **FD-3** | **`summarize` is never BYO** — not even attended. Stricter than FR31's attended-only confinement, and deliberately so: the attended confinement exists because an unqualified model degrades *pleasantness* while a human watches, and the quarantine read is a **security control** whose failure mode is a breach. **A control the owner can weaken is not a control**, and a human present cannot see an instruction that was laundered into a summary | `model/SPEC.md §7` (the reasoning and its stated cost) · enforced unconstructable at config load, `model/INTERFACES.md §2.2`, `model/BUILD.md` Step 4 · seam restatement `harness/INTERFACES.md §2.4` |
+
+**Why FD-3 is registered separately from FD-2 rather than read off it.** FD-2 creates the `summarize` call; FD-3 decides who may supply the model behind it. They could have been one ruling and are not, because FR5/FR31 grant BYO broadly and a reader reconciling those against FD-2 alone would find no rule either way — the strictest confinement in the model layer would exist only as an unexplained parenthetical. The cost is stated where the reasoning lives: an owner who wants their own model everywhere cannot have it on one call type.
+
+## FD-4–FD-6 — the deployment sitting, 2026-08-08 (the `FD#` series)
+
+*Same series, same rules as FD-1–FD-3 above. These three were made inside the deployment phase and were cited across the corpus for two days under a letter form (`FD-a/b/c`) that this registry never carried; the letters are deleted and the citations renumbered here. **FD-5 had no repo footprint at all** before this entry.*
+
+| # | Ruling | Where it lives |
+|---|---|---|
+| **FD-4** | **Deployment re-scoped 33→20 scenarios for a solo operator** | `deployment/SCENARIOS.md` (the twenty that survive) · the record of what died and why: `deployment/NOTES.md` · `deployment/SPEC.md §8` (DR-4, moot by it) |
+| **FD-5** | **Model spike built but deliberately unrun** | `deployment/SPEC.md §8` (DR-7) · `model/spike/README.md` |
+| **FD-6** | ~~**Push refused; the public repo stays stale on purpose**~~ — **reversed 2026-08-08 (FD-10)**. Kept in the series rather than renumbered; FD numbers are cited elsewhere | `deployment/SPEC.md §4` · FD-10 below |
+
+## FD-7–FD-9 — the preflight sitting, 2026-08-08 (the `FD#` series)
+
+*Same series, same rules. These three were the founder decisions standing between the corpus and `harness/BUILD.md` Step 0; they were put to him as three questions and answered in one sitting.*
+
+| # | Ruling | Where it lives |
+|---|---|---|
+| **FD-7** | **A pre-landing hook, bypassable with `--no-verify`, is an acceptable gate — and the bypass is the accepted ceiling.** `.githooks/pre-commit` fires the aggregator before every commit; `--no-verify` defeats it and nothing prevents that. The ceiling is recorded rather than closed, because the hook is the only mechanism that can *refuse* a landing — the CI job (live since FD-10) reports after the fact. **Consequence:** B1 returns to `[MUST]` — `deployment/SCENARIOS.md` B1 pre-authorized exactly this form and named this as the condition | `deployment/SPEC.md §4` (the ceiling) · `§9` (ledger) · `deployment/SCENARIOS.md` B1 |
+| **FD-8** | **Injection attack strings live in the repo, under `harness/tests/fixtures/injection/`, with a provenance README.** They are public-benchmark-sourced, so committing them publishes nothing that was not already public; the clause being satisfied was never "no attack strings in this repo" but "annnä does not *author* attack strings inside a public design document", which a provenance file answers. Fetch-at-test-time is disqualified by S3 (hermetic) and breaks replay determinism (B9). **They are permanent test data, not throwaway** — `security/SPEC.md §5` already said so and the restatements contradicting it were the error | `security/SPEC.md §5` (the law and the location) · restated at `harness/SCENARIOS.md` L5, `harness/BUILD.md` Step 5 |
+| **FD-9** | **The `engine/`-is-owned-by-another-session rule is dropped.** It was a working practice, never spec law, and the handoff file that carried its open items no longer exists — leaving three known contradictions owned by nobody. Any session may edit `engine/`; §5's one-session-per-layer rule is the real constraint and it is unchanged | `deployment/SPEC.md §5` (the surviving constraint) · closed items: `engine/SPEC.md §1.9`, `§1.13`, `engine/SCENARIOS.md` K3 |
+
+## FD-10 — the Alignment push, 2026-08-08 (the `FD#` series)
+
+*Same series, same rules. One ruling, made at the squash that ends the deployment-and-harness phase.*
+
+| # | Ruling | Where it lives |
+|---|---|---|
+| **FD-10** | **Push resumed; FD-6 is reversed.** The public repo stops being deliberately stale, and `.github/workflows/check.yml` (`on: push`) becomes a real event rather than a declaration. **Two consequences, both paid before the push rather than discovered after it:** the workflow installs every layer with a suite, not just the engine's — a missing install reads as a red gate rather than as a missing install; and `doc-count-check.mjs` **stops asserting a working-tree count**, because that walks the filesystem and counts whatever gitignored material the machine happens to hold — true on one laptop, false in every clone and runner. The tracked count and the `AGENTS.md` word ceiling are stable everywhere and remain asserted. **The reasoning FD-6 supported is not deleted but re-based:** B1's mechanism is still the pre-commit hook, because CI reports *after* a landing and only the hook can refuse one | `deployment/SPEC.md §4` (B1's mechanism) · `deployment/SCENARIOS.md` B1 · `AGENTS.md`, "The one green command" · `.github/workflows/check.yml` |
 
 ## Provenance — which decisions were the founder's, and which were drafted
 

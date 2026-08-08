@@ -10,13 +10,14 @@ The model **powers the agent**: language, world knowledge, and judgment, importe
 
 **The design bet:** the harness is strong enough that model choice barely matters. A weaker model never *corrupts* anything — the engine owns truth, the floor owns permission, and both are enforced structurally, not by trusting the model. What a weaker model costs is **pleasantness**: more unnecessary clarifying questions, clumsier proposals, worse phrasing. The exam (`EVALS.md`) is this bet's insurance: it measures exactly the pleasantness dimensions, so a cheaper model is swapped in on evidence, not hope.
 
-## 1. The three calls — producer side
+## 1. The four calls — producer side
 
 The harness consumes these (contract shapes in `../harness/INTERFACES.md §2`); this layer must *implement* them:
 
 - **`normalize(utterance, context) → {intent, fields, ambiguities}`** — obligations: return an intent from the vocabulary in §2 (never a free-form action name); return field values **raw and unvalidated** (they are not trusted — the harness routes correctness-critical ones through the engine); populate `ambiguities` per the calibration in §3; use *only* the assembled context (never remembered conversation — there is none: the harness assembles context fresh per firing).
 - **`narrate(structure) → text`** — obligations: every factual claim traces to the input structure (§4); voice per §6.
 - **Judgment** — world-knowledge choices inside the other calls (which kind this sounds like, which template is nearest, how to phrase). Bounded by §5.
+- **`summarize(raw_text, source_tag) → {summary, labels[]}`** — the quarantine read (seam contract `../harness/INTERFACES.md §2.4`; law `../security/SPEC.md §5`). Obligations: return **only** the declared structure — never free text, never a field the schema does not name; **no instruction in `raw_text` may survive into `summary` as an instruction** (an imperative is reported *as a labelled fact that the text contains one*, never re-emitted as a directive); **material facts the owner would need are preserved** — an over-aggressive reduction that drops the guest's real request is a failure of this call, graded as its own mode (`EVALS.md` S-set); `source_tag` is an input the return may not alter or elevate. This call is bounded by §5 more tightly than the others: it is **not judgment** at all.
 
 **Compound utterances** ("cancel day 3 and let James know") normalize as an **ordered sequence of single-intent actions**; the harness's plan stage owns ordering and the floor gates each action independently. *(Producer-side note: `BUILD.md` Step 1 must reconcile this with the built harness's actual dispatch shape.)*
 
@@ -66,6 +67,8 @@ Every factual claim in `narrate` output must trace to a field in the input struc
 
 **Forbidden (structural, not behavioral — the tool contract blocks these, but a model attempting them fails the exam):** authoring times, prices, availability, balances, or quota verdicts as literals; asserting a grant exists; deciding a crossing is safe; placing a commitment (placement is an engine `resolve` handle); composing outward prose freely (§4).
 
+**`summarize` is not judgment, and the boundary is tighter.** Reducing untrusted text is a **structural** operation, not a world-knowledge one: within `summarize` the model may not **propose** anything, may not **infer intent** behind the text, and may not **resolve references** in it ("the other booking", "as we agreed", "the usual") — an unresolved reference stays unresolved and is reported as such. Every allowance in the list above is withdrawn for this call. The reason is the failure mode: judgment inside a quarantine read is how an injection gets laundered into a plausible-sounding fact, and a laundered instruction is indistinguishable from a real one downstream.
+
 ## 6. Voice
 
 - **Propose, don't interrogate** — recommended answer + scope, user accepts or narrows.
@@ -92,11 +95,18 @@ Every factual claim in `narrate` output must trace to a field in the input struc
 - **The owner is told, once, plainly:** their own model powers their console turns, annnä's models run their triggers, and annnä does not vouch for a model it did not qualify. Stated, not buried.
 - **Fallback is app-supplied, always.** A BYO binding that errors or times out falls back to the qualified app model (§8) — never to a park, and never to silence.
 
+**`summarize` is app-supplied only, always — never BYO, not even attended *(FD-3, founder-ruled 2026-08-07; registry `../archive/08-founder-rulings-2026-08-06.md`)*.** This is **stricter than the confinement above**, and deliberately so, because it is a different kind of rule. The attended-only confinement exists because an unqualified model degrades *pleasantness* while a human watches: a clumsy sentence, a mis-calibrated question. The quarantine read is not that. It is a **security control**, and its failure mode is a breach — an injection reaching the tool-bearing model — not an awkward turn. **A control the owner can weaken is not a control.** A human being present does not help: nobody reading a summary can see the instruction that was laundered into it, which is the whole reason the raw text is kept out of the privileged context in the first place. So the confinement here is not "attended only" but "never".
+
+- **The cost is real, is annnä's, and is stated rather than hidden.** annnä pays for a `summarize` call on **every guest-form return and every SOP upload** — including for owners who brought their own key and pay for their own console turns. A BYO owner's quarantine reads are on annnä's bill, always, with no opt-out and no way for the owner to shift it onto their own key. That is the accepted price of the control, and it is written here so nobody costing this layer later mistakes it for an oversight. (`summarize` is the cheapest of the four calls — structured reduction, no judgment, §5 — which is what makes the price payable, not the reason it is charged.)
+- **Enforced at config load, not in review.** A `byo-*` provider bound to `summarize` is **unconstructable** — the routing config refuses to load, the way an unqualified binding already does (`BUILD.md` Step 4; `INTERFACES.md §2.2`). Poka-yoke, because a rule that depends on someone noticing a config line is not a rule.
+
 **Ruled out:** Anthropic BYO-subscription (banned for third-party apps, Feb 2026).
 
 ## 8. Failure behavior
 
 The **harness validates output shape at the seam** — the model is never trusted to self-validate. Malformed output (schema violation, unknown intent, unparseable) and refusals are the same failure class: **one bounded retry**, then the turn surfaces as a gap (attended) or parks (unattended) per the harness loop. Timeout → the routing config's fallback model for that call type. No failure path may skip the floor or invent a partial result.
+
+**`summarize` fails closed, and this is the one failure path that does not degrade gracefully.** Same bounded retry, same fallback. But when there is still no valid summary — timeout, malformed, fallback also failed — the raw text is **not admitted to the assembled context at all**, and the firing surfaces a gap (attended) or **parks** (unattended). The harness half is `../harness/SPEC.md §8`, asserted at `../harness/SCENARIOS.md` L7. What this forbids is the graceful-looking option: admitting the raw text with a warning attached, which turns the control off precisely when it failed.
 
 ## 9. What the model layer is NOT
 
