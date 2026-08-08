@@ -1,6 +1,6 @@
 # The app substrate — what the swap changed, and what it still owes
 
-*The app substrate is **TanStack Start + Cloudflare**, ruled 2026-08-08 as **FD-11** (`../archive/08-founder-rulings-2026-08-06.md`). The swap was executed the same day: every site that named Next.js or Vercel now names the current substrate, except the ones deliberately kept as history. **The ruling is not a ratification** — the printed five-criterion check it owes is at `../app/BUILD.md` Step 0 and has not been run. Until it has, no document may call this substrate ratified.*
+*The app substrate is **TanStack Start + Cloudflare**, ruled 2026-08-08 as **FD-11** (`../RULINGS.md`). The swap was executed the same day: every site that named Next.js or Vercel now names the current substrate, except the ones deliberately kept as history. **The ruling is not a ratification** — the printed five-criterion check it owes is at `../app/BUILD.md` Step 0 and has not been run. Until it has, no document may call this substrate ratified.*
 
 *This file is not law. It is the swap's record and the research map for the sessions that build against it. Rerun the commands in §6 before trusting any line number here.*
 

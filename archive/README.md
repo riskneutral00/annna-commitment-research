@@ -55,8 +55,9 @@ This validates the original instinct: **event = title + when-anchor; task = titl
 - [`05-post-critique-decisions.md`](05-post-critique-decisions.md) — the strategic forks settled after round one
 - [`06-round-two-decisions.md`](06-round-two-decisions.md) — harness decisions after round two; **replaced the lifecycle statuses** in `DESIGN.md` with latched, attributed events
 - [`07-elicitation-mechanism.md`](07-elicitation-mechanism.md) — the ask-once-apply-forever machinery
-- [`08-founder-rulings-2026-08-06.md`](08-founder-rulings-2026-08-06.md) — the **FR series registry**: what each 2026-08-06 ruling decided and which file holds it. An index, never a normative home; where it disagrees with a package spec, the spec governs
 - [`DESIGN.md`](DESIGN.md) — the original living design doc. **Superseded** — read for reasoning, never for the current model.
+
+*The FR/FD ruling registry used to sit here as `08-founder-rulings-2026-08-06.md`. It moved to [`../RULINGS.md`](../RULINGS.md) on 2026-08-08 — it is current and actively edited, and nothing current belongs in a folder that is history.*
 
 **The two adversarial critiques** — annnä's design was attacked twice on purpose, and the findings were worked through rather than filed away:
 

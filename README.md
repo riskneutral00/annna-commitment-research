@@ -3,7 +3,7 @@
 **A conversational agent that replaces the calendar.** A schedule today is a load you carry in your head and a grid you maintain by hand. With annnä you talk — *"book an open-water course for these three days," "leave 5 minutes between lessons"* — and the agent creates, governs, and reconciles your commitments for you. The aim, stated plainly: **a schedule that feels like there is nothing on it** — because the coordination work leaves, and then the head no longer has to be where the schedule is kept.
 
 > ### 📋 This repository is a design specification, not a working application.
-> Almost all of it is specification — **130 markdown files** covering the research, the architecture, the user stories, the test strategy, and the public-facing identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 TypeScript scaffold with its test suite, and small Node scripts run the process gates (`deployment/scripts/`) and the admin asset pipeline (`assets/make-pack.mjs`). The point of this package is that it's complete enough to build *from*.
+> Almost all of it is specification — **132 markdown files** covering the research, the architecture, the user stories, the test strategy, and the public-facing identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 TypeScript scaffold with its test suite, and small Node scripts run the process gates (`deployment/scripts/`) and the admin asset pipeline (`assets/make-pack.mjs`). The point of this package is that it's complete enough to build *from*.
 
 ---
 
@@ -14,6 +14,8 @@ The fastest way to see what annnä is for is to watch one busy week at a small P
 **Hug Ocean. One week, four bookings, three different courses.** A Mandarin Open Water + Advanced. An English Open Water for a group of three friends. A Mandarin Advanced finishing at Phi Phi. A German Advanced. They all want the same instructors, the same pool, the same rental gear and the same single house boat — which is already carrying a 40-person dive club that week.
 
 TingTing works the front desk. Here is her week, both ways:
+
+> **Read the third column as the destination, not the first version.** It shows the week when everyone in it is already on annnä — the demo worth building toward. On day one most of them are not. **What v1 actually does is the middle case:** annnä places everything its network can reach, and for every edge it cannot it **prepares the call** — two dozen calls become a handful of prepared ones. That is a real claim and a smaller one; the detail is below the table.
 
 | What the week needs | What happens today | What annnä does instead |
 |---|---|---|
@@ -31,9 +33,7 @@ TingTing works the front desk. Here is her week, both ways:
 
 **With annnä, once everyone in the week is on it: not one phone call between any of them.** The whole week is placed in a single pass against every instructor, boat, pool, tank and gear set at once — and placed *weeks ahead*, because the clashes that surface at 07:00 on the morning of were visible the day the booking was taken.
 
-> **Read that as the destination, not the first version.** The zero-phone-call week is what this looks like when the whole week is on annnä, and it is the demo worth building toward — it is not what the first version does, because on day one most of the people in that week are not on it.
->
-> **What the first version actually does is the middle case, and it is specified as its own thing.** annnä places everything its network can reach, and for the edges it cannot reach it **prepares the call, records the answer, and offers an invite** — the owner still picks up the phone, but the call is prepared from the record instead of improvised, the answer lands in the same place every other fact lands, and nothing has to be remembered twice. The week goes from two dozen calls to a handful of prepared ones. That path is law at `harness/SPEC.md §2`, built at `harness/BUILD.md` Step 7, and gated by `harness/SCENARIOS.md` O1–O5. The story it comes from is [`user-stories/Situations/Situation-C/situation-5.md`](user-stories/Situations/Situation-C/situation-5.md) — written specifically as *the minimal-adoption world the product actually launches into*.
+> **The middle case, in full — and it is specified as its own thing.** annnä places everything its network can reach, and for the edges it cannot reach it **prepares the call, records the answer, and offers an invite** — the owner still picks up the phone, but the call is prepared from the record instead of improvised, the answer lands in the same place every other fact lands, and nothing has to be remembered twice. The week goes from two dozen calls to a handful of prepared ones. That path is law at `harness/SPEC.md §2`, built at `harness/BUILD.md` Step 7, and gated by `harness/SCENARIOS.md` O1–O5. The story it comes from is [`user-stories/Situations/Situation-C/situation-5.md`](user-stories/Situations/Situation-C/situation-5.md) — written specifically as *the minimal-adoption world the product actually launches into*.
 >
 > **And one row waits longer than the rest.** Handing a customer to a shop annnä has no relationship with — the German course — is a **referral**, and referrals come after the first version. Reaching people at *other* businesses is in it: anyone already on annnä is reachable, and anyone who isn't gets the prepared call above. What waits is the reach to **strangers**, because passing someone's details to a business nobody has an agreement with is a legal question before it is an engineering one.
 
@@ -223,6 +223,8 @@ A product that asks for your whole life — and holds your customers' passports 
 | [`archive/`](archive/) | The original research and full design history — *how we got here*, not what to build |
 | [`.specs/`](.specs/) | Interview records locking design decisions across packages |
 | [`AGENTS.md`](AGENTS.md) | **Start here if you are an agent** — authority order, package shape, and the citation conventions that otherwise trip automated readers |
+| [`INDEX.md`](INDEX.md) | Every tracked file, one line each: its authority tier and what it decides. The per-file map this table is the folder-level view of |
+| [`RULINGS.md`](RULINGS.md) | The founder-ruling registry — what each `FR#`/`FD#` decided, and which file holds it |
 
 **Reading suggestion for a human:** this page, then [`user-stories/`](user-stories/) for what it actually does, then [`archive/`](archive/) if you want to know why the commitment primitive is shaped the way it is. A security reviewer can start — and mostly stay — at [`security/README.md`](security/README.md).
 

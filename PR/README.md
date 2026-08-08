@@ -4,6 +4,8 @@
 > **What is frozen:** authoring new outward material from this package — landing copy, pitch, video narration, store text. The package stays in the tree and stays authoritative for anything that *does* ship.
 > **Resume condition:** there is a running product to speak about — the app renders a real board a real owner can open. Identity written ahead of the thing it describes gets rewritten when the thing arrives.
 > **What the freeze does not do:** it does not suspend the derivation rule below. Anything outward that ships while this is frozen is still derived from `IDENTITY.md`, and an ungrounded claim still doesn't ship.
+>
+> **One exception, ruled 2026-08-08:** [`BRIEF.md`](BRIEF.md) was authored after the freeze and lands inside it. It carries the corpus's only success criteria and only risk register — content with no other home — and is otherwise pointers rather than new outward copy. The exception is this file and no other.
 
 The outward-facing identity of annnä: who the product is, how it speaks, and what every public surface derives from. **The derivation rule:** nothing outward — landing page, repo copy, pitch, store text, video narration — is written from scratch; it is derived from this package, and if a claim isn't grounded in `IDENTITY.md`, it doesn't ship.
 
@@ -14,6 +16,7 @@ The outward-facing identity of annnä: who the product is, how it speaks, and wh
 | [`IDENTITY.md`](IDENTITY.md) | The source: purpose (peace), the promise, mission, vision, values-backed-by-architecture, the liberties thread, personification and name law |
 | [`VOICE.md`](VOICE.md) | How annnä speaks: neutral like water; the four banned registers; vocabulary; before→after rewrites |
 | [`MESSAGING.md`](MESSAGING.md) | The reusable words: taglines by family, pitches at three lengths (worry-first, ruled), channel angles, objection answers |
+| [`BRIEF.md`](BRIEF.md) | The investor/grant compression — mostly pointers, plus the corpus's only success criteria and only risk register |
 | [`BRAND.md`](BRAND.md) | The visible identity: the alpaca mark brief, wordmark law, koi-derived color, typography direction, imagery law |
 | [`LANDING.md`](LANDING.md) | The landing page in three states — vacant holding page now, progress stills next, the usage-video hero at V1 |
 | [`REPO-FACADE.md`](REPO-FACADE.md) | GitHub as storefront: description, topics, social preview, the README's job |

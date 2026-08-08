@@ -28,4 +28,4 @@ whole of what there is to find.
 
 *Interviews are not run for every package. `harness/`, `model/`, `marketplace/`,
 `deployment/` and `security/` were settled in the design history ([`archive/`](../archive/))
-or by direct founder ruling ([`archive/08-founder-rulings-2026-08-06.md`](../archive/08-founder-rulings-2026-08-06.md)).*
+or by direct founder ruling ([`RULINGS.md`](../RULINGS.md)).*

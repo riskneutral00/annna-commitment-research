@@ -27,7 +27,7 @@
 
 - **One named design partner or pilot commitment** — the concentric-circle strategy (tutors, dive pros, the therapist) doubles as this; getting one "yes, I'll be first" on record converts the whole story.
 - **Build timeline + who builds** — the "no app yet" answer needs a milestone plan and team shape beside it before any investor meeting.
-- **Competitive one-pager** — Calendly, Acuity, Fresha, Cal.com, Mindbody, Motion et al., and why multi-party coordination is a different category.
+- **Competitive one-pager** — Calendly, Acuity, Fresha, Cal.com, Mindbody, Motion et al., and why multi-party coordination is a different category. **Partially answered 2026-08-08** in [`BRIEF.md`](BRIEF.md) §The landscape: the AI-calendar side (Motion, Reclaim, Calendly; Clockwise shut down after the Salesforce acquisition) and the vertical-booking side (Anolla, Aquateks, Roverd, Bookeo, EVE Diving, Anchor) were scanned, and the claim narrowed — multi-resource scheduling is **not** novel and no outward surface may imply it is. Still open: Acuity, Fresha, Cal.com and Mindbody were not covered.
 
 ## Also flagged
 
