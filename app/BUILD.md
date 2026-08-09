@@ -2,6 +2,23 @@
 
 *Each step is gated by its scenarios (`SCENARIOS.md`) and, for visual steps, the design-law checklist (`DESIGN.md`). Substrates per `INTERFACES.md §2`: TanStack Start (TanStack Router on Vite) · Convex · Clerk · Astryx + glass theme · Resend · Cloudflare Workers. The final gate is the stub-swap — the app is done when the harness never noticed the change.*
 
+## Design-law coverage — every section of `DESIGN.md`, accounted for
+
+*Added 2026-08-09, and gated: `../deployment/scripts/design-law-coverage.mjs` refuses if a `DESIGN.md` section is named nowhere below. Three sections landed in one sitting and gated nothing before this existed, and the remaining UI/UX phases each add another — so the accounting is mechanical rather than remembered. **Being named here is not being reviewed well**; it only means no visual law is silently ungated.*
+
+| section | where it is checked |
+|---|---|
+| §Canvas & photo · §Appearance · §Spacing · §Shapes · §Colour · §Board rendering | **Step 1** |
+| §Typography | **Step 1** (ramp, tabular figures, self-hosted delivery) and **Step 5** (the 16px guest floor) |
+| §Glass · §Islands & mobile | **Step 1**, then re-checked wherever a new surface appears |
+| §Console · §Proposal cards | **Step 2** |
+| §Risers and forms | **Step 3** |
+| §Guest pages | **Step 5** |
+| §Motion & iconography · §Accessibility baseline · §Standing rejections | **every visual step** — they bound all of them, so no single step owns them |
+| §Design-system mechanics | **Step 0** (the pin, the layer order, the postinstall refusal) |
+| §Supersessions | **no gate, and deliberately** — it records what this repo reversed in the prior build, not law a build satisfies |
+| §Language | **no visual gate** — chrome posture is a scope line (English at v1), checked by `SPEC.md §5`'s guest-language law, not by looking at a surface |
+
 ## Step 0 — Scaffold
 TanStack Start app + Convex + Clerk wired; Astryx installed **pinned, no postinstall approval** (`DESIGN.md` §Mechanics), CSS layer order and per-scope `color-scheme` set; glass materials file (the closed inventory) created; Cloudflare Workers deploy from day one. Gate: a signed-in owner sees an empty canvas; a token route renders outside auth.
 
@@ -18,13 +35,13 @@ TanStack Start app + Convex + Clerk wired; Astryx installed **pinned, no postins
 **If any row fails when it is first built against, FD-11 reopens** — that is the whole point of printing it rather than asserting it. Until this table exists with a result in it, the ruling is a ruling and nothing more; no document may describe the substrate as ratified.
 
 ## Step 1 — Canvas + board
-The wallpaper canvas, the board on it, blocks from stored payloads, date-row navigation, frontier-extension requests, `+N` overflow, due chips, mobile rack + bottom bar; skin packs + palette tokens, boring mode, the opacity dial, no-flash landing. Gate: **C1, C6, S1, S2, S4, S7**, design-law checklist (board laws, islands, photo rules, breathing blocks, §Appearance).
+The wallpaper canvas, the board on it, blocks from stored payloads (**events and tasks, one component**), date-row navigation, frontier-extension requests, the two-gravity 75/25 split and its asymmetric scroll, the wake policy's four parts, mobile rack + bottom bar; skin packs + palette tokens + **the derived veil** and **the per-skin urgency marks**, boring mode, **both opacity dials**, no-flash landing. **Check `corner-shape` support per engine here** and wire the circular fallback (`DESIGN.md` §Shapes) — it is a support question, not a design one, and it is cheapest to answer at the first surface that draws a corner. Gate: **C1, C6, S1, S2, S4, S7**, design-law checklist (board laws, islands, photo rules, breathing blocks, §Appearance). *(2026-08-09: `+N` overflow and due chips are struck — internal scroll replaced the chip, and tasks are blocks. `DESIGN.md` §Board rendering.)*
 
 ## Step 2 — Console
 The draggable card / pill, utterance in → seam → narrate out, proposal cards, surface stamping. Gate: **C3, C5, C7, C8** (the pending-decision card: engine-named choices as the action strip, nothing applied client-side), design-law checklist (console laws, card anatomy).
 
 ## Step 3 — Risers
-The single overlay primitive with sink/rise motion; the commitment form riser first (creation form = detail form), then rules, Plan, settings. Gate: **C2, C4**, design-law checklist (overlay + whisper dim + motion restraint).
+The single overlay primitive with sink/rise motion; the commitment form riser first (creation form = detail form), then rules and settings *(the Plan riser is struck — 2026-08-09, tasks are board blocks)*. Gate: **C2, C4**, design-law checklist (overlay + whisper dim + motion restraint + `DESIGN.md` §Risers and forms).
 
 ## Step 4 — Catalog + `render_generative`
 The manifest (vetted Astryx subset, named list), schema validation against the meta-schema, node→component mapping, rejected-render path. Gate: **U1–U4**.

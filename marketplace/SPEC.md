@@ -19,7 +19,7 @@ The catalog form of a skin (`../app/DESIGN.md §Appearance` is the law of how a 
 | Field | What it is |
 |---|---|
 | `id` / `name` / `version` | Identity. A re-publish is a new version (§2). |
-| `palette` | The approved token set — the shipped packs' `palette.json` shape as it actually is: dominants + semantic roles, accent/accentDeep, ambient gradient pairs, tint alphas, `suggestedMode` (`light` \| `dark`), LQIP. The glass temperature (warm \| dark) **derives** from it per `../app/DESIGN.md §Appearance` — it is not a stored field. |
+| `palette` | The approved token set — the shipped packs' `palette.json` shape as it actually is: dominants + semantic roles, accent/accentDeep, ambient gradient pairs, tint alphas, `suggestedMode` (`light` \| `dark`), LQIP. The **veil** — the tint every glass surface is made of — **derives** from it per `../app/DESIGN.md §Appearance`, as a continuous function of the pack's measured `luminance` plus 18% of its `DarkMuted`; it is not a stored field. *(2026-08-09: this was a two-value warm\|dark "glass temperature" switched on `suggestedMode`, and that rule is gone — `suggestedMode` still selects ink and density pair, never the veil. A pack supplies no new field either way.)* |
 | `derivatives` | The responsive image set (WebP + AVIF at 640/1280/2048 + mobile aliases). **Licensed IP: delivered only as short-lived signed URLs to entitled accounts** (§4) — never in a public repo or client bundle. |
 | `license` | The licensed-IP marker. The asset license is not the code license; MIT covers this repo, not store images. |
 | `preview` | **Palette-only** preview material — enough for the gallery to re-tint the owner's board *before* the account is entitled, without touching a licensed image. |

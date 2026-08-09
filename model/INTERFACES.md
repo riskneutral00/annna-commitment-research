@@ -30,7 +30,7 @@ complete(model_id, messages, output_schema) -> structured JSON | error(malformed
 ### 2.2 Routing config (the layer's one real artifact)
 ```
 routing: {
-  <call_type>: { model_id, fallback_model_id, max_cost_per_call, timeout_ms, provider: openrouter | byo-chatgpt }
+  <call_type>: { model_id, fallback_model_id, max_cost_per_call, timeout_ms, provider: openrouter | byo-chatgpt | byo-key }
 }
 // timeout_ms defaults: 10_000 attended (a console turn), 30_000 unattended (trigger firings —
 //   nobody is waiting, and the fallback hop still runs). Timeout → fallback_model_id per SPEC §8.
@@ -39,6 +39,7 @@ routing: {
 ```
 - **Config, never code.** A routing change (new model, new fallback, provider flip) requires re-qualification (`EVALS.md §3`) and nothing else.
 - `byo-chatgpt` is a **slot**: valid only for attended console calls; trigger firings always resolve to an `openrouter` binding (SPEC §7). The slot's auth/OAuth mechanics are app-seam work, integrated at `BUILD.md` Step 5.
+- `byo-key` is the **owner's own provider API key** (FR5, 2026-08-06 — the ban is reversed; SPEC §7's tertiary supply). It is an ordinary `{call_type → model_id}` binding whose credential happens to be the owner's: **no new mechanism and no second code path**, which is the whole reason it is a provider value here rather than a parallel config. Same attended-only confinement as `byo-chatgpt` (SPEC §7, **FR31** founder-ruled 2026-08-07). The binding is stored here; **the secret never is** — it is vault-resident, and this config holds only the reference (`../security/SPEC.md §3.1`, member 2, asserted at `../security/SCENARIOS.md` T8).
 - **`summarize` rejects every `byo-*` provider** — attended or not, console or trigger (SPEC §7, **FD-3** founder-ruled 2026-08-07). Both `model_id` and `fallback_model_id` must be `openrouter` bindings; a config naming a `byo-*` provider on this call type **does not load** (`BUILD.md` Step 4). Its `timeout_ms` rides the same attended/unattended defaults as every other call type — no special budget, and the retry/fallback path is SPEC §8's, ending fail-closed rather than in a degraded admit.
 
 ### 2.3 Stub

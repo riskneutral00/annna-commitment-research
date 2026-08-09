@@ -9,7 +9,7 @@ The owner side is **one canvas**: the board is home, the console (the agent) is 
 Read in this order:
 
 1. **`SPEC.md`** — behavior: the one-canvas model (and how canvas state grounds H1/H2), the board, the console, the fixed generative-UI catalog, guest pages, delivery, app-only views, onboarding, the invariants ledger.
-2. **`DESIGN.md`** — the carried design law (the appearance model — skins, boring mode, opacity — plus glass, board rendering, islands, motion; distilled from the prior build, with four recorded supersessions) and the design-system mechanics. *(This sixth file exists because presentation law would bury the seam contract if folded into SPEC.)*
+2. **`DESIGN.md`** — the visual and interaction law (the appearance model — skins, boring mode, the two opacity dials — plus glass, spacing, shapes, colour, typography, board rendering, islands, motion) and the design-system mechanics. **Ruled here, not carried:** the prior build was released as design law on 2026-08-09 (FD-20) and is inspiration only; the four recorded supersessions and the external citations are provenance, never warrant. *(This sixth file exists because presentation law would bury the seam contract if folded into SPEC.)*
 3. **`INTERFACES.md`** — upward: the harness's app seam satisfied verbatim (zero new verbs); downward: the named substrates.
 4. **`SCENARIOS.md`** — the deterministic acceptance suite (structure and wire, not pixels), ending in stub parity + two story walkthroughs.
 5. **`BUILD.md`** — the ordered plan, Step 0 (scaffold) through Step 8 (**the stub-swap**).
@@ -18,4 +18,4 @@ Read in this order:
 
 **Deliberately NOT here:** permission decisions, elicitation, narration (harness/model) · any deterministic math, even for preview (engine) · model calls in any render or write path · calendar sync or write-back (**banned**, not merely unbuilt — `NOTES.md` OR-39, closed 2026-08-06: data flows in, never out; import IN *is* in scope, `SPEC.md §9`) · a guest-side agent · payment rails, and storefront/commerce logic beyond rendering catalog payloads (`../marketplace/` + the closed service) · native shells (deferred).
 
-Design decisions locked by interview: `../.specs/deep-interview-app.md`. Design-law provenance: a prior build outside this repo (`~/Desktop/annnä/docs/`, on the founder's machine) — **not needed to build**; every carried law is distilled in full in `DESIGN.md`, and the external citations there are traceability only. Glossary for M1/M2/M3/T2/H1/H2: `../harness/README.md`.
+Design decisions locked by interview: `../.specs/deep-interview-app.md`. Design-law provenance: a prior build outside this repo (`~/Desktop/annnä/docs/`, on the founder's machine) — **not needed to build, and not authority since FD-20**; every law is stated in full in `DESIGN.md`, and the external citations there are traceability only. Glossary for M1/M2/M3/T2/H1/H2: `../harness/README.md`.

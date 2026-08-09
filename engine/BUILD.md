@@ -4,6 +4,8 @@
 
 ## Step 0 — Substrate & scaffold
 
+**NOT CLOSED 2026-08-08 — the scaffold and its suite landed; the reactive-push criterion is unverified.** `convex/schema.ts`, `convex/scaffold.ts`, `tests/scaffold.test.ts` and the shared transcript reporter are in the tree and green. What is *not* done is the Verify line's last clause: `reactive-push-check.mjs` needs a live Convex deployment and `npm run check:reactive` skips without a `CONVEX_URL`, so the one criterion that **fails silently by degrading into a polling loop** has never actually been observed passing. Same shape as `../deployment/BUILD.md` Step 2 — the work that needs no account is done, and the tag names what is missing rather than rounding it up to closed.
+
 **Substrate ratification — settled, and settled the right way round (founder ruling FR7, 2026-08-06).** The serving substrate is **Convex**. This does not weaken the *"not by preference"* law above, because the ruling was **checked against `INTERFACES.md §2.2`'s five criteria before it was accepted**, not asserted over them. The check, printed so a later reader can re-run it rather than take it on trust:
 
 | §2.2 criterion | How Convex answers |

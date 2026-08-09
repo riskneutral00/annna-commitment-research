@@ -21,21 +21,11 @@
 - ~~**No-show money**~~ — **CLOSED 2026-08-07 (wayfinder #5).** No-show is always a human mark; the policy is a creator-set per-commitment field binding at booking. Landed at `../engine/SPEC.md §1.9`.
 - **Store terms** — held by the closed service and, per `SPEC.md §5` (FR18, 2026-08-06), **deliberately unspecified anywhere in this repo**. Not an omission and not a gap: the open half is complete without them. Do not re-introduce them here.
 
-## Prepared: the Situation-A′/C′ install-run probe — **AUTHORED 2026-08-07** (`../user-stories/Situations/Situation-A-prime/`, `Situation-C-prime/`; the checklist below is what they were built from)
+## Prepared: the Situation-A′/C′ install-run probe — **AUTHORED 2026-08-07**
 
-The flagged gap (`SCENARIOS.md` coverage map): no user story exercises the marketplace itself — Sofia never installs, TingTing never browses. The fix is a **probe, not a design target**: two short install-run situations derived from A and C. Route: the `probe-situation` staged flow, seeded with this scope.
+The flagged gap (`SCENARIOS.md` coverage map): no user story exercises the marketplace itself — Sofia never installs, TingTing never browses. The fix was a **probe, not a design target**: two short install-run situations derived from A and C.
 
-**A′ — Sofia-shaped install run** must exercise:
-- Discovering the store; previewing "Free Time Available" as the **ghost guest page rendered from her real availability** (D3's template half) — before any write.
-- Installing: the agent walks the blanked parameters (hours, duration, buffer, price) as ordinary proposals — *her* numbers, nothing written without confirm (I2).
-- Publishing a link from the installed shape; a booking lands (Z1 first half).
-- Later, uninstalling — her booked lessons stand (I5).
-- **A refusal:** she asks the agent to "publish my setup so other teachers can use it" — refused; supply is admin-only (P2's human face).
-
-**C′ — Hug-shaped install run** must exercise:
-- Installing the dive-center bundle: multi-resource shapes stood up (roster slots, boat, pool, gear), course kinds, governed rules with blanked operands (F5, I4).
-- The installed state being the setup Situation C's clean run starts from (Z1 second half).
-- **A refusal:** a tampered/over-reaching bundle (carries a rule off the menu, or tries to carry "our regular customers") — refused whole at the door, entry named (I3, F3).
+**Both are written, and they carry their own checklists now.** The "what this probe must exercise" lists that used to sit here moved with them — `../user-stories/Situations/Situation-A-prime/README.md` and `Situation-C-prime/README.md`, each under its own §What this probe must exercise. *They were kept here in parallel for a day and had already drifted (C′ gained "into an empty account" in the story and not in the copy), which is the FR13 failure this file is the wrong tier to host: a `never`-tier scratchpad cannot hold a second copy of `SPEC`-tier requirements.*
 
 **Domain-brief questions — ANSWERED 2026-08-07 (wayfinder #6), probe unblocked:**
 1. **The agent suggests the store** when the owner describes a need; browsing may appear as a beat inside the story, never its opening.

@@ -35,6 +35,6 @@ The store's infrastructure — catalog, curation, payments, entitlements, licens
 
 ## §5. Stub strategy
 
-- **Service mock** (per §1): canned catalog + entitlement map + dead signer; the same mock serves this package's suite, the app's S6/S7, and CI everywhere.
+- **Service mock** (per §1): canned catalog + entitlement map + a **real test signer minting genuinely expiring URLs** — never a dead stub, because E1 and E4 must be *executable* against the mock rather than vacuously green (§1 carries the reasoning). The same mock serves this package's suite, the app's S6/S7, and CI everywhere.
 - **Harness:** scripted transcripts for install walks (the I-family) — real harness once built; scripted seam calls before that.
 - **App:** the record-and-return spies of `../app/INTERFACES.md §4`, unchanged.

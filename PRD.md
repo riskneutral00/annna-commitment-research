@@ -69,7 +69,7 @@ When agents become first-class callers, that envelope stops being an internal la
 
 `PR/IDENTITY.md` engineers peace in two steps — it takes the work, then it takes the worry. Both are automation. A third mechanism is required and is stated here for the first time: **what the owner looks at must not itself be a burden.** A board holding a complete life is, by construction, a board holding a great deal, and the completeness bet and the peace promise pull against each other in exactly that moment. The mechanism is the block **wake policy** (§3, §4), and it is the answer to a tension the corpus otherwise leaves open.
 
-`[NOTE FOR PM]` `PR/IDENTITY.md` §Mission names two steps. If this third mechanism stands, that file gains a third — an outward-material edit, owed after the UI/UX session named in §11 Q1. Deferred deliberately — see §11 Q2.
+`[NOTE FOR PM]` `PR/IDENTITY.md` §Mission names two steps. The third mechanism **stands and is ruled** (FD-22, 2026-08-09), so that file gains a third — an outward-material edit whose condition is now met and which is **owed**, not deferred. See §11 Q2 for why it was not taken in the same pass.
 
 ## 2. Target User
 
@@ -142,7 +142,7 @@ Two journeys have no story, and both are new with this document.
 - **Commitment harness** — annnä itself, named for the governed envelope around the agent: what it may do, what it may not, and on whose explicit basis. The envelope is the product surface once agents are callers. Distinct from — and named after — the `harness/` layer, which is where the envelope is specified.
 - **External client** — any caller of the harness tool contract that is not the app. In v1 this is the owner's own agent and nothing else (§1.2).
 - **Capability parity** — the property that for every capability the app exposes to an owner, a tool exists reaching the same capability, under the same permission floor, callable by an external client. The testable form of *agent as consumer*.
-- **Wake policy** — the rule governing which blocks render at full legibility at rest. `app/DESIGN.md` §Board rendering names the slot and sets its default to `none`; blocks at rest show structure only and their text and fill wake on attention. §4 requires a non-`none` value. `[ASSUMPTION]` The slot is parameterized as this entry reads it; the bullet's full definition cites a document outside this repo and could not be verified here.
+- **Wake policy** — the rule governing which blocks render at full legibility at rest. **Ruled 2026-08-09 (FD-22), closing §11 Q1.** It is a mechanism in four parts, all four the owner's: a **value** (0–100, default **80**, fading fill and ink only — spine, urgency edge, border and micro-mark keep full strength), a **scope** (an open predicate over a block's own stored data, deciding who rests lit), a per-commitment **keep-awake** mark, and a **keep-awake toggle**. Attention is senior to all four. Home: `app/DESIGN.md` §Board rendering, *The wake policy*. *(The former `[ASSUMPTION]` on this entry is discharged: the slot is not parameterized as a single value, and the document it depended on has been released as law.)*
 - **Peace** — the product's purpose (`PR/IDENTITY.md` §Purpose). In this PRD it is a requirement with three mechanisms: annnä takes the coordination work, holds the record so the owner's head need not, and governs what the owner is asked to look at.
 
 **Terms with homes elsewhere** — used verbatim, defined once, cited here:
@@ -150,7 +150,8 @@ Two journeys have no story, and both are new with this document.
 - **Commitment** — the single primitive; one object with orthogonal axes, where event and task are derived presets. Home: `engine/SPEC.md`.
 - **Owner** — the principal a board belongs to; the only party whose explicit basis can authorize an outward act. Home: `harness/SPEC.md`.
 - **Guest** — a non-owner party reached by one tokenized link and one form; never an account holder. Home: `security/SPEC.md`.
-- **Grant** — the engine-minted object by which a commitment or board reaches another person or link token; three rungs, availability by default (FR30). Home: `engine/SPEC.md`.
+- **ShareGrant** — the engine-minted object by which a commitment or board reaches another person or link token; `{holder, rung, scope, edit_mode}`, three rungs, availability by default (FR30). Home: `engine/SPEC.md §7.1`.
+- **Grant** *(the authorization Grant — a different object, same bare word)* — a standing authorization from the owner that satisfies the permission floor without a fresh confirmation; `{action_class, scope, expiry, revocable}`, and what an auto-accept is recorded as (FR6, FR28). Home: `harness/SPEC.md §7`; stored shape at `engine/SPEC.md §1.6`. **The two are deliberately separate and must not be merged** — a ShareGrant governs *who may see or edit*, an authorization Grant governs *which action class the floor permits*; `engine/SPEC.md §7.1` exists in part to keep them apart.
 - **Permission floor** *(also: the reversibility floor)* — the rule that nothing crossing into the real world happens without an explicit basis from the owner. Home: `harness/SPEC.md`.
 - **Board** — the owner's surface; no time axis, blocks stack, time is block data. Home: `app/SPEC.md`, visual law `app/DESIGN.md`.
 - **Console** — the conversational surface where the owner talks to their agent and confirms proposals. Home: `app/SPEC.md`.
@@ -191,7 +192,7 @@ An owner can authorize an external client to act as them against their own board
 **Consequences (testable):**
 - A credential is issued by the owner through the console. No agent request mints one, and no credential is created as a side effect of any other action.
 - Withdrawal takes effect at the next authorization check; a withdrawn credential authorizes nothing thereafter, and revocation is a latch — the honest dead end, never a stale view.
-- Every custody rule in §3 binds it unchanged: ≥128-bit random minting never derived from anything guessable; the SHA-256 digest stored and the plaintext stored nowhere, including logs; constant-time lookup on miss with no existence oracle; per-token and per-IP rate limits; the printed adversarial suite green before it goes live.
+- Every custody rule in §3 binds it unchanged: ≥128-bit random minting never derived from anything guessable; the SHA-256 digest stored and the plaintext stored nowhere, including logs; constant-time lookup on miss with no existence oracle; per-token and per-IP rate limits; the adversarial suite `security/SCENARIOS.md` T9 green before it goes live.
 - **It is the only class in the table that attributes to a principal on the inside rather than to a counterparty.** An act performed through it is recorded as an act of **the principal who issued the credential**, with the client identified alongside. It introduces no new actor model: `harness/SPEC.md` §3.1 already distinguishes the **owner** of a board from the **actor** on a turn, and a credential is issued by, and attributes to, whoever holds the role that could have performed the act by hand.
 - It authorizes nothing the owner has not authorized. Attribution is not permission (RQ-7).
 
@@ -207,6 +208,7 @@ For every capability annnä exposes to an owner through the app, a tool exists t
 **Out of Scope:**
 - Capabilities exposed to guests. A guest surface is one link and one form and has no owner behind it.
 - Administrator capabilities in the closed marketplace service, which is outside this repo.
+- **Appearance** — the active skin, the boring stash, the opacity dial, the fave-four (**FD-19**, founder-ruled 2026-08-08). `app/SPEC.md §7` makes appearance the one app-owned write and §10 makes it invariant that **no seam call carries it**; without this exclusion the mechanical check above could only ever go red, and a gate that cannot go green is worse than none. The exclusion is narrow and principled rather than convenient: appearance is display-only state that never becomes engine truth, so it is not a capability anything schedules against — nothing an agent acting for the owner needs, and the one place where reaching *less* costs the owner nothing.
 
 #### RQ-3: The surface adds no seam verbs
 
@@ -273,28 +275,36 @@ An outward act — messaging a third party, moving value, destroying something �
 
 **Description:** The board holds a complete life, and completeness is the product's central bet. The same completeness is what makes a board heavy to look at. This feature is the third mechanism of peace (§1.4): governing legibility, without hiding anything and without applying judgment. Realizes **UJ-CALM**.
 
-`[ASSUMPTION]` The whole of §4.3 is drafted ahead of the UI/UX session named in §11 Q1 and is written to be cut or replaced by it. The requirement — that a full board must not read as a wall — stands regardless of which mechanism satisfies it.
+*The UI/UX session named in §11 Q1 **ran on 2026-08-09** and ruled the mechanism (FD-22). §4.3 survived it: the requirement was right and only its first consequence was a placeholder. The `[ASSUMPTION]` that this subsection was written to be cut is discharged — it was written to be **satisfied**, and it was. Mechanism home: `app/DESIGN.md` §Board rendering, *The wake policy*.*
 
 #### RQ-10: Legibility at rest is governed, and nothing is hidden
 
-**Consequences (testable):** *the first is a placeholder and is named as one — it passes with any value, including a bad one. The requirement that matters, that a full board must not read as a wall, cannot get a test until §11 Q1 rules the mechanism. A green check here is not a satisfied requirement.*
-- The block wake policy takes a value other than `none`.
-- Every commitment on a displayed day is present on the board; none is removed, collapsed away, or withheld.
-- No agent judgment selects what is legible. The rule is mechanical and its inputs are the clock and the block's own data.
+**Consequences (testable):**
+- The wake policy exists in all four parts — a value, a scope, a per-commitment `keep-awake` mark, and a toggle over the holding — and the value defaults to **80**, not to a state where nothing rests legible.
+- **Exactly one scope is active at a time**, carrying exactly one value; setting a new one replaces the old, and no precedence rule is reachable.
+- Every commitment on a displayed day is present on the board; none is removed, collapsed away, or withheld. **The value fades fill and ink only** — a block's spine, urgency edge, border and micro-mark are at full strength at every setting, including 0.
+- No agent judgment selects what is legible. The rule is mechanical and its inputs are the block's own stored data.
+- **Every part is display state.** Setting any of the four writes app settings and emits no seam call; no engine value, placement or handle changes.
+
+**Notes:** *the placeholder is gone.* The first consequence formerly read *"the wake policy takes a value other than `none`"* and passed with any value including a bad one; it was named as a placeholder when written and is replaced now that §11 Q1 is closed. What still has **no** test is the requirement itself — that a full board does not read as a wall. That is a judgment, it belongs on the design-law checklist (`../TDD.md`), and no green check above should be read as satisfying it.
 
 #### RQ-11: Attention is senior to the rule
 
 **Consequences (testable):**
-- Engaging any block — hover, focus, or explicit engagement — wakes it fully, whatever the rule says about it.
-- The two glass states remain governed by attention alone; this requirement changes what a block looks like at rest, never what triggers frost (`app/DESIGN.md` §Glass).
+- Engaging any block — hover, focus, or explicit engagement — wakes it to the owner's value, whatever the scope says about it. **Out of scope rests at the floor and reveals to the value on attention**; in scope rests at the value. Attention never produces a *third* appearance.
+- Engagement remains governed by attention alone; this requirement changes what a block looks like at rest, never what triggers a reaction (`app/DESIGN.md` §Glass).
+- **Engaging adds material, never removes it.** A surface is more frosted engaged than at rest, at every setting.
+- **A `keep-awake` block ignores the scope but not attention** — it rests at the value and still reacts.
 
 #### RQ-12: The muted state is measured, not eyeballed
 
 **Consequences (testable):**
-- Text meets WCAG 2.1 AA contrast in *both* states, over the worst-case region of every shipped skin's photograph.
-- A skin whose muted state fails the check does not ship.
+- Text meets WCAG 2.1 AA contrast **in the engaged state**, over the worst-case region of every shipped skin's photograph.
+- **Anything that must be read without engagement is measured at rest** — the date row, an island's label, a block's micro-mark — to the same threshold, over the same worst-case region.
+- Every surface is engageable by keyboard as well as pointer, so the readable state is reachable without a mouse.
+- A skin failing any of the three does not ship.
 
-**Notes:** Already law in `app/DESIGN.md` §Accessibility baseline; restated here because it is the ceiling on how faint the muted end can be, and the aesthetic will otherwise be specified past it.
+**Notes:** Already law in `app/DESIGN.md` §Accessibility baseline; restated here because it is the ceiling on how faint the muted end can be, and the aesthetic will otherwise be specified past it. **Amended 2026-08-09:** this formerly required AA in *both* states. That could not hold once the wake policy's value was the owner's — a block at rest sits at the floor with fill and ink faded by the owner's own dial, so "AA at rest" requires either a floor high enough to erase the thesis or a line no build could satisfy. The three consequences above are the honest closure; the ceiling they impose is the same one.
 
 ### 4.4 Agent as interface
 
@@ -449,10 +459,10 @@ The success criteria are ruled and their only home is `PR/BRIEF.md`: how many pe
 
 ## 11. Open Questions
 
-*Four of the questions this document opened were answered on 2026-08-08 and now appear as decisions where they belong: v1's scope (§6.1), what the legal review reviews (§6.3), where this document lives (§0.1), and the two adopted answers behind RQ-1 and RQ-8. What remains is genuinely unknown.*
+*Four of the questions this document opened were answered on 2026-08-08 and now appear as decisions where they belong: v1's scope (§6.1), what the legal review reviews (§6.3), where this document lives (§0.1), and the two adopted answers behind RQ-1 and RQ-8. **Q1 closed on 2026-08-09** and is kept below rather than deleted, because the shape of the answer contradicts the shape of the question and a reader who finds only the answer will re-ask the question. What remains is genuinely unknown.*
 
-1. **Q1 — The wake policy's shape.** Carried to a dedicated UI/UX session and **not a question for the founder here**: which policy value, and what "near" means — a fixed window, a count of blocks, or duration-aware. Two related items are already constrained by existing law rather than open: whether the tier is user-configurable is a **setting**, not a founder question, with "boring mode" as the precedent beside it; and the ramp is **inert on any day that is not today**, because `app/DESIGN.md` gives the board no time axis and makes today *"a pill, never a scroll position"*, so there is no now to anchor to elsewhere. Whether task due chips ramp alongside blocks is open, with a lean toward no — chips already carry urgency, and urgency is largely proximity.
-2. **Q2 — `PR/IDENTITY.md`'s third mechanism.** §Mission names two steps and §1.4 adds a third. *(Distinct from the agent-first sentence, which landed in §What it is on 2026-08-08 — only the mechanism list waits.)* **Deferred deliberately, not forgotten:** `PR/IDENTITY.md` governs every outward claim, and it should not carry a mechanism that does not exist yet — the same discipline that made `PR/BRIEF.md` narrow a claim rather than widen it. The edit happens in the pass that rules the wake policy. Less urgent than it looks: the outward *promise* is already there — *"Five commitments are five small pieces of glass resting on it — not a wall of blocks from midnight to midnight."* — and only the mechanism list lags.
+1. ~~**Q1 — The wake policy's shape.**~~ **CLOSED 2026-08-09 (FD-22), by the dedicated UI/UX session this question named.** The answer was **not a policy value** — the question's own framing (*a fixed window, a count of blocks, or duration-aware*) was the wrong shape, and choosing among those three would have been the corpus asking the founder a question that belongs to its users. What was ruled is a **mechanism in four parts** — value (default 80), scope, `keep-awake`, keep-awake toggle — with the value and the scope both **the owner's**. Home: `app/DESIGN.md` §Board rendering, *The wake policy*. **Two things this question assumed and the ruling reversed:** proximity-to-now is not the mechanism (the scope is an open predicate over the block's own data, which can express proximity but is not limited to it), and *"whether task due chips ramp alongside blocks"* is moot — **the due chip no longer exists** and tasks are ordinary blocks (FD-23). The one thing it got right survives: whether the tier is user-configurable was never a founder question, and the ruling made value and scope settings for exactly that reason.
+2. **Q2 — `PR/IDENTITY.md`'s third mechanism. Now due, and it is the one thing this pass deliberately did not write.** §Mission names two steps and §1.4 adds a third. Q2 said *"the edit happens in the pass that rules the wake policy"* — that pass has now run, so the deferral's condition is met and the edit is **owed**, not deferred. It is left for an outward-copy pass rather than taken here: `PR/IDENTITY.md` governs every outward claim, `PR/` is frozen for new outward material, and a mechanism sentence in the brand's own voice is authored, not derived. The mechanism it must name is settled and stated above. Less urgent than it looks, still: the outward *promise* is already there — *"Five commitments are five small pieces of glass resting on it — not a wall of blocks from midnight to midnight."* — and the ruling made that sentence **more** true, not less, by pinning it to emptiness rather than to transparency (`app/DESIGN.md`, the default-80 bullet).
 3. **Q3 — Reliability grading in the model layer.** `model/EVALS.md` grades capability rather than reliability under perturbation. Open in the corpus, raised by the harness research pass, and unchanged by this PRD — recorded here so it is not read as closed.
 
 *Agent-initiated speech is deliberately absent from this document. It is unruled, this PRD takes no position on it in either direction, and nothing here is built on the assumption that annnä does or does not speak first.*
@@ -462,7 +472,7 @@ The success criteria are ruled and their only home is `PR/BRIEF.md`: how many pe
 *Every `[ASSUMPTION]` in this document, surfaced for explicit confirmation.*
 
 - **§2.3** — The founder uses annnä at its own console and admits no external client until a beta cohort exists; the external surface is v1 specification, not v1 exercise.
-- **§3, wake policy** — `app/DESIGN.md`'s *"Default wake policy is `none`"* names a parameterized slot that can take a proximity value. The bullet cites a document outside this repo, so the reading could not be verified here. **If it is wrong, §1.4, §4.3 and UJ-CALM need a different mechanism rather than a different value** — this is the load-bearing assumption in the document.
+- ~~**§3, wake policy**~~ — **DISCHARGED 2026-08-09 (FD-22).** The assumption was that `app/DESIGN.md`'s *"Default wake policy is `none`"* named a parameterized slot that could take a proximity value, and it warned that if the reading was wrong, §1.4, §4.3 and UJ-CALM would need a **different mechanism rather than a different value**. **The reading was wrong, and the warning was right.** The mechanism is four parts rather than a slot, the prior-build document it depended on has since been released as law, and §3, §4.3 and RQ-10–RQ-12 were rewritten to the ruled mechanism rather than re-defaulted. **UJ-CALM stands** — it asked that a full board not read as a wall, and that requirement never depended on which mechanism satisfied it.
 - **§2.4, UJ-CALM** — the journey is stated as an assumption rather than narrated, because narrating it would fix a design that has not been made.
-- **§4.3, whole subsection** — RQ-10 through RQ-12 are drafted ahead of the UI/UX session and written to be cut by it. The requirement that a full board must not read as a wall stands regardless of the mechanism.
+- ~~**§4.3, whole subsection**~~ — **DISCHARGED 2026-08-09.** RQ-10 through RQ-12 were drafted ahead of the UI/UX session and written to be cut by it. The session ran; **none of the three was cut.** RQ-10's placeholder consequence was replaced with the ruled mechanism's, RQ-11 gained the scope/floor distinction, and RQ-12's *"AA in both states"* became AA on the engaged state plus a measured-at-rest clause. The requirement each states was correct as drafted.
 - **§2.4, UJ-AGENT** — written as predictions in Situation E's form, not as a run. Every prediction carries a question mark until a client exercises it.

@@ -62,4 +62,4 @@ When the first deployable surface lands: the full ladder walked on a trivial cha
 1. `SPEC.md` — the law: repos, rungs, the landing law, waves, the floor.
 2. `INTERFACES.md` — what deployment owns, the four seams, the optional scratch rehearsal.
 3. `SCENARIOS.md` — the proof obligations each step above gates on.
-4. `../TDD/integration.md` — the swap sequence Step 4 serializes.
+4. `../TDD.md §Integration` — the swap sequence Step 4 serializes.

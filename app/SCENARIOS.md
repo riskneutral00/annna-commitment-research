@@ -49,7 +49,7 @@
 
 ## S — Appearance (skins, boring, opacity)
 - **S1 [skin applies]** Selecting a skin re-tints canvas and chrome from that pack's approved palette tokens; the same stored appearance state renders identically twice, with **zero model calls**.
-- **S2 [boring round-trip]** Boring on: photo off, solid content backing. Boring off: the previous skin **and** opacity restore exactly. The stash survives reload.
+- **S2 [boring round-trip]** Boring on: photo off, solid content backing. Boring off: **every member of the display-only state set** (`SPEC.md §7` — active skin, both opacity dials, faves, the wake policy's scope and its `keep-awake` marks) restores exactly. The stash survives reload. *(Asserted against the set, not a fixed list: a member added to §7 and not stashed fails this scenario, which is how the second opacity dial and `keep-awake` would have been caught.)*
 - **S3 [fave-four FIFO]** Starring a fifth skin drops the oldest fave; unstarring the last is a no-op; the pop-out never exceeds four rows and never renders a scroll container.
 - **S4 [no-flash landing]** A return visit paints the stored skin in the first frame; a true first visit paints the ambient ground — never a guessed skin later corrected.
 - **S5 [gallery = own board]** Every gallery card renders the owner's own current board re-tinted per that skin — real commitments, display projections only, no app-computed values, zero writes.

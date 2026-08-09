@@ -35,18 +35,11 @@
 | PRD.md | SPEC | That annnä is an agent-first commitment harness for peace of mind — both senses of agent-first, capability parity for the owner's own agents, and the requirement that a full board not read as a wall |
 | README.md | derived | The repo's front page: what annnä is, the one-week-run-twice proof, the layer map, current build state |
 | RULINGS.md | index | The FR and FD ruling registry — what each ruling decided and which file holds it. Never a home itself |
-| TDD/README.md | derived | The testing strategy: which kind of test each part gets, and in what order |
-| TDD/app.md | derived | That the app gets component/wire tests plus a few e2e, against `app/SCENARIOS.md` |
-| TDD/engine.md | derived | That the engine gets classic unit and property tests — the layer where determinism is provable |
-| TDD/harness.md | derived | That the harness gets behavioral tests on stubs, before any other layer is real |
-| TDD/integration.md | derived | That integration is proven by re-running existing suites with real parts swapped for stubs, not by a new suite |
-| TDD/marketplace.md | derived | That the marketplace is tested against the service mock, never the real closed service |
-| TDD/model.md | derived | That the model is graded by evals rather than pass/fail tests, and where the hard floors are |
-| TDD/security.md | derived | That security is a cross-cutting suite riding every layer's build, with no standalone deliverable but the compliance pack |
+| TDD.md | derived | The testing strategy: the five kinds of test, the four laws, which kind each layer's criteria become, and the swap sequence integration is proven by rather than by a new suite |
 | app/BUILD.md | derived | The app's ordered build steps, each gated by its scenarios and the design-law checklist; ends at the stub-swap |
-| app/DESIGN.md | SPEC | The carried visual and interaction law for every app surface, and where it supersedes the prior build |
+| app/DESIGN.md | SPEC | The visual and interaction law for every app surface. Ruled here, not carried — the prior build was released as law 2026-08-09 (FD-20) |
 | app/INTERFACES.md | derived | The app's two seams: upward to the harness contract, downward to its substrates |
-| app/NOTES.md | never | App backlog scratchpad — the five original ideas are absorbed; two items are still open (calendar import, perceived write-path latency) |
+| app/NOTES.md | never | App backlog scratchpad — the five original ideas are absorbed and calendar import is closed; two items are still open (the untested direct-manipulation bet, perceived write-path latency) |
 | app/README.md | derived | The app package's purpose and read order |
 | app/SCENARIOS.md | derived | The app's deterministic acceptance suite — payloads, mappings, wire contents, state transitions |
 | app/SPEC.md | SPEC | The human-facing layer: what it renders, what it collects, and that it holds zero harness logic, engine math, or model calls |

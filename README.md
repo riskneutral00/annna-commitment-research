@@ -5,7 +5,7 @@ Your schedule lives in your head — every promise, every pickup, every "don't f
 **annnä is an agent-first commitment harness.** You talk; it holds what you promised and does the work the promise implies. The aim is peace — a schedule that feels like there is nothing on it, because the coordination leaves, and then your head no longer has to be where the schedule is kept.
 
 > ### 📋 This repository is a design specification, not a working application.
-> **133 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
+> **126 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
 
 ---
 
@@ -110,7 +110,7 @@ The design was attacked three times before being called done — structured adve
 | [`user-stories/`](user-stories/) | The requirements source of truth — five situations |
 | [`harness/`](harness/) · [`engine/`](engine/) · [`app/`](app/) · [`model/`](model/) | The four layers |
 | [`marketplace/`](marketplace/) · [`security/`](security/) · [`deployment/`](deployment/) | The store's open half · the cross-cutting security law · the discipline of the build |
-| [`TDD/`](TDD/) · [`assets/`](assets/) · [`.specs/`](.specs/) | Test strategy · shipped skins · interview records |
+| [`TDD.md`](TDD.md) · [`assets/`](assets/) · [`.specs/`](.specs/) | Test strategy · shipped skins · interview records |
 | [`archive/`](archive/) | The original research and full design history — *how we got here*, not what to build |
 
 **Reading suggestion:** this page, then [`user-stories/`](user-stories/) for what it actually does, then [`archive/`](archive/) for why the commitment primitive is shaped the way it is. A security reviewer can start, and mostly stay, at [`security/README.md`](security/README.md).

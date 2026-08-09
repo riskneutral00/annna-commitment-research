@@ -8,7 +8,7 @@
 
 - Deployment consumes each layer's `BUILD.md` — the `## Step N` order and the **`Gate:` scenario-ID lines** — as its contract. The `Gate:` lines are machine-readable by design intent: they drive the CI job definitions and `scripts/gate-coverage.mjs`.
 - Deployment owns **when** a step may start (waves) and **whether** its change may land (gates); it never owns **what** a step contains. A deployment-driven edit inside a layer folder is a defect.
-- The swap serialization (`SPEC.md §6`) is `../TDD/integration.md §The swap sequence`; deployment adds the diff gate (Q3), not the order.
+- The swap serialization (`SPEC.md §6`) is `../TDD.md §The swap sequence`; deployment adds the diff gate (Q3), not the order.
 
 ## §2. To the specs (the boundary seam)
 

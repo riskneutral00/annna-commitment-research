@@ -68,4 +68,4 @@ Rules: warm accent on quiet ground, always. Accent is for meaning (a link, the m
 - SVG-only iconography; no emoji glyphs on designed surfaces.
 - Motion restraint: short cross-fades only; **no carousels, no parallax, no auto-playing or ambient animation**.
 - **No testimonials, social-proof, or pricing furniture** on any surface.
-- Glass follows the product's two-state law (rest = absolute glass; frost only under attention) wherever glass is imitated outside the app.
+- Glass follows the product's own law wherever it is imitated outside the app: **one glass at three densities**, findable at rest and readable when engaged, and **engagement adds material rather than removing it**. *(Corrected 2026-08-09 — this previously restated a "rest = absolute glass, frost only under attention" rule that `app/DESIGN.md` §Glass no longer carries. A restatement, not new outward material, so the `README.md` freeze is not engaged.)*

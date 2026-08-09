@@ -1,13 +1,13 @@
 # User Stories (the situations the product must satisfy)
 
-This folder holds the **real, end-to-end stories of how people actually use annnä.** It is the **requirements source-of-truth** for the whole product. It is deliberately *not* the tests: the per-layer acceptance suites (each layer's `SCENARIOS.md`, and the model's `EVALS.md`) are **derived from these stories**, and [`TDD/`](../TDD/) states what kind of executable test each criterion becomes. Stories first, tests after — both now written.
+This folder holds the **real, end-to-end stories of how people actually use annnä.** It is the **requirements source-of-truth** for the whole product. It is deliberately *not* the tests: the per-layer acceptance suites (each layer's `SCENARIOS.md`, and the model's `EVALS.md`) are **derived from these stories**, and [`TDD.md`](../TDD.md) states what kind of executable test each criterion becomes. Stories first, tests after — both now written.
 
 **What these files are:** the full narrative of how each kind of user works with annnä, plus the **situations** that matter — both the things that **must work** and the things that **must be refused** (poka-yoke tested from the outside).
 
 **Why these stories exist:** each Situation explains **how somebody works in real life today, without the app** — the phones, paper, memory, and message tag of its current-reality run — against **how that same person will use annnä to improve their life**, told top to bottom (set up → publish → book → change → settle). **The gap between those two tellings is the product**, and the edge runs around them mark its boundaries: what must work, what must be refused, and (in Situation C) the realistic middle where only part of the world is on the app yet. All of it exists **to help design the parts of this application** — the **harness**, the **model**, the **engine**, and the **app** — each layer *derived* from what these stories require rather than invented and justified afterward.
 
 **What these files are NOT:**
-- **Not tests.** We describe the *situations* a test would need to cover; the executable tests are not written here. What kind of test each criterion becomes is decided in [`TDD/`](../TDD/).
+- **Not tests.** We describe the *situations* a test would need to cover; the executable tests are not written here. What kind of test each criterion becomes is decided in [`TDD.md`](../TDD.md).
 - **Not decomposed here.** The per-layer decomposition of these stories lives in each layer's own `SCENARIOS.md`, not in this folder.
 - **Not v1-scoped.** The stories tell the **end-state product**. **Two named gaps** *(founder-ruled 2026-08-06)*:
   1. Wherever a story shows annnä itself sending over WeChat / Messenger / SMS or buzzing a phone (Situations A, C, D), v1 delivers that same moment as **email sent by the app, or the owner tapping Generate Link and pasting into that channel themselves** (`../app/SPEC.md §6/§9`). The depicted auto-sends are later additions behind the same seam — only the *who presses send* differs in v1.

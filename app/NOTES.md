@@ -31,9 +31,11 @@
 
 ## Still open — the board has no direct-manipulation path for time, and the bet is untested (2026-08-08)
 
-*From the concept-feasibility research pass (provenance: `../RULINGS.md` FD-16). Recorded so it is a decision rather than a discovery. **Not a blocker for any build step**, and **not a proposal to change the board** — `DESIGN.md`'s board laws stand as written.*
+*From the concept-feasibility research pass (provenance: `../RULINGS.md` FD-16). Recorded so it is a decision rather than a discovery. **Not a blocker for any build step**, and **not a proposal to change the board.** The board laws were in fact re-ruled the next day (FD-22, FD-23 — two gravities, and it scrolls); this note did not ask for that and none of it answers this note. The one law this finding rests on — **no time axis** — is the one the re-ruling left untouched.*
 
-`DESIGN.md`: *"The board never scrolls and has no time axis. Time is block data, never position or size."* Blocks are uniform regardless of duration and the date row is the sole navigation. A consequence follows that no file states: **drag a block to move it — the most common gesture in every competing product — is unconstructable here by design.** Every time change routes through the console or a riser form.
+`DESIGN.md`: *"No time axis, ever. Time is block data, never position or size."* Blocks are uniform regardless of duration and the date row is the sole navigation. A consequence follows that no file states: **drag a block to move it — the most common gesture in every competing product — is unconstructable here by design.** Every time change routes through the console or a riser form.
+
+*(Quote refreshed 2026-08-09. It formerly read "The board never scrolls and has no time axis" — **the board now scrolls** (`DESIGN.md` §Board rendering, two gravities), and the citation would otherwise point at a phrase no longer in the file. **The finding is unchanged and if anything sharper:** scroll moves a block's position on screen without moving it in time, so scrolling is not a time gesture and the gap this note records — no direct-manipulation path for time — is exactly as open as it was.)*
 
 The external evidence is unflattering and consistent: conversational interfaces lose to direct manipulation on **low-ambiguity visual tasks**, the gap widening as difficulty rises, and what users prefer is the hybrid — pointing *and* speaking, with language reserved for what is hard to point at. *"Move this to 3pm"* is the canonical case where conversation loses.
 
