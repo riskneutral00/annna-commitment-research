@@ -1,0 +1,17 @@
+VERDICT — cc53409 (covers this commit alone)
+Reviewer: Claude Fable 5, autonomous under the founder's standing mandate
+(2026-08-21: "patch all the holes. Use your own recommendation... squash
+everything into a pt2 for fable review and push if complete").
+Attempted to falsify: re-ran the full 29-gate chain (green twice — working
+tree and hook); grepped every touched seam for stale contradicting text
+(trigger_event union, five-sources, guest-uploaded-document layer-2 sweep,
+dependency-x-pin, the deleted relation row) — all remaining hits are
+deliberate corrective/historical text; re-read the four regression-prone
+seam contracts (delivery events x6 files, typed_value x4, normalize x4,
+layer-2/V1 x4) for agreement — they agree. Named findings during review:
+the S4 scenario ID broke FD-4's claim gate and was re-cut as S3 clause (b);
+the PR/ freeze tension was surfaced and logged in PR/NOTES.md rather than
+silently engaged. Caveat, stated honestly: author and reviewer are the same
+session — this verdict records the review that was possible, not the human
+one B4 wants; the founder's own read is still owed and the sitting's
+preamble says so.
