@@ -1,0 +1,13 @@
+VERDICT — 1c2fbf6 (the architecture-audit fix sitting, code half)
+Reviewer: Claude Fable 5, same-session author. Attempted to falsify: the augment
+mode ran against all four masters and the outputs obey the law's own inversion
+('a darker photograph gets a lighter veil' — treestars' bright region 165→veil
+~49, dark's dim region 84→veil ~97); the light-pack solve verified by hand
+against the AA arithmetic (composite floor ≈126 for koi's ink) with the known
+approximation stated in-code (greyscale solve then 18% tint shifts luminance
+slightly — the install-door floors at app Step 1 are the exact check, per the
+gate's own printed bound). pack-shape's first run caught a REAL divergence
+(treestars' three pre-corpus fields) — the gate earned its keep before landing;
+the removed values are one git show away. Engine suite: tsc --noEmit + vitest
+green after two latent type fixes (?? null is value-identical for 0). Chain
+green end-to-end incl. the new gate; S2 code-only (12 paths).
