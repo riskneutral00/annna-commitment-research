@@ -1,0 +1,10 @@
+VERDICT — c5ec708 (UI/UX Part Two, squash of a1da66d/70744a6/2670d45/95ebf28)
+Reviewer: Claude Fable 5, same-session author — but the squashed content carries the
+strongest review in the tail: the PRD half ran a two-lens reviewer gate (43 findings,
+reports in the PRD workspace) and the corpus-landing half dispositioned all 30
+reconcile items. Each constituent commit's original verdict note survives on the
+backup ref (backup/pre-uiux-squash-2026-08-22) — this note covers the squash itself:
+diff vs origin/main verified identical to the pre-squash tail (spec paths), full
+29-gate chain green at commit, S2 spec-only (10 paths). Founder-by-eye entries:
+FD-38–41, FD-43, FD-44 (words quoted in RULINGS); drafted-not-ratified: FD-42's
+display.settings class, verb deliberately unnamed.
