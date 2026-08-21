@@ -1,0 +1,19 @@
+VERDICT — 70744a6 (covers this commit alone)
+Reviewer: Claude Fable 5 — but this commit is the one in the tail whose review was
+NOT same-session-author-only: two independent reviewer lenses (staleness/consistency,
+adversarial-requirements) ran against the whole corpus first, and every edit here
+traces to a numbered finding in their reports (workspace: review-staleness-2026-08-22.md,
+review-adversarial-2026-08-22.md; 43 findings total, all CRITICAL/HIGH applied).
+Attempted to falsify: both lenses verified their claims by opening cited files, and I
+re-verified the load-bearing ones before editing (FD-35's wording in RULINGS and
+user-stories/README; the presence alias at DESIGN §Board rendering; harness §5.3's
+member list; C10's island text; the §10 spend sentence). The sharpest resolutions:
+RQ-2's appearance exclusion restated gate-shaped (whole for the parity set; FD-42's
+drafted display.settings class is a dedicated path outside the enumeration — X1/X6
+stand unedited, which was the reviewers' own test of the right cut) and the drafted
+class now states its unpaid cost (no named verb; naming is part of ratification, the
+RQ-3 discipline). One genuine floor hole closed: clearing a credential's suspension
+joins the FD-26 console-only class (else credential B un-suspends rate-limited
+credential A) — an application of FD-26's stated principle, marked, not new law.
+Full 29-gate chain green; S2 classified spec-only (6 paths). status: final stamped
+on the root PRD.md; the workspace prd.md remains the 2026-08-08 authoring snapshot.
