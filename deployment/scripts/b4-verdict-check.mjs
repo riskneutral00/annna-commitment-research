@@ -11,6 +11,27 @@
 //
 //   git notes --ref=verdict add -m "attempted to falsify; nothing found" <sha>
 //   git log --notes=verdict
+//
+// IN A FRESH CLONE THE VERDICTS ARE NOT THERE UNTIL YOU FETCH THEM. Notes refs
+// live outside refs/heads and no default refspec brings them down, so `git
+// clone` gives you every commit and none of its verdicts, and this gate reports
+// the whole history uncast. Fetch them once:
+//
+//   git fetch origin "refs/notes/verdict:refs/notes/verdict"
+//
+// and to keep them coming with every ordinary fetch:
+//
+//   git config --add remote.origin.fetch "+refs/notes/verdict:refs/notes/verdict"
+//
+// The push half is the founder's ritual and pushes `refs/notes/verdict`
+// explicitly, for the same reason in the other direction (SPEC.md §7a item 9).
+//
+// THE PIN. This used to be run as `--since=c802396`, a SHA the 2026-08-08 squash
+// left unreachable — so in any fresh clone the gate died on `git log` rather
+// than reporting. `npm run verdicts` now names no range and walks the whole of
+// HEAD, which is reachable by construction; an explicit `--since` that names an
+// unreachable commit falls back to the same full walk with a line saying so,
+// rather than failing on a pin that is nobody's defect.
 import { execFileSync } from "node:child_process";
 
 const REF = "verdict";
@@ -20,7 +41,7 @@ const REF = "verdict";
 const FALSIFIED = /attempted to falsify/i;
 const TOO_THIN = 40;
 
-const range = process.argv.find((a) => a.startsWith("--since="))?.slice(8);
+let range = process.argv.find((a) => a.startsWith("--since="))?.slice(8);
 
 function notesFor(sha) {
   try {
@@ -46,6 +67,15 @@ if (process.argv.includes("--selfcheck")) {
   }
   console.log(`selfcheck OK`);
   process.exit(0);
+}
+
+if (range) {
+  try {
+    execFileSync("git", ["merge-base", "--is-ancestor", range, "HEAD"], { stdio: "ignore" });
+  } catch {
+    console.log(`\nB4 — --since=${range} is not an ancestor of HEAD in this clone; walking the whole history instead.`);
+    range = undefined;
+  }
 }
 
 const commits = execFileSync("git", ["log", "--format=%H%x00%s", range ? `${range}..HEAD` : "HEAD"], {

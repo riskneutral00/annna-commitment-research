@@ -16,8 +16,24 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 
 const DIR = ".tmp/transcripts";
+
+// A layer has a suite if its package.json declares a test script. Discovered,
+// not listed — a hardcoded layer list is a second registry that rots the day a
+// layer gains a suite and nobody edits this file.
+//
+// Exported, and the run below is guarded, because `gate-wiring.mjs` asserts the
+// CI workflow installs every layer this finds (SPEC.md §7a item 3). Two copies
+// of "which layers carry a suite" is the second registry again, one level over.
+export function suiteLayers(root = ".") {
+  return readdirSync(root, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && !e.name.startsWith(".") && e.name !== "node_modules")
+    .filter((e) => existsSync(join(root, e.name, "package.json")))
+    .filter((e) => JSON.parse(readFileSync(join(root, e.name, "package.json"), "utf8")).scripts?.test)
+    .map((e) => e.name);
+}
 
 // The whole gate is this comparison; everything else is running suites and
 // hashing files. Kept separate so --selfcheck can exercise it without a suite.
@@ -39,7 +55,9 @@ function compare(first, second, suites) {
   return { names, findings };
 }
 
-if (process.argv.includes("--selfcheck")) {
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+
+if (isMain && process.argv.includes("--selfcheck")) {
   const cases = [
     ["identical replays pass", compare({ "h.txt": "aa" }, { "h.txt": "aa" }, ["h"]).findings.length === 0],
     ["divergent bytes fail", compare({ "h.txt": "aa" }, { "h.txt": "bb" }, ["h"]).findings.length === 1],
@@ -57,14 +75,10 @@ if (process.argv.includes("--selfcheck")) {
   process.exit(0);
 }
 
-// A layer has a suite if its package.json declares a test script. Discovered,
-// not listed — a hardcoded layer list is a second registry that rots the day a
-// layer gains a suite and nobody edits this file.
-const layers = readdirSync(".", { withFileTypes: true })
-  .filter((e) => e.isDirectory() && !e.name.startsWith(".") && e.name !== "node_modules")
-  .filter((e) => existsSync(join(e.name, "package.json")))
-  .filter((e) => JSON.parse(readFileSync(join(e.name, "package.json"), "utf8")).scripts?.test)
-  .map((e) => e.name);
+// Everything below is the run, guarded: an import wants suiteLayers() alone, and
+// running every suite twice as an import side effect is not a thing to do.
+if (isMain) {
+const layers = suiteLayers();
 
 if (!layers.length) {
   console.log(`\nB9 SKIPPED — no layer declares a suite. Nothing to run twice.`);
@@ -101,3 +115,4 @@ if (!names.length) {
   process.exit(0);
 }
 console.log(`\nB9 OK — ${layers.length} suite(s) run twice, ${names.length} transcript(s) byte-identical`);
+}

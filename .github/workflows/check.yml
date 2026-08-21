@@ -23,3 +23,25 @@ jobs:
       - run: npm ci --prefix engine
       - run: npm ci --prefix harness
       - run: npm run check
+      # S2 and Q3 over the commits this push or PR actually lands. Both read the
+      # commit that lands, and in CI nothing is staged, so without a range they
+      # print SKIPPED and "CI is the second reader" was false for exactly these
+      # two — and a fresh unhooked clone had neither (deployment/SPEC.md §7a
+      # item 2). The pre-commit and commit-msg hooks still fire first; this is
+      # the reader that --no-verify and a missing core.hooksPath cannot skip.
+      - name: path class and swap diff over the pushed commits
+        env:
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+          TIP: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          # A new branch reports an all-zero (or absent) base: fall back to the
+          # tip commit alone rather than skipping, which is the failure mode
+          # this step exists to end.
+          if [ -n "$BASE" ] && git cat-file -e "$BASE^{commit}" 2>/dev/null; then
+            SELECT="--range $BASE..$TIP"
+          else
+            SELECT="--commit $TIP"
+          fi
+          echo "classifying $SELECT"
+          node deployment/scripts/s2-path-class.mjs $SELECT
+          node deployment/scripts/q3-swap-diff.mjs $SELECT

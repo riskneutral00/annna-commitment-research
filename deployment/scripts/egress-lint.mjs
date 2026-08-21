@@ -27,6 +27,12 @@ const CALLS = new RegExp(
     "require\\s*\\(\\s*[\"'](http|https|net|dgram|tls)[\"']",
     "\\b(axios|got|undici|node-fetch|superagent)\\b",
     "\\bConvex(Http)?Client\\b",
+    // Store clients imported by PACKAGE NAME. `import { Client } from "pg"`
+    // opens a socket and passed every clause above until 2026-08-21 (SPEC.md
+    // §7a item 7): the node:-builtin clause reads builtins only, and the
+    // library clause named HTTP libraries only. Matched in import position, not
+    // as a bare word, because "pg" and "ws" are ordinary identifiers elsewhere.
+    "(?:from\\s+|require\\s*\\(\\s*)[\"'](pg|postgres|mysql2?|mariadb|mongodb|mongoose|ioredis|redis|cassandra-driver|ws|eventsource|@?[a-z0-9-]*(aws-sdk|supabase|planetscale|neondatabase)[a-z0-9/@-]*)[\"']",
   ].join("|"),
 );
 
@@ -63,6 +69,11 @@ if (process.argv.includes("--selfcheck")) {
     ["a node:https import is a call site", CALLS.test('import https from "node:https"')],
     ["prefetch( is not a call site", !CALLS.test("const x = prefetch(url)")],
     ["ordinary code is not", !CALLS.test("const summary = summarize(text)")],
+    // §7a item 7: a store client by package name used to pass every clause.
+    ['a store client imported by name is a call site', CALLS.test('import { Client } from "pg";')],
+    ["and by require", CALLS.test('const { MongoClient } = require("mongodb");')],
+    ["a scoped SDK is too", CALLS.test('import { S3 } from "@aws-sdk/client-s3";')],
+    ["the same word outside import position is not", !CALLS.test("const pg = pageCount(doc); const ws = ws + 1;")],
     // The bug this file's canary caught: the two paths must share an engine.
     ["the real pass and the selfcheck use the same matcher", scan(["x"], () => "await fetch(u)").length === 1],
   ];

@@ -10,21 +10,42 @@
 // door fails it the moment someone adds one. The IMPORT half has nothing to
 // read: zero doors exist, so it reports as unexercised rather than passing
 // quietly, and becomes real with the first door.
+//
+// BARE PACKAGE SPECIFIERS ARE ALLOWLISTED, NOT EXEMPTED (SPEC.md §7a item 7,
+// fixed 2026-08-21). The import half used to look only at relative and absolute
+// paths, so a Postgres client imported by its package name — a store client,
+// the exact thing "no store dump" names — walked through it. (Written in prose
+// rather than as a snippet on purpose: the egress lint reads this folder, and a
+// worked example of a store-client import in a gate source is a call site to
+// it.) The allowlist is the node builtins
+// that carry no network, taken from node:module rather than typed out: a
+// hand-written package list is a registry that rots, and the corpus has been
+// bitten by every one of those it has written.
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
+import { builtinModules } from "node:module";
 
 const DOOR = /(^|\/)seed\.(ts|tsx|js|mjs|cjs)$/;
 const IMPORT = /(?:^|\s)(?:import\s[^;]*?from\s*|import\s*|require\s*\(\s*)["']([^"']+)["']/g;
 const FIXTURES = /(^|\/)fixtures(\/|$)/;
+// The network-capable builtins, which a seed door may not reach either — the
+// same set the egress lint refuses, named once per script because these two
+// gates run in different folders and neither may import the other's law.
+const NETWORK_BUILTIN = /^(node:)?(http|https|http2|net|dgram|tls|dns|cluster|inspector)$/;
+const ALLOWED_BARE = new Set(
+  builtinModules.filter((m) => !NETWORK_BUILTIN.test(m)).flatMap((m) => [m, `node:${m}`]),
+);
 
 function badImports(source) {
   return [...source.matchAll(IMPORT)]
     .map((m) => m[1])
-    .filter((spec) => spec.startsWith(".") || spec.startsWith("/"))
-    .filter((spec) => !FIXTURES.test(spec));
+    .filter((spec) =>
+      spec.startsWith(".") || spec.startsWith("/") ? !FIXTURES.test(spec) : !ALLOWED_BARE.has(spec),
+    );
 }
 
 if (process.argv.includes("--selfcheck")) {
+  const imp = (spec) => `import { X } from ${JSON.stringify(spec)};`;
   const cases = [
     ["seed.ts is a door", DOOR.test("engine/seed.ts")],
     ["a nested seed.mjs is a door", DOOR.test("app/db/seed.mjs")],
@@ -32,7 +53,15 @@ if (process.argv.includes("--selfcheck")) {
     ["reseed.ts is not", !DOOR.test("engine/reseed.ts")],
     ["a fixtures import is allowed", badImports('import { boards } from "../fixtures/boards";').length === 0],
     ["a store-dump import is caught", badImports('import { dump } from "../prod/dump";').length === 1],
-    ["a bare package import is not a local reach", badImports('import { z } from "zod";').length === 0],
+    // §7a item 7's worked example, and the allowlist that replaced the exemption.
+    // The specifiers are composed rather than written out for the reason in the
+    // header: a literal store-client import here is one the egress lint reads.
+    ["a store client imported by package name is caught", badImports(imp("pg")).length === 1],
+    ["so is any other bare package", badImports(imp("zod")).length === 1],
+    ["a non-network builtin is allowed", badImports(imp("node:fs")).length === 0],
+    ["its bare spelling too", badImports(imp("path")).length === 0],
+    ["a network builtin is not", badImports(imp("node:https")).length === 1],
+    ["require form reads the same", badImports(`const c = require(${JSON.stringify("pg")});`).length === 1],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   if (failed.length) {

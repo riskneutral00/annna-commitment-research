@@ -22,7 +22,7 @@
     "check:closed": "node deployment/scripts/r2-closed-service.mjs --selfcheck && node deployment/scripts/r2-closed-service.mjs",
     "check:seed": "node deployment/scripts/r4-one-seed-door.mjs --selfcheck && node deployment/scripts/r4-one-seed-door.mjs",
     "check:credfloor": "node deployment/scripts/r6-deploy-secret-scoping.mjs --selfcheck && node deployment/scripts/r6-deploy-secret-scoping.mjs",
-    "check:secrets": "node deployment/scripts/x1-secret-grep.mjs",
+    "check:secrets": "node deployment/scripts/x1-secret-grep.mjs --selfcheck && node deployment/scripts/x1-secret-grep.mjs",
     "check:swap": "node deployment/scripts/q3-swap-diff.mjs --selfcheck",
     "check:egress": "node deployment/scripts/egress-lint.mjs --selfcheck && node deployment/scripts/egress-lint.mjs",
     "check:engine": "npm --prefix engine test",
@@ -34,6 +34,6 @@
     "check:docs": "node deployment/scripts/doc-count-check.mjs",
     "check:index": "node deployment/scripts/index-complete.mjs --selfcheck && node deployment/scripts/index-complete.mjs",
     "cites": "node deployment/scripts/cite-check.mjs --selfcheck && node deployment/scripts/cite-check.mjs",
-    "verdicts": "node deployment/scripts/b4-verdict-check.mjs --selfcheck && node deployment/scripts/b4-verdict-check.mjs --since=c802396"
+    "verdicts": "node deployment/scripts/b4-verdict-check.mjs --selfcheck && node deployment/scripts/b4-verdict-check.mjs"
   }
 }

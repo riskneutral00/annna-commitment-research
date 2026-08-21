@@ -5,8 +5,19 @@
 //
 // Produces public/assets/packs/<name>/:
 //   photo-640/1280/2048.webp + .avif, photo@1x/2x/3x.webp (AGENTS.md pipeline ruling)
-//   palette.json  — extracted colors + derived ambient/tint/accent tokens
+//   palette.json      — extracted colors + derived ambient/tint/accent tokens
+//   derivatives.json  — the LQIP
 // and refreshes public/assets/packs/index.json.
+//
+// v3 (2026-08-21, FD-31): the LQIP left palette.json. A 24px inlined rendition
+// of the licensed photograph is a rendition of the licensed photograph, so it
+// belongs with the renditions and not with the token set —
+// ../marketplace/SPEC.md §1.1: `palette` is the approved token set, thirteen
+// fields, and `derivatives` is "the responsive image set and, since FD-31, the
+// LQIP", delivered only to entitled accounts. The store document's
+// `derivatives` field is assembled from this file plus the rendition files
+// written beside it; keeping the LQIP in palette.json meant the palette — which
+// §1.1 sends to unentitled browsers as preview material — carried a picture.
 //
 // v2 (2026-07-17): extraction via node-vibrant's semantic swatches (Android Palette port);
 // derivation math in OKLCH via culori (perceptually uniform, unlike HSL); WCAG contrast
@@ -128,9 +139,9 @@ const palette = {
   ambientLight,
   tintDarkAlpha: +Math.min(0.3 + luminance * 0.35, 0.6).toFixed(2),
   tintLightAlpha: +Math.min(0.35 + (1 - luminance) * 0.3, 0.65).toFixed(2),
-  lqip,
 };
 fs.writeFileSync(`${outDir}/palette.json`, JSON.stringify(palette, null, 2));
+fs.writeFileSync(`${outDir}/derivatives.json`, JSON.stringify({ name, lqip }, null, 2));
 
 // ---------- 4. refresh the pack index ----------
 const packsRoot = "public/assets/packs";

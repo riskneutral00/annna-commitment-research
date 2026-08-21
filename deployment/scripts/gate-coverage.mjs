@@ -12,15 +12,19 @@
 //   node deployment/scripts/gate-coverage.mjs            full run over all layers
 //   node deployment/scripts/gate-coverage.mjs --selfcheck  assert-based self-test
 //
-// ORPHANS are reported for [MUST] scenarios only — the rule this script
-// mechanizes is "every [MUST] scenario names its gating step", and requiring a
-// BUILD home for every tag was stricter than the law. Side effect to know
-// about: a [HELD-OUT] or [DRILL] scenario with no BUILD home is now silently
-// allowed. Every one of them has a home today; if one is ever added without
-// one, nothing here will say so. Only harness ([HELD-OUT]) and deployment
-// ([DRILL]) carry non-MUST tags at all — every other layer states "Every
-// scenario is MUST" in its own SCENARIOS.md header — so the filter can only
-// ever bite in those two.
+// ORPHANS are reported for [MUST], [ENGINE] and [HELD-OUT] scenarios — the law
+// verbatim (SCENARIOS.md B8: "a change that adds or renames a
+// [MUST]/[ENGINE]/[HELD-OUT] scenario without naming it in a BUILD step").
+// This script checked [MUST] alone until 2026-08-21 and said so in this comment,
+// which is a narrowing admitted rather than fixed (SPEC.md §7a item 4). It was
+// latent — no non-MUST orphan existed — and a latent gap is still a gap: the
+// day one is added, a narrowed gate says nothing.
+//
+// [DRILL] is the one tag still exempt, and it is exempt in the law too: B4 is
+// the only [DRILL] and its second identity does not exist, so no mechanism can
+// gate it (SCENARIOS.md, the coverage map). A [DRILL] that also carries
+// [ENGINE] is an orphan candidate like any other — [ENGINE] is named in the law
+// and the two tags are read independently.
 //
 // Parsing contract (verified against all six walked layers 2026-08-07):
 //   scenario def line:  `- **<ID> [ ...tag... ] ...`  ID = [A-Z]\d+[a-z]?
@@ -106,40 +110,51 @@ function gateLines(text) {
     .join("\n");
 }
 
+// Which tags owe a BUILD home. Exported so the selfcheck and the real pass
+// cannot drift onto two readings of one law.
+export const owesHome = (def) => def.tag !== "DRILL" || def.engine;
+
 function checkLayer(layer) {
   const defs = scenarioDefs(fs.readFileSync(path.join(ROOT, layer.scenarios), "utf8"));
   const buildText = fs.readFileSync(path.join(ROOT, layer.build), "utf8");
   const homed = buildIds(buildText, defs); // whole build: J-family etc. are named in step bodies
   const gated = buildIds(gateLines(buildText), defs); // gate lines only: where a phantom would live
   const families = new Set([...defs.keys()].map((id) => id[0]));
-  const orphans = [...defs.keys()].filter((id) => defs.get(id).tag === "MUST" && !homed.has(id));
+  const orphans = [...defs.keys()].filter((id) => owesHome(defs.get(id)) && !homed.has(id));
   const phantoms = [...gated].filter((id) => families.has(id[0]) && !defs.has(id));
   return { defs, orphans, phantoms };
 }
 
 function selfcheck() {
-  const S = `- **X1 [MUST]** — a\n- **X2 [MUST]** — b\n- **X3 [HELD-OUT]** — c`;
+  const S = `- **X1 [MUST]** — a\n- **X2 [MUST]** — b\n- **X3 [HELD-OUT]** — c\n- **X4 [DRILL]** — d\n- **X5 [ENGINE]** — e\n- **X6 [DRILL] [ENGINE]** — f`;
   const defs = scenarioDefs(S);
   const fam = new Set([...defs.keys()].map((i) => i[0]));
-  assert.deepStrictEqual([...defs.keys()], ["X1", "X2", "X3"], "parses three IDs");
+  assert.deepStrictEqual([...defs.keys()], ["X1", "X2", "X3", "X4", "X5", "X6"], "parses six IDs");
   assert.strictEqual(defs.get("X3").tag, "HELD-OUT", "reads HELD-OUT tag");
+  assert.ok(defs.get("X5").engine, "reads the ENGINE tag");
 
-  // Mirrors checkLayer: only a [MUST] scenario without a BUILD home is an orphan.
-  const orphansOf = (ids) =>
-    [...defs.keys()].filter((i) => defs.get(i).tag === "MUST" && !ids.has(i));
+  // The law's tag set, and its one exemption.
+  assert.ok(owesHome(defs.get("X1")) && owesHome(defs.get("X3")) && owesHome(defs.get("X5")),
+    "MUST, HELD-OUT and ENGINE each owe a BUILD home");
+  assert.ok(!owesHome(defs.get("X4")), "a bare DRILL does not — its second identity does not exist");
+  assert.ok(owesHome(defs.get("X6")), "but a DRILL that is also ENGINE does");
+
+  // Mirrors checkLayer.
+  const orphansOf = (ids) => [...defs.keys()].filter((i) => owesHome(defs.get(i)) && !ids.has(i));
 
   // Clean case: a range covers X2, X9 is a phantom, non-family M3 is ignored.
-  const clean = buildIds("Verify: X1, X3. Also X2–X2. Phantom X9. Prose M3.");
+  const clean = buildIds("Verify: X1, X3, X5, X6. Also X2–X2. Phantom X9. Prose M3.");
   const phan = [...clean].filter((i) => fam.has(i[0]) && !defs.has(i));
   assert.deepStrictEqual(orphansOf(clean), [], "no orphans when all gated");
   assert.deepStrictEqual(phan, ["X9"], "X9 flagged, M3 ignored (wrong family)");
 
-  // Negative, mixed tags: X2 [MUST] is ungated -> orphan; X3 [HELD-OUT] is
-  // ungated too -> not an orphan (the MUST-only rule, and its side effect).
-  assert.deepStrictEqual(orphansOf(buildIds("Verify: X1.")), ["X2"], "MUST-only orphans");
+  // Negative, mixed tags: everything the law names is an orphan when ungated,
+  // and only the bare [DRILL] is not. This is the case the narrowed script read
+  // wrong — it returned ["X2"] alone while X3, X5 and X6 sat ungated.
+  assert.deepStrictEqual(orphansOf(buildIds("Verify: X1.")), ["X2", "X3", "X5", "X6"], "MUST, HELD-OUT and ENGINE orphans");
 
   // X-family expands against the layer's own defs, and only with them.
-  assert.deepStrictEqual(orphansOf(buildIds("Gate: X-family.", defs)), [], "X-family covers X1–X3");
+  assert.deepStrictEqual(orphansOf(buildIds("Gate: X-family.", defs)), [], "X-family covers X1–X6");
   assert.ok(!buildIds("Gate: X-family.").has("X1"), "no defs -> no family expansion");
 
   // Range expansion across a real family span.

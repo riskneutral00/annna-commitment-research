@@ -21,14 +21,26 @@ const WORKFLOWS = ".github/workflows";
 // one thing it exists to catch. VERCEL stays for the same reason in reverse: a
 // leftover token from a former provider is still a deploy secret.
 const DEPLOY_SECRET = /secrets\.[A-Z0-9_]*(DEPLOY|PROD|CLOUDFLARE|VERCEL|CLERK_SECRET|RESEND|CONVEX_DEPLOY)[A-Z0-9_]*/g;
+// The site of a finding when it sits above `jobs:` rather than inside one job.
+const WORKFLOW_LEVEL = "everything above `jobs:`";
 
 // A job is `  name:` at two spaces under `jobs:`; `environment:` anywhere in it
 // puts it behind a protected environment. Deliberately a shallow scan, not a
 // YAML parse: the corpus has one workflow file and adding a parser dependency
 // to read it would be the larger risk.
+//
+// THE PREAMBLE IS SCANNED TOO (SPEC.md §7a item 6, fixed 2026-08-21). Everything
+// above `jobs:` — a workflow-level `env:` block above all else — is inherited by
+// every job in the file, and no job-level `environment:` can protect what was
+// already handed to all of them. The old scan started at `jobs:`, so a deploy
+// secret hoisted to the top of the file was invisible to the gate whose whole
+// subject is deploy secrets reachable from agent-authored code. Job-level `env:`
+// needed no fix: it already sits inside its job's block.
 function unprotectedJobsWithDeploySecrets(yaml) {
   const findings = [];
   const jobsAt = yaml.indexOf("\njobs:");
+  const preamble = [...new Set((jobsAt < 0 ? yaml : yaml.slice(0, jobsAt)).match(DEPLOY_SECRET) ?? [])];
+  if (preamble.length) findings.push([WORKFLOW_LEVEL, preamble]);
   if (jobsAt < 0) return findings;
   const blocks = yaml.slice(jobsAt).split(/\n(?=  [A-Za-z0-9_-]+:[ \t]*$)/m);
   for (const block of blocks) {
@@ -64,6 +76,25 @@ if (process.argv.includes("--selfcheck")) {
         "\njobs:\n  build:\n    steps:\n      - run: echo ${{ secrets.CLOUDFLARE_API_TOKEN }}\n",
       ).length === 1,
     ],
+    // The bypass §7a item 6 named: hoist the secret above `jobs:`, where every
+    // job inherits it and no job-level `environment:` can protect it.
+    [
+      "a workflow-level env: block is caught",
+      unprotectedJobsWithDeploySecrets(
+        "name: x\nenv:\n  TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}\n\njobs:\n  build:\n    steps:\n      - run: npm test\n",
+      ).length === 1,
+    ],
+    [
+      "and it is reported at workflow level, not as a job",
+      unprotectedJobsWithDeploySecrets("env:\n  T: ${{ secrets.VERCEL_TOKEN }}\njobs:\n  b:\n    steps: []\n")[0][0] === WORKFLOW_LEVEL,
+    ],
+    [
+      "a protected job below it does not launder it",
+      unprotectedJobsWithDeploySecrets(
+        "env:\n  T: ${{ secrets.PROD_KEY }}\n\njobs:\n  deploy:\n    environment: production\n    steps: []\n",
+      ).length === 1,
+    ],
+    ["a preamble with no secret is not a finding", unprotectedJobsWithDeploySecrets("name: check\non:\n  push:\n" + clean).length === 0],
     // The bypass this gate shipped with: a decoy `environment:` inside a step.
     [
       "a step-level environment: does NOT protect the job",
@@ -86,7 +117,8 @@ const findings = [];
 for (const name of existsSync(WORKFLOWS) ? readdirSync(WORKFLOWS) : []) {
   if (!/\.ya?ml$/.test(name)) continue;
   for (const [job, secrets] of unprotectedJobsWithDeploySecrets(readFileSync(join(WORKFLOWS, name), "utf8"))) {
-    findings.push(`${WORKFLOWS}/${name} — job "${job}" runs agent-authored code and holds ${secrets.join(", ")}`);
+    const where = job === WORKFLOW_LEVEL ? `${WORKFLOW_LEVEL} (inherited by every job)` : `job "${job}"`;
+    findings.push(`${WORKFLOWS}/${name} — ${where} runs agent-authored code and holds ${secrets.join(", ")}`);
   }
 }
 
