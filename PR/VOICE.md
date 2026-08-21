@@ -47,7 +47,7 @@ Naming a banned register in order to refuse it is permitted — "not a productiv
 | Banned draft | Water |
 |---|---|
 | "annnä is an AI-powered scheduling solution that streamlines coordination for service businesses." | "You tell annnä what you sold. It arranges the people and things the promise needs." |
-| "Reclaim your time and 10x your focus with intelligent automation!" | "The week that took two dozen phone calls now takes none." |
+| "Reclaim your time and 10x your focus with intelligent automation!" | "The week that took two dozen phone calls takes a handful of prepared ones." |
 | "Let our AI copilot magically handle your calendar." | "The agent asks one question. The engine checks the numbers. You say yes or no." |
 | "Find your zen with a mindfully designed interface." | "An empty day is a photograph." |
 | "Your journey to work-life balance starts here." | "The time you win back is yours. It is never re-listed behind your back." |

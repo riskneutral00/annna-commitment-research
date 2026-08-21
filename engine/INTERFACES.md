@@ -13,8 +13,9 @@ Every obligation of `../harness/INTERFACES.md §1`, mapped to where this package
 | §1.1 `calculate(query) → Handle` — opaque, never outward | `SPEC.md §5` (closed query taxonomy) + `§4` (handle mechanics, display facet, staleness) |
 | §1.2 `commit` — no-double-book by construction, atomic, latch invariant, diff-only, never wipes governing rules, idempotent per caller write id | `SPEC.md §6` (§6.6 the write id) |
 | §1.3 `check_consistency` / `check_coverage` — governing vs own vs **unsatisfiable**, structural only | `SPEC.md §8` (four classes; unsatisfiable outranks authority) |
-| §1.4 `typed_value` / `compare` — the M3 value vocabulary + quota math | `SPEC.md §2` (vocabulary + operators), `§3` (`quota` entry) |
+| §1.4 `typed_value` / `compare` — the M3 value vocabulary + quota math; for `instant`/`interval` rows the `type_spec` carries the resolution context `{zone, reference_instant, locale}` (FD-27, 2026-08-21 — the two-argument pin holds) | `SPEC.md §2` (vocabulary + operators + the resolution-context rule), `§3` (`quota` entry) |
 | §1.5 `resolve(goal, boards, rules) → Handle` — arbitration, bounded re-solve, contention ordering | `SPEC.md §7` |
+| §1 `unavailable \| timeout` — the seam-wide infrastructure members (2026-08-21): a call that cannot reach the engine or times out returns these, never `{conflict}`; recovery rides the §6.6 write id | `SPEC.md §9` (the engine-unreachable bullet), `§6.6` *(row added 2026-08-21 — this table claims to map **every** §1 obligation and had five rows for six obligations)* |
 
 **The proposal fits the existing seam — verified:**
 - `resolve` already returns "a satisfying placement, **or a decline**" as a Handle; a compaction goal returns a **Proposal handle** through the same signature — the `direction` rides inside `goal`, no new parameter.

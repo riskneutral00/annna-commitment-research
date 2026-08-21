@@ -38,11 +38,11 @@ Grouped by family. One flagship is chosen per surface; the rest are the bench, n
 > Right now your schedule is kept in your head. annnä holds it instead — all of it, on one board — and does the coordination behind each promise too. Your calendar is replaced by an agent you talk to.
 
 **30 seconds** —
-> Your schedule lives in your head — every promise, every pickup, every "don't forget," carried all day by you. annnä is a conversational agent that holds it instead: everything you schedule, personal and professional, on one governed board. And the coordination behind each promise — finding the instructor, holding the boat, collecting the documents, getting the yes from every person affected — she does that too. The numbers always come from deterministic code, never from the AI. The week that took two dozen phone calls takes none — and the board, resting on a photograph, feels like there's nothing on it.
+> Your schedule lives in your head — every promise, every pickup, every "don't forget," carried all day by you. annnä is a conversational agent that holds it instead: everything you schedule, personal and professional, on one governed board. And the coordination behind each promise — finding the instructor, holding the boat, collecting the documents, getting the yes from every person affected — she does that too. The numbers always come from deterministic code, never from the AI. The week that took two dozen phone calls takes a handful of prepared ones — none, once everyone in it is on annnä — and the board, resting on a photograph, feels like there's nothing on it.
 
 **2 minutes** — the four movements, in order:
 1. **The crowded head.** Where the schedule actually lives today: in memory, in worry, in the low hum of "what am I forgetting?" — for a parent and a shop owner alike. annnä's first act is to hold it all, so a head can put it down.
-2. **The work, proven.** A real dive-shop week today (two dozen calls, a boat chartered the morning of) versus the same week with annnä (placed weeks ahead, not one call). The relief isn't a mood — it's coordination actually leaving.
+2. **The work, proven.** A real dive-shop week today (two dozen calls, a boat chartered the morning of) versus the same week with annnä: placed weeks ahead — not one call once everyone in the week is on it, and until then the honest middle case: annnä places everything its network reaches and *prepares* the calls it can't, two dozen becoming a handful of prepared ones *(the ceiling/v1 split the README already carries, added here 2026-08-21 — the ceiling stated as the product is the overclaim VOICE's own "Understate" rule forbids)*. The relief isn't a mood — it's coordination actually leaving.
 3. **What it protects.** A promised time is a promise to a real person: nothing touches another human without the owner's yes. Private life blocks availability without being visible. Customers fill plain forms — no accounts, no chatbot. Documents live in a vault with a shredder. And every number comes from deterministic code — the AI literally cannot author one.
 4. **Where it ends.** Eventually you stop placing commitments and state them instead — annnä knows your life well enough to propose where each one fits, and you say yes. The goal, throughout: a schedule that feels like there's nothing on it.
 
@@ -52,7 +52,7 @@ Grouped by family. One flagship is chosen per surface; the rest are the bench, n
 |---|---|---|---|
 | **Landing page** | Someone with a crowded week | The feeling first: the board on a photograph, then the week-run-twice proof | Recognition, then relief |
 | **Repo (GitHub)** | An engineer or builder | The discipline: four blind research streams, the model/engine split, adversarial reviews, five falsification-probe situations | Rigor they can check |
-| **Investor / grant** | A capital allocator | Category: **multi-party coordination for small service businesses** — the calendar gets replaced as a side effect. Lead with the week-run-twice proof, not the category. The completeness thesis is stated as a bet to be tested with pilots, never as an achieved moat | Specific mechanism + falsifiable claims — they've seen fifty "AI calendar" decks |
+| **Investor / grant** | A capital allocator | Category: **multi-party coordination across employers, for small service businesses** — coordination *inside* one shop is a served market (`BRIEF.md`'s landscape scan names who serves it); the across-employer half is the narrowing annnä claims, and the calendar gets replaced as a side effect. Lead with the week-run-twice proof, not the category. The completeness thesis is stated as a bet to be tested with pilots, never as an achieved moat | Specific mechanism + falsifiable claims — they've seen fifty "AI calendar" decks |
 | **First users** | Tutors, dive pros, the therapist | The mirror: describe *their* week back to them, accurately, before showing anything — and match the proof to the reader (Sofia's week for a tutor, Hug Ocean's for a dive pro, Debra's for a practitioner) in *their* friction unit: calls for a shop, WhatsApp threads for a tutor | "That's exactly my Tuesday" |
 
 ## Objections, answered in-voice
@@ -67,13 +67,13 @@ Grouped by family. One flagship is chosen per surface; the rest are the bench, n
 > Data flows in, never out. You can bring an existing calendar in — importing it seeds your board so you're not starting from an empty screen — and you can bring it in again any time you like. What annnä won't do is go looking on its own: nothing runs in the background, nothing watches. And it never writes back — no outside copy of your board exists to drift out of date, because a schedule kept in two places is how double-bookings happen. Your data itself is always yours to take with you.
 
 **"There's no app yet."**
-> Correct — and the honest state is the pitch. What exists is a complete, reviewed design: more than 120 specification files, five end-to-end situations including one deliberately built to break it, and a security posture written to be handed to an outside reviewer. The reviews were structured adversarial attacks by independent AI reviewers — not external human audits — and every kill list is public in the repo. The build starts from a spec that was attacked before it was trusted.
+> Correct — and the honest state is the pitch. What exists is a complete, reviewed design whose build has just begun: more than 120 specification files, Step-0 scaffolds with test suites in the engine and harness, five end-to-end situations including one deliberately built to break it, and a security posture written to be handed to an outside reviewer. The reviews were structured adversarial attacks by independent AI reviewers — not external human audits — and every kill list is public in the repo. The build starts from a spec that was attacked before it was trusted.
 
 **"Will it message my customers on its own?"**
 > Never by default. Anything that crosses into the real world — a message, a move — requires your yes. You can hand annnä standing permission for a category of action, but that grant is itself an explicit, visible approval — never acquired silently, always revocable. And a person whose time might change is asked, never told.
 
 **"What does it cost?"**
-> Nothing to announce. What is decided: annnä sells no data and shows no ads.
+> Nothing to announce.
 
 **"What happens when the AI is wrong?"**
 > It can be wrong about wording; it can't be wrong about the math. Every number is computed, checked against real capacity, and shown to you before anything is promised to anyone.

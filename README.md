@@ -16,7 +16,7 @@ Your schedule lives in your head — every promise, every pickup, every "don't f
 **Agent-first.** Agents are first-class users, alongside people, in two senses at once.
 
 - You state intent and an agent does the work. There is no settings screen to hunt for: connecting a calendar is a conversation, and a template is authored by talking.
-- Your own agent can call annnä directly, through the same tools the app calls, under the same permissions. Nothing the app can do is out of reach of software acting for you. Specified in [`PRD.md`](PRD.md); the surface opens when there is a cohort to open it for.
+- Your own agent can call annnä directly, through the same tools the app calls, under the same permissions. Nothing the app can do is out of reach of software acting for you — with the exclusions the spec itself rules: guest surfaces, appearance, service administration, and the authorization-and-recovery acts that stay console-only, because a credential must never control who may act as the owner ([`PRD.md`](PRD.md) RQ-2). The surface opens when there is a cohort to open it for.
 
 **Harness.** What you put on something powerful so it can be steered, and what a person clips into so they cannot fall. Both are meant.
 
@@ -47,9 +47,9 @@ The proof is one busy week at a small Phuket dive center, run the way the indust
 
 > Read it: [the clean run](user-stories/Situations/Situation-C/situation-1.md) · [current reality](user-stories/Situations/Situation-C/situation-2.md) · [the middle case](user-stories/Situations/Situation-C/situation-5.md)
 
-## The five probes
+## The probes
 
-Five end-to-end situations in [`user-stories/`](user-stories/) are the requirements source of truth. They are falsification probes, not design targets: if a story breaks the model, the finding is a missing *general* primitive, and the fix is never to special-case the story.
+Five end-to-end situations in [`user-stories/`](user-stories/) — plus two marketplace install probes (A′, C′) the folder also holds — are the product's falsification probes: if a story breaks the model, the finding is a missing *general* primitive, and the fix is never to special-case the story. (The requirements register is [`PRD.md`](PRD.md)'s RQ series — FD-35; the probes are what every requirement is tested against.)
 
 | | Who | What it tests |
 |---|---|---|
@@ -72,7 +72,7 @@ The load-bearing split is Model and Engine. Delete the AI entirely and the Engin
 
 **Why the split is drawn there is arithmetic, not tidiness.** Agent success compounds over steps: 95% per step is about 60% over ten and 28% over twenty-five. A placed week is that many steps, so placement in the model is a coin flip and placement in the engine is deterministic (FD-16).
 
-**Build order:** Harness first, against stubs → Engine to satisfy its seams → App to render the surfaces → qualify real models last. [`marketplace/`](marketplace/) builds last; [`deployment/`](deployment/) builds alongside.
+**Build order:** the harness against stubs and the app against its own spies run concurrently from the start; the engine builds to the harness's seams once its suite is green; real models qualify last. [`marketplace/`](marketplace/) builds last of all; [`deployment/`](deployment/) builds alongside. (The dependency order's normative home is [`deployment/SPEC.md`](deployment/SPEC.md) §6's wave table — this line matches it since 2026-08-21; its older strictly-linear phrasing was the one thing that SPEC names as wrong.)
 
 ## The locks
 
@@ -86,7 +86,7 @@ Your customers' data is legally yours, not annnä's — the business is the cont
 
 The founding research, the five situations, all four layer specs with their acceptance suites, the security law, the build discipline and the testing strategy are done. Application code is Step-0 scaffolds in [`engine/`](engine/) and [`harness/`](harness/), the process gates in [`deployment/scripts/`](deployment/scripts/), and the asset pipeline in [`assets/`](assets/).
 
-The design was attacked three times before being called done — structured adversarial reviews by fleets of independent AI reviewers with no stake in it, not external human audits. 93 findings across the first two rounds, 30 killed as unfounded; a third round of 46 findings on the newer material, every one refuted, and then an audit of the refuters overturned four kills and surfaced five fresh gaps. The lesson held all three times: most attacks die, and the survivors are the ones worth having found.
+The design was attacked three times before being called done — structured adversarial reviews by fleets of independent AI reviewers with no stake in it, not external human audits. 93 findings across the first two rounds, 30 killed as unfounded; a third round on the newer material raised 46 raw findings — **30 distinct after dedup** — all 30 killed on first review, and then an audit of the refuters overturned four of those kills and surfaced five fresh gaps *(numbers restated 2026-08-21; the round's working tally had been quoted pre-dedup, which inflated the killed count by sixteen)*. The lesson held all three times: most attacks die, and the survivors are the ones worth having found. A fourth, whole-corpus pass ran 2026-08-21 and its findings are landed throughout, dated in place.
 
 **Next step:** build the harness against stubs, per [`harness/BUILD.md`](harness/BUILD.md).
 
@@ -107,7 +107,7 @@ The design was attacked three times before being called done — structured adve
 | [`INDEX.md`](INDEX.md) | Every tracked file, one line each: its authority tier and what it decides |
 | [`PRD.md`](PRD.md) | What agent-first means here, and what it requires |
 | [`RULINGS.md`](RULINGS.md) | The founder-ruling registry |
-| [`user-stories/`](user-stories/) | The requirements source of truth — five situations |
+| [`user-stories/`](user-stories/) | The falsification probes — five situations + two marketplace probes (the requirements register is `PRD.md`, FD-35) |
 | [`harness/`](harness/) · [`engine/`](engine/) · [`app/`](app/) · [`model/`](model/) | The four layers |
 | [`marketplace/`](marketplace/) · [`security/`](security/) · [`deployment/`](deployment/) | The store's open half · the cross-cutting security law · the discipline of the build |
 | [`TDD.md`](TDD.md) · [`assets/`](assets/) · [`.specs/`](.specs/) | Test strategy · shipped skins · interview records |

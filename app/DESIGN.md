@@ -207,6 +207,11 @@ Twenty open, self-hostable candidates were measured. **The superfamily criterion
 
 ### The criteria the choice was made against
 
+Two of these are additions to `../PR/BRAND.md`'s list, both derived rather than chosen *(moved under this heading 2026-08-21 — the heading sat empty while its content lived two subsections down, and the design-law-coverage gate checks section naming, not section truth)*:
+
+1. **The face must be a superfamily, not a face — because of the owner's *content*, not the chrome.** *"One humanist sans"* is unbuildable as written. **Chrome shipping in English does not make the product Latin-only**: the board renders **owner-authored content** — commitment titles, party names, place names — and the owner is a Rawai dive shop or a Taipei studio as readily as an English speaker (`SPEC.md §5`, FR15's own examples). Those strings land in the face, at 13px and at the 9px micro-mark, on the densest surface in the product. A Latin-only face resolves them through an unmatched system fallback: different weight, different vertical metrics, and a block whose text no longer sits where the block was measured for. What is required is a face with **metric-matched Thai and CJK siblings** (the Source Sans / Source Han and Noto families are the *shape* of the answer, not the answer). *This does not change the "one face" law — a superfamily is one design.*
+2. **The `ä` is a gate, at both ends of the ramp.** The umlaut is part of the wordmark (`../PR/BRAND.md`), so: at **9px** the two dots must remain two dots and must not merge with the bowl; at heading and hero sizes they must not clip against a tight line-height. **Test both before accepting a face** — a face that fails either is disqualified regardless of how it reads in a specimen.
+
 ### The ramp
 
 | role | size | where |
@@ -223,11 +228,6 @@ Twenty open, self-hostable candidates were measured. **The superfamily criterion
 
 Every figure the product renders is `tabular-nums` — no exceptions and no per-site opt-in. The board shows a column of start times, and proportional figures make a vertical run of times visibly ragged at exactly the size (9px) where raggedness is indistinguishable from misalignment. **This is a whole-product setting, not a component one**, so that no future surface has to remember.
 
-Two of these are additions to `../PR/BRAND.md`'s list, both derived rather than chosen:
-
-1. **The face must be a superfamily, not a face — because of the owner's *content*, not the chrome.** *"One humanist sans"* is unbuildable as written. **Chrome shipping in English does not make the product Latin-only**: the board renders **owner-authored content** — commitment titles, party names, place names — and the owner is a Rawai dive shop or a Taipei studio as readily as an English speaker (`SPEC.md §5`, FR15's own examples). Those strings land in the face, at 13px and at the 9px micro-mark, on the densest surface in the product. A Latin-only face resolves them through an unmatched system fallback: different weight, different vertical metrics, and a block whose text no longer sits where the block was measured for. What is required is a face with **metric-matched Thai and CJK siblings** (the Source Sans / Source Han and Noto families are the *shape* of the answer, not the answer). *This does not change the "one face" law — a superfamily is one design.*
-2. **The `ä` is a gate, at both ends of the ramp.** The umlaut is part of the wordmark (`../PR/BRAND.md`), so: at **9px** the two dots must remain two dots and must not merge with the bowl; at heading and hero sizes they must not clip against a tight line-height. **Test both before accepting a face** — a face that fails either is disqualified regardless of how it reads in a specimen.
-
 ### Delivery — self-hosted, and never a third-party font host
 
 **Self-hosted and subset, always.** Not a preference and not a performance argument:
@@ -237,7 +237,7 @@ Two of these are additions to `../PR/BRAND.md`'s list, both derived rather than 
 
 **How that resolves, and the two surfaces differ deliberately:**
 - **The app** takes `font-display: optional` with the subset preloaded. Behind sign-in, on a repeat-visit surface, the cache is warm essentially always — and on the one cold load, holding the fallback for that page is exactly what *never correct in front of the reader* requires.
-- **Outward surfaces** take `swap` with a **metric-matched fallback** (`size-adjust`, `ascent-override`, `descent-override`), because a first impression that never arrives is worse than one that arrives late — and matched metrics mean the swap moves nothing.
+- **Outward surfaces beyond the guest page — none of which exist at v1** *(scoped 2026-08-21: the guest page is the app's only outward surface and §Guest pages rules it onto a system stack — the surface that cannot predict its own script should not ship a webfont subset — so this bullet previously mandated a webfont treatment for a surface its own sibling law forbade one on; the marketing site is a separate artifact)* — would take `swap` with a **metric-matched fallback** (`size-adjust`, `ascent-override`, `descent-override`), because a first impression that never arrives is worse than one that arrives late — and matched metrics mean the swap moves nothing. Recorded as the rule for a surface that does not yet exist, applying to none today.
 
 ## Board rendering
 
@@ -329,7 +329,7 @@ Two of these are additions to `../PR/BRAND.md`'s list, both derived rather than 
 - **Bare substrate defaults, deliberately.** The guest page wears the design system's stock light theme — no skin, no glass, no photo, no custom tokens beyond the wordmark and the owner-chosen accent if the substrate carries one cleanly. The plainness *is* the design: a guest page should read as an ordinary trustworthy web form, not a branded product surface (Scope bullet above: appearance never applies to guests).
 - **Mobile-first, one column.** The month view and the form stack single-column at every width; the compact/tablet thresholds above do not apply — there is nothing to re-arrange. Touch targets keep the 44px minimum. **Body type takes the 16px guest floor** (§Typography) — this is the one read-heavy surface in the product and its reader is a stranger on a phone.
 - **The stock stack is a *system* font stack, and that is load-bearing** *(added 2026-08-09)*. "Bare substrate defaults" already means the guest page does not wear annnä's face; making the stack a system one also makes it the **only** text in the product whose script resolution is the operating system's job. Guest-facing copy renders in the owner's chosen languages, which have **no product default and no fallback list** (FR15) — so the surface that cannot predict its own script is exactly the surface that should not be shipping a webfont subset. **No third-party font host on this page under any circumstance** (§Typography: annnä is a processor here, and the guest never agreed to anything).
-- **The whole page states**: month view (open windows written into day cells) → day drill-in → form → plain confirmation, plus the honest dead end (`SPEC.md §5`). No other guest surface exists to design.
+- **The whole page states**: month view (open windows written into day cells) → day drill-in → form → plain confirmation, plus the honest dead end — and, on a booking-bound token only, the **manage state**: the guest's own booking with its cancel and move actions (`SPEC.md §5`; harness H8–H9) *(added 2026-08-21 — the closed state list predated the cancel/move asymmetry and its "no other guest surface exists" line was refusing a surface two Situations depict)*. No other guest surface exists to design.
 
 ## Accessibility baseline (added 2026-08-06)
 

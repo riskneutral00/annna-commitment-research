@@ -14,6 +14,8 @@ The one untracked secrets file (`../security/SPEC.md §7`) plus the separate hum
 |---|---|---|---|
 | `CONVEX_URL` | founder | on deployment change | Names the engine's dev deployment. Read by `engine/scripts/reactive-push-check.mjs`; `npm run check` skips that gate explicitly when it is unset. **Not secret-bearing** — enumerated because the manifest is the record of what exists, not only of what is sensitive. |
 | `CONVEX_DEPLOY_KEY` | founder | on suspicion; drilled once (R10) | Writes to the engine's dev deployment. Never present in any lane that runs agent-authored code (R6). |
+| `MODEL` | founder | n/a — not secret-bearing | The OpenRouter model slug `model/spike/run-nset.mjs` reads (DR-7). **Not secret-bearing** — enumerated on `CONVEX_URL`'s reasoning; its absence from this table until 2026-08-21, while the file's own law says an unmanifested variable is a defect, is exactly what `SPEC.md §7a` item 8's grep gate exists to catch. Dies with the spike (`../model/BUILD.md` Step 0's subsumption). |
+| `OPENROUTER_API_KEY` | founder | on suspicion | The spike's provider key when it is ever run locally (`../model/spike/README.md` — fails closed without one). In CI this key exists **only** in the protected qualification environment (R3); a local run is the founder's own act, out-of-band from the wave order (DR-7). |
 
 ## Per-change preview rung
 

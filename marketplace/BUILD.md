@@ -8,16 +8,16 @@
 The two document schemas (skin pack, template bundle) and the install-door validator, including the two seed bundles ("Free Time Available", dive-center) as fixtures. These two seeds are **throwaway test fixtures, not production catalog content** (FR38, `../RULINGS.md`): they exist only to exercise the format's span; any shipped version is founder-built through the app, and no developer authors a bundle. Gate: **F1–F5**.
 
 ## Step 1 — The service mock
-Canned catalog (the four shipped skins + one store-skin fixture + the two seed templates — the Step 0 **throwaway fixtures**, FR38, never shipped catalog defaults), entitlement map covering the fixture for one account and not another, test signer minting genuinely expiring URLs (`INTERFACES.md §1`) — the same mock CI uses forever. The transaction surface exists here, so the lane separation is proven here too: nothing the store does writes a board money record (E7). Gate: **P1–P2, E1, E4, E7**.
+Canned catalog (the four shipped skins + one store-skin fixture + the two seed templates — the Step 0 **throwaway fixtures**, FR38, never shipped catalog defaults), the entitlement map **and the `entitlements.grant` / `catalog.publish` / `catalog.unpublish` verbs** (`INTERFACES.md §1`, 2026-08-21), test signer minting genuinely expiring URLs — the same mock CI uses forever. The transaction surface exists here, so the lane separation is proven here too: nothing the store does writes a board money record (E7). Gate: **P2 (first assertion — vacuously green here, where no surfaces exist, and re-gated at every step that adds one: Steps 2, 3, 4), E1, E4, E7**. *(P1 moved to Step 3, 2026-08-21 — its Given opens "an installed copy" and installing does not exist until then; a Step-1 P1 was the dead-stub green `INTERFACES.md §1` legislates against.)*
 
 ## Step 2 — Skins end-to-end
-The store shelf in the gallery riser, entitlement-aware pack fetch, degradation path, and the two entitlement-withdrawal behaviors — deactivate on the next successful check, never on a failed one (`SPEC.md §4`, FR14). Gate: **E2, E5, E6, D3 (skin half)**; re-run app **S5–S6** unchanged.
+The store shelf in the gallery riser, the seam-granted entitlement + pack fetch into the app-managed device store, degradation path, and the two entitlement-withdrawal behaviors — deactivate on the next successful check, never on a failed one (`SPEC.md §4`, FR14). Gate: **I7 (the grant is real, the device store persists), E2, E5, E6, D3 (skin half), P2 (re-gated — the shelf is a surface)**; re-run app **S5–S6** unchanged.
 
 ## Step 3 — Templates end-to-end
-The browse riser, the install door wired to the real harness, the propose→confirm parameter walk, uninstall, and the installed copy's independence from the service (an install is a local fork, so an outage cannot reach it — `SPEC.md §3`). Gate: **I1–I6, E3, D3 (template half)**; re-run harness **B1/B2** unchanged — *zero new verbs is the exam*.
+The browse riser, the install door wired to the real harness, the propose→confirm parameter walk **as a session (save/resume/abandon — `SPEC.md §3`)**, uninstall, and the installed copy's independence from the service (an install is a local fork, so an outage cannot reach it — `SPEC.md §3`). Gate: **P1 (fork isolation — moved from Step 1, now that installs exist), I1–I6, I8 (the dive-center-scale walk), E3, D3 (template half), P2 (re-gated — the riser is a surface)**; re-run harness **B1/B2** unchanged — *zero new verbs is the exam*.
 
 ## Step 4 — Discovery (minimal)
-Categories + tags at publish, featured shelves, the New shelf, the client-side text filter; `popularity` present in the format, unused by any surface. Gate: **D1–D4**.
+Categories + tags at publish (through `catalog.publish` — the admin-only verb), featured shelves, the New shelf, the client-side text filter; `popularity` present in the format, unused by any surface. Gate: **D1–D5 (the agent-suggested entry — D5), P2 (re-gated — publish surfaces are the exact thing it forbids users reaching)**.
 
 ## Step 5 — Integration
 The two seeds end-to-end on real layers. Gate: **Z1**.

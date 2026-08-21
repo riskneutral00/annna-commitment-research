@@ -29,11 +29,13 @@ There are many named testing styles; annnä uses five. One line each:
 | **All together** | Swap tests + two story walkthroughs | §Integration |
 | **Security** | Unit + property + behavioral + wire tests, riding each layer's build | §Security |
 | **Marketplace** | Unit + behavioral tests against the mock, reusing app's component/wire tiers, one integration run | §Marketplace |
+| **Deployment** | Process gates: `[MUST]` = a named mechanized check, `[DRILL]` = a rehearsal run once and recorded | §Deployment |
 
 ## The hierarchy (what derives from what)
 
 ```
-user-stories/          real life, the requirements source-of-truth
+user-stories/          real life — the falsification probes every scenario answers to
+                       (the requirements register is PRD.md's RQ series — FD-35)
    ↓
 <layer>/SCENARIOS.md   each layer's pass/fail criteria  (model: EVALS.md, graded)
    ↓
@@ -70,12 +72,12 @@ The engine is deterministic math over a store — the same inputs always give th
 ### The engine's three tiers
 
 1. **Unit tests** — the bulk. Each scenario becomes one or more direct tests: set up store state, call the operation, assert the result. No mocks of the engine's own parts — the engine is tested whole, against its own real store logic.
-2. **Property tests** — the invariants that must hold for *all* inputs, not just the scenario's example. Generate hundreds of random cases against each:
+2. **Property tests** — the invariants that must hold for *all* inputs, not just the scenario's example. Generate hundreds of random cases against each *(two restated 2026-08-21 — as first written, one was false against the spec and one was not a property test at all)*:
    - **Latches never clear** (B3): no sequence of writes leaves a set latch nulled.
-   - **Commit is atomic** (A2): after any failed commit, the store is byte-identical to before it.
-   - **No mutable balance** (K1): every owed/credit figure is derivable from the record; no write path stores a running balance.
+   - **Commit is atomic** (A2): after any failed commit, the store is byte-identical to before it **except the write-id ledger entry** (`engine/SPEC.md §6.6` records failed commits so their replay is deterministic) — and the property is true only because commit never fetches (`§6.1`, so no cache fact is written mid-transaction); cite both when the test is written.
+   - **No mutable balance (K1) — re-filed as a structural check, not a property test**: "no write path stores a running balance" is a claim about the store's schema and entry-point set, with no input to generate and no per-case oracle — it is the D9/N2 absence-asserted-structurally pattern (a schema walk), and calling it a property test handed the builder an unexecutable instruction. The *derivability* half (every owed figure recomputes from the record) stays testable per scenario.
    - **Exactly one winner** (A1): N racing commits for one unit → exactly one success, N−1 structured conflicts.
-3. **The scenario suite** — every `SCENARIOS.md` item (families **A** races · **B** latches · **Q** quota · **T** travel/buffers · **M** recurrence · **P** resolve/projections · **X** reshuffle · **K** money · **S** shared projection · **G** consistency · **I** the cross-owner share · **W** multi-day decomposition + course templates · **V** the travel envelope · **O** minimum occupancy · **Z** swap) as a named executable test, ID in the test name. *(`W`, not `D`, for multi-day — the harness's D-family is the floor, and two D-series across the two suites would be unreadable.)*
+3. **The scenario suite** — every `SCENARIOS.md` item (families **A** races · **B** latches · **Q** quota · **T** travel/buffers · **M** recurrence · **P** resolve/projections · **X** reshuffle · **K** money · **S** shared projection · **G** consistency · **I** the cross-owner share · **W** multi-day decomposition + course templates · **V** the travel envelope · **O** minimum occupancy · **Y** typed values (§2 — instant resolution, Y1–Y2; *the family this map omitted entirely until 2026-08-21*) · **Z** swap) as a named executable test, ID in the test name. *(`W`, not `D`, for multi-day — the harness's D-family is the floor, and two D-series across the two suites would be unreadable.)*
 
 ### Determinism harness
 
@@ -83,7 +85,7 @@ The engine is deterministic math over a store — the same inputs always give th
 - **Scripted travel provider** (T1–T3) — the stub from `engine/INTERFACES.md §4`; the `unavailable` case (T3, fail-closed) is a first-class test, not an afterthought.
 - **Replayability** — any failing case must be re-runnable from its recorded inputs alone.
 
-**Done when.** All scenario tests + property suites green, then the **swap** (§Integration): the real engine replaces the harness's engine stubs and the full harness suite — including P1, the compaction pass-through — runs green with zero harness changes (engine Z1–Z2).
+**Done when.** All scenario tests + property suites green, then the **swap** (§Integration): the real engine replaces the harness's engine stubs and the full harness suite — including P1, the compaction pass-through, **and P2, the pending-decision round-trip** — runs green with zero harness changes (engine Z1–Z2).
 
 ---
 
@@ -110,12 +112,12 @@ Same inputs → same run, every time. L2 pins this as a criterion: the same trig
 - **The floor as a spy assertion** (D family): the outward-act spy proves `notify_and_await` fired only with a basis, every act carrying `{who, basis, when}` (D6), and never at all in the no-grant cases (D1, D3, D4).
 - **Refusals surfaced, not swallowed** (A4, B5, E family): the stub's `conflict`/`refuse` verdict must reach the surface.
 - **Absence asserted structurally** (D9, N2): no tool in the contract declares the `destruction` or `value-transfer` class — a walk of the contract, not a runtime check.
-- **Composition pinned** (P1): the compaction pass-through asserts at the end that no tool beyond the §5 contract was called and the harness needed no change.
+- **Composition pinned** (P1, P2): the compaction pass-through and the pending-decision round-trip each assert at the end that no tool beyond the §5 contract was called and the harness needed no change.
 - **The floor as a property** (D20): the D-family spies prove the floor case by case; **one property-based test** raises them to an invariant — *no outward act ever occurs without a matching basis, under any tool-call sequence*. The library is **`fast-check`** — the TypeScript-native property-based framework, added as the harness's one non-scaffolding dependency at [`harness/BUILD.md`](harness/BUILD.md) Step 3; it records a reproducible seed for any counterexample, which is what makes a failure of this invariant re-runnable rather than anecdotal. Generate arbitrary interleavings of tool calls (across-the-line and reversible), confirmations, and grants; assert every across-the-line effect the spies recorded carries `{who, basis, when}` whose basis actually matches — a **content-bound** live confirmation (D18) or a **scope-matched** grant (D11). This is the harness's crown-jewel invariant, the analogue of the engine's property-tested latch/quota invariants; its one normative home is [`harness/SPEC.md §7`](harness/SPEC.md) and it adds no new law. Written at build time like every scenario test.
 
 ### Family map
 
-**A** board authoring (incl. **A7** return-leg validation) · **B** rules/elicitation · **C** status latches · **D** the floor (incl. **D10–D11** auto-accept-as-Grant, **D18–D20** content-bound confirmation / fail-closed / the floor property, **D22–D23** channel suppression, **D24–D26** the authorization class) · **D′** the escalation ladder (**D12–D17, D21**) · **E** M2 gate · **F** conflict/versioning · **G** elicitation store · **H** orders/groups/guest · **I** the cross-owner share (**I1–I4**) · **K** check-work · **L** context assembly · **N** money · **O** the assisted off-app path (**O1–O5**) · **P** proposal round-trip · **X** the external surface (**X1–X7**) — all `[MUST]`, all behavioral, all on stubs.
+**A** board authoring (incl. **A7** return-leg validation) · **B** rules/elicitation (incl. **B9** the duration floor) · **C** status latches · **D** the floor (incl. **D10–D11** auto-accept-as-Grant, **D18–D20** content-bound confirmation / fail-closed / the floor property, **D22–D23** channel suppression, **D24–D26** the authorization class, **D27** no-signed-term-no-debt) · **D′** the escalation ladder (**D12–D17, D21**) · **E** M2 gate · **F** conflict/versioning (incl. **F6** in-flight operands) · **G** elicitation store · **H** orders/groups/guest (incl. **H9** the counterparty's move) · **I** the cross-owner share (**I1–I4**) · **K** check-work · **L** context assembly · **N** money · **O** the assisted off-app path (**O1–O5**) · **P** engine-originated round-trips (**P1–P2**) · **X** the external surface (**X1–X7**) — all `[MUST]`, all behavioral, all on stubs.
 
 **J family is different.** `[HELD-OUT]` probes run against the *finished* harness and their results are **recorded, pass or fail** — a failure means "which general primitive is missing," never "patch the atom." Do not design or fix toward J.
 
@@ -139,11 +141,11 @@ The app renders and transports; it decides nothing. So its tests check **structu
 
 ### What is deliberately NOT automated in the app
 
-**Design law is a human checklist, not a test suite.** `app/DESIGN.md` gates BUILD steps 1–3 by review — breathing glass, board laws, island placement, motion restraint are *judged*, because pixel-diff tests rot and pass/fail can't grade "calm." Two narrow exceptions worth automating because DESIGN.md states them structurally: the **closed material inventory** (any class carrying `backdrop-filter` outside the named list = build error) and the **Route B selector-liveness check** (a components-map key that matches nothing = failure).
+**Design law is a human checklist, not a test suite.** `app/DESIGN.md` gates the app's visual BUILD steps by review — Step 0's mechanics, Steps 1–3's surfaces, Step 5's guest page and Step 7's views, per `app/BUILD.md`'s design-law coverage table, whose assignment governs *(widened 2026-08-21 — this sentence said "steps 1–3" while the table it defers to assigns sections to Steps 0, 5 and 7 as well)* — breathing glass, board laws, island placement, motion restraint are *judged*, because pixel-diff tests rot and pass/fail can't grade "calm." Two narrow exceptions worth automating because DESIGN.md states them structurally: the **closed material inventory** (any class carrying `backdrop-filter` outside the named list = build error) and the **Route B selector-liveness check** (a components-map key that matches nothing = failure).
 
 Zero-model-call is asserted by **instrumentation, not review** (U3): the render path has no model client to call.
 
-**Done when.** All families green (component + wire), then the **swap** (§Integration): the real app replaces the harness's app spies (Z1), the full harness suite including P1 runs green with `git diff harness/` empty (Z2), and both Z3 walkthroughs pass in the browser.
+**Done when.** All families green (component + wire), then the **swap** (§Integration): the real app replaces the harness's app spies (Z1), the full harness suite including P1 **and P2** runs green with `git diff harness/` empty (Z2), and both Z3 walkthroughs pass in the browser.
 
 ---
 
@@ -270,6 +272,14 @@ T1–T6 are classified above by mechanism (property, wire), but the family also 
 
 ---
 
+## Deployment — process gates, not layer tests
+
+*Criteria: [`deployment/SCENARIOS.md`](deployment/SCENARIOS.md) (nineteen scenarios). Law: [`deployment/SPEC.md`](deployment/SPEC.md). Added 2026-08-21 — the sixth suite was the one this file classified nowhere, and "deployment is not a layer" did not survive the strategy table's own contents (security is not a layer either).*
+
+Deployment tests the **process**, not the product, so its two kinds are its own: **`[MUST]`** — a named mechanized check (a script in `deployment/scripts/`, run by `npm run check` and the pre-commit hook), verified by attempting the forbidden act and observing refusal, or by static assertion where the forbidden thing is an absence; **`[DRILL]`** — what only a runtime or a human can enforce, executed deliberately at least once and recorded (B4's verdict, the ladder walk, the rotation). The suite is self-classifying — every scenario carries its tag in-file — which is why no builder was ever stranded by the missing section; this section exists so the classification claim ("every criterion classified here") is true rather than nearly true. Mechanism gaps between a `[MUST]`'s law and its current script are ledgered at `deployment/SPEC.md §7a`, not papered over.
+
+---
+
 ## Integration — swap tests and the two walkthroughs
 
 *The all-together strategy. There is no separate "integration test suite" to write — integration is proven by **re-running suites that already exist** with real parts in place of stubs.*
@@ -280,7 +290,7 @@ The harness is built first, against stubs of everything else, and its behavioral
 
 ### The swap sequence
 
-1. **Engine swap** (engine Z1–Z2) — the real engine replaces the engine stubs. Parity first (Z1: each stub behavior reproduced exactly on the harness scenarios' inputs), then the full harness suite **including P1**, the compaction pass-through — so the proposal path is exercised end-to-end and Z2 can't pass vacuously.
+1. **Engine swap** (engine Z1–Z2) — the real engine replaces the engine stubs. Parity first (Z1: each stub behavior reproduced exactly on the harness scenarios' inputs), then the full harness suite **including P1 and P2** — the compaction pass-through and the pending-decision round-trip — so both engine-originated paths are exercised end-to-end and Z2 can't pass vacuously on either *(P2 added to this sentence and its three siblings 2026-08-21 — both Z2 definitions always named the pair; this file said P1 alone in all four places)*.
 2. **App swap** (app Z1–Z3) — the real app replaces the app spies. Spy parity (Z1), full harness suite green with `git diff harness/` empty (Z2), then the two browser walkthroughs (Z3).
 3. **Model qualification** (model EVALS) — last, against the built harness. Not a swap-suite rerun: the model is graded, and by design nothing deterministic depends on it.
 

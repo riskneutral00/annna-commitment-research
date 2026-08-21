@@ -10,7 +10,7 @@ The contract is **owned and defined by `../harness/INTERFACES.md §2`** — not 
 
 | Harness call | Producer obligation (see SPEC) |
 |---|---|
-| `normalize(utterance \| trigger_event, context)` | intent from the §2 vocabulary only; fields raw; `ambiguities` per §3; context-only (no memory) |
+| `normalize(utterance, context)` | intent from the §2 vocabulary only; fields raw; `ambiguities` per §3; context-only (no memory); never called on a trigger firing (FD-28) |
 | `narrate(structure)` | fidelity per §4; voice per §6 |
 | judgment | bounded per §5 |
 | `summarize(raw_text, source_tag)` | structured return only; no instruction survives into `summary`; material facts preserved; not judgment (SPEC §1, §5) |
@@ -30,14 +30,33 @@ complete(model_id, messages, output_schema) -> structured JSON | error(malformed
 ### 2.2 Routing config (the layer's one real artifact)
 ```
 routing: {
-  <call_type>: { model_id, fallback_model_id, max_cost_per_call, timeout_ms, context_budget_tokens, provider: openrouter | byo-chatgpt | byo-key }
+  <call_type>: {
+    attended:   { model_id, provider, fallback_model_id, fallback_provider },
+    unattended: { model_id, provider, fallback_model_id, fallback_provider },
+    max_cost_per_call, timeout_ms: { attended, unattended }, context_budget_tokens
+  }
 }
+firing_budget: { max_steps_per_firing, max_cost_per_firing }
+// Restructured 2026-08-21: the old single per-entry `provider` field made three standing rules
+//   structurally unexpressible — "Fallback is app-supplied, always" (SPEC §7: a byo primary's
+//   fallback is another byo), the attended-only confinement (FR31: a single entry had nowhere to
+//   name what trigger firings resolve to), and FD-3's summarize rule. Now each binding carries its
+//   own provider, and the attended/unattended split the timeout already had covers the provider
+//   dimension too. Load-refusals, all poka-yoke (BUILD Step 4): `fallback_provider` must be
+//   `openrouter`, always · any `byo-*` in an `unattended` binding refuses · any `byo-*` anywhere
+//   on `summarize` refuses (FD-3).
+// provider = openrouter | byo-chatgpt | byo-key
 // timeout_ms defaults: 10_000 attended (a console turn), 30_000 unattended (trigger firings —
-//   nobody is waiting, and the fallback hop still runs). Timeout → fallback_model_id per SPEC §8.
+//   nobody is waiting, and the fallback hop still runs). Timeout → fallback per SPEC §8.
 // context_budget_tokens (2026-08-21) is the assembly budget the harness truncates against
 //   (../harness/SPEC.md §8). A binding is QUALIFIED AT its budget (EVALS.md §3): swapping to a
 //   model with a smaller budget is a re-qualification, never a silent config diff — otherwise a
 //   cheap swap silently changes which busy boards park.
+// firing_budget (2026-08-21) is the per-FIRING ceiling ../harness/SPEC.md §4's fourth termination
+//   condition reads — a step count and a spend total across ALL of a firing's calls (assembly
+//   summarize reads, tool round-trips, narrate, check-work). It sits beside the per-call routing
+//   because §4 cites this section for it and no field carried it: max_cost_per_call bounds one
+//   call, never the firing.
 // call_type = normalize | narrate | judgment | summarize (judgment rides inside normalize/narrate's
 //   calls; listed so a future split stays representable. summarize is a real, separately bound call.)
 ```
@@ -53,25 +72,43 @@ The harness build already defines the model stub (`../harness/INTERFACES.md §5`
 
 The concrete JSON Schemas passed to `complete()`. v0 unblocks the Step 0 eval scaffold; the Step 1 freeze reconciles them against the built harness's dispatch shape (SPEC §1's compound-utterance note) — until then the shapes below are the contract as designed.
 
-**`normalize`:**
+**`normalize`** *(a `oneOf` since 2026-08-21 — the schema previously admitted only the single form while SPEC §1 required compound utterances to return a sequence, so the declared compound return was rejected by its own schema and N-07 was unpassable on any model)*:
 ```json
-{
-  "type": "object", "additionalProperties": false,
-  "required": ["intent", "fields", "ambiguities"],
-  "properties": {
-    "intent":      { "enum": ["commitment.create","commitment.edit","commitment.complete","commitment.cancel","commitment.confirm","commitment.mark","board.query","board.edit","rule.author","rule.edit","rule.override","proposal.respond","answer.provide","grant.give","grant.revoke","exception.record","sop.author","shared.author","shared.publish","notify.request","session.control"] },
-    "fields":      { "type": "object" },
-    "ambiguities": { "type": "array", "items": {
-      "type": "object", "additionalProperties": false,
-      "required": ["question", "readings"],
-      "properties": { "question": {"type": "string"}, "readings": {"type": "array", "items": {"type": "string"}, "minItems": 2} }
-    } }
+{ "oneOf": [
+  {
+    "type": "object", "additionalProperties": false,
+    "required": ["intent", "fields", "ambiguities"],
+    "properties": {
+      "intent":      { "$ref": "#/$defs/intent" },
+      "fields":      { "type": "object" },
+      "ambiguities": { "$ref": "#/$defs/ambiguities" }
+    }
+  },
+  {
+    "type": "object", "additionalProperties": false,
+    "required": ["sequence", "ambiguities"],
+    "properties": {
+      "sequence": { "type": "array", "minItems": 2, "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["intent", "fields"],
+        "properties": { "intent": { "$ref": "#/$defs/intent" }, "fields": { "type": "object" } }
+      } },
+      "ambiguities": { "$ref": "#/$defs/ambiguities" }
+    }
   }
-}
+],
+"$defs": {
+  "intent": { "enum": ["commitment.create","commitment.edit","commitment.complete","commitment.cancel","commitment.confirm","commitment.mark","board.query","board.edit","rule.author","rule.edit","rule.override","proposal.respond","answer.provide","grant.give","grant.revoke","exception.record","sop.author","shared.author","shared.publish","notify.request","party.reenable","session.control"] },
+  "ambiguities": { "type": "array", "items": {
+    "type": "object", "additionalProperties": false,
+    "required": ["question", "readings"],
+    "properties": { "question": {"type": "string"}, "readings": {"type": "array", "items": {"type": "string"}, "minItems": 2} }
+  } }
+} }
 ```
 - The `intent` enum **is** SPEC §2's vocabulary — one source; an edit there is an edit here (same review).
 - `fields` stays schema-open by design: values are raw-as-heard (SPEC §1); per-intent key expectations are the §2 table's rows, enforced by the harness's own seam validation, not by the provider.
-- A compound utterance returns an ordered `sequence` array of `{intent, fields}` pairs in place of the single pair; the exact encoding is what Step 1 freezes.
+- The second branch **is** the compound-utterance sequence (SPEC §1); Step 1's freeze reconciles both branches against the built harness's dispatch shape.
 
 **`narrate`:**
 ```json
@@ -83,10 +120,12 @@ The concrete JSON Schemas passed to `complete()`. v0 unblocks the Step 0 eval sc
 { "type": "object", "additionalProperties": false,
   "required": ["summary", "labels"],
   "properties": { "summary": { "type": "string" },
-                  "labels":  { "type": "array", "items": { "type": "string" } } } }
+                  "labels":  { "type": "array", "maxItems": 8, "items": {
+                    "enum": ["contains-instruction","impersonation-attempt","document","question",
+                             "request","confirmation","complaint","unresolved-reference"] } } } }
 ```
 - `additionalProperties: false` is load-bearing here, not stylistic: it is what stops a quarantined model from smuggling an extra field into the privileged context. A return that validates is the *whole* of what crosses.
-- `labels[]` carries what the summary reports **about** the text (e.g. that it contains an instruction, that it is a document) — it never carries the instruction. `source_tag` is an input; the return has no field for it, so it cannot be changed or elevated (`../harness/INTERFACES.md §2.4`).
+- **`labels[]` is a closed enum** *(2026-08-21 — as an open string array it was a free-text channel that validated, unbounded and outside the S-set's carry-through bar, while this section's own argument is that a return that validates is the whole of what crosses)*: it carries what the summary reports **about** the text and structurally cannot carry the instruction — there is no string to put one in. The carry-through bar covers `summary` and the label *choice* both (SPEC §1). Growing the enum is an exam-and-schema edit, same review as the intent vocabulary. `source_tag` is an input; the return has no field for it, so it cannot be changed or elevated (`../harness/INTERFACES.md §2.4`).
 
 Judgment has no schema of its own — it rides inside `normalize`/`narrate` (SPEC §1).
 

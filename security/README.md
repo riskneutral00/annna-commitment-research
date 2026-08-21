@@ -14,7 +14,7 @@ annnä schedules people's lives and their customers' bookings — which means it
 - **Built to GDPR as the ceiling**, with Thailand PDPA named (the anchor businesses are Thai) and Taiwan PDPA covered by the same design. Medical data takes explicit consent and dedicated encryption; minors take guardian consent.
 - **Guests never get accounts or agents.** A guest touches one tokenized page and one form — the attack surface of a guest is one link, by construction.
 - **Sensitive documents live in an encrypted vault with destruction clocks, never in the permanent record.** The permanent record keeps only the attestation — "passport verified, this date." Keep the receipt, shred the document.
-- **Every string entering the AI carries its source, and non-owner text can never instruct the agent.** A guest's note is something the owner reads, not something the agent obeys — and even a successful injection could only *propose*, because every irreversible act requires the owner's explicit basis.
+- **Every string entering the AI carries its source, and raw non-owner text never reaches the model that can act.** A guest's note is something the owner reads, not something the agent obeys: the raw text is read only by a quarantined, tool-less model, and what remains — a hostile document can still shape the summary — is bounded by the floor, because even a successful injection could only *propose*: every irreversible act requires the owner's explicit basis. *(Reworded 2026-08-21 to §5's own terms — isolation removes the raw-text path, not the summary path, and no restatement may claim otherwise.)*
 - **The AI cannot author correctness values, move money, or delete records — structurally.** Deterministic code answers times, prices, and availability; no tool transfers value; no tool deletes. You can persuade a concierge; you cannot persuade the book.
 - **The store sells data, never code.** Marketplace items are validated documents; the worst installed item is a bad one, never a program.
 
@@ -42,13 +42,14 @@ The honest attack surface, enumerated in advance — each with the scenario fami
 | The owner session | §2 posture; floor-bounded |
 | The admin identity & publish pipeline | M |
 | The model's context (injection) | Q |
+| The external-client surface (the fifth token class) | T9, harness X-family |
 | The shared store's tenant line | N |
 | The vault (access, destruction, key handling) | V |
 | The closed marketplace service | out of repo scope — named, specced privately |
 
 ## Status
 
-**Design complete; nothing built.** Like every package here: the laws are specced, the suite is written, zero lines of code exist. The posture above describes what the build must construct, and the suite is how anyone — including an external reviewer — will know it did.
+**Design complete; the build has begun and is early.** The laws are specced and the suite is written; of the suite, **X1 is built and its canary has been fired for real** (`BUILD.md` Step 0 — the CI secret-grep gate), and everything else waits on the layer steps it rides. *(This line previously said "zero lines of code exist," which Step 0's own record contradicted — corrected 2026-08-21.)* The posture above describes what the build must construct, and the suite is how anyone — including an external reviewer — will know it did.
 
 ## For builders: read order
 

@@ -4,7 +4,7 @@
 
 ## Step 0 — Substrate & scaffold
 
-**NOT CLOSED 2026-08-08 — the scaffold and its suite landed; the reactive-push criterion is unverified.** `convex/schema.ts`, `convex/scaffold.ts`, `tests/scaffold.test.ts` and the shared transcript reporter are in the tree and green. What is *not* done is the Verify line's last clause: `reactive-push-check.mjs` needs a live Convex deployment and `npm run check:reactive` skips without a `CONVEX_URL`, so the one criterion that **fails silently by degrading into a polling loop** has never actually been observed passing. Same shape as `../deployment/BUILD.md` Step 2 — the work that needs no account is done, and the tag names what is missing rather than rounding it up to closed.
+**NOT CLOSED 2026-08-08 — the scaffold and its suite landed; the Verify line is only part-met, and the tag's scope was corrected 2026-08-21.** `convex/schema.ts`, `convex/scaffold.ts`, `tests/scaffold.test.ts` and the shared transcript reporter are in the tree and green. What is *not* done, stated fully rather than rounded to the last clause: **(a)** the reactive-push clause — `reactive-push-check.mjs` needs a live Convex deployment and `npm run check:reactive` skips without a `CONVEX_URL`, so the one criterion that **fails silently by degrading into a polling loop** has never been observed passing; **(b)** boot, write/read-back and the clock run through `convexTest` in-memory with a hand-rolled `makeClock` — the three substrate criteria have not been exercised against the ratified substrate itself (no scheduled function has run); **(c)** the attribution clause is deferred to the §1 object model and closes at Step 1 (the scaffold test's own comment says so). Same shape as `../deployment/BUILD.md` Step 2 — the work that needs no account is done, and the tag names what is missing rather than rounding it up to closed.
 
 **Substrate ratification — settled, and settled the right way round (founder ruling FR7, 2026-08-06).** The serving substrate is **Convex**. This does not weaken the *"not by preference"* law above, because the ruling was **checked against `INTERFACES.md §2.2`'s five criteria before it was accepted**, not asserted over them. The check, printed so a later reader can re-run it rather than take it on trust:
 
@@ -28,29 +28,30 @@
 
 ## Step 1 — Object model & latches
 - Implement §1 objects (principal, board, commitment, rule, grant, shared, order, money marks, history, **OnCall/Escalation** — §1.13, the stored objects behind the harness on-call ladder; shape home `../harness/SPEC.md §3.9`; **PendingDecision** — §1.14, engine-written and human-chosen, `chosen` unwritable by any engine path, exercised at Step 7 by O2/O3). Write-once latches and no-delete enforced at the store layer — the escalation's terminal status (`answered`/`timed_out_parked`) latches under the same discipline.
-- **Verify:** B1–B3, **B4 (escalation persists across firings; terminal status write-once; only `commit`/`calculate` touched)**, K1–K2, A3.
+- **Verify:** B1–B3, **B5 (no delete entry point, asserted structurally)**, **B4 (the store half — persistence across firings and terminal write-once; its only-`commit`/`calculate` walk closes at Step 5, when those verbs exist to walk)**, K1–K2 (the mark-storage half — K1's cancel-path close is Step 5), A3 (the diff-refusal half — its commit-path close is Step 5). *(The half-annotations follow Step 5's own "Q1 (commit side)" precedent; without them the red-green loop cannot go green in order.)*
 
 ## Step 2 — Type-value system (M3)
 - `typed_value` / `compare` over the full §2 vocabulary; raw literals rejected outside `typed_value`.
-- Time-phrase resolution (FD-27): `instant`/`interval` rows, resolved against board zone + a supplied reference instant — deterministic, locale-aware, fail-closed on an unresolvable phrase.
-- **Verify:** type-error cases + Q2's typed draws + **Y1** (instant resolution).
+- Time-phrase resolution (FD-27): `instant`/`interval` rows, resolved against the `type_spec`'s `{zone, reference_instant, locale}` context — deterministic, fail-closed on an unresolvable phrase.
+- **The parsing dependency is a named tech-candidate lane, not a one-line build** *(added 2026-08-21 — deterministic multilingual time parsing was handed to the builder with no grammar, no locale list, and no candidate, while FD-16 forbids moving it to the model)*: candidates are a vetted per-locale date-parsing library (e.g. `chrono-node` for `en`) wrapped behind `typed_value`, with **explicit locale tables for `th` (Buddhist-era dates included) and `zh-TW`** — the supported-locale list is a named constant starting at `{en, th, zh-TW}` (FR15's own examples), an unsupported locale is a `typed_value` error (fail closed, elicit — never a guess), and the binding is recorded in `../deployment/INTERFACES.md §4` when made, same as the travel provider.
+- **Verify:** type-error cases + **Y2 (a literal in a handle-typed position is a type error)** + Q2's typed draws + **Y1** (instant resolution, all three printed locales).
 
 ## Step 3 — Rule menu & evaluation points
-- The closed §3 menu: storage constraint (off-menu unstorable), per-type math, binding times, precedence.
-- Implement §3's **clash table** (pairwise, plus the one bounded N-ary joint row — `duration + buffer × location-window`) and §8's four-way classification — including the **unsatisfiable** class, which is refused at write regardless of authority and is never offered on the override path. Each row's **minimum-case test** is the implementation, not a comment: code the smallest failing input the row names, not the general shape of the clash.
-- **Verify:** G1–G4, Q1, P4, **G5–G6 (unsatisfiable outranks authority; the refusal names the fix)**, **O4 (min-occupancy × capacity unsatisfiable, refused at write on the shop's own rules)**, and **G7 — the over-application guard.** G7 is the one that fails silently if skipped: an over-broad `unsatisfiable` refuses a valid ruleset, and no refusal-side assertion catches that. Gate the positive case with the negative ones.
+- The closed §3 menu: storage constraint (off-menu unstorable), per-type math, binding times (§1.5's list), precedence.
+- Implement §3's **clash table** (strictly pairwise since 2026-08-21 — the N-ary joint row died of its own minimum-case test) and §8's four-way classification — including the **unsatisfiable** class, which is refused at write regardless of authority and is never offered on the override path. Each row's **minimum-case test** is the implementation, not a comment: code the smallest failing input the row names, not the general shape of the clash.
+- **Verify:** G1–G4, **G8 (the rule-type half — off-menu type refused at write; the recurrence-shape half closes at Step 6)**, Q1 (the rule-evaluation half — its `calculate`/commit sides close at Steps 4/5), P4, **G5–G6 (unsatisfiable outranks authority; the refusal names the fix)**, **O4 (min-occupancy × capacity unsatisfiable, refused at write on the shop's own rules)**, and **G7 — the over-application guard, now three look-alikes.** G7 is the one that fails silently if skipped: an over-broad `unsatisfiable` refuses a valid ruleset, and no refusal-side assertion catches that. Gate the positive cases with the negative ones.
 
 ## Step 4 — `calculate` & the travel seam
 - Closed query taxonomy, handles with display facets, the travel interface + cache + precedence + fail-closed; the **travel envelope** (≤8 fresh fetches per `resolve`, per-day batching + dedup, 30-min buckets / 30-day TTL, 2s timeout + one retry) with its named constants centralized in one place (SPEC §5).
-- **Verify:** T1–T4, S1–S3, P3, **V1–V4 (the travel envelope: ceiling, dedup/batch, cache-hit, the two distinguishable declines)**.
+- **Verify:** T1–T4, S1–S3, P3, **P5 (unknown is not free)**, **P6 (the duration floor excludes at projection — its commit half closes at Step 5)**, **V1–V4 (the travel envelope: ceiling in deduplicated triples, dedup/batch, cache-hit, the two distinguishable declines)**.
 
 ## Step 5 — `commit`
-- One-transaction checks, races, handle redemption, diff application; the apply-proposal and apply-offer variants (§6.5).
-- **Verify:** A1–A2, Q1 (commit side), B1 (lapse under the clock), **K1–K3 (owed derived, marks latched, no value moved, and no engine-declared `no-show` once the start has passed under the clock)**, **O1 (an early booking below the minimum is never blocked at commit)**.
+- One-transaction checks (commit never fetches — §6.1), races, handle redemption, diff application, the interval-widening re-check (§6.7); the write-id idempotency index (§6.6, tenant-scoped); the apply-proposal, apply-offer and apply-Order input forms (§6.5 a/b/c — the offer form's accept-gate included).
+- **Verify:** A1–A2, **A4 (write-id idempotency: replay, payload-mismatch refusal, failed-commit replay, foreign-tenant miss)**, **A5 (re-widening cannot double-book)**, A3 (commit-path close of Step 1's half), Q1 (commit side), **Q4 (cancel restores the quota draw)**, P6 (commit side), B1 (lapse under the clock), B4 (the only-`commit`/`calculate` walk, closing Step 1's half), **K1–K3 (owed derived with the FD-30 carve, marks latched, no value moved, and no engine-declared `no-show` once the start has passed under the clock)**, **K4 (the marked no-show survives a self-cancel)**, **O1 (an early booking below the minimum is never blocked at commit)**.
 
 ## Step 6 — Recurrence & materialization
-- Pattern objects, rolling-horizon job, forward-only edits, bounded on-demand materialization, the §9 DST law.
-- **Verify:** M1–M6, Q3.
+- Pattern objects, rolling-horizon job, forward-only edits (the §1.4 withdrawal disposition for superseded bare drafts), bounded on-demand materialization, the §9 materialization-capacity law (conflicted drafts, never double-books), the §9 DST law.
+- **Verify:** M1–M6, **M7 (materialization cannot double-book)**, **G8 (the recurrence-shape half — off-menu shape refused at write)**, Q3.
 
 ## Step 7 — `resolve`: place-only + decomposition + templates + min-occupancy clock
 - Placement search with the §7 constraint classes; structured declines; contention ordering + bounded re-solve. **Multi-day decomposition** as caller-chained per-day `resolve` calls composed by an Order (§7); **`KindTemplate` expansion** to ordinary objects (§1.12); the **min-occupancy clock trigger** writing the `needs_human` park (no loop logic here — that is the harness's, §3).
@@ -58,11 +59,11 @@
 
 ## Step 8 — `resolve`: reshuffle proposals + cross-owner share
 - Proposal objects, direction, pin pre-filtering, the ≤3-move bound, apply-proposal via commit, freed-window fail-closed. The **§7.1 cross-owner share**: `resolve` over a counterparty availability ref → `offered`; `commit(offer_ref)`; creator-set hold; the `ShareGrant` mint — the sole engine-minted two-tenant edge, riding the two existing verbs with no new seam verb.
-- **Verify:** X1–X7, **I1–I7 (the cross-owner share: engine parity, both-boards-or-neither, no read power added, caller cannot author a crossing, silence never binds, the creator's hold, terminal states recorded both sides)**.
+- **Verify:** X1–X7, **I1–I8 (the cross-owner share: engine parity, both-boards-or-neither, no read power added, caller cannot author a crossing, silence never binds, the creator's hold, terminal states recorded both sides, and the accept-gate — a live unanswered offer cannot commit)**.
 
 ## Step 9 — The stub-swap (definition of done)
 - Point the built harness at the real engine. Run the **entire harness suite**.
-- **Verify:** Z1–Z2 — every harness scenario green, `git diff` on `harness/` empty. If any harness change is needed, stop: that is a seam-contract bug to fix on the engine side (or to flag, per `INTERFACES.md §1`), never a harness edit.
+- **Verify:** Z1–Z2 — every harness scenario green, `git diff` on `harness/` empty — and **Z3** (fault injection: unreachable and timed-out calls return the infrastructure members and recover through the write id). If any harness change is needed, stop: that is a seam-contract bug to fix on the engine side (or to flag, per `INTERFACES.md §1`), never a harness edit.
 
 ## Guardrails
 - **The bound is law:** if Step 8 tempts you toward route optimization or week-level moves, re-read SPEC §7/§11 — feasibility and improvement, ≤3 moves, one day, one owner.

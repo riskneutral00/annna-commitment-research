@@ -14,6 +14,7 @@
 | Consent & evidence bundles (§6) | **App** captures (G6); shape is the harness's `satisfied_by {principal, at, evidence}` | `on_form_return` | canned form returns with/without evidence |
 | Secrets (§7) | **BUILD/ops + CI**, per layer | none — a file-and-pipeline discipline | none needed: the grep gate is real from day one |
 | Rate limits & abuse (§10) | **App** (public doors); hold idempotency is already engine law | none — limits sit in front of existing routes | scripted limit clock |
+| The external-client surface (§3 fifth class; §10 its caps; FD-33 suspension) | **Harness** (it is the harness's own tool contract exposed, `../harness/SPEC.md §5.3`); credential custody is this package's Step 4b | the existing tool contract — zero new verbs (`../harness/INTERFACES.md §6`) | the scripted credential check (`../harness/INTERFACES.md §5`) *(row added 2026-08-21 — the one door attributing to a principal inside had no owner, seam, or stub here)* |
 | Tenant scoping (§9) | **Engine** (store construction, `../engine/SPEC.md §1.1`) | none — it is how every existing read/write is built | the engine build itself; N-family probes it |
 | Compliance tooling (§12) | **App** (§7-class views: retention surface, deletion runbook surface) + **harness** ask-once (clock answers) | existing view + elicitation machinery | canned stored answers |
 | DR & takeout (§8) | **Ops** + the engine substrate (the version chain is what takeout reads) | none — operational procedure over the store | restore drill against a seeded **two-tenant** store, backups carrying a **per-tenant watermark**, and a **simulated partial loss** — D1's platform drill and D5's detect → confirm → replay share the fixture |
@@ -40,6 +41,6 @@ Encryption law, inline: artifacts encrypted at rest (**AES-256-GCM**, random IV 
 
 - **Vault:** in-memory implementation with a virtual clock (the engine's virtual-clock discipline) — clocks advance by test control, shreds are observable, tombstones real.
 - **Rate limits:** scripted clock; limits declared exactly as in production, windows advanced by the test.
-- **Identities:** canned owner/guest/admin identities; the two-credential-models law asserted against the canned set.
+- **Identities:** canned owner/guest/admin identities plus a canned `external-client` credential; the **three**-credential-models law (M5, FD-18) asserted against the canned set *(updated 2026-08-21 — "two" survived FD-18 here)*.
 - **Injection:** fixtures as scripted `normalize` inputs with source tags — the Q-family runs against the real assembly policy, stubbed model.
 - **CI grep gate:** no stub — it is a grep, real from the first commit of any layer.
