@@ -1,0 +1,11 @@
+VERDICT — 95ebf28 (covers this commit alone)
+Reviewer: Claude Fable 5, same-session author. FD-44 registered with the founder's
+words quoted; provenance = founder-by-eye at the 10-face sampler (every real surface
+rendered, self-checked by screenshot before he saw it). The landing is minimal and
+honest: DESIGN §Typography re-headed with the ruling, the measured Noto record and
+the superfamily criterion KEPT as record and marked reversed (never deleted), the
+fallback consequence (Thai/CJK via Noto siblings) and the two build-time
+verifications (ä gate, tnum) printed so they cannot be lost. NOTES entry updated per
+BRAND's own recorded flow; BRAND untouched (frozen). Chain green; S2 spec-only (3
+paths). Not verified here: whether Nunito Sans actually carries tnum at 9px — that
+is deliberately routed to app BUILD Step 1 as a fact-check, not assumed.
