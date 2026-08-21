@@ -1,0 +1,16 @@
+VERDICT — eefb8d8 (the architecture-audit fix sitting, spec half)
+Reviewer: Claude Fable 5 — but every edit here traces to a numbered finding from
+three INDEPENDENT reviewer lenses (rubric/adversary/currency, reports in the
+architecture workspace reviews/), each of which verified its claims by opening
+the cited files; I re-verified each anchor before editing. 21 files, all CRITICAL
++ HIGH + one-clause MEDIUMs from the consolidated ledger
+(docs/agents/architecture-audit-2026-08-22-ledger.md, dispositions updated).
+Attempted to falsify: the two-key §6.6 split checked against X4's re-worded
+assertion (they now state one design); publish's minted[] return leg checked
+against app/INTERFACES' never-absorbs-truth law (the harness commits, the app
+records); §2a's discard-older rule stated identically at both ends of the seam;
+the envelope's six kinds checked against every existing shape they claim as
+members; the goal-zone rule checked against Y1's new two-zone assertion; AGENTS
+edit word-counted (947/950). Full 29-gate chain green; S2 spec-only. Founder
+rulings: none overturned; FD-44's corrective note records a mechanism correction
+with the founder's same-sitting approval ('make the fix now'), outcome untouched.
