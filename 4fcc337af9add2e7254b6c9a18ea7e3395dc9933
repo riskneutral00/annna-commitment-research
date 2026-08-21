@@ -1,0 +1,14 @@
+VERDICT — 4fcc337 (covers this commit alone)
+Reviewer: Claude Fable 5, same-session author — the standing caveat applies.
+One-line code fix, the F-scope item ROADMAP carried as 'accent-check latent bug':
+the ΔE2000 urgency-collision check compared the accent candidate against the three
+base hexes, but app/DESIGN §Colour walks the per-skin marks in lightness — a
+candidate sharing alarm's hue at a different lightness sailed through. The fix
+compares at the candidate's own lightness, which lower-bounds the distance over
+the whole walk range (rejects strictly more, never less).
+Attempted to falsify: reproduced the miss in isolation (alarm hue at L 0.45 —
+old check MISSED, new check catches); confirmed a distant hue (h=150, same L/C)
+still passes, so the check does not over-reject; node --check clean; full 29-gate
+chain green; S2 classified the commit code-only (1 path). Not run: make-pack
+end-to-end against the masters — regenerating packs would churn tracked files
+for no spec change; the collision expression is the only changed logic.
