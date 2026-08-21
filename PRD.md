@@ -39,7 +39,7 @@ Four obligations before it lands: the `INDEX.md` row goes **between `PR/VOICE.md
 
 A schedule is two burdens carried at once. The first is coordination — the calls, the chasing, the confirming, the rewriting of a manifest for the third time. The second is the load of holding all of it in your head, because nowhere else can be trusted to hold it. annnä takes the first so the second can leave. `PR/IDENTITY.md` states the order and it is honest: *"first the labor leaves, then the load."*
 
-The primitive underneath is the **Commitment** — one object with orthogonal axes, where "event" and "task" are derived presets nobody ever picks. That result came from four blind research streams and is the foundation everything else stands on (`archive/`, and the model of record at `engine/SPEC.md`). A calendar holds *when*. A commitment holds what was promised, to whom, under what conditions, needing what — which is why annnä can assemble the people and resources a promise needs, and a calendar cannot.
+The primitive underneath is the **Commitment** — one object with orthogonal axes, where "event" and "task" are derived presets nobody ever picks. That result came from four blind research streams and is the foundation everything else stands on (`archive/`, and the model of record at `engine/SPEC.md`). A calendar holds *when*. A commitment holds what was promised, to whom, and under what conditions — and, when the promise needs people and resources, it carries those as optional axes (`title` is the only universally required field, `engine/SPEC.md §1.3`) — which is why annnä can assemble what a promise needs, and a calendar cannot.
 
 ### 1.1 What "agent-first" means here, and why the phrase needs teaching
 
@@ -208,6 +208,7 @@ For every capability annnä exposes to an owner through the app, a tool exists t
 **Out of Scope:**
 - Capabilities exposed to guests. A guest surface is one link and one form and has no owner behind it.
 - Administrator capabilities in the closed marketplace service, which is outside this repo.
+- **Authorization and recovery** (**FD-26**, founder-ruled 2026-08-21) — capabilities that create or withdraw a caller's own permission: issuing and revoking the external-client credential (RQ-1: *"No agent request mints one"*), minting or widening a Grant (FD-24), confirming a restore (`security/SPEC.md §8`: *"not an agent tool"*), and re-enabling a suppressed party (`harness/SPEC.md §3.11`). These are console-only by design, and the principle is stated so the exclusion cannot creep: **a credential must never control who may act as the owner.** Without this class the RQ-2 gate was red forever — or a stolen credential could mint credentials.
 - **Appearance** — the active skin, the boring stash, the opacity dial, the fave-four (**FD-19**, founder-ruled 2026-08-08). `app/SPEC.md §7` makes appearance the one app-owned write and §10 makes it invariant that **no seam call carries it**; without this exclusion the mechanical check above could only ever go red, and a gate that cannot go green is worse than none. The exclusion is narrow and principled rather than convenient: appearance is display-only state that never becomes engine truth, so it is not a capability anything schedules against — nothing an agent acting for the owner needs, and the one place where reaching *less* costs the owner nothing.
 
 #### RQ-3: The surface adds no seam verbs
@@ -313,6 +314,8 @@ An outward act — messaging a third party, moving value, destroying something �
 ### 4.5 What the specs owe
 
 *The pathway from these requirements to a buildable corpus, as a map of edits to files that already exist. **No new specification file is created by any row** — the only new artifact anywhere below is RQ-2's gate script. `engine/` is untouched throughout, which is the clearest evidence that this PRD adds a door rather than an authority.*
+
+*Landed: RQ-1's security rows on 2026-08-08 (FD-17, FD-18); the harness rows — RQ-2 through RQ-9 and RQ-13 — on 2026-08-21, at `harness/SPEC.md §5.3`, `harness/INTERFACES.md §6`, `harness/SCENARIOS.md` X1–X6, `harness/BUILD.md` Step 8, and `security/SPEC.md §5`'s door list. RQ-2's mechanical gate lands with the enumeration at that Step 8, per the printed-gate posture.*
 
 | Requirement | What changes, and where |
 |---|---|

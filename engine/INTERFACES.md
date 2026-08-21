@@ -11,7 +11,7 @@ Every obligation of `../harness/INTERFACES.md §1`, mapped to where this package
 | Harness obligation (§1.x) | Engine answer |
 |---|---|
 | §1.1 `calculate(query) → Handle` — opaque, never outward | `SPEC.md §5` (closed query taxonomy) + `§4` (handle mechanics, display facet, staleness) |
-| §1.2 `commit` — no-double-book by construction, atomic, latch invariant, diff-only, never wipes governing rules | `SPEC.md §6` |
+| §1.2 `commit` — no-double-book by construction, atomic, latch invariant, diff-only, never wipes governing rules, idempotent per caller write id | `SPEC.md §6` (§6.6 the write id) |
 | §1.3 `check_consistency` / `check_coverage` — governing vs own vs **unsatisfiable**, structural only | `SPEC.md §8` (four classes; unsatisfiable outranks authority) |
 | §1.4 `typed_value` / `compare` — the M3 value vocabulary + quota math | `SPEC.md §2` (vocabulary + operators), `§3` (`quota` entry) |
 | §1.5 `resolve(goal, boards, rules) → Handle` — arbitration, bounded re-solve, contention ordering | `SPEC.md §7` |

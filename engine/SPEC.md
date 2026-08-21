@@ -172,6 +172,10 @@ The closed value vocabulary — the only shapes a rule operand or correctness-cr
 | recurring time-window set | Tue 09:00–12:00 weekly | membership of an instant/interval |
 | **place** | declared address + ≤1 resolved geo-ref | equality; input to `travel()` (§5) |
 | **computed duration (travel)** | drive(place-A, place-B, at) | `< ≤ = ≥ >`; produced only by the engine (§5), never authored |
+| **instant** *(FD-27, 2026-08-21)* | a zone-resolved point in time | `< ≤ = ≥ >`; ordering in UTC |
+| **interval** *(FD-27)* | an ordered instant pair (start, end) | containment, overlap, duration |
+
+- **The engine owns time resolution (FD-27, founder-ruled 2026-08-21).** `typed_value` is where a raw time phrase — *"Thursday 3–4pm"*, *"บ่ายสามถึงบ่ายสี่"*, a Buddhist-era date — becomes an `instant`/`interval`: resolved **locale- and zone-aware against the board's declared `zone`** (§1.2's authority) **and a supplied reference instant** (the firing's clock, passed in so replay is deterministic — resolution never reads wall time). DST edges follow §9's law. A phrase that cannot be resolved is a `typed_value` **error** — surfaced for the harness to elicit against, never guessed. The model passes the phrase **raw**; a model-resolved instant literal is a forbidden authoring attempt (`../model/SPEC.md §5`). Before this row every layer was forbidden to author a time and none was assigned to resolve one.
 
 - `typed_value(raw, type_spec) → TypedValue | error` is the sole entry: raw strings become typed values here or nowhere. `compare(a, op, b)` is total over the table above and undefined elsewhere.
 - **The stored struct — one shape for every row above:** `TypedValue { type_tag, value, unit?, currency?, order_ref?, zone? }`. `type_tag` names the table row; `value` carries the row's payload (number · ordered-set member · range pair · board-ref list · relation expression · amount · rate `{quantity, window, per}` · window set · declared address + geo-ref); `unit`/`currency` accompany the rows that need them; `order_ref` points at the declared ordered set; `zone` rides recurring-window values. Two builders reading this table must produce identical encodings — that is the struct's whole job.
@@ -261,6 +265,7 @@ The closed value vocabulary — the only shapes a rule operand or correctness-cr
 3. **Diff-only application.** Board and rule writes arrive as diffs and apply non-destructively. A diff whose effect would remove or disable a governing-authority rule from a lower authority **does not apply** — the wipe is unconstructable, not audited-after.
 4. **Handle redemption.** Correctness-critical fields must arrive as handles or typed values; the engine resolves and **re-validates them at commit time** against the current store version.
 5. **Apply-proposal** is a commit variant: takes a Proposal handle, requires every move's stored `confirmed`, re-runs every check as of *now* (the board may have moved since §7 computed it), and applies all moves in one transaction — or returns `{conflict}` and the proposal goes stale. Freed-window decisions are stored the same way.
+6. **Idempotency per write id** *(2026-08-21)*. Every commit carries a caller-supplied write id (`../harness/INTERFACES.md §1.2`); re-committing an id already applied returns the **original result**, never a second application — the guest seam's hold-idempotency (`../security/SPEC.md §3`), generalized to every write. It is what makes the harness's one bounded retry safe against a lost response (harness K4), and it doubles as the external surface's continuation handle.
 
 ## §7. `resolve` — placement
 
@@ -361,6 +366,7 @@ The `grants[]` edge (each entry a `ShareGrant`) is the only structure in the sto
 - **External travel source down** → the gap is unknown → fail closed (not offered, not proposed) with a structured reason the harness can narrate.
 - **Beyond-horizon request** → materialize on demand, bounded to the requested window; quota windows spanning the horizon edge compute from pattern + instances (materialization never changes a quota verdict).
 - **Stale handle / stale proposal at redemption** → `{conflict, reason}`; fresh recompute required; never partial application.
+- **The engine itself unreachable, or a call timed out** → the `unavailable | timeout` members (`../harness/INTERFACES.md §1`, 2026-08-21) — a different answer from `{conflict}` and never collapsed into it; the harness surfaces a gap attended and parks unattended, and recovery runs through the §6.6 write id, never through re-authoring.
 - **Clock edges** — DST inside a recurring pattern: the pattern's zone governs expansion; instants convert after. A local time erased by spring-forward materializes at the gap's first existing instant; a local time duplicated by fall-back materializes exactly once, at its earlier-UTC occurrence. No day yields zero or two instances, and a duration spanning the transition keeps its true elapsed length. Stated once, here; tested at M5–M6.
 - All failure paths return data; none skip a check, none invent a partial result.
 

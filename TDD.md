@@ -115,7 +115,7 @@ Same inputs → same run, every time. L2 pins this as a criterion: the same trig
 
 ### Family map
 
-**A** board authoring (incl. **A7** return-leg validation) · **B** rules/elicitation · **C** status latches · **D** the floor (incl. **D10–D11** auto-accept-as-Grant, **D18–D20** content-bound confirmation / fail-closed / the floor property) · **D′** the escalation ladder (**D12–D17**) · **E** M2 gate · **F** conflict/versioning · **G** elicitation store · **H** orders/groups/guest · **I** the cross-owner share (**I1–I4**) · **K** check-work · **L** context assembly · **N** money · **P** proposal round-trip — all `[MUST]`, all behavioral, all on stubs.
+**A** board authoring (incl. **A7** return-leg validation) · **B** rules/elicitation · **C** status latches · **D** the floor (incl. **D10–D11** auto-accept-as-Grant, **D18–D20** content-bound confirmation / fail-closed / the floor property, **D22–D23** channel suppression, **D24–D26** the authorization class) · **D′** the escalation ladder (**D12–D17, D21**) · **E** M2 gate · **F** conflict/versioning · **G** elicitation store · **H** orders/groups/guest · **I** the cross-owner share (**I1–I4**) · **K** check-work · **L** context assembly · **N** money · **O** the assisted off-app path (**O1–O5**) · **P** proposal round-trip · **X** the external surface (**X1–X7**) — all `[MUST]`, all behavioral, all on stubs.
 
 **J family is different.** `[HELD-OUT]` probes run against the *finished* harness and their results are **recorded, pass or fail** — a failure means "which general primitive is missing," never "patch the atom." Do not design or fix toward J.
 

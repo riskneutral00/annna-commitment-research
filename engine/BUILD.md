@@ -32,7 +32,8 @@
 
 ## Step 2 — Type-value system (M3)
 - `typed_value` / `compare` over the full §2 vocabulary; raw literals rejected outside `typed_value`.
-- **Verify:** type-error cases + Q2's typed draws.
+- Time-phrase resolution (FD-27): `instant`/`interval` rows, resolved against board zone + a supplied reference instant — deterministic, locale-aware, fail-closed on an unresolvable phrase.
+- **Verify:** type-error cases + Q2's typed draws + **Y1** (instant resolution).
 
 ## Step 3 — Rule menu & evaluation points
 - The closed §3 menu: storage constraint (off-menu unstorable), per-type math, binding times, precedence.

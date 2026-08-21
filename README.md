@@ -11,7 +11,7 @@ Your schedule lives in your head — every promise, every pickup, every "don't f
 
 ## The three words
 
-**Commitment.** The one thing on the board. Not an appointment — something you promised, to someone, under conditions, needing people and equipment. "Event" and "task" are presets derived from it, and nobody ever picks a type. That result came from four research streams — philosophy, contract law, calendar data models, task data models — run blind to each other, and it is what everything else stands on ([`archive/`](archive/)).
+**Commitment.** The one thing on the board. Not an appointment — something you promised, to someone, under conditions. When a promise needs people and equipment, the commitment carries them too — optional axes, never the definition: a title is the only thing every commitment requires. "Event" and "task" are presets derived from it, and nobody ever picks a type. That result came from four research streams — philosophy, contract law, calendar data models, task data models — run blind to each other, and it is what everything else stands on ([`archive/`](archive/)).
 
 **Agent-first.** Agents are first-class users, alongside people, in two senses at once.
 

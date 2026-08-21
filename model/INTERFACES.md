@@ -10,7 +10,7 @@ The contract is **owned and defined by `../harness/INTERFACES.md §2`** — not 
 
 | Harness call | Producer obligation (see SPEC) |
 |---|---|
-| `normalize(utterance, context)` | intent from the §2 vocabulary only; fields raw; `ambiguities` per §3; context-only (no memory) |
+| `normalize(utterance \| trigger_event, context)` | intent from the §2 vocabulary only; fields raw; `ambiguities` per §3; context-only (no memory) |
 | `narrate(structure)` | fidelity per §4; voice per §6 |
 | judgment | bounded per §5 |
 | `summarize(raw_text, source_tag)` | structured return only; no instruction survives into `summary`; material facts preserved; not judgment (SPEC §1, §5) |
@@ -30,10 +30,14 @@ complete(model_id, messages, output_schema) -> structured JSON | error(malformed
 ### 2.2 Routing config (the layer's one real artifact)
 ```
 routing: {
-  <call_type>: { model_id, fallback_model_id, max_cost_per_call, timeout_ms, provider: openrouter | byo-chatgpt | byo-key }
+  <call_type>: { model_id, fallback_model_id, max_cost_per_call, timeout_ms, context_budget_tokens, provider: openrouter | byo-chatgpt | byo-key }
 }
 // timeout_ms defaults: 10_000 attended (a console turn), 30_000 unattended (trigger firings —
 //   nobody is waiting, and the fallback hop still runs). Timeout → fallback_model_id per SPEC §8.
+// context_budget_tokens (2026-08-21) is the assembly budget the harness truncates against
+//   (../harness/SPEC.md §8). A binding is QUALIFIED AT its budget (EVALS.md §3): swapping to a
+//   model with a smaller budget is a re-qualification, never a silent config diff — otherwise a
+//   cheap swap silently changes which busy boards park.
 // call_type = normalize | narrate | judgment | summarize (judgment rides inside normalize/narrate's
 //   calls; listed so a future split stays representable. summarize is a real, separately bound call.)
 ```
