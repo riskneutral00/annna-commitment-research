@@ -1,8 +1,8 @@
 ---
 title: annnä
-status: active
+status: final
 created: 2026-08-08
-updated: 2026-08-08
+updated: 2026-08-22
 ---
 
 # PRD: annnä
@@ -11,7 +11,7 @@ updated: 2026-08-08
 
 This PRD is for the people and agents who build annnä: the layer owners working from `harness/`, `engine/`, `app/`, `model/`, `marketplace/` and `security/`, and the downstream workflows that turn requirements into epics, stories and tests. It exists because the corpus answers *what annnä is* exhaustively and *what it is agent-first for* almost not at all — a gap that surfaced when two technical research passes landed material the specs did not produce.
 
-It is deliberately thin on restatement. Under FR13 every rule has exactly one normative home, and almost every rule this document touches already has one: requirements live in `user-stories/`, acceptance criteria in each layer's `SCENARIOS.md`, architecture in `SPEC.md` and `INTERFACES.md`, build order in `BUILD.md`, success criteria and the risk register in `PR/BRIEF.md`, and every founder ruling in `RULINGS.md`. Where this PRD names one of those, it points and does not copy.
+It is deliberately thin on restatement. Under FR13 every rule has exactly one normative home, and almost every rule this document touches already has one: requirements live **here**, as the `RQ-##` series (FD-35, ruled 2026-08-21 — this file is the requirements register), with `user-stories/` as the falsification-probe corpus every scenario derives from and is refutable against; acceptance criteria live in each layer's `SCENARIOS.md`, architecture in `SPEC.md` and `INTERFACES.md`, build order in `BUILD.md`, success criteria and the risk register in `PR/BRIEF.md`, and every founder ruling in `RULINGS.md`. Where this PRD names one of those, it points and does not copy.
 
 **What this PRD is the normative home of:** the agent-first goal and its two definitions, the capability-parity requirement, and the peace requirement. Nothing else in the corpus holds any of the three. Everything else here is a pointer with a sentence of context.
 
@@ -21,7 +21,7 @@ Assumptions are tagged `[ASSUMPTION]` inline and indexed in §12. Items owed to 
 
 **`PRD.md` at the repository root, INDEX tier `SPEC`.** Root is where corpus-wide documents that are not layers already live — `AGENTS.md`, `INDEX.md`, `RULINGS.md`, `README.md` — and `AGENTS.md` is already tiered `SPEC` there, so both the location and the tier have precedent. `SPEC` rather than `derived` because §0 declares this the normative home of three things nothing else holds; a `derived` tier would misdescribe the parity requirement. `PR/` is frozen, and while that freeze reaches new outward material rather than every edit inside the package (`PR/README.md` §FROZEN), its one *authoring* exception was ruled *"this file and no other"* — so a new document does not land there.
 
-Four obligations before it lands: the `INDEX.md` row goes **between `PR/VOICE.md` and `README.md`** (`git ls-files` sorts `/` before `D`, so the whole `PR/` folder precedes `PRD.md`) or `index-complete` fails; the tracked doc count moves 132 → 133 in both `README.md` and `AGENTS.md`; `AGENTS.md` §Rulings gains a line naming the **`RQ-##`** series, because that section exists so an agent meeting a label knows where to resolve it and a citable series absent from it is the broken-citation problem `RULINGS.md` was built to end; and `npm run check` is green before the landing.
+Four obligations before it lands: the `INDEX.md` row goes **between `PR/VOICE.md` and `README.md`** (`git ls-files` sorts `/` before `D`, so the whole `PR/` folder precedes `PRD.md`) or `index-complete` fails; the tracked doc count moved with it in both `README.md` and `AGENTS.md` (the count has since changed again; those two files are its home); `AGENTS.md` §Rulings gains a line naming the **`RQ-##`** series, because that section exists so an agent meeting a label knows where to resolve it and a citable series absent from it is the broken-citation problem `RULINGS.md` was built to end; and `npm run check` is green before the landing.
 
 ### 0.2 Provenance of the decisions in this document
 
@@ -47,7 +47,7 @@ The term carries two live meanings in the industry, and annnä claims both. Stat
 
 **Agent as interface.** The human states intent; an agent plans, calls tools, chains actions, and either returns a result or asks a clarifying question. The agent is the orchestration layer and the UI is one surface among several. annnä is built this way today: *"the human only has to state intent"*, configuration is conversation rather than a settings wizard (FR36), and a user authors a marketplace template through their agent (FR38).
 
-**Agent as consumer.** Other agents call the application directly. The tool contract is the product surface; structured outputs are guaranteed; actions carry explicit parameters; session affinity is a defect. annnä is built *for* this and does not yet expose it — the harness is a tool contract with a permission floor rather than a set of routes, and it is built and tested before any UI exists, but nothing outside the app may call it.
+**Agent as consumer.** Other agents call the application directly. The tool contract is the product surface; structured outputs are guaranteed; actions carry explicit parameters; session affinity is a defect. annnä is built *for* this and does not yet exercise it — the harness is a tool contract with a permission floor rather than a set of routes, and it is built and tested before any UI exists; the external surface is specified (`harness/SPEC.md §5.3`) and nothing outside the app calls it yet (§2.3).
 
 **The goal is 9 out of 10 against both.** The scorecard and its targets are §10; the requirements that move the numbers are §4.
 
@@ -87,14 +87,14 @@ The first cohort is a working freelancer who sells bookable time and also has a 
 
 ### 2.2 Non-Users (v1)
 
-- **Guests are never users.** A student, a renter, a diver or a patient gets one tokenized link and one form. No account, no password, no chatbot. This is a security guarantee (`security/SPEC.md`), not a scope cut.
+- **Guests are never users.** A student, a renter, a diver or a patient gets one tokenized link and one form — and, once a booking completes, a booking-bound manage link for that booking alone (FD-43). No account, no password, no chatbot. This is a security guarantee (`security/SPEC.md`), not a scope cut.
 - **Other people's agents.** v2, behind FR1's legal review — see §1.2.
 - **Institutions running an autonomy envelope.** Situation E is held out by FR10 and stays a set of predictions to verify, not a target.
 - **Not a non-user, and worth separating:** dive centers and rental operators are in v1 product scope (FR10 puts Situations A, B, C and D in v1). They are simply not in the first two rings of adoption — see §2.3.
 
 ### 2.3 The rings
 
-`PR/IDENTITY.md` describes the audience as *"the mirror, not the market"* that *"grows in circles"* The first two circles are now nameable, and naming them closes the open pilot item in `PR/NOTES.md` that `PR/BRIEF.md` says the success criteria cannot be exercised without.
+`PR/IDENTITY.md` describes the audience as *"the mirror, not the market"* that *"grows in circles"* The first two circles are now nameable, and naming them supplies the cohort the open pilot item in `PR/NOTES.md` needs — that item closes when one of them says "yes, I'll be first" on record, not here.
 
 1. **The founder.** A working dive instructor and language teacher, using annnä directly at its own console.
 2. **Dive and English instructors he knows.** Same shape: freelance, bookable, multi-language, life and work on one board.
@@ -106,7 +106,7 @@ The first cohort is a working freelancer who sells bookable time and also has a 
 
 ### 2.4 Key User Journeys
 
-*These mirror the Situations, which are the requirements source of truth (`user-stories/README.md`). They are identified by their Situation letter rather than a fresh numeric series, deliberately: the corpus has twice been bitten by two numbering schemes for one thing, and a `UJ-1` that does not equal `Situation-1` is that failure waiting to happen. FRs in §4 reference these IDs inline.*
+*These mirror the Situations, which are the falsification-probe corpus the requirements are tested against (`user-stories/README.md`, FD-35). They are identified by their Situation letter rather than a fresh numeric series, deliberately: the corpus has twice been bitten by two numbering schemes for one thing, and a `UJ-1` that does not equal `Situation-1` is that failure waiting to happen. FRs in §4 reference these IDs inline.*
 
 | ID | The journey | Source |
 |---|---|---|
@@ -128,7 +128,7 @@ Two journeys have no story, and both are new with this document.
 - It carries no session. Two identical calls in different orders, with the same store, return the same answers.
 - **The refusal, and it is the beat that matters:** an outward act — messaging a third party, moving value, destroying something — is refused for the owner's own agent exactly as it is refused for the owner's own console, and the owner learns of the refusal in the console rather than only in the caller's response. Permission is never inferred from the fact that the caller is trusted.
 
-**UJ-CALM — Sofia's full board does not read as a wall.** `[ASSUMPTION]` Sofia, months in, opens a genuinely busy day; commitments near now are legible and the rest recede, without anything being hidden or any judgment being applied. Deferred to the UI/UX session named in §11 Q1; written as an assumption rather than an invented narrative because inventing it would fix a design that has not been made.
+**UJ-CALM — Sofia's full board does not read as a wall.** Sofia, months in, opens a genuinely busy day; commitments near now are legible and the rest recede, without anything being hidden or any judgment being applied. *(Formerly `[ASSUMPTION]`, discharged 2026-08-22 — the mechanism is ruled and specified in tracked law (`app/DESIGN.md` §Board rendering, FD-22; asserted at `app/SCENARIOS.md` C9), so the assumption's reason — that narrating would fix an unmade design — no longer holds; see §12.)*
 
 ## 3. Glossary
 
@@ -142,18 +142,18 @@ Two journeys have no story, and both are new with this document.
 - **Commitment harness** — annnä itself, named for the governed envelope around the agent: what it may do, what it may not, and on whose explicit basis. The envelope is the product surface once agents are callers. Distinct from — and named after — the `harness/` layer, which is where the envelope is specified.
 - **External client** — any caller of the harness tool contract that is not the app. In v1 this is the owner's own agent and nothing else (§1.2).
 - **Capability parity** — the property that for every capability the app exposes to an owner, a tool exists reaching the same capability, under the same permission floor, callable by an external client. The testable form of *agent as consumer*.
-- **Wake policy** — the rule governing which blocks render at full legibility at rest. **Ruled 2026-08-09 (FD-22), closing §11 Q1.** It is a mechanism in four parts, all four the owner's: a **value** (0–100, default **80**, fading fill and ink only — spine, urgency edge, border and micro-mark keep full strength), a **scope** (an open predicate over a block's own stored data, deciding who rests lit), a per-commitment **keep-awake** mark, and a **keep-awake toggle**. Attention is senior to all four. Home: `app/DESIGN.md` §Board rendering, *The wake policy*. *(The former `[ASSUMPTION]` on this entry is discharged: the slot is not parameterized as a single value, and the document it depended on has been released as law.)*
+- **Wake policy** *(owner-facing name: **presence** — one mechanism, two registers; the alias is declared at the mechanism's home)* — the rule governing which blocks render at full legibility at rest. **Ruled 2026-08-09 (FD-22), closing §11 Q1.** It is a mechanism in four parts, all four the owner's: a **value** (0–100, default **80**, fading fill and ink only — spine, urgency edge, border and micro-mark keep full strength), a **scope** (an open predicate over a block's own stored data, deciding who rests lit), a per-commitment **keep-awake** mark, and a **keep-awake toggle**. Attention is senior to all four. Home: `app/DESIGN.md` §Board rendering, *The wake policy*. *(The former `[ASSUMPTION]` on this entry is discharged: the slot is not parameterized as a single value, and the document it depended on has been released as law.)*
 - **Peace** — the product's purpose (`PR/IDENTITY.md` §Purpose). In this PRD it is a requirement with three mechanisms: annnä takes the coordination work, holds the record so the owner's head need not, and governs what the owner is asked to look at.
 
 **Terms with homes elsewhere** — used verbatim, defined once, cited here:
 
 - **Commitment** — the single primitive; one object with orthogonal axes, where event and task are derived presets. Home: `engine/SPEC.md`.
 - **Owner** — the principal a board belongs to; the only party whose explicit basis can authorize an outward act. Home: `harness/SPEC.md`.
-- **Guest** — a non-owner party reached by one tokenized link and one form; never an account holder. Home: `security/SPEC.md`.
+- **Guest** — a non-owner party reached by tokenized links and forms — entry, and after a completed booking the booking-bound manage link (FD-43) — never an account holder. Home: `security/SPEC.md`.
 - **ShareGrant** — the engine-minted object by which a commitment or board reaches another person or link token; `{holder, rung, scope, edit_mode}`, three rungs, availability by default (FR30). Home: `engine/SPEC.md §7.1`.
-- **Grant** *(the authorization Grant — a different object, same bare word)* — a standing authorization from the owner that satisfies the permission floor without a fresh confirmation; `{action_class, scope, expiry, revocable}`, and what an auto-accept is recorded as (FR6, FR28). Home: `harness/SPEC.md §7`; stored shape at `engine/SPEC.md §1.6`. **The two are deliberately separate and must not be merged** — a ShareGrant governs *who may see or edit*, an authorization Grant governs *which action class the floor permits*; `engine/SPEC.md §7.1` exists in part to keep them apart.
+- **Grant** *(the authorization Grant — a different object, same bare word)* — a standing authorization from the owner that satisfies the permission floor without a fresh confirmation; `{action_class, scope, expiry, revocable}`, and what an auto-accept is recorded as (FR6, FR28). Minting or widening one is an `authorization`-class act, console-only (FD-24), with FD-32's `ShareGrant` carve on the stored-accept path. Home: `harness/SPEC.md §7`; stored shape at `engine/SPEC.md §1.6`. **The two are deliberately separate and must not be merged** — a ShareGrant governs *who may see or edit*, an authorization Grant governs *which action class the floor permits*; `engine/SPEC.md §7.1` exists in part to keep them apart.
 - **Permission floor** *(also: the reversibility floor)* — the rule that nothing crossing into the real world happens without an explicit basis from the owner. Home: `harness/SPEC.md`.
-- **Board** — the owner's surface; no time axis, blocks stack, time is block data. Home: `app/SPEC.md`, visual law `app/DESIGN.md`.
+- **Board** — the owner's surface; no time axis, two gravities (events pack to the top, tasks flush to the bottom edge), time is block data. Home: `app/SPEC.md`, visual law `app/DESIGN.md`.
 - **Console** — the conversational surface where the owner talks to their agent and confirms proposals. Home: `app/SPEC.md`.
 - **Situation** — an end-to-end falsification probe in `user-stories/`, never a design target. Home: `user-stories/README.md`.
 - **Template** — the transferable shape of how someone runs bookable time; never anyone's data. Home: `marketplace/SPEC.md`.
@@ -174,7 +174,7 @@ Two journeys have no story, and both are new with this document.
 | Cross-owner reach — grants, creator-set holds, the three accept modes | `engine/SPEC.md` (FR26–FR30) |
 | The assisted off-app path — the prepared call, the recorded answer, the invite | `harness/SPEC.md`, gated `harness/SCENARIOS.md` |
 | Guest surfaces — one tokenized link, one form, no account | `app/SPEC.md`, `security/SPEC.md` |
-| Calendar import — connect once, owner-triggered sync, inbound only | `app/SPEC.md` (FR12, FR36) |
+| Calendar import — connect once, owner-triggered sync, inbound only | `app/SPEC.md` (FR12, FR36 as amended by FD-37) |
 | Skins, templates, install law | `marketplace/SPEC.md` |
 | Threat model, token law, PII vault, injection quarantine, compliance posture | `security/SPEC.md` |
 | What any candidate model must satisfy, and the exam that grades it | `model/SPEC.md`, `model/EVALS.md` |
@@ -192,6 +192,7 @@ An owner can authorize an external client to act as them against their own board
 **Consequences (testable):**
 - A credential is issued by the owner through the console. No agent request mints one, and no credential is created as a side effect of any other action.
 - Withdrawal takes effect at the next authorization check; a withdrawn credential authorizes nothing thereafter, and revocation is a latch — the honest dead end, never a stale view.
+- A declared rate or spend trip **suspends** rather than revokes: suspension blocks use while set, is not a latch, and is cleared only by an owner console act (FD-33, `security/SPEC.md §3`). Revocation remains the latch.
 - Every custody rule in §3 binds it unchanged: ≥128-bit random minting never derived from anything guessable; the SHA-256 digest stored and the plaintext stored nowhere, including logs; constant-time lookup on miss with no existence oracle; per-token and per-IP rate limits; the adversarial suite `security/SCENARIOS.md` T9 green before it goes live.
 - **It is the only class in the table that attributes to a principal on the inside rather than to a counterparty.** An act performed through it is recorded as an act of **the principal who issued the credential**, with the client identified alongside. It introduces no new actor model: `harness/SPEC.md` §3.1 already distinguishes the **owner** of a board from the **actor** on a turn, and a credential is issued by, and attributes to, whoever holds the role that could have performed the act by hand.
 - It authorizes nothing the owner has not authorized. Attribution is not permission (RQ-7).
@@ -208,8 +209,8 @@ For every capability annnä exposes to an owner through the app, a tool exists t
 **Out of Scope:**
 - Capabilities exposed to guests. A guest surface is one link and one form and has no owner behind it.
 - Administrator capabilities in the closed marketplace service, which is outside this repo.
-- **Authorization and recovery** (**FD-26**, founder-ruled 2026-08-21) — capabilities that create or withdraw a caller's own permission: issuing and revoking the external-client credential (RQ-1: *"No agent request mints one"*), minting or widening a Grant (FD-24), confirming a restore (`security/SPEC.md §8`: *"not an agent tool"*), and re-enabling a suppressed party (`harness/SPEC.md §3.11`). These are console-only by design, and the principle is stated so the exclusion cannot creep: **a credential must never control who may act as the owner.** Without this class the RQ-2 gate was red forever — or a stolen credential could mint credentials.
-- **Appearance** — the active skin, the boring stash, the opacity dial, the fave-four (**FD-19**, founder-ruled 2026-08-08). `app/SPEC.md §7` makes appearance the one app-owned write and §10 makes it invariant that **no seam call carries it**; without this exclusion the mechanical check above could only ever go red, and a gate that cannot go green is worse than none. The exclusion is narrow and principled rather than convenient: appearance is display-only state that never becomes engine truth, so it is not a capability anything schedules against — nothing an agent acting for the owner needs, and the one place where reaching *less* costs the owner nothing.
+- **Authorization and recovery** (**FD-26**, founder-ruled 2026-08-21) — capabilities that create or withdraw a caller's own permission: issuing and revoking the external-client credential (RQ-1: *"No agent request mints one"*), **clearing a credential's suspension** (FD-33's clearer is always human — FD-26's principle applied, else a second credential re-arms a rate-limited first), minting or widening a Grant (FD-24), confirming a restore (`security/SPEC.md §8`: *"not an agent tool"*), and re-enabling a suppressed party (`harness/SPEC.md §3.11`). These are console-only by design, and the principle is stated so the exclusion cannot creep: **a credential must never control who may act as the owner.** Without this class the RQ-2 gate was red forever — or a stolen credential could mint credentials.
+- **Appearance** — the active skin, the boring stash, the opacity dial, the fave-four (**FD-19**, founder-ruled 2026-08-08). `app/SPEC.md §7` makes appearance the one app-owned write and §10 makes it invariant that **no seam call carries it**; without this exclusion the mechanical check above could only ever go red, and a gate that cannot go green is worse than none. The exclusion is narrow and principled rather than convenient: appearance is display-only state that never becomes engine truth, so it is not a capability anything schedules against — nothing an agent acting for the owner needs, and the one place where reaching *less* costs the owner nothing. *(Amended 2026-08-22: FD-42 rules that the owner's **own** agent does set appearance, conversationally, as ordinary display-only settings. The exclusion stays **whole for the parity gate** — the gate ranges over the harness tool contract, and the display-only set is not a parity member in either direction, so X1/X6's excluded-class lists stand as written and the gate stays green. FD-42's ruled behaviour reaches appearance by a dedicated path **outside the enumeration**: the drafted `display.settings` write class at `app/SPEC.md §7`, whose seam verb is unnamed and is part of what ratification must decide — per RQ-3, a capability requiring a new verb is a spec change with its own ruling, and that drafted amendment is the spec change, pending. FD-19's old rationale sentence is superseded; the gate-shaped outcome stands.)*
 
 #### RQ-3: The surface adds no seam verbs
 
@@ -223,7 +224,7 @@ The external client calls the verbs the harness already defines and introduces n
 
 **Consequences (testable):**
 - Every tool result validates against a declared schema; an off-schema result fails loudly at parse rather than degrading — the poka-yoke the render catalog already uses.
-- A client that renders nothing can reach every capability in RQ-2.
+- A client that renders nothing can reach every capability in RQ-2's parity set *(net of the excluded classes — after FD-26, authorization-and-recovery is reachable only through a rendered console by design)*.
 - No capability's only complete answer is obtainable by reading a rendered page.
 
 #### RQ-5: No capability depends on session affinity
@@ -237,10 +238,10 @@ The external client calls the verbs the harness already defines and introduces n
 
 **Consequences (testable):**
 - After an interruption a client can query the turn's state and either resume it or discard it.
-- An abandoned turn leaves no partial write.
+- An abandoned turn leaves no half-applied domain effect: the store holds either the turn's verified complete effect or none of it *(the wording is `harness/SCENARIOS.md` X4's — "no effect at all" was literally unsatisfiable, since attribution records and the turn record survive by law)*.
 - Neither path requires the client that started the turn to be the client that ends it.
 
-**Notes:** Open in `harness/NOTES.md` and raised by the harness research pass. Optional with one human at one console; load-bearing the moment a stateless caller exists.
+**Notes:** Raised by the harness research pass; folded out of `harness/NOTES.md` into `harness/SPEC.md §5.3` on 2026-08-21. Optional with one human at one console; load-bearing the moment a stateless caller exists.
 
 #### RQ-7: The permission floor binds every client identically
 
@@ -276,7 +277,7 @@ An outward act — messaging a third party, moving value, destroying something �
 
 **Description:** The board holds a complete life, and completeness is the product's central bet. The same completeness is what makes a board heavy to look at. This feature is the third mechanism of peace (§1.4): governing legibility, without hiding anything and without applying judgment. Realizes **UJ-CALM**.
 
-*The UI/UX session named in §11 Q1 **ran on 2026-08-09** and ruled the mechanism (FD-22). §4.3 survived it: the requirement was right and only its first consequence was a placeholder. The `[ASSUMPTION]` that this subsection was written to be cut is discharged — it was written to be **satisfied**, and it was. Mechanism home: `app/DESIGN.md` §Board rendering, *The wake policy*.*
+*The UI/UX session named in §11 Q1 **ran on 2026-08-09** and ruled the mechanism (FD-22); the run resumed and closed 2026-08-21/22 (FD-38–FD-43), and §4.3 is stated against that close. §4.3 survived it: the requirement was right and only its first consequence was a placeholder. The `[ASSUMPTION]` that this subsection was written to be cut is discharged — it was written to be **satisfied**, and it was. Mechanism home: `app/DESIGN.md` §Board rendering, *The wake policy*.*
 
 #### RQ-10: Legibility at rest is governed, and nothing is hidden
 
@@ -285,14 +286,14 @@ An outward act — messaging a third party, moving value, destroying something �
 - **Exactly one scope is active at a time**, carrying exactly one value; setting a new one replaces the old, and no precedence rule is reachable.
 - Every commitment on a displayed day is present on the board; none is removed, collapsed away, or withheld. **The value fades fill and ink only** — a block's spine, urgency edge, border and micro-mark are at full strength at every setting, including 0.
 - No agent judgment selects what is legible. The rule is mechanical and its inputs are the block's own stored data.
-- **Every part is display state.** Setting any of the four writes app settings and emits no seam call; no engine value, placement or handle changes.
+- **Every part is display state.** Setting any of the four writes app settings and never becomes engine truth; no engine value, placement or handle changes, and no part of it is engine-readable. *(The former "emits no seam call" absolute is amended: FD-42's drafted `display.settings` write class rides the ordinary seam into the app-owned store — `app/SPEC.md §7`, drafted not founder-ratified.)*
 
 **Notes:** *the placeholder is gone.* The first consequence formerly read *"the wake policy takes a value other than `none`"* and passed with any value including a bad one; it was named as a placeholder when written and is replaced now that §11 Q1 is closed. What still has **no** test is the requirement itself — that a full board does not read as a wall. That is a judgment, it belongs on the design-law checklist (`../TDD.md`), and no green check above should be read as satisfying it.
 
 #### RQ-11: Attention is senior to the rule
 
 **Consequences (testable):**
-- Engaging any block — hover, focus, or explicit engagement — wakes it to the owner's value, whatever the scope says about it. **Out of scope rests at the floor and reveals to the value on attention**; in scope rests at the value. Attention never produces a *third* appearance.
+- Engaging any block — hover, focus, or explicit engagement — wakes it, whatever the scope says about it. **Out of scope rests at the floor and reveals on attention to `max(value, floor)`** — the floor being the named `presence-floor` token (a11y A3), so `0` is a fill stop, never a legibility stop; in scope rests at the value. Attention never produces a *third* appearance.
 - Engagement remains governed by attention alone; this requirement changes what a block looks like at rest, never what triggers a reaction (`app/DESIGN.md` §Glass).
 - **Engaging adds material, never removes it.** A surface is more frosted engaged than at rest, at every setting.
 - **A `keep-awake` block ignores the scope but not attention** — it rests at the value and still reacts.
@@ -300,10 +301,10 @@ An outward act — messaging a third party, moving value, destroying something �
 #### RQ-12: The muted state is measured, not eyeballed
 
 **Consequences (testable):**
-- Text meets WCAG 2.1 AA contrast **in the engaged state**, over the worst-case region of every shipped skin's photograph.
-- **Anything that must be read without engagement is measured at rest** — the date row, an island's label, a block's micro-mark — to the same threshold, over the same worst-case region.
+- Text meets WCAG 2.1 AA contrast **in the engaged state**, over the worst-case region of every installed skin's photograph *(a11y A14 ranges the proof over installed, not shipped — no skin is special)*.
+- **Anything that must be read without engagement is measured at rest** — the date row, a settings-pane label, a block's micro-mark — to the same threshold, over the same worst-case region.
 - Every surface is engageable by keyboard as well as pointer, so the readable state is reachable without a mouse.
-- A skin failing any of the three does not ship.
+- A skin failing any of the three does not ship — **and a marketplace skin failing either of the first two does not install** *(the third is a property of the app, not of a pack — no door can test it)*: the install door runs the same derived-token floors it runs for schema fields (`app/DESIGN.md §Appearance`; a11y A12), because a bought skin arrives after any build and *ship* alone is unenforceable on it *(clause added 2026-08-22)*.
 
 **Notes:** Already law in `app/DESIGN.md` §Accessibility baseline; restated here because it is the ceiling on how faint the muted end can be, and the aesthetic will otherwise be specified past it. **Amended 2026-08-09:** this formerly required AA in *both* states. That could not hold once the wake policy's value was the owner's — a block at rest sits at the floor with fill and ink faded by the owner's own dial, so "AA at rest" requires either a floor high enough to erase the thesis or a line no build could satisfy. The three consequences above are the honest closure; the ceiling they impose is the same one.
 
@@ -313,9 +314,9 @@ An outward act — messaging a third party, moving value, destroying something �
 
 ### 4.5 What the specs owe
 
-*The pathway from these requirements to a buildable corpus, as a map of edits to files that already exist. **No new specification file is created by any row** — the only new artifact anywhere below is RQ-2's gate script. `engine/` is untouched throughout, which is the clearest evidence that this PRD adds a door rather than an authority.*
+*The pathway from these requirements to a buildable corpus, as a map of edits to files that already exist. **No new specification file is created by any row except RQ-13's** — `harness/INTERFACES.md §6` rules the compatibility policy lands as its own spec-class markdown on the `deployment/egress-allowlist.md` precedent, carrying its INDEX row and count bump with it; the only other new artifact is RQ-2's gate script. `engine/` is untouched throughout, which is the clearest evidence that this PRD adds a door rather than an authority.*
 
-*Landed: RQ-1's security rows on 2026-08-08 (FD-17, FD-18); the harness rows — RQ-2 through RQ-9 and RQ-13 — on 2026-08-21, at `harness/SPEC.md §5.3`, `harness/INTERFACES.md §6`, `harness/SCENARIOS.md` X1–X6, `harness/BUILD.md` Step 8, and `security/SPEC.md §5`'s door list. RQ-2's mechanical gate lands with the enumeration at that Step 8, per the printed-gate posture.*
+*Landed: RQ-1's security rows on 2026-08-08 (FD-17, FD-18); the harness rows — RQ-2 through RQ-9 and RQ-13 — on 2026-08-21, at `harness/SPEC.md §5.3`, `harness/INTERFACES.md §6`, `harness/SCENARIOS.md` X1–X7 (X7 is RQ-13's gate), `harness/BUILD.md` Step 8, and `security/SPEC.md §5`'s door list. RQ-2's mechanical gate lands with the enumeration at that Step 8, per the printed-gate posture.*
 
 | Requirement | What changes, and where |
 |---|---|
@@ -327,9 +328,9 @@ An outward act — messaging a third party, moving value, destroying something �
 | RQ-6 | `harness/SPEC.md` + `harness/SCENARIOS.md` — resume-or-abandon. Closes the open item in `harness/NOTES.md` rather than adding one |
 | RQ-7 | `harness/SPEC.md` — the floor binds every client identically; `harness/SCENARIOS.md` gains the refusal |
 | RQ-8 | `security/SPEC.md` §5 — the surface is a door that stamps `import`, and a client-asserted tag is ignored. `harness/INTERFACES.md` — the quarantine applies to free text, not structured parameters |
-| RQ-10–12 | `app/DESIGN.md`, `app/SPEC.md` §2, `app/SCENARIOS.md` — held until the UI/UX session (§11 Q1) rules the mechanism |
+| RQ-10–12 | `app/DESIGN.md`, `app/SPEC.md` §2, `app/SCENARIOS.md` — **landed**: the mechanism ruled 2026-08-09 (FD-22, §Board rendering), the wake scenarios `app/SCENARIOS.md` C9/C10 added 2026-08-21 (C10 re-cut 2026-08-22 to the settings pane after FD-39 dissolved the islands), and RQ-12's install-door clause landed 2026-08-22 |
 | RQ-13 | `harness/INTERFACES.md` — the compatibility policy, since it is a property of the seam |
-| The claim itself | `README.md` — annnä is an agent-first commitment harness, and the founder's *"APIs before dashboards"* is already true of the build order with no file saying so. `AGENTS.md` — the `RQ-##` series line and the doc count. `INDEX.md` — this document's row. `PR/IDENTITY.md` — §What it is, **landed 2026-08-08**; its §Mission third mechanism stays deferred (§11 Q2). `PR/REPO-FACADE.md` — the About line, landed the same day under its own standing rule that the line is rewritten when it stops being true |
+| The claim itself | `README.md` — annnä is an agent-first commitment harness, and the founder's *"APIs before dashboards"* is already true of the build order with no file saying so. `AGENTS.md` — the `RQ-##` series line and the doc count. `INDEX.md` — this document's row. `PR/IDENTITY.md` — §What it is, **landed 2026-08-08**; its §Mission third mechanism is **owed to the outward-copy pass** (§11 Q2). `PR/REPO-FACADE.md` — the About line, landed the same day under its own standing rule that the line is rewritten when it stops being true |
 
 ## 5. Non-Goals (Explicit)
 
@@ -341,7 +342,7 @@ What annnä is not, and will not become. These prevent the "let me also add this
 - **Not open to other people's agents in v1.** §1.2, refusal two.
 - **Not agent-only.** Agents are first-class *alongside* humans, never instead of them. A capability reachable only by an agent violates RQ-2 exactly as one reachable only by the console does.
 - **Not a two-way calendar.** Inbound import is in scope; outbound sync and write-back are banned and the UI for them is a standing rejection.
-- **Not a guest-facing product.** Guests get one link and one form, permanently. No guest account exists to build features onto.
+- **Not a guest-facing product.** Guests get links and forms, never an account — no password, no sign-in, no agent. A booking-bound manage token (FD-43) gives a guest cancel/move over **their own booking only**; that is the ceiling, and nothing is built past it.
 - **Not a dive product.** The Situations are falsification probes; a fix that special-cases a story is the wrong fix. The held-out domain exists to keep that honest.
 - **Not a claim to have invented multi-resource scheduling.** `PR/BRIEF.md` establishes that vertical booking software already schedules people and equipment together, and that no outward surface may imply otherwise. The claim is the unoccupied combination, and it is a narrowing.
 
@@ -358,7 +359,7 @@ What annnä is not, and will not become. These prevent the "let me also add this
 ### 6.2 What this PRD adds to v1
 
 - **The external client surface** — RQ-1 through RQ-9, plus RQ-13. Specified in v1; exercised when a beta cohort exists.
-- **Governed legibility** — RQ-10 through RQ-12, pending the UI/UX session.
+- **Governed legibility** — RQ-10 through RQ-12, ruled (FD-22) and landed; the judgment half stays on the design-law checklist per RQ-10's note.
 - **The agent-first claim itself**, which **landed 2026-08-08** on `README.md`, `PR/IDENTITY.md` §What it is, and `PR/REPO-FACADE.md`'s About line. It ships as *specification*, not as exercise: each surface says the external client is specified and opens when a cohort exists, and all three sit under the repo's design-specification-not-an-app banner. **SM-C4 binds everything said past that line** — no surface may describe the surface as working until RQ-1 through RQ-9 have green scenarios.
 
 ### 6.3 Out of scope
@@ -401,21 +402,22 @@ The corpus has strong versioning discipline in two places: kind schemas are pinn
 
 | Concern | Home | What the external client changes |
 |---|---|---|
-| Threat model, tokens, PII vault, injection quarantine | `security/SPEC.md` | A second non-owner-shaped surface; the token table's closure (Q1) and the quarantine's reach (Q2) |
+| Threat model, tokens, PII vault, injection quarantine | `security/SPEC.md` | A second non-owner-shaped surface; the token table's closure (RQ-1, FD-17) and the quarantine's reach (RQ-8) |
 | Compliance posture — GDPR as ceiling, PDPA named, processor not controller | `security/SPEC.md` | Nothing directly. An external client acts *as* the owner, so no new controller relationship is created in v1 |
 | The legal gate | FR1; `security/README.md` | Unchanged for v1's own-agent scope. It is the blocker on the v2 scope, and the reason v1 stops where it does |
 | Determinism and the model's confinement | FD-16; `engine/SPEC.md`, `model/SPEC.md` | Nothing. The external client is another caller of the same floor, not a new authority |
-| Reliability of the model layer | `model/EVALS.md` | The exam grades capability, not reliability under perturbation — open in the corpus and unchanged by this PRD |
-| Build discipline, environments, what may land on main | `deployment/SPEC.md` | An inbound enumeration of record is owed (RQ-9), mirroring the outbound allowlist |
+| Reliability of the model layer | `model/EVALS.md` | The exam grades capability and — since the P-set landed 2026-08-21 — reliability under repetition (`pass^k` over engine state); the P-set first becomes runnable at built-harness Step 3, a build condition rather than an open question |
+| Build discipline, environments, what may land on main | `deployment/SPEC.md` | The inbound-enumeration law landed (RQ-9, `harness/INTERFACES.md §6`); the concrete list is produced at harness BUILD Step 8, mirroring the outbound allowlist |
 | Accessibility — WCAG 2.1 AA on both audiences | `app/DESIGN.md` | RQ-12 makes it the measured ceiling on §4.3's aesthetic |
 
 **Monetization is deliberately absent.** FR18 makes commercial silence repo-wide, and `PR/BRIEF.md` was ruled to stay on the product and the problem.
 
 ## 9. Risks this PRD adds
 
-*The risk register's normative home is `PR/BRIEF.md`, and the five live risks there are unchanged. These four are new with this document and are owed to that register if they survive review.*
+*The risk register's normative home is `PR/BRIEF.md`, and the five live risks there are unchanged. These five are new with this document (the fifth added at Finalize, 2026-08-22) and are owed to that register if they survive review.*
 
-- **A public surface is a permanent surface.** Once a credential is issued and something is built against it, the contract's shape is expensive to change in a way an internal contract never was. RQ-13 is the mitigation and it is cheap only while the sole holder is the founder.
+- **A public surface is a permanent surface.** Once a credential is issued and something is built against it, the contract's shape is expensive to change in a way an internal contract never was. RQ-13 is the mitigation, now gated at issuance (`harness/SCENARIOS.md` X7: no policy on record, no credential); the surviving residue is X7's own — no scenario can assert that a future breaking change actually honors the policy.
+- **An admitted caller spends annnä's money.** Every inbound call can burn annnä-paid `normalize`/`summarize`, so a looping or runaway owner agent converts the model budget into someone else's retry loop — the adversary `security/SPEC.md §1` names as the stolen or looping external client. Mitigations: §10's per-credential rate and spend caps on annnä's own spend, and FD-33's suspension as the trip's consequence.
 - **The quarantine was designed against prose, and callers are not prose.** FD-2 is the control the whole injection posture rests on. RQ-8 extends the tagging door rather than the control itself, which is the cheaper half; the expensive half is unchanged and unsolved by design — `security/SPEC.md` §5 states that this pattern mitigates roughly two-thirds of benchmarked attacks, and that the floor, not the quarantine, bounds the rest.
 - **A parity requirement can be satisfied downward.** RQ-2 is true if the app is made poorer. SM-C1 exists to catch that, and it is a real failure mode rather than a theoretical one.
 - **The agent-first claim can outrun its scenarios.** `PR/IDENTITY.md` requires every outward claim to be grounded in it, and `PR/BRIEF.md` established the precedent by *narrowing* a claim rather than widening it. Saying annnä works with an outside agent, before one has, is that same shape.
@@ -424,7 +426,7 @@ The corpus has strong versioning discipline in two places: kind schemas are pinn
 
 ### 10.1 Product success — pointer only
 
-The success criteria are ruled and their only home is `PR/BRIEF.md`: how many people use it, whether they are still using it month after month, and what they say directly — with feedback as the primary instrument, and two admitted-hard secondary signals. **No numeric target is set there and none may be introduced by derivation.** This PRD introduces none, and §2.3 naming the first cohort is what makes those criteria exercisable at all.
+The success criteria are ruled and their only home is `PR/BRIEF.md`: how many people use it, whether they are still using it month after month, and what they say directly — with feedback as the primary instrument, and two admitted-hard secondary signals. **No numeric target is set there and none may be introduced by derivation.** This PRD introduces none, and §2.3 naming the first cohort supplies what the still-open pilot item needs before those criteria can be exercised.
 
 ### 10.2 Agent-first conformance — this PRD's own metric
 
@@ -439,7 +441,7 @@ The success criteria are ruled and their only home is `PR/BRIEF.md`: how many pe
 | Intent in, agent orchestrates, clarifies rather than forms | 9 | 10 — reached when it is equally true from every client (RQ-2, RQ-4) |
 | Agent owns the workflow rather than hardcoded routes | 7 | 8 — capped by FD-16, and the cap is accepted |
 | State lives in the agent's context | 3 | **Refused.** §1.2, refusal one. Excluded from the target and argued in writing |
-| Multiple surfaces collapse into one agent layer | 4 | 10 — RQ-1 through RQ-5 |
+| Multiple surfaces collapse into one agent layer | 4 → **6** *(re-scored 2026-08-22 per this section's protocol; what changed: FD-39 retired the islands into the console's settings pane and FD-42 made appearance and text size settable by saying them — the console absorbed every control)* | 10 — RQ-1 through RQ-5 |
 | Tools are first-class citizens | 9 | 10 — RQ-2, RQ-3 |
 
 **SM-2 — Agent as consumer.** Target **9/10**.
@@ -449,7 +451,7 @@ The success criteria are ruled and their only home is `PR/BRIEF.md`: how many pe
 | APIs before dashboards | 9 in build order, 0 in exposure | 9 — RQ-1, RQ-2 |
 | Structured outputs guaranteed | 9 | 10 — RQ-4 |
 | Tool-call ready | 9 | 10 — RQ-3 |
-| Stateless by default | 6 | 9 — RQ-5, RQ-6 |
+| Stateless by default | 6 → **7** *(re-scored 2026-08-22; what changed: the caller-supplied write id and the resume-or-abandon pair landed as spec — `harness/INTERFACES.md §1.2`, `harness/SCENARIOS.md` X3/X4)* | 9 — RQ-5, RQ-6 |
 
 **SM-3 — Parity coverage.** The proportion of enumerated owner capabilities reachable by an external client under the same floor. Validates RQ-2. Target: complete, and mechanically checked rather than asserted.
 
@@ -462,11 +464,11 @@ The success criteria are ruled and their only home is `PR/BRIEF.md`: how many pe
 
 ## 11. Open Questions
 
-*Four of the questions this document opened were answered on 2026-08-08 and now appear as decisions where they belong: v1's scope (§6.1), what the legal review reviews (§6.3), where this document lives (§0.1), and the two adopted answers behind RQ-1 and RQ-8. **Q1 closed on 2026-08-09** and is kept below rather than deleted, because the shape of the answer contradicts the shape of the question and a reader who finds only the answer will re-ask the question. What remains is genuinely unknown.*
+*Five of the questions this document opened were answered on 2026-08-08 and now appear as decisions where they belong: v1's scope (§6.1), what the legal review reviews (§6.3), where this document lives (§0.1), and the two adopted answers behind RQ-1 and RQ-8. **Q1 closed on 2026-08-09** and **Q3 on 2026-08-21**; both are kept below rather than deleted, because a reader who finds only the answer will re-ask the question. What remains open is Q2 alone — and it is an owed edit with a named owner (the outward-copy pass), not an unknown.*
 
 1. ~~**Q1 — The wake policy's shape.**~~ **CLOSED 2026-08-09 (FD-22), by the dedicated UI/UX session this question named.** The answer was **not a policy value** — the question's own framing (*a fixed window, a count of blocks, or duration-aware*) was the wrong shape, and choosing among those three would have been the corpus asking the founder a question that belongs to its users. What was ruled is a **mechanism in four parts** — value (default 80), scope, `keep-awake`, keep-awake toggle — with the value and the scope both **the owner's**. Home: `app/DESIGN.md` §Board rendering, *The wake policy*. **Two things this question assumed and the ruling reversed:** proximity-to-now is not the mechanism (the scope is an open predicate over the block's own data, which can express proximity but is not limited to it), and *"whether task due chips ramp alongside blocks"* is moot — **the due chip no longer exists** and tasks are ordinary blocks (FD-23). The one thing it got right survives: whether the tier is user-configurable was never a founder question, and the ruling made value and scope settings for exactly that reason.
 2. **Q2 — `PR/IDENTITY.md`'s third mechanism. Now due, and it is the one thing this pass deliberately did not write.** §Mission names two steps and §1.4 adds a third. Q2 said *"the edit happens in the pass that rules the wake policy"* — that pass has now run, so the deferral's condition is met and the edit is **owed**, not deferred. It is left for an outward-copy pass rather than taken here: `PR/IDENTITY.md` governs every outward claim, `PR/` is frozen for new outward material, and a mechanism sentence in the brand's own voice is authored, not derived. The mechanism it must name is settled and stated above. Less urgent than it looks, still: the outward *promise* is already there — *"Five commitments are five small pieces of glass resting on it — not a wall of blocks from midnight to midnight."* — and the ruling made that sentence **more** true, not less, by pinning it to emptiness rather than to transparency (`app/DESIGN.md`, the default-80 bullet).
-3. **Q3 — Reliability grading in the model layer.** `model/EVALS.md` grades capability rather than reliability under perturbation. Open in the corpus, raised by the harness research pass, and unchanged by this PRD — recorded here so it is not read as closed.
+3. ~~**Q3 — Reliability grading in the model layer.**~~ **CLOSED 2026-08-21.** The gap this question recorded — `model/EVALS.md` grading capability and nothing grading repetition — is filled: the **P-set** (`pass^k` over engine state, ten triples per item, item passes at ≥ 9) landed in `model/EVALS.md`, with the explicit relation that P is the stricter bar and P governs. What remains is a build condition, not an open question: the P-set first becomes runnable at built-harness Step 3, stated in its own section. Kept rather than deleted for the same reason as Q1 — a reader who finds only the answer would re-ask the question this PRD itself raised.
 
 *Agent-initiated speech is deliberately absent from this document. It is unruled, this PRD takes no position on it in either direction, and nothing here is built on the assumption that annnä does or does not speak first.*
 
@@ -476,6 +478,6 @@ The success criteria are ruled and their only home is `PR/BRIEF.md`: how many pe
 
 - **§2.3** — The founder uses annnä at its own console and admits no external client until a beta cohort exists; the external surface is v1 specification, not v1 exercise.
 - ~~**§3, wake policy**~~ — **DISCHARGED 2026-08-09 (FD-22).** The assumption was that `app/DESIGN.md`'s *"Default wake policy is `none`"* named a parameterized slot that could take a proximity value, and it warned that if the reading was wrong, §1.4, §4.3 and UJ-CALM would need a **different mechanism rather than a different value**. **The reading was wrong, and the warning was right.** The mechanism is four parts rather than a slot, the prior-build document it depended on has since been released as law, and §3, §4.3 and RQ-10–RQ-12 were rewritten to the ruled mechanism rather than re-defaulted. **UJ-CALM stands** — it asked that a full board not read as a wall, and that requirement never depended on which mechanism satisfied it.
-- **§2.4, UJ-CALM** — the journey is stated as an assumption rather than narrated, because narrating it would fix a design that has not been made.
+- ~~**§2.4, UJ-CALM**~~ — **DISCHARGED 2026-08-22.** The design has now been made and lives in tracked law (`app/DESIGN.md` §Board rendering, FD-22; `app/SCENARIOS.md` C9); the assumption's reason — narrating would fix an unmade design — no longer holds.
 - ~~**§4.3, whole subsection**~~ — **DISCHARGED 2026-08-09.** RQ-10 through RQ-12 were drafted ahead of the UI/UX session and written to be cut by it. The session ran; **none of the three was cut.** RQ-10's placeholder consequence was replaced with the ruled mechanism's, RQ-11 gained the scope/floor distinction, and RQ-12's *"AA in both states"* became AA on the engaged state plus a measured-at-rest clause. The requirement each states was correct as drafted.
-- **§2.4, UJ-AGENT** — written as predictions in Situation E's form, not as a run. Every prediction carries a question mark until a client exercises it.
+- **§2.4, UJ-AGENT** — its protagonist is the founder, because §2.3 names him the first and for some time only person who will exercise it. Written as predictions in Situation E's form; every one carries a question mark until a client exercises it.
