@@ -112,7 +112,9 @@ if (accentSeed) {
     let cand = { mode: "oklch", l: 0.62, c: Math.min(c.c, 0.15), h: c.h ?? 0 };
     while (wcagContrast("#ffffff", formatHex(cand)) < 3 && cand.l > 0.35) cand.l -= 0.02;
     const candHex = formatHex(cand);
-    const collision = URGENCY.find((u) => dE(parse(candHex), parse(u)) < 12);
+    // per-skin urgency marks are lightness-walked from these hues (app/DESIGN §Colour),
+    // so the collision check must be lightness-invariant: compare at the candidate's own L
+    const collision = URGENCY.find((u) => dE(parse(candHex), parse(formatHex({ ...inOklch(u), l: cand.l }))) < 12);
     if (collision) {
       accentNote = `rejected: too close to urgency ${collision}`;
     } else {
