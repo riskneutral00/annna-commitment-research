@@ -29,6 +29,12 @@ _bmad-output
 # rest of the process artifacts kept off the public repo.
 docs/agents/
 
+# Per-machine session pointers (they point into docs/agents/ working
+# material). Working material like the above; the corpus forbids schedule
+# documents (FR2).
+CLAUDE.md
+.hermes.md
+
 # Local Claude Code and skill working files — per-machine state.
 .claude/settings.local.json
 .scratch/
