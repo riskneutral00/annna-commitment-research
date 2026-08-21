@@ -1,0 +1,5 @@
+VERDICT — 5bea208 (roster row + gate count)
+Reviewer: Claude Fable 5, same-session author. The gate-landing recipe's spec
+sliver: pack-shape's README description + AGENTS' 28→29, committed with both
+halves on disk so the roster/claim gates (which read the working tree) stayed
+green through the hook. Chain green; S2 spec-only (2 paths).
