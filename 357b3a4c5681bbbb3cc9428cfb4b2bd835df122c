@@ -1,0 +1,6 @@
+VERDICT — 357b3a4 (covers this commit alone)
+Reviewer: Claude Fable 5, same-session author. One-line stack change: the tracked
+landing mock now leads with the FD-44 face. Deliberately NO webfont link — R2's
+seven-host allowlist and the mock's self-contained rule both stay true; the face
+renders when self-hosted/installed and falls back to the prior chain otherwise.
+Chain green; S2 classified the commit code-only (1 path).
