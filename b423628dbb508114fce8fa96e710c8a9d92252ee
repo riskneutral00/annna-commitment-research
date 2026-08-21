@@ -1,0 +1,6 @@
+VERDICT — b423628 (UI/UX Part Two: the code half, squash of 4fcc337/357b3a4)
+Reviewer: Claude Fable 5, same-session author. Two changes: the lightness-invariant
+collision check (reproduced the old miss and the new catch in isolation; distant hues
+still pass) and the landing-mock font stack (no external URL — R2's host allowlist
+stays true). Chain green; S2 code-only (2 paths). Original per-commit notes survive
+on the backup ref.
