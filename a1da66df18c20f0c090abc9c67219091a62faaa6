@@ -1,0 +1,17 @@
+VERDICT — a1da66d (covers this commit alone)
+Reviewer: Claude Fable 5, the session that also authored the landing — same-session
+caveat as cc53409's note; the founder's read is owed, and the sitting preamble in
+RULINGS.md says which entries are his (FD-38–41, 43, made by eye against built
+comparisons, his words quoted) and which carry delegated provenance.
+Attempted to falsify: full 29-gate chain green (pre-commit run recorded); S2
+classified the commit spec-only (8 paths); gate-coverage caught and killed one
+phantom scenario reference (V3) my own BUILD note introduced — the gate worked;
+every reconcile-sources.md item (30) dispositioned: landed, discharged-as-stale
+(marketplace LQIP note), or explicitly drafted (the display.settings seam path in
+app/SPEC §7 — the one entry that is design, not transcription, and it is marked
+drafted-not-founder-ratified in place). D8 radii resolved FOR the corpus
+(concentricity, the founder's follow-Apple directive) against my own delegated
+placeholder set — the workspace was corrected, not the corpus. FD-43 checked at
+all four homes for agreement (SPEC §5, security §3, SCENARIOS G10, DESIGN §Guest
+pages): the minting story, the binding rule, and the abandoned-hold carve read
+consistently.
