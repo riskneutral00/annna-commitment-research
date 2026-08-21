@@ -1,0 +1,6 @@
+VERDICT — 2670d45 (covers this commit alone)
+Reviewer: Claude Fable 5, same-session author. One-line label fix found by the
+readiness check: app/BUILD.md Step 1's gate list described C10 in its pre-FD-39
+island form after 70744a6 re-cut the scenario to the settings pane. The gated
+set (C1, C6, C9, C10, S1, S2, S4, S7) is unchanged — the parenthetical
+description now matches the scenario it names. Chain green; S2 spec-only (1 path).
