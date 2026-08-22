@@ -18,8 +18,13 @@ export class AppStub implements AppSeam {
     this.calls.push({ call: "publish", payload });
   }
 
-  async notify_and_await(payload: unknown) {
-    this.calls.push({ call: "notify_and_await", payload });
+  async send(payload: unknown) {
+    this.calls.push({ call: "send", payload });
+  }
+
+  async display_settings(diff: unknown): Promise<{ ok: true }> {
+    this.calls.push({ call: "display_settings", payload: diff });
+    return { ok: true };
   }
 
   /** The one outward-effect assertion Step 0 already needs a shape for: a

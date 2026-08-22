@@ -68,8 +68,6 @@ describe("Step 0 — the injection point", () => {
       commit: async () => ({ ok: true as const, commitment: null }),
       check_consistency: async () => ({ conflicts: [], latent: [] }),
       check_coverage: async () => ({ missing_required: [] }),
-      typed_value: async (raw: unknown) => raw,
-      compare: async () => false,
       resolve: async () => ({}) as never,
     } satisfies EngineSeam;
 

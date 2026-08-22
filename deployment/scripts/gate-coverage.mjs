@@ -114,6 +114,53 @@ function gateLines(text) {
 // cannot drift onto two readings of one law.
 export const owesHome = (def) => def.tag !== "DRILL" || def.engine;
 
+// The checkpoint ledger (harness/BUILD.md Step 5, 2026-08-22). Two countable
+// halves of the step's own stated laws: (a) "every ID in the Verify set sits in
+// exactly one checkpoint"; (b) the printed Depends line's `ID → (n)` pairs — a
+// scenario whose Given needs machinery a later subset builds — each match the
+// ID's actual placement. D4 in checkpoint (1) went green vacuously through the
+// empty-ladder path; a Depends pair makes that misplacement fail the chain.
+// NOT CHECKED: that the Depends line is COMPLETE — naming a new
+// Given-dependency is a reading job; enforcing a named one is mechanical.
+export function checkpointLedger(buildText, defs = new Map()) {
+  const bad = [];
+  // Scope to the checkpoint block: from the declaration sentence to the next
+  // Verify line — a bold-numbered list anywhere else in the file is not a
+  // checkpoint and must not join the membership count.
+  const start = buildText.indexOf("Checkpoints (declared");
+  if (start < 0) return ["harness/BUILD.md Step 5's checkpoint block no longer parses — fix this script's contract"];
+  const endRel = buildText.slice(start).search(/\n-\s*\*\*Verify:/);
+  const block = endRel < 0 ? buildText.slice(start) : buildText.slice(start, start + endRel);
+  const membership = new Map(); // id -> [subset numbers]
+  const SUBSET = /\*\*\((\d+)\)[^*]*\*\*\s*`([^`]+)`/g;
+  let m;
+  let subsets = 0;
+  while ((m = SUBSET.exec(block))) {
+    subsets++;
+    for (const id of buildIds(m[2], defs)) {
+      if (!membership.has(id)) membership.set(id, []);
+      membership.get(id).push(m[1]);
+    }
+  }
+  if (!subsets) return ["harness/BUILD.md Step 5's checkpoint list no longer parses — fix this script's contract"];
+  for (const [id, subs] of membership) if (subs.length > 1) bad.push(`${id} sits in checkpoints (${subs.join(") and (")}) — the law says exactly one`);
+  const dep = block.match(/\*\*Depends \(the Given-needs-machinery edges[^:]*:\s*([^*]+)\*\*/);
+  if (!dep) bad.push("the Depends line is missing or no longer parses — it is part of the checkpoint contract");
+  else {
+    const PAIR = /([A-Z]\d+[a-z]?)\s*→\s*\((\d+)\)/g;
+    let p;
+    let pairs = 0;
+    while ((p = PAIR.exec(dep[1]))) {
+      pairs++;
+      const placed = membership.get(p[1]);
+      if (!placed) bad.push(`Depends names ${p[1]}, which sits in no checkpoint`);
+      else if (!placed.includes(p[2])) bad.push(`Depends says ${p[1]} → (${p[2]}) but it sits in (${placed.join(",")})`);
+    }
+    if (!pairs) bad.push("the Depends line parses but names no ID → (n) pair");
+  }
+  return bad;
+}
+
 function checkLayer(layer) {
   const defs = scenarioDefs(fs.readFileSync(path.join(ROOT, layer.scenarios), "utf8"));
   const buildText = fs.readFileSync(path.join(ROOT, layer.build), "utf8");
@@ -122,7 +169,8 @@ function checkLayer(layer) {
   const families = new Set([...defs.keys()].map((id) => id[0]));
   const orphans = [...defs.keys()].filter((id) => owesHome(defs.get(id)) && !homed.has(id));
   const phantoms = [...gated].filter((id) => families.has(id[0]) && !defs.has(id));
-  return { defs, orphans, phantoms };
+  const ledger = layer.name === "harness" ? checkpointLedger(buildText, defs) : [];
+  return { defs, orphans, phantoms, ledger };
 }
 
 function selfcheck() {
@@ -162,6 +210,14 @@ function selfcheck() {
   // Plural is not a phantom; cross-ref in prose is excluded from the gate scan.
   assert.ok(buildIds("two X1s working").has("X1") && !buildIds("two X1s").has("X1s"), "plural 's' dropped");
   assert.strictEqual(gateLines("prose Z9 here\n- **Verify:** X1, X2\nGate: X3"), "- **Verify:** X1, X2\nGate: X3", "keeps only gate lines");
+
+  // The checkpoint ledger: exactly-once membership + Depends placement.
+  const cp = (list, deps) => `Checkpoints (declared, not advisory): ${list}\n**Depends (the Given-needs-machinery edges, parsed by the gate): ${deps}**\n- **Verify:** X1`;
+  assert.deepStrictEqual(checkpointLedger(cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X3 → (2)"), defs), [], "a clean ledger passes");
+  assert.ok(checkpointLedger(cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X3 → (1)"), defs).some((b) => b.includes("X3")), "a misplaced Depends pair is caught");
+  assert.ok(checkpointLedger(cp("**(1) a** `X1` · **(2) b** `X1`", "X1 → (1)"), defs).some((b) => b.includes("exactly one")), "double membership is caught");
+  assert.ok(checkpointLedger("no checkpoint block here").length, "a non-parsing checkpoint block is a failure, not a skip");
+  assert.deepStrictEqual(checkpointLedger(`bold list elsewhere **(4) prose** \`X9\`\n${cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X3 → (2)")}`, defs), [], "a bold-numbered list outside the block is ignored");
   console.log("selfcheck OK");
 }
 
@@ -172,8 +228,8 @@ if (process.argv.includes("--selfcheck")) {
 
 let bad = 0;
 for (const layer of LAYERS) {
-  const { defs, orphans, phantoms } = checkLayer(layer);
-  const status = orphans.length || phantoms.length ? "FAIL" : "ok";
+  const { defs, orphans, phantoms, ledger } = checkLayer(layer);
+  const status = orphans.length || phantoms.length || ledger.length ? "FAIL" : "ok";
   console.log(`\n[${layer.name}] ${defs.size} scenarios — ${status}`);
   if (orphans.length) {
     bad++;
@@ -183,6 +239,10 @@ for (const layer of LAYERS) {
   if (phantoms.length) {
     bad++;
     console.log(`  PHANTOMS (gated, undefined): ${phantoms.join(", ")}`);
+  }
+  if (ledger.length) {
+    bad++;
+    for (const b of ledger) console.log(`  CHECKPOINT LEDGER: ${b}`);
   }
 }
 console.log(`\nmodel: N/A — graded EVALS, not a per-item gated suite`);

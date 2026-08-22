@@ -26,8 +26,6 @@ export class EngineStub implements EngineSeam {
     return { __handle: `h${++this.#next}` } as unknown as Handle;
   }
 
-  constructor(private readonly canned: Record<string, unknown> = {}) {}
-
   async calculate(query: unknown): Promise<Handle> {
     this.calls.push({ call: "calculate", args: [query] });
     return this.#handle();
@@ -48,15 +46,10 @@ export class EngineStub implements EngineSeam {
     return { missing_required: [] };
   }
 
-  async typed_value(raw: unknown, type_spec: unknown) {
-    this.calls.push({ call: "typed_value", args: [raw, type_spec] });
-    return { __typed: true, raw, type_spec };
-  }
-
-  async compare(a: unknown, op: string, b: unknown) {
-    this.calls.push({ call: "compare", args: [a, op, b] });
-    return Boolean(this.canned[`compare:${op}`] ?? false);
-  }
+  // typed_value/compare left this stub 2026-08-22 (INTERFACES.md §1.4): they
+  // are the shared library `../typed-value.ts` now — the accept-anything echo
+  // made FD-27's fail-closed path unreachable, which is exactly what a stub
+  // must never do to a MUST path.
 
   async resolve(goal: unknown, boards: unknown, rules: unknown): Promise<Handle> {
     this.calls.push({ call: "resolve", args: [goal, boards, rules] });

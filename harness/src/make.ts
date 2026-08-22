@@ -15,8 +15,8 @@ import { AppStub } from "./stubs/app.js";
 
 export type Harness = { engine: EngineSeam; model: ModelSeam; app: AppSeam; clock: Clock };
 
-export function makeEngine(canned: Record<string, unknown> = {}): EngineSeam {
-  return new EngineStub(canned);
+export function makeEngine(): EngineSeam {
+  return new EngineStub();
 }
 
 export function makeModel(script: ModelScript = {}): ModelSeam {

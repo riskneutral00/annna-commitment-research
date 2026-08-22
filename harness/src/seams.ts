@@ -33,8 +33,10 @@ export interface EngineSeam {
   commit(input: unknown): Promise<CommitResult>;
   check_consistency(rules: unknown): Promise<{ conflicts: unknown[]; latent: unknown[] }>;
   check_coverage(board: unknown): Promise<{ missing_required: unknown[] }>;
-  typed_value(raw: unknown, type_spec: unknown): Promise<unknown>;
-  compare(a: unknown, op: string, b: unknown): Promise<boolean>;
+  // typed_value/compare are NOT seam methods (INTERFACES.md §1.4, 2026-08-22):
+  // both are pure functions taking every input as an argument, so they live in
+  // the shared library `./typed-value.ts` — one real implementation both layers
+  // import, which is what makes FD-27's fail-closed path reachable in the suite.
   resolve(goal: unknown, boards: unknown, rules: unknown): Promise<Handle>;
 }
 
@@ -51,7 +53,16 @@ export interface ModelSeam {
 export interface AppSeam {
   render(payload: unknown): Promise<void>;
   publish(payload: unknown): Promise<void>;
-  notify_and_await(payload: unknown): Promise<void>;
+  /** Renamed from `notify_and_await` (INTERFACES.md §3.3, 2026-08-22): the verb
+   *  never awaited — the reply arrives later through `on_form_return`, and the
+   *  old name already produced one documented spec error. */
+  send(payload: unknown): Promise<void>;
+  /** FD-66 (2026-08-22) — FD-42's ratified mechanism: the owner's display-only
+   *  settings write into the app-owned store (app/SPEC.md §7's closed member
+   *  set). `internal` class, diff-shaped; an off-set member is `invalid` and
+   *  nothing partial applies. The second ruled amendment to the seam's verb
+   *  roster, after `import_fetch` (INTERFACES.md §3.3). */
+  display_settings(diff: unknown): Promise<{ ok: true } | { ok: false; invalid: true }>;
 }
 
 /** A steppable virtual clock — required, not optional (INTERFACES.md §5).
