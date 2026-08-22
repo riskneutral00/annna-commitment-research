@@ -25,8 +25,8 @@
 - Write the qualified `routing` config (INTERFACES §2.2) with fallbacks and cost caps; wire the qualification-state record.
 - **Verify:** an unqualified binding cannot go live (poka-yoke at config load, not review-time discipline). **A `byo-*` provider on `summarize` — in `model_id` or `fallback_model_id` — is unconstructable at config load**: the config refuses to load, the same mechanism as the unqualified-binding rule above, not a review checklist item (SPEC §7, **FD-3** founder-ruled 2026-08-07; INTERFACES §2.2).
 
-## Step 5 — ChatGPT-subscription slot (v1; integrated last)
-- Integrate the `byo-chatgpt` provider binding for **attended console calls only**; triggers keep resolving to app-supplied bindings (SPEC §7). Auth mechanics are app-seam work; check OpenAI's program terms at this time — the slot ships only if the terms still allow it.
+## Step 5 — ChatGPT-subscription slot — CUT (FD-65, 2026-08-22)
+- The step's content is removed with the slot: the vendor programme has been identity-only since 2026-08-02, so there is nothing to integrate and no terms check to run. The step number is kept so citations resolve; if the programme returns, the restoring ruling re-opens this step with the old content (one paragraph, preserved in history).
 - **Verify:** with BYO active, a trigger firing still resolves to `openrouter`; revoking BYO degrades to app-supplied with no behavior change beyond billing.
 
 ## Guardrails

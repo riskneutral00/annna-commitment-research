@@ -14,6 +14,7 @@
 ## Reserved — rows that land with a named build step
 
 - **The calendar importer** (`../app/BUILD.md` Step 6a; FD-49, 2026-08-22): when the importer module exists, its three provider paths — the Google Calendar API, Microsoft Graph, and owner-supplied ICS hosts — join the Allowed table, **each row landing as its own floor act at that time**. The note exists now because the audit found the v1-ruled import capability with no presence in this document at all: a reader of the floor should meet the forthcoming rows before the code that needs them does.
+- **The LINE delivery channel** (`../app/SPEC.md §6`; FD-61, 2026-08-22): when the automated-LINE send module exists, the LINE Messaging API path joins the Allowed table as its own floor act — the same discipline as the importer rows, for the same reason.
 
 ## Not on the list, deliberately
 

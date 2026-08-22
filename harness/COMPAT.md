@@ -18,7 +18,7 @@ Every failure return on every seam is one of the six kinds (`INTERFACES.md §1`)
 | `conflict` | `precondition` | commit-time precondition check (`../engine/SPEC.md §7.1` item 3) |
 | `conflict` | `governing-rule` | a governing-authority rule refusing the write (`../engine/SPEC.md §7.1` item 3; hard stop, `SPEC.md §6`) |
 | `decline` | `no-feasible-placement` | "the math ran; nothing fits" — `detail` carries the tightest refusing constraint class (`../engine/SPEC.md §5`, §7's exhaustion rule) |
-| `decline` | `travel-unknown` | "the math could not run" on the travel envelope — never collapsed into the row above (`../engine/SPEC.md §5`, §9) |
+| `decline` | `travel-unknown` | "the math could not run" on the travel envelope — never collapsed into the row above; `detail.cause` says why, `ceiling` (the warm-up is running; expect a re-offer) or `provider-failed` (the map is down) — a `detail` discriminator, not a reason widening *(2026-08-22)* (`../engine/SPEC.md §5`, §9) |
 | `invalid` | `malformed` | a malformed model return or tool call (`../model/SPEC.md §8`; `SPEC.md §5`'s no-repair-loop rule) |
 | `invalid` | `type-mismatch` | `typed_value`'s error — the operand fails its declared type (`INTERFACES.md §1.4`) |
 | `invalid` | `schema-mismatch` | return-leg validation and the app's rejected-render error (`SPEC.md §5`; `../app/SPEC.md §4`) |

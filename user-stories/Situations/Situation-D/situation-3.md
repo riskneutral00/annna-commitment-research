@@ -14,7 +14,7 @@
 
 **A cancelled visit corrects the record.** Mrs. Gable's cancelled 11:00 comes off her thread — the $140 never owed, the visit never counted. No refund machinery runs, because no money ever moved; the *record* is what corrects itself.
 
-**The new patient arrives through a shared link.** Nathan books through the link Priya handed him — terms shown, Wednesday at Eastside, no account, no phone call. Finding Nathan was Priya's doing, not the app's; the link is just where the referral becomes a booking.
+**The new patient arrives through a shared link — the *right* shared link.** Nathan books through the link Priya handed him — **Debra's public front door, not Priya's own** — terms shown, Wednesday at Eastside, no account, no phone call, the booking his and the manage link his. Finding Nathan was Priya's doing, not the app's; the link is just where the referral becomes a booking. *(The refused twin, clarified 2026-08-22: had Priya forwarded her **own** link instead, whatever Nathan booked on it would attribute to **Priya** — a named link answers as its named person, always, and forwarding it hands over your standing, not a way in. The honest path for a named-only practice is Nathan asking and Debra sending him a link of his own; the front door is what makes "without Debra lifting a finger" possible.)*
 
 **Business admin rides the board.** "Ask Mrs. Gable's son for a review when she rebooks" fires as **Debra's own task** the day she rebooks — annnä holds the reminder; the asking is Debra's, done outside the app.
 

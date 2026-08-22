@@ -54,6 +54,8 @@ Two secondary signals, recorded because they are the ones that would show the pr
 
 **No numeric target is set, and none may be introduced by derivation.** Choosing a benchmark before one person has used the product would be inventing it rather than picking it. A target becomes settable when the first pilots run.
 
+**One readiness condition joins the criteria (FD-63, 2026-08-22 — the founder-dogfood exit):** four weeks of the founder's own real bookings run on the system with **zero fallbacks** to the old tools — binary, and it tests the completeness bet with zero users. It is a readiness condition, not a schedule (FR2), and it is the first instrument above that can run before any pilot exists.
+
 ## Risks and the central bet
 
 *The register. Each entry is a live risk, not a resolved one.*
@@ -63,9 +65,10 @@ Two secondary signals, recorded because they are the ones that would show the pr
 - **Cold start.** Value rises with how many people in a given week are on it, and at the start that number is small. This is why the minimal-adoption path is specified as first-class rather than as a degraded mode.
 - **Legal.** Holding customers' passports and medical notes, and eventually routing customers between businesses, are legal questions before engineering ones. A formal legal review is a hard build gate that green tests cannot argue past — the referral beat is deferred behind it (FR1).
 - **Model risk.** The language layer is imported, not written, and models age quickly. They are qualified last against a graded exam, so the system can swap them rather than depend on one.
+- **The cost of serving.** *(FD-58, 2026-08-22.)* Every interaction rides an imported language layer that is paid for per call, including calls the owner never sees (the quarantine reads), and nothing in the product counter-presses that spend. The working numbers live in ungoverned working material, not in this corpus; what this row records is that the risk is real and owned.
 
 ## What this file does not hold
 
 - **Anything commercial.** Commercial silence governs this package (`VOICE.md` §Commercial silence), and the brief was ruled to stay on the product and the problem.
 - **A schedule or a milestone plan.** FR2: documentation states readiness, never schedule. The related investor-readiness gap is open in `NOTES.md`.
-- **A named pilot.** Also open in `NOTES.md`, and the success criteria above cannot be exercised until one exists.
+- **A named pilot — now open ruling OR-40** *(FD-62, 2026-08-22 — promoted from never-authoritative `NOTES.md`, because the pilot is the only instrument the criteria above can run on and an instrument named nowhere authoritative cannot be owed)*: **OR-40 — who the pilot cohort is.** Open, the founder's; defined here, where it is used. Until it closes, the primary signals cannot be exercised and the FD-63 dogfood condition is the only runnable instrument.

@@ -109,7 +109,7 @@ Same inputs → same run, every time. L2 pins this as a criterion: the same trig
 ### What the assertions look like
 
 - **Writes, not words** (A, B, G families): the test inspects what was *written* through the seam — a Rule with the right shape, an edit not a duplicate — never the chat text.
-- **The floor as a spy assertion** (D family): the outward-act spy proves `notify_and_await` fired only with a basis, every act carrying `{who, basis, when}` (D6), and never at all in the no-grant cases (D1, D3, D4).
+- **The floor as a spy assertion** (D family): the outward-act spy proves `send` fired only with a basis, every act carrying `{who, basis, when}` (D6), and never at all in the no-grant cases (D1, D3, D4).
 - **Refusals surfaced, not swallowed** (A4, B5, E family): the stub's `conflict`/`refuse` verdict must reach the surface.
 - **Absence asserted structurally** (D9, N2): no tool in the contract declares the `destruction` or `value-transfer` class — a walk of the contract, not a runtime check.
 - **Composition pinned** (P1, P2): the compaction pass-through and the pending-decision round-trip each assert at the end that no tool beyond the §5 contract was called and the harness needed no change.
@@ -117,7 +117,7 @@ Same inputs → same run, every time. L2 pins this as a criterion: the same trig
 
 ### Family map
 
-**A** board authoring (incl. **A7** return-leg validation) · **B** rules/elicitation (incl. **B9** the duration floor) · **C** status latches · **D** the floor (incl. **D10–D11** auto-accept-as-Grant, **D18–D20** content-bound confirmation / fail-closed / the floor property, **D22–D23** channel suppression, **D24–D26** the authorization class, **D27** no-signed-term-no-debt) · **D′** the escalation ladder (**D12–D17, D21**) · **E** M2 gate · **F** conflict/versioning (incl. **F6** in-flight operands) · **G** elicitation store · **H** orders/groups/guest (incl. **H9** the counterparty's move) · **I** the cross-owner share (**I1–I4**) · **K** check-work · **L** context assembly · **N** money · **O** the assisted off-app path (**O1–O5**) · **P** engine-originated round-trips (**P1–P2**) · **X** the external surface (**X1–X7**) — all `[MUST]`, all behavioral, all on stubs.
+**A** board authoring (incl. **A7** return-leg validation) · **B** rules/elicitation (incl. **B9** the duration floor) · **C** status latches · **D** the floor (incl. **D10–D11** auto-accept-as-Grant, **D18–D20** content-bound confirmation / fail-closed / the floor property, **D22–D23** channel suppression, **D24–D26** the authorization class, **D27** no-signed-term-no-debt) · **D′** the escalation ladder (**D12–D17, D21** — the ladder-walk set re-provenanced `[SHOULD]` under FD-59, D15 the family's `[MUST]`) · **E** M2 gate · **F** conflict/versioning (incl. **F6** in-flight operands) · **G** elicitation store · **H** orders/groups/guest (incl. **H9** the counterparty's move) · **I** the cross-owner share (**I1–I4**) · **K** check-work · **L** context assembly · **N** money · **O** the assisted off-app path (**O1–O5**) · **P** engine-originated round-trips (**P1–P2**) · **X** the external surface (**X1–X7**) — `[MUST]` throughout save the FD-59 re-provenance above, all behavioral, all on stubs.
 
 **J family is different.** `[HELD-OUT]` probes run against the *finished* harness and their results are **recorded, pass or fail** — a failure means "which general primitive is missing," never "patch the atom." Do not design or fix toward J.
 

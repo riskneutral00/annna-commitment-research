@@ -1,0 +1,19 @@
+# Situation 4 — the week she got it wrong
+
+*Third-person, what-happens only. **Provenance: scripted** (added 2026-08-22 from the coverage review's checklist — the corpus's stated control for its most dangerous residual failure, "a valid, well-formed, wrong normalization passes every check; attended, the owner reading the read-back is that check," had no story of an owner ever reading, catching, or correcting anything). The same board and links as situations 1–3; what's new is that **Sofia is wrong, then annnä is wrong, and both get fixed out loud.** Who each player is lives in `story-sofia.md`, `customer.md`, and the README cast.*
+
+## The agent hears her wrong — and her read-back catches it
+
+Tuesday over coffee Sofia tells the agent, **"move my run to half past six."** The agent does everything right by its own lights: it finds exactly one run rule, normalizes "half past six" to a real time, and reads the change back before touching anything — *"Your M/W/F run becomes **18:30–19:15**, buffered 18:20–19:30. Confirm?"* Evening. She meant morning. Nothing in the request said so, the proposal is perfectly valid, and no check anywhere below her could know it's wrong — **only she can**, and she's the one reading. She says *"no — morning, 6:30,"* the agent re-proposes **06:30–07:15**, she confirms, and the board updates. The wrong version never touched the board, never moved a buffer, never changed what a student's link offered. The read-back wasn't politeness; it was the check working.
+
+## She edits a rule with live bookings under it — and sees the blast radius first
+
+A month of 6 p.m. yoga invitations later, Sofia decides Thursday teaching should end at **4 p.m.** She tells the agent to shrink the window. Before applying anything, the agent surfaces what the change touches: *"Thursday 2–6 becomes 2–4. **Millie's lesson this Thursday, 4:00–6:00, sits in the part you're closing** — booked lessons keep their terms, so it stands; from next week the links stop offering past 4:00. Apply?"* She applies. Then the agent offers the one thing it will not do alone: *"Want me to tell Millie the window changed?"* Sofia says no — Millie will see the new hours on her own link, and this Thursday is untouched. Nothing is sent. The rule change re-published her future exactly as situation-3 promised, and the one live booking inside the closed window was **shown to her before she committed**, not discovered by Millie.
+
+## A half-built thing is abandoned — and stays harmless
+
+Sofia starts authoring a second bookable kind — a **conversation group class**, four students at once, a different price. Halfway through setting the group size, Brownie's lesson starts and she closes the laptop. Nothing asks her to finish; nothing finishes for her. The half-made class persists as a **disabled draft**: it publishes nowhere, no student's link shows a group class, no slot is held for it. Ten days later she says "let's finish the group class," and the agent reopens it exactly where she left off — group size still the open question. She decides she doesn't want it after all and says so; the draft is discarded, and the board is exactly as if she'd never started. Starting to say something to annnä never commits her to it.
+
+## The point
+
+Situations 1–3 show the board being right. This run shows the **path back when someone isn't** — and that the path is attended, not automatic. A plausible-but-wrong normalization died at the read-back because reading back before acting is law, not courtesy. A rule edit showed its downstream casualties *before* applying, kept its promise that booked terms stand, and still wouldn't message a real person without a yes. And an abandoned half-thought stayed a disabled draft instead of a live surprise. The agent being correctable out loud is not a lesser mode of the product; for the moments that matter most, it *is* the product.

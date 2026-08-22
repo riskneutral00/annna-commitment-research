@@ -14,6 +14,8 @@
 
 **A completed checklist confirms with no human.** A traveller clears passport + license + signed T&C + deposit inside the clock; the hold **confirms itself** (Auto). Ploy approves nothing.
 
+**A walk-up guest manages his own rental** *(scripted beat, added 2026-08-22)*. Tom arrived off the public link — nobody at Sunbird ever typed his name — yet his confirmation handed him a **manage link of his own**. From it he can move the rental's dates (offered only against genuinely free time for that unit) or cancel it outright, his own act, with Ploy **informed, never asked**. Change his mind twice and it's still two taps, not two phone calls; the walk-up guest and the named guest hold the same power over their own booking.
+
 **The big bike, when it's free and the license fits.** A traveller with a **motorcycle-class** IDP taps a **CBR**; the extra license precondition is satisfied, the rest of the checklist clears, and the CBR confirms. Scarcity working *with* the grain when a qualified rider meets a free license-gated unit.
 
 ## Must be refused / handled
@@ -27,6 +29,8 @@
 **The big bike, no fallback → honest "no bike available."** Two ways this dead-ends, both returning a plain **no** at submit, not a runaround:
 - **Both CBRs are already out** (or in their buffer). They're the only motorcycle-class units, so a rider who needs a big bike has nothing to fall to — told **no bike available** for that class.
 - The traveller's license is **car-and-scooter class, not motorcycle-class** (Tom's case). Neither CBR's extra precondition can be met, so both are closed to him regardless of availability; the pull **can't confirm** and he's told plainly — then shown the scooters he *can* take.
+
+**A guest who cried spam becomes honestly unreachable** *(scripted beat, added 2026-08-22)*. A traveller books a Click for the weekend, then flags Sunbird's confirmation email as spam — one tap, in his own mail app, maybe by accident. That single complaint **permanently suppresses** the channel: annnä will not send him another word, at the first complaint, no rate and no averaging — consent, not volume. Friday the bike fails its pre-rental check and Ploy cancels; the cancellation notice comes back **unsent**, and the record says so plainly instead of pretending delivery: Ploy is told **which party and why**, and the app composes the message for her to deliver herself — she has his number from the checklist, and the call is hers to make. He gave one email and told that email to stop; what he's owed is a system that never lies about having reached him. Nothing is silently dropped, nothing is re-sent behind his complaint, and un-suppressing is an act only Ploy can take, never a timer. *(What re-enabling looks like for a stranger with no second channel is a fork deferred to this Situation's own sprint — FD-50; the beat here ends at the honest wall.)*
 
 **A charge without captured consent is refused.** Tom's returned Click has a **scratch**. Ploy wants to convert part of the deposit to a damage charge. annnä holds no money to seize — the deposit is a record — and it will not even *record* a charge against it on the strength of the represented deposit alone: a charge is an across-the-line act that requires **Tom's own captured consent**. Without a consent artifact tied to this rental, the charge is **refused**; the deposit stays represented, and whatever Ploy and Tom settle happens between them, outside the app.
 

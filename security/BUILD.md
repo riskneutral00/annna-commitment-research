@@ -27,7 +27,7 @@ After engine Step 0 (substrate pick); **before app Step 5** — the Situation B/
 > **Gate-coverage still walks every scenario below.** Frozen is a statement about what is being worked, never about what must hold.
 
 ## Step 4 — The token law
-With app Step 5 (guest pages + tokens). Minting, digest storage, lifetimes, revocation latches, enumeration safety, transport headers, per-IP/per-token limits. **The printed gate: no public link goes live before T1–T6 are green** — the carried adversarial-test contract. This is also where the owner-session and guest-token credential models first coexist, so the one-model-per-mutation law is first proven here (M5; the third model joins at Step 4b). Gate: **T-family except T9, P-family, R1, R3, M5, N6 (the conversion claim — FD-46: account creation and token attribution first coexist here)**.
+With app Step 5 (guest pages + tokens). Minting, digest storage, lifetimes, revocation latches, enumeration safety, transport headers, per-IP/per-token limits. **The printed gate: no public link goes live before T1–T6 are green** — the carried adversarial-test contract, **mechanized 2026-08-22** (`../deployment/scripts/t-six-before-link.mjs`: a token route under `app/` without a recorded T1–T6 green marker fails the chain; armed and passing while no route exists). This is also where the owner-session and guest-token credential models first coexist, so the one-model-per-mutation law is first proven here (M5; the third model joins at Step 4b). Gate: **T-family except T9, P-family, R1, R3, M5, N6 (the conversion claim — FD-46: account creation and token attribution first coexist here)**.
 
 ## Step 4b — The fifth token class *(added 2026-08-21 — the class previously had no owning step: its custody was handed to "security's build" by `../harness/BUILD.md` Step 8 while every candidate step here rode an app step, so a credential could be built and issued while its suite sat frozen)*
 **Rides `../harness/BUILD.md` Step 8, on the harness's clock — not the app's**, and unfreezes when that step begins, independent of the freeze block above (whose resume conditions are app steps). The `external-client` credential's minting, digest custody, suspension state (FD-33), withdrawal latch, and the §10 per-credential rate and spend caps. **T9 is its gate, green before any credential is issued** — the `SPEC.md §3` printed-gate posture, now with a step that owns it. M5 re-runs here against all three models (its own text always said so). Gate: **T9, M5 (three-model form)**.
@@ -42,6 +42,18 @@ With app Step 6 (delivery): named limits as declared objects, email volume caps,
 
 ## Step 7 — Admin hardening, DR drill & takeout
 Pre-alpha ops: the third identity + hardware-key MFA, the logged vault path, the one publish path, error-report scrubbing; the restore drill; the takeout export. Gate: **M-family, D1–D2, D5, V6**.
+
+**The backup substrate check, printed so it can be run rather than trusted** *(added 2026-08-22 — `SPEC.md §8`'s hourly/one-hour-loss/eight-hour-restore bounds were the one substrate commitment that never got the FR7/FD-11 printed-table treatment; the bounds are promises against Convex capabilities nobody has checked)*. Run at this step, **UNRUN today**, five criteria in the FR7 shape:
+
+| # | Criterion | The check (re-runnable) |
+|---|---|---|
+| 1 | Programmatic export exists on the bound plan tier at ≥ hourly cadence | provider docs + one scheduled `npx convex export` (or streaming-export equivalent) observed firing twice, an hour apart |
+| 2 | The export covers every table incl. file storage, at a granularity a restore can consume | inspect one export archive; enumerate tables against the schema of record |
+| 3 | A restore from the latest export stands a runnable deployment inside the 8-hour bound | the Step-7 restore drill, timed and recorded here |
+| 4 | The export job itself alarms on failure ("a backup that silently stops is worse than no backup") | kill the job once; assert the alarm fired |
+| 5 | The export path fits the per-transaction ceilings recorded at `../engine/BUILD.md` Step 0 (32k docs scanned · 16 MiB read), or uses a provider path those ceilings don't govern | provider docs + the observed export of a Situation-C-scale fixture |
+
+**Reopening clause (FR7's):** if any row fails when first run, `SPEC.md §8`'s bounds reopen as a ruling — the bounds move to what the substrate supports, or the substrate question reopens; the table is updated with the measured result either way, never silently.
 
 ## Step 8 — The compliance pack & THE LEGAL REVIEW GATE
 Last, and named: the DPA in the terms of service; the records-of-processing (from `SPEC.md §4`'s table); the deletion-request runbook; the posture README refreshed against what was actually built. Then the **formal legal review — a hard gate, like a red scenario: it cannot be argued past by green suites.** Gate: **V4, D3–D4**, and the review itself.

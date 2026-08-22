@@ -19,13 +19,13 @@ Every obligation of `../harness/INTERFACES.md §1`, mapped to where this package
 
 **The proposal fits the existing seam — verified:**
 - `resolve` already returns "a satisfying placement, **or a decline**" as a Handle; a compaction goal returns a **Proposal handle** through the same signature — the `direction` rides inside `goal`, no new parameter.
-- Moved-party confirmations travel through the harness's **existing** outward machinery (`notify_and_await` → `on_form_return`), gated by the floor exactly like any outward act. Apply-proposal is a `commit` call with a handle (`SPEC.md §6.5`).
+- Moved-party confirmations travel through the harness's **existing** outward machinery (`send` → `on_form_return`), gated by the floor exactly like any outward act. Apply-proposal is a `commit` call with a handle (`SPEC.md §6.5`).
 - The freed-window keep-vs-reopen question surfaces as a **pending elicitation the harness reads** (its gap-detection already routes stored questions); the engine only records it and fails closed meanwhile.
 
 **The cross-owner share fits the existing seam — verified against the lock (`SPEC.md §7.1`):**
 - A share offer is a `resolve` whose `boards` include a counterparty's **published availability ref**; it returns the **one commitment in `offered`** as a handle through the unchanged signature — the same way a compaction goal returns a Proposal handle. **No new parameter, no new verb: one machine for own-board and cross-owner bookings.**
 - It is applied by `commit(offer_ref)` — the **existing** `proposal_ref` input (`../harness/INTERFACES.md §1.2`), atomically, all-or-nothing. The harness never unpacks it; it passes the reference back, exactly as with a compaction proposal.
-- The counterparty's accept/decline travels the harness's **existing** machinery (their trigger loop, their accept-mode Grants, `notify_and_await` → `on_form_return`), floor-gated like any outward act. **The largest cross-tenant feature in the corpus therefore adds nothing to this table** — which is the test it had to pass.
+- The counterparty's accept/decline travels the harness's **existing** machinery (their trigger loop, their accept-mode Grants, `send` → `on_form_return`), floor-gated like any outward act. **The largest cross-tenant feature in the corpus therefore adds nothing to this table** — which is the test it had to pass.
 - Pinned harness-side by `../harness/SCENARIOS.md` I1 and engine-side by `SCENARIOS.md` I1–I7, so the parity is testable rather than asserted.
 
 **Zero new seam verbs, zero harness changes.** If building ever demands a new verb here, that contradicts the lock in `../.specs/deep-interview-engine.md` — stop and flag; don't add it silently.

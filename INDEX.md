@@ -104,6 +104,8 @@
 | user-stories/Situations/Situation-A/situation-1.md | SPEC | The clean run: Sofia's life and work on one board, students booking into time she is genuinely free |
 | user-stories/Situations/Situation-A/situation-2.md | SPEC | The same week before annnä, across four apps that never share a truth |
 | user-stories/Situations/Situation-A/situation-3.md | SPEC | Situation A's edges — what must work, and what must be refused |
+| user-stories/Situations/Situation-A/situation-4.md | SPEC | The correction run: a wrong normalization caught at read-back, a rule edit's blast radius shown first, a draft abandoned harmlessly (scripted) |
+| user-stories/Situations/Situation-A/situation-5.md | SPEC | Months later: the ledger's month rolls over, a series reaches week twenty, and a dense board finally tests the peace promise (scripted) |
 | user-stories/Situations/Situation-A/story-sofia.md | SPEC | Sofia's own first-person telling — the whole-life requirement stated as lived experience |
 | user-stories/Situations/Situation-B/README.md | SPEC | The self-service rental probe: interchangeable units, and a customer who pulls rather than books |
 | user-stories/Situations/Situation-B/customer.md | SPEC | What the off-app traveller does — drives the booking themselves, against a hold with a clock |
@@ -117,6 +119,7 @@
 | user-stories/Situations/Situation-C/README.md | SPEC | The dive-economy probe: the cast, the market, and the fiction notice governing every name in it |
 | user-stories/Situations/Situation-C/customer.md | SPEC | What the off-app diver does — one form, one language, and never the app again |
 | user-stories/Situations/Situation-C/operator-agent.md | SPEC | How a referral agent sets up: owns nothing, sells only what a center it refers to can run |
+| user-stories/Situations/Situation-C/operator-dive-center-second-seat.md | SPEC | The second seat at Hug Ocean — Fon and Gop under one board, and the questions a plural desk surfaces (scripted) |
 | user-stories/Situations/Situation-C/operator-dive-center.md | SPEC | How a dive center sets up, and that it adds its own resources through the same forms a one-of-one fills |
 | user-stories/Situations/Situation-C/resource-air.md | SPEC | How a fill station sets up, over the shared air template |
 | user-stories/Situations/Situation-C/resource-boat.md | SPEC | How a day boat sets up — the one resource whose setup genuinely differs, because each runs a different weekly route |
@@ -129,6 +132,7 @@
 | user-stories/Situations/Situation-C/situation-3.md | SPEC | Specialty matching down three axes at once: rating, then language, then who is actually free |
 | user-stories/Situations/Situation-C/situation-4.md | SPEC | The honest dead-end: no match exists, and annnä says so instead of promising |
 | user-stories/Situations/Situation-C/situation-5.md | SPEC | The realistic middle — the minimal-adoption world v1 launches into, where the prepared call replaces the reach |
+| user-stories/Situations/Situation-C/situation-6.md | SPEC | The second-seat run: TingTing goes home and the desk keeps working — two humans on one board for the first time (scripted) |
 | user-stories/Situations/Situation-D/README.md | SPEC | The location probe: a schedule that moves through space, where the gap between commitments is a drive |
 | user-stories/Situations/Situation-D/customer.md | SPEC | What the off-app patient sees — when *and where* Debra can treat, never the route behind it |
 | user-stories/Situations/Situation-D/situation-1.md | SPEC | The clean run, centered on the compaction: a cancellation becomes a checked proposal and a reclaimed afternoon |

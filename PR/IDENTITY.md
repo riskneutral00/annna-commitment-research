@@ -24,12 +24,13 @@ A full life that feels like almost nothing. An empty day is a photograph. Five c
 
 ## Mission (how it delivers, honestly)
 
-The peace is engineered, in two steps:
+The peace is engineered, in three steps:
 
 1. **It takes the work.** You tell annnä what you sold, what you promised, what you need. It does the coordination a person would otherwise do by hand — assembling the people and resources, checking the numbers, collecting the documents, confirming with everyone. The same problem stops costing you time.
 2. **It takes the worry.** Because every commitment lives on one governed board — personal and professional, yours and your family's — your head no longer has to be the place where the schedule is kept. What the mind can put down, it puts down.
+3. **It quiets the looking.** A board that holds a whole life holds a lot, and peace would die at the glance if the whole of it shouted at once. So the board rests. Everything is there — nothing hidden, nothing ranked for you — and the day reads at the level you set. When something true happens, that one thing wakes to your attention, and the board settles around it. *(This became outward copy only when the mechanism existed to back it — 2026-08-22, on the standing rule that a claim ships grounded or not at all.)*
 
-The order matters and is honest: first the labor leaves, then the load. The blank feeling is a quiet mind, not an empty life.
+The order matters and is honest: first the labor leaves, then the load, and what stays in view learns to be quiet. The blank feeling is a quiet mind, not an empty life.
 
 ## Vision (where this goes)
 

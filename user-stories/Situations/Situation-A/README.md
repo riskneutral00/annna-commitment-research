@@ -8,7 +8,7 @@
 
 1. **Meet the protagonist.** `story-sofia.md` is Sofia's own **first-person** telling — the one immersive file, because a whole-life workflow is best felt from inside it. It doubles as the **setup story**: in a solo world the resource and the operator are the same person.
 2. **Then the customer.** Her students are off-app; they only ever get a link: `customer.md`.
-3. **Then the situations** — three runs of the same week (`situation-1.md … situation-3.md`), each with a stated purpose, in the standard third-person Situation voice.
+3. **Then the situations** — three runs of the same week (`situation-1.md … situation-3.md`) plus two later additions (`situation-4.md`, the correction run; `situation-5.md`, months later — both scripted, 2026-08-22), each with a stated purpose, in the standard third-person Situation voice.
 
 *(Sofia's board is mostly her own life — meals, runs, yoga, cycle. Only the **teaching slice** faces outward, and that's the only part a "customer" ever touches.)*
 
@@ -54,7 +54,7 @@ Where the dive center authors three courses, Sofia declares two kinds of commitm
 
 ## The situations (the storybook)
 
-Three runs of the **same week**, each to show one thing.
+Three runs of the **same week**, each to show one thing — then two scripted extensions (the correction run, and months later).
 
 ### Situation 1 — the perfect case → `situation-1.md`
 **Everything on one board, and it just runs.** Sofia's life is set down once by talking; her teaching hours publish; Bobby, Millie, and Brownie each book through their own link into time she's genuinely free; the bookings land pre-labelled on her board beside her runs and meals; a race for one slot resolves silently; and each student's monthly ledger (base + hours) writes itself, marked paid when the money reaches her outside the app. **She copies nothing and answers no messages.**
@@ -68,7 +68,15 @@ The **same week across scattered apps**, the way she lived before annnä: a nutr
 The pointed cases: a life-commitment (the buffered run) **blocks** a booking a student tries to make; the **min-duration** floor refuses a 5-minute grab; a **race** for one slot yields one winner; a student **moves her own** lesson with no approval asked of Sofia; a cancelled lesson **credits** its money and hours back; a **rate change** applies only forward, never to booked lessons; *"cancel Bobby's Wednesday"* makes the agent ask — **this one, or the series?**; a student at the **10-hour cap** can't book an eleventh; a **no-show** becomes Sofia's rule to make — asked once, stored; and Sofia cancels a standing lesson but the agent **won't message a real person on her behalf without asking first** — not about a lesson, and not about an unpaid bill.
 **Purpose:** show **the boundaries** — availability told truthfully, the customer's own power over their own time, and annnä's refusal to take an across-the-line action (messaging a person) without consent.
 
-**How the three relate:** 1 ↔ 2 are the same week with-annnä vs. across-scattered-apps (the axis is *one board vs. many*). 3 stress-tests the seams from the outside (the axis is *honest boundaries*). Together they bound annnä's job here: hold a whole life in one place, publish only its free edges, let the other party own their own slot, and never act *as* Sofia toward a real person without her say-so.
+### Situation 4 — the week she got it wrong → `situation-4.md` *(scripted, 2026-08-22)*
+The missing half of the gold reference: **what talking to annnä feels like when someone is wrong.** A plausible-but-wrong normalization dies at the read-back (only Sofia could know "half past six" meant morning); a rule edit shows the live bookings it strands *before* applying and still won't message Millie without a yes; a half-built group class abandons into a harmless disabled draft and resumes — or discards — cleanly.
+**Purpose:** exercise the **correction path** — the attended read-back as the real check on a valid-but-wrong proposal, downstream impact surfaced before a rule edit, and save/resume/abandon as law.
+
+### Situation 5 — months later → `situation-5.md` *(scripted, 2026-08-22)*
+The only run with **time-depth**: the month rolls over (base fees rewrite, allowances reset, last month closes), Bobby's standing Wednesday reaches week twenty and survives a rate change by the recorded law — surfacing one honest open question about a not-yet-materialized instance's terms — and a genuinely dense Tuesday finally tests the peace promise: the board **at rest**, waking only where one true thing just happened, with March still answerable behind it.
+**Purpose:** probe **a board with a history** — recurring money and quotas over real months, a long-lived series, and the wake policy against actual density instead of a one-week board.
+
+**How the five relate:** 1 ↔ 2 are the same week with-annnä vs. across-scattered-apps (the axis is *one board vs. many*). 3 stress-tests the seams from the outside (the axis is *honest boundaries*). 4 stress-tests the **conversation itself** (the axis is *correctability*). 5 stretches the same board across **months** (the axis is *time*). Together they bound annnä's job here: hold a whole life in one place, publish only its free edges, let the other party own their own slot, stay correctable out loud, keep its promises across month boundaries, and never act *as* Sofia toward a real person without her say-so.
 
 ---
 
@@ -78,7 +86,8 @@ The pointed cases: a life-commitment (the buffered run) **blocks** a booking a s
 |---|---|
 | `story-sofia.md` | Sofia's own first-person telling — setup + life + teaching + managing bookings (immersive; the gold-reference) |
 | `customer.md` | the off-app student — Bobby (and Millie, Brownie) |
-| `situation-1.md … situation-3.md` | the three runs |
+| `situation-1.md … situation-3.md` | the three original runs (elicited-blind) |
+| `situation-4.md` · `situation-5.md` | the correction run and the months-later run (scripted, 2026-08-22 — marked in-file) |
 
 ---
 

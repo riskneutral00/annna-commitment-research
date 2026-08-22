@@ -43,9 +43,14 @@ firing_budget: { max_steps_per_firing, max_cost_per_firing }
 //   name what trigger firings resolve to), and FD-3's summarize rule. Now each binding carries its
 //   own provider, and the attended/unattended split the timeout already had covers the provider
 //   dimension too. Load-refusals, all poka-yoke (BUILD Step 4): `fallback_provider` must be
-//   `openrouter`, always · any `byo-*` in an `unattended` binding refuses · any `byo-*` anywhere
-//   on `summarize` refuses (FD-3).
-// provider = openrouter | byo-chatgpt | byo-key
+//   APP-SUPPLIED (`openrouter` or `app-direct` — FD-67, 2026-08-22: the vendor name was a single
+//   point of failure written into law; the property was always "app-supplied", and `app-direct`
+//   is an app-held direct provider key, vault-custodied like any §3.1 credential) · any `byo-*`
+//   in an `unattended` binding refuses · any `byo-*` anywhere on `summarize` refuses (FD-3).
+// provider = openrouter | app-direct | byo-key
+//   (byo-chatgpt LEFT the enum — FD-65, 2026-08-22: the vendor programme has been identity-only
+//   since 2026-08-02; a slot for a programme that no longer exists is speculative machinery.
+//   One ruling restores it if the programme returns.)
 // timeout_ms defaults: 10_000 attended (a console turn), 30_000 unattended (trigger firings —
 //   nobody is waiting, and the fallback hop still runs). Timeout → fallback per SPEC §8.
 // context_budget_tokens (2026-08-21) is the assembly budget the harness truncates against
@@ -61,9 +66,8 @@ firing_budget: { max_steps_per_firing, max_cost_per_firing }
 //   calls; listed so a future split stays representable. summarize is a real, separately bound call.)
 ```
 - **Config, never code.** A routing change (new model, new fallback, provider flip) requires re-qualification (`EVALS.md §3`) and nothing else.
-- `byo-chatgpt` is a **slot**: valid only for attended console calls; trigger firings always resolve to an `openrouter` binding (SPEC §7). The slot's auth/OAuth mechanics are app-seam work, integrated at `BUILD.md` Step 5.
-- `byo-key` is the **owner's own provider API key** (FR5, 2026-08-06 — the ban is reversed; SPEC §7's tertiary supply). It is an ordinary `{call_type → model_id}` binding whose credential happens to be the owner's: **no new mechanism and no second code path**, which is the whole reason it is a provider value here rather than a parallel config. Same attended-only confinement as `byo-chatgpt` (SPEC §7, **FR31** founder-ruled 2026-08-07). The binding is stored here; **the secret never is** — it is vault-resident, and this config holds only the reference (`../security/SPEC.md §3.1`, member 2, asserted at `../security/SCENARIOS.md` T8).
-- **`summarize` rejects every `byo-*` provider** — attended or not, console or trigger (SPEC §7, **FD-3** founder-ruled 2026-08-07). Both `model_id` and `fallback_model_id` must be `openrouter` bindings; a config naming a `byo-*` provider on this call type **does not load** (`BUILD.md` Step 4). Its `timeout_ms` rides the same attended/unattended defaults as every other call type — no special budget, and the retry/fallback path is SPEC §8's, ending fail-closed rather than in a degraded admit.
+- `byo-key` is the **owner's own provider API key** (FR5, 2026-08-06 — the ban is reversed; SPEC §7's tertiary supply). It is an ordinary `{call_type → model_id}` binding whose credential happens to be the owner's: **no new mechanism and no second code path**, which is the whole reason it is a provider value here rather than a parallel config. Attended-only confinement per SPEC §7 (**FR31**, founder-ruled 2026-08-07). The binding is stored here; **the secret never is** — it is vault-resident, and this config holds only the reference (`../security/SPEC.md §3.1`, member 2, asserted at `../security/SCENARIOS.md` T8).
+- **`summarize` rejects every `byo-*` provider** — attended or not, console or trigger (SPEC §7, **FD-3** founder-ruled 2026-08-07). Both `model_id` and `fallback_model_id` must be app-supplied bindings (`openrouter` or `app-direct` — FD-67); a config naming a `byo-*` provider on this call type **does not load** (`BUILD.md` Step 4). Its `timeout_ms` rides the same attended/unattended defaults as every other call type — no special budget, and the retry/fallback path is SPEC §8's, ending fail-closed rather than in a degraded admit.
 
 ### 2.3 Stub
 The harness build already defines the model stub (`../harness/INTERFACES.md §5`): scripted structured outputs keyed per scenario. This layer's eval scaffold reuses the same shape in reverse — golden inputs, graded outputs.

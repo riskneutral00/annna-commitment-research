@@ -99,7 +99,7 @@ Hug Ocean *(owned, full stock)* · **Scuba Revolution** *(Ta, full size grid)* �
 
 ## The situations (the storybook)
 
-Five runs of the **same busy week** — four parties on three courses sharing an instructor bench, the boats, and a pool. Each exists to show one thing.
+Five runs of the **same busy week** — four parties on three courses sharing an instructor bench, the boats, and a pool — plus a sixth, scripted later, that puts a second human on the board. Each exists to show one thing.
 
 ### Situation 1 — the perfect case → `situation-1.md`
 **Everyone is on annnä and nothing goes wrong.** annnä sees the whole week's inventory and routes and places all of it in one pass; ranked lists resolve silently (a busy first choice → next fit), languages match, a divemaster appears for the group, and two boat backups are engaged silently — one because the house boat **ran out of seats** (capacity overflow), one because it **couldn't reach a second site** (route clash). **Zero phone calls.**
@@ -121,6 +121,10 @@ The same **Drysuit** booking, on dates the one rated instructor is booked. No fa
 The **same week with only a minimal network on annnä** — Hug plus its own staff/boat/pool/gear and three freelancers; everyone else off-app. The boat clash surfaces **weeks early** instead of morning-of; a sick instructor is replaced through a **clocked offer** that lapses past a silent freelancer; the replacement is briefed **from the record**, not by phone; the four unavoidable calls are **prepared and recorded**; money is tracked, never moved; and each call becomes an **invite** — the conversion engine.
 **Purpose:** show the **launch reality** — annnä coordinating what it can reach, assisting what it can't, and growing the network through exactly the pain the phone causes.
 
+### Situation 6 — the second seat → `situation-6.md` *(scripted, 2026-08-22)*
+**TingTing goes home, and the desk keeps working.** Fon (the evening admin) sells a course at 7 p.m. on the same board, the intake links fire on grants TingTing authored, and Gop (the boat leader) works a narrower seat from the pier. The first run anywhere with **two humans on one board** — it surfaces, as beats, the four questions the specs answer only for a singular owner (what satisfies the floor when admins are plural; what act class *adding a seat* is; whether grants are board-scoped; what a narrower seat's shape is) and deliberately invents no mechanism for them.
+**Purpose:** probe the **plural-admin reality** every real centre lives in — the stub `operator-dive-center.md` left light, now told (`operator-dive-center-second-seat.md`).
+
 **How the five relate:** 1 ↔ 2 are the same *week* in two worlds (with-annnä vs. without) — the axis is coordination. **5 sits between them** — the minimal-adoption world the product actually launches into, where annnä solves the on-app part and assists the phone part. 3 ↔ 4 are the same *booking* in two worlds (available vs. booked-out) — the axis is honest matching. Together they bound annnä's job: place the possible silently, replace today's phone tree, match scarce qualifications, refuse the impossible out loud — and convert the off-app world one call at a time.
 
 ---
@@ -136,9 +140,11 @@ The **same week with only a minimal network on annnä** — Hug plus its own sta
 | `resource-gear.md` | how a gear shop sets up (size grid) — lens: Ta / Scuba Revolution |
 | `resource-air.md` | how a fill station sets up (gas mixes) — lens: Prawit / Scuba Market |
 | `operator-dive-center.md` | how a dive center sets up — TingTing / Hug Ocean (owns its resources + staff) |
+| `operator-dive-center-second-seat.md` | the second seat — Fon and Gop under Hug Ocean (scripted, 2026-08-22) |
 | `operator-agent.md` | how a referral agent sets up — Alex Walker / Phuket Travel |
 | `customer.md` | the off-app customer — Jun Wang |
 | `situation-1.md … situation-5.md` | the five runs |
+| `situation-6.md` | the second-seat run (scripted, 2026-08-22 — marked in-file) |
 
 ---
 
@@ -165,6 +171,6 @@ The **same week with only a minimal network on annnä** — Hug plus its own sta
 ---
 
 ## Stubs (part of the story, deliberately blank)
-- **Adding the rest of the team** — TingTing adds a second admin / boat leader / the owner under Hug Ocean (`operator-dive-center.md`, left light on purpose).
+- ~~**Adding the rest of the team**~~ — told 2026-08-22: `operator-dive-center-second-seat.md` + `situation-6.md` (Fon, Gop; the owner himself stays light).
 - **Dive hostel** — the diver's lodging ("dive shop with rooms").
 - **Liveaboard** — a trip portion of the open-water days.
