@@ -30,6 +30,6 @@ export function makeClock(startMs: number) {
 export function makeTravel(table: Record<string, number>) {
   return (a: string, b: string, atBucketMs: number): number | null => {
     const key = `${a}|${b}|${atBucketMs}`;
-    return key in table ? table[key] : null;
+    return table[key] ?? null;
   };
 }

@@ -29,12 +29,73 @@ import path from "node:path";
 import { Vibrant } from "node-vibrant/node";
 import { oklch, formatHex, wcagContrast, differenceCiede2000, parse } from "culori";
 
-const [, , input, nameArg] = process.argv;
+const augment = process.argv.includes("--augment");
+const [input, nameArg] = process.argv.slice(2).filter((a) => a !== "--augment");
 if (!input) {
-  console.error("usage: node scripts/make-pack.mjs <master-image> [pack-name]");
+  console.error("usage: node scripts/make-pack.mjs [--augment] <master-image> [pack-name]");
   process.exit(1);
 }
 const name = (nameArg || path.parse(input).name).toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+// ---------- augment mode (2026-08-22 — the V1 fix's code half) ----------
+// Measures brightestRegion from the master and derives veil per
+// app/DESIGN.md §Appearance (by mode, one law in two directions, 18% DarkMuted
+// carry); writes ONLY those two keys into the tracked pack's palette.json, so
+// augmentation never churns the thirteen measured fields of an existing pack.
+if (augment) {
+  const palettePath = path.join("assets/packs", name, "palette.json");
+  const pal = JSON.parse(fs.readFileSync(palettePath, "utf8"));
+
+  // brightestRegion: mean sRGB of the brightest cell of an 8×8 grid over the
+  // photograph — the region a glass plate must survive compositing over.
+  // ponytail: 64×64 downsample, 8px cells — the law names a region, not a resolution
+  const GRID = 8, CELL = 8;
+  const { data: px, info: gi } = await sharp(input)
+    .resize(GRID * CELL, GRID * CELL, { fit: "cover" }).removeAlpha().raw()
+    .toBuffer({ resolveWithObject: true });
+  let best = null;
+  for (let cy = 0; cy < GRID; cy++) for (let cx = 0; cx < GRID; cx++) {
+    let r = 0, g = 0, b = 0, n = 0;
+    for (let y = cy * CELL; y < (cy + 1) * CELL; y++) for (let x = cx * CELL; x < (cx + 1) * CELL; x++) {
+      const i = (y * gi.width + x) * 3;
+      r += px[i]; g += px[i + 1]; b += px[i + 2]; n++;
+    }
+    r /= n; g /= n; b /= n;
+    const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    if (!best || lum > best.lum) best = { r, g, b, lum };
+  }
+  const toHex = (r, g, b) =>
+    "#" + [r, g, b].map((v) => Math.round(Math.max(0, Math.min(255, v))).toString(16).padStart(2, "0")).join("");
+  const brightestRegion = toHex(best.r, best.g, best.b);
+
+  // veil, by mode. Plate alphas are the FD-41 quiet-glass engaged values.
+  const PLATE_DARK = 0.6, PLATE_LIGHT = 0.78;
+  let v;
+  if (pal.suggestedMode === "dark") {
+    // a plate composited over the brightest region must not exceed rgb(92)
+    v = (92 - (1 - PLATE_DARK) * best.lum) / PLATE_DARK;
+  } else {
+    // the composite must not fall below the value where the pack's ink clears 4.5:1 engaged
+    const relLum = (hex) => {
+      const c = parse(hex);
+      const f = (u) => (u <= 0.03928 ? u / 12.92 : ((u + 0.055) / 1.055) ** 2.4);
+      return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
+    };
+    const inkL = relLum(pal.ambientDark[1]); // the light pack's ink seed
+    const Lmin = 4.5 * (inkL + 0.05) - 0.05; // minimum composite relative luminance
+    const invF = (L) => 255 * (L <= 0.0031308 ? L * 12.92 : 1.055 * L ** (1 / 2.4) - 0.055);
+    v = (invF(Math.min(1, Math.max(0, Lmin))) - (1 - PLATE_LIGHT) * best.lum) / PLATE_LIGHT;
+  }
+  v = Math.max(0, Math.min(255, v));
+  // carry 18% of DarkMuted so the veil reads tinted rather than grey
+  const dm = parse(pal.semantic.DarkMuted ?? pal.ambientDark[0]);
+  const mix = (a, b) => a * 0.82 + b * 255 * 0.18;
+  pal.brightestRegion = brightestRegion;
+  pal.veil = toHex(mix(v, dm.r), mix(v, dm.g), mix(v, dm.b));
+  fs.writeFileSync(palettePath, JSON.stringify(pal, null, 2) + "\n");
+  console.log(`${name}: brightestRegion ${brightestRegion} (lum ${best.lum.toFixed(0)}) → veil ${pal.veil} [${pal.suggestedMode}]`);
+  process.exit(0);
+}
 const outDir = path.join("public/assets/packs", name);
 fs.mkdirSync(outDir, { recursive: true });
 

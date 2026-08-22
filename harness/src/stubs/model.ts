@@ -4,7 +4,7 @@ import type { ModelSeam, SourceTag } from "../seams.js";
 //
 // FOUR scripted calls, not three: normalize, narrate, judgment-inside-those,
 // and summarize (§2.4). Deterministic and scenario-keyed; no real model, no
-// randomness, no cost.
+// randomness, no cost. Async per the seam's law (INTERFACES.md §1).
 //
 // The failure fixture is the part that is easy to skip and must not be: a
 // scenario key whose summarize fails on EVERY attempt including the fallback,
@@ -27,20 +27,20 @@ export class ModelStub implements ModelSeam {
 
   constructor(private readonly script: ModelScript = {}) {}
 
-  normalize(utterance: string, context: unknown) {
+  async normalize(utterance: string, context: unknown) {
     this.calls.push({ call: "normalize", args: [utterance, context] });
     return this.script.normalize?.[utterance] ?? { intent: "unknown", fields: {}, ambiguities: [] };
   }
 
-  narrate(structure: unknown) {
+  async narrate(structure: unknown) {
     this.calls.push({ call: "narrate", args: [structure] });
     return this.script.narrate?.[JSON.stringify(structure)] ?? "";
   }
 
-  summarize(raw_text: string, source_tag: SourceTag) {
+  async summarize(raw_text: string, source_tag: SourceTag) {
     this.calls.push({ call: "summarize", args: [raw_text, source_tag] });
     if (raw_text === SUMMARIZE_ALWAYS_FAILS) {
-      // Throws rather than returning anything. A stub that returned a degraded
+      // Rejects rather than resolving anything. A stub that returned a degraded
       // summary here would let the raw text through with a warning attached,
       // which SCENARIOS.md L7 says explicitly fails the scenario.
       throw new Error("summarize failed on every attempt including the fallback");

@@ -7,6 +7,12 @@
 //
 // Step 0 pins the shapes and nothing more. The behaviour behind them arrives in
 // Steps 1–5; a fuller type here would be a guess about code nobody has written.
+//
+// EVERY SEAM CALL IS ASYNCHRONOUS (INTERFACES.md §1, 2026-08-22): the real
+// neighbours are a datastore over a network, a multi-second model call, and
+// provider-backed delivery — and the swap law (Q3) forbids harness edits at the
+// moment the first real adapter would have needed the sync signatures fixed.
+// The stubs resolve immediately; the shapes are promises from Step 0.
 
 /** An engine-issued reference to a computed, validated value (INTERFACES.md §1.1).
  *  The harness passes handles around and may NEVER read their internals to
@@ -23,35 +29,42 @@ export type SourceTag = "owner" | "guest" | "import" | "document";
 export type Tagged = { text: string; source: SourceTag };
 
 export interface EngineSeam {
-  calculate(query: unknown): Handle;
-  commit(input: unknown): CommitResult;
-  check_consistency(rules: unknown): { conflicts: unknown[]; latent: unknown[] };
-  check_coverage(board: unknown): { missing_required: unknown[] };
-  typed_value(raw: unknown, type_spec: unknown): unknown;
-  compare(a: unknown, op: string, b: unknown): boolean;
-  resolve(goal: unknown, boards: unknown, rules: unknown): Handle;
+  calculate(query: unknown): Promise<Handle>;
+  commit(input: unknown): Promise<CommitResult>;
+  check_consistency(rules: unknown): Promise<{ conflicts: unknown[]; latent: unknown[] }>;
+  check_coverage(board: unknown): Promise<{ missing_required: unknown[] }>;
+  typed_value(raw: unknown, type_spec: unknown): Promise<unknown>;
+  compare(a: unknown, op: string, b: unknown): Promise<boolean>;
+  resolve(goal: unknown, boards: unknown, rules: unknown): Promise<Handle>;
 }
 
 export interface ModelSeam {
-  normalize(utterance: string, context: unknown): { intent: string; fields: Record<string, unknown>; ambiguities: string[] };
-  narrate(structure: unknown): string;
+  normalize(utterance: string, context: unknown): Promise<{ intent: string; fields: Record<string, unknown>; ambiguities: string[] }>;
+  narrate(structure: unknown): Promise<string>;
   /** §2.4, the layer-2 quarantine read. Tool-less by construction; never BYO
-   *  (FD-3); FAILS CLOSED — it throws rather than returning a partial summary,
+   *  (FD-3); FAILS CLOSED — it rejects rather than resolving a partial summary,
    *  because a summary that might be raw text is the control degrading into no
    *  control at the moment it failed (L7). */
-  summarize(raw_text: string, source_tag: SourceTag): { summary: string; labels: string[] };
+  summarize(raw_text: string, source_tag: SourceTag): Promise<{ summary: string; labels: string[] }>;
 }
 
 export interface AppSeam {
-  render(payload: unknown): void;
-  publish(payload: unknown): void;
-  notify_and_await(payload: unknown): void;
+  render(payload: unknown): Promise<void>;
+  publish(payload: unknown): Promise<void>;
+  notify_and_await(payload: unknown): Promise<void>;
 }
 
 /** A steppable virtual clock — required, not optional (INTERFACES.md §5).
  *  Tests STEP it; nothing sleeps and nothing waits on wall time. Injected
- *  through the same point as the seams, and shared with the engine. */
+ *  through the same point as the seams, and shared with the engine.
+ *
+ *  `sleepUntil` is `step`'s promise twin (INTERFACES.md §1, the async law):
+ *  the loop's own waiting — hold expiry, ladder timeouts — awaits it, and it
+ *  resolves only when a `step` carries the clock to or past the instant. It
+ *  never touches wall time, so the ordering laws across awaited calls are
+ *  testable exactly as the sync expiries always were. */
 export interface Clock {
   now(): number;
   step(ms: number): void;
+  sleepUntil(instant: number): Promise<void>;
 }

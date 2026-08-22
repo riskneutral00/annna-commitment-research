@@ -49,5 +49,7 @@
     "#d7d7e1"
   ],
   "tintDarkAlpha": 0.31,
-  "tintLightAlpha": 0.64
+  "tintLightAlpha": 0.64,
+  "brightestRegion": "#5b5257",
+  "veil": "#5c5958"
 }

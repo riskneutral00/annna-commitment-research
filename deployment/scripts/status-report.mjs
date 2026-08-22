@@ -68,6 +68,30 @@ function frozenRange(text) {
   return (n) => spans.some(([lo, hi]) => n >= lo && n <= hi);
 }
 
+// A step body may carry a `**Precondition**` marker naming ruling IDs (the
+// FD-42 form: "**Precondition** *(date)*: FD-42's drafted class must be
+// ratified ... before this step"). Added 2026-08-22: the roadmap's "only
+// remaining founder act" claim was false by the corpus's own text — two BUILD
+// steps carried a day-two-blocking precondition no status surface showed. The
+// resolver reads the marker, verifies each named ruling EXISTS in RULINGS.md
+// (a precondition naming a ruling that isn't there is a broken citation and
+// fails the run — the one refusal in this otherwise-reporting script), and
+// prints the step as BLOCKED on those IDs. Whether the ruling has since been
+// ratified is not machine-readable; the marker's amendment or removal is the
+// mechanical arrival point, which is exactly what the two markers say.
+function preconditions(body) {
+  const ids = new Set();
+  for (const line of body.split("\n")) {
+    const at = line.indexOf("**Precondition**");
+    if (at === -1) continue;
+    // Only what follows the marker on its line: a long bullet may mention other
+    // rulings BEFORE the marker (app/BUILD.md Step 1 does), and those are
+    // history, not conditions.
+    for (const m of line.slice(at).matchAll(/\bF[DR]-?\d+\b/g)) ids.add(m[0]);
+  }
+  return [...ids];
+}
+
 // Steps in file order, each with the body that runs up to the next `## ` heading.
 function steps(text) {
   const lines = text.split("\n");
@@ -86,9 +110,15 @@ function steps(text) {
   }
   const isFrozen = frozenRange(text);
   return out.map((s) => {
-    const state = stateOf(s.body.join("\n"));
+    const body = s.body.join("\n");
+    const state = stateOf(body);
     // A range freezes only what has not already declared itself finished.
-    return { n: s.n, title: s.title, state: state === "open" && isFrozen(s.n) ? "FROZEN" : state };
+    return {
+      n: s.n,
+      title: s.title,
+      state: state === "open" && isFrozen(s.n) ? "FROZEN" : state,
+      blockedOn: preconditions(body),
+    };
   });
 }
 
@@ -110,13 +140,27 @@ function selfcheck() {
   assert.deepStrictEqual(
     parsed,
     [
-      { n: 0, title: "The spec/code boundary", state: "CLOSED" },
-      { n: 1, title: "Landing law", state: "NOT CLOSED" },
-      { n: 2, title: "The rung ladder", state: "open" },
-      { n: 3, title: "Frozen work", state: "FROZEN" },
+      { n: 0, title: "The spec/code boundary", state: "CLOSED", blockedOn: [] },
+      { n: 1, title: "Landing law", state: "NOT CLOSED", blockedOn: [] },
+      { n: 2, title: "The rung ladder", state: "open", blockedOn: [] },
+      { n: 3, title: "Frozen work", state: "FROZEN", blockedOn: [] },
     ],
     "number, title and all four states parse",
   );
+
+  // The precondition resolver, against the marker form the corpus writes
+  // (harness/BUILD.md Step 2, app/BUILD.md Step 1 — the FD-42 pair).
+  const pre = steps(
+    [
+      "## Step 2 — The tool contract",
+      "- **Precondition** *(2026-08-22)*: FD-42's drafted `display.settings` class must be **ratified (verb named) or reversed** before this step's signatures freeze.",
+      "- other work",
+      "## Step 3 — Unblocked",
+      "prose mentioning FD-42 without a marker",
+    ].join("\n"),
+  );
+  assert.deepStrictEqual(pre[0].blockedOn, ["FD-42"], "a Precondition marker's ruling IDs are read");
+  assert.deepStrictEqual(pre[1].blockedOn, [], "a bare mention outside a marker is not a precondition");
   // The ordering trap this script exists to avoid.
   assert.strictEqual(stateOf("**NOT CLOSED yet"), "NOT CLOSED", "NOT CLOSED is not read as CLOSED");
   // A marker needs its bold opener; bare prose is not a status claim.
@@ -180,6 +224,13 @@ if (process.argv.includes("--selfcheck")) {
 const root = process.argv[2] ? path.resolve(process.argv[2]) : REPO;
 const width = 58;
 
+const rulingsPath = path.join(root, "RULINGS.md");
+const rulings = fs.existsSync(rulingsPath) ? fs.readFileSync(rulingsPath, "utf8") : "";
+const rulingExists = (id) => rulings.includes(`**${id}**`);
+
+const blocked = [];
+let brokenPrecondition = false;
+
 for (const layer of LAYERS) {
   const file = path.join(root, layer, "BUILD.md");
   if (!fs.existsSync(file)) continue;
@@ -189,10 +240,29 @@ for (const layer of LAYERS) {
   for (const s of found) {
     tally[s.state]++;
     const label = `  Step ${s.n} — ${s.title} `;
-    console.log(label.padEnd(width, ".") + ` ${s.state}`);
+    const suffix = s.blockedOn.length ? ` ${s.state} — BLOCKED on ${s.blockedOn.join(", ")}` : ` ${s.state}`;
+    console.log(label.padEnd(width, ".") + suffix);
+    for (const id of s.blockedOn) {
+      if (!rulingExists(id)) {
+        console.log(`    PRECONDITION BROKEN — ${id} appears in no RULINGS.md entry`);
+        brokenPrecondition = true;
+      } else {
+        blocked.push(`${layer} Step ${s.n} waits on ${id}`);
+      }
+    }
   }
   const parts = Object.entries(tally)
     .filter(([, n]) => n)
     .map(([k, n]) => `${n} ${k}`);
   console.log(`  ${layer} — ${parts.join(" · ")} of ${found.length}`);
 }
+
+if (blocked.length) {
+  console.log(`\nFOUNDER-ACT PRECONDITIONS OPEN — ${blocked.length}:`);
+  for (const b of blocked) console.log(`  ${b}`);
+  console.log(
+    `  (Resolved by the named ruling landing and the step's **Precondition** marker being amended away — ` +
+      `the marker is the mechanical arrival point; this report cannot read ratification itself.)`,
+  );
+}
+if (brokenPrecondition) process.exit(1);

@@ -1,7 +1,8 @@
 import type { AppSeam } from "../seams.js";
 
 // AppStub — INTERFACES.md §5: record-and-return spies. Assert the payload and
-// its reversibility class; simulate `on_form_return`.
+// its reversibility class; simulate `on_form_return`. Async per the seam's law
+// (INTERFACES.md §1) — the spies record synchronously and resolve immediately.
 //
 // The escalation ladder's per-rung notifications ride this same spy, which is
 // why asserting *who was notified, when, on which rung* needs no new stub
@@ -9,15 +10,15 @@ import type { AppSeam } from "../seams.js";
 export class AppStub implements AppSeam {
   readonly calls: Array<{ call: string; payload: unknown }> = [];
 
-  render(payload: unknown) {
+  async render(payload: unknown) {
     this.calls.push({ call: "render", payload });
   }
 
-  publish(payload: unknown) {
+  async publish(payload: unknown) {
     this.calls.push({ call: "publish", payload });
   }
 
-  notify_and_await(payload: unknown) {
+  async notify_and_await(payload: unknown) {
     this.calls.push({ call: "notify_and_await", payload });
   }
 

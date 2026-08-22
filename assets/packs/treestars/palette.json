@@ -50,7 +50,6 @@
   ],
   "tintDarkAlpha": 0.43,
   "tintLightAlpha": 0.54,
-  "accentInk": "#241505",
-  "today": "#E2A44F",
-  "accentNote": "founder ruling 2026-07-18 (DESIGN.md §2): treestars carries its own amber; ink/today from the vibe-slice reference"
+  "brightestRegion": "#a6a5a1",
+  "veil": "#31302c"
 }

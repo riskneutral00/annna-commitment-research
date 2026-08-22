@@ -11,7 +11,13 @@ if (!key) {
   console.error("FAIL: set OPENROUTER_API_KEY (no key is committed or defaulted here)");
   process.exit(2);
 }
-const model = process.env.MODEL ?? "openai/gpt-4o-mini";
+// Before the first paid run (DR-7 is waived-until-live): confirm this default
+// slug is still served on OpenRouter — a 404 here would read as a supply
+// failure and it would only be a stale name.
+// Default refreshed 2026-08-22: the previous default (openai/gpt-4o-mini,
+// mid-2024) was ~18 months stale — a spike run against it would have graded a
+// model nobody would bind. Same tier (cheapest mainstream), current family.
+const model = process.env.MODEL ?? "openai/gpt-5-mini";
 
 // The eight N-set seeds, verbatim from ../EVALS.md §2. Only the expected INTENT is
 // graded — fields and ambiguities are rubric work the real scaffold owns.

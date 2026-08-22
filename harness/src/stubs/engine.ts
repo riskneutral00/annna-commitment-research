@@ -7,6 +7,9 @@ import type { CommitResult, EngineSeam, Handle } from "../seams.js";
 // capacity and latch rules arrive with the scenarios that need them (Steps 1–5).
 // What matters now is that handles are OPAQUE — the harness may pass one on and
 // may never read it to author a literal (INTERFACES.md §1.1).
+//
+// Async per the seam's law (INTERFACES.md §1): the stub resolves immediately
+// and deterministically — same order, same values, every run (L2/B9).
 
 export class EngineStub implements EngineSeam {
   readonly calls: Array<{ call: string; args: unknown[] }> = [];
@@ -25,37 +28,37 @@ export class EngineStub implements EngineSeam {
 
   constructor(private readonly canned: Record<string, unknown> = {}) {}
 
-  calculate(query: unknown): Handle {
+  async calculate(query: unknown): Promise<Handle> {
     this.calls.push({ call: "calculate", args: [query] });
     return this.#handle();
   }
 
-  commit(input: unknown): CommitResult {
+  async commit(input: unknown): Promise<CommitResult> {
     this.calls.push({ call: "commit", args: [input] });
     return { ok: true, commitment: input };
   }
 
-  check_consistency(rules: unknown) {
+  async check_consistency(rules: unknown) {
     this.calls.push({ call: "check_consistency", args: [rules] });
     return { conflicts: [], latent: [] };
   }
 
-  check_coverage(board: unknown) {
+  async check_coverage(board: unknown) {
     this.calls.push({ call: "check_coverage", args: [board] });
     return { missing_required: [] };
   }
 
-  typed_value(raw: unknown, type_spec: unknown) {
+  async typed_value(raw: unknown, type_spec: unknown) {
     this.calls.push({ call: "typed_value", args: [raw, type_spec] });
     return { __typed: true, raw, type_spec };
   }
 
-  compare(a: unknown, op: string, b: unknown) {
+  async compare(a: unknown, op: string, b: unknown) {
     this.calls.push({ call: "compare", args: [a, op, b] });
     return Boolean(this.canned[`compare:${op}`] ?? false);
   }
 
-  resolve(goal: unknown, boards: unknown, rules: unknown): Handle {
+  async resolve(goal: unknown, boards: unknown, rules: unknown): Promise<Handle> {
     this.calls.push({ call: "resolve", args: [goal, boards, rules] });
     return this.#handle();
   }
