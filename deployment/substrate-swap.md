@@ -99,7 +99,7 @@ The app is only as portable as its three seams, and these are criteria 1–3 of 
 - Convex + TanStack Start + Clerk · <https://docs.convex.dev/client/tanstack/tanstack-start/clerk>
 - StyleX Vite installation · <https://stylexjs.com/docs/learn/installation/vite> — StyleX is Astryx's peer dependency (`../app/INTERFACES.md`), so this is the pin's survival path.
 
-*Known-stale trap: Convex's own docs have described TanStack Start as a "Release Candidate" while it has been on 1.x since 2025-02-25. Verify version claims against npm, not against a prose description — including the ones in this file.*
+*Known-stale trap — corrected 2026-08-22, and the correction is the sharper lesson: the "Release Candidate" prose was **right** and the npm number was the misleading half. `@tanstack/react-start` rides TanStack Router's shared 1.x version line, so its major number was never a maturity signal; as of 2026-08-22 the framework's own docs still read Release Candidate ("feature-complete, API stable"). **A shared version line makes the major number meaningless as a maturity signal: read the framework's own stability statement, and record the date you read it.** Keep `npm view` for version facts; never as a maturity oracle. (The two rough-edge issues once listed here both closed: workers-sdk#9622 on 2025-10-08, router#4255 on 2025-09-23 — annotated, not deleted, because a closed issue with a date beats an absent one.)*
 
 ### Known rough edges — read the failure reports, not only the guides
 

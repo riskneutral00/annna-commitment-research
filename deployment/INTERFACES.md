@@ -29,6 +29,7 @@
 | **GitHub** | This repo · required checks (no path filters; the always-run `npm run check` aggregator) · **protected environments** (deploy, qualification — the human as required reviewer) · Actions · `gh` |
 | **Cloudflare** | Per-change preview rung (`SPEC.md §3`'s name for it) · production rung with **access protection** (R7) — production activates at app Step 0. Ruled under FD-11, replacing Vercel; the rung law in `SPEC.md §3` names no provider and did not change |
 | **Convex** | Per-rung deployments + the per-rung env store (enumerable for R1/R5) |
+| **TypeScript** | **The 5.x line (`^5.9`) corpus-wide, decided 2026-08-22** — the tree held three answers (harness `^5.9`, engine none, the substrate spike `^7` by default) and TS 7 is a compiler reimplementation, a real decision not a point bump: it gets its own decision point when a layer needs it, never adoption-by-throwaway-rig. Every layer typechecks (`tsc --noEmit`) the way the harness does |
 | **Clerk** | Per-rung auth instances |
 | **Resend** | Mail — sandbox below production |
 | **OpenRouter** | The model key, confined to the qualification environment, **provider-side hard spend cap** (R3/R8) |

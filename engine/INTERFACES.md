@@ -50,6 +50,14 @@ Tech-neutral requirements (candidates named in `BUILD.md` only):
 - A **clock trigger** facility for holds and horizon extension (virtual/steppable clock in tests).
 - **Reactive push to subscribers** *(founder-ruled 2026-08-06)* — when a committed write changes a published display projection (§0's sole-client carve), subscribers are pushed the new value; the app never polls for it. This is a **hard criterion, not a preference**, and it is the one a reader is most likely to skip: a store can satisfy every row above and still be non-reactive, at which point `../app/INTERFACES.md`'s live board and app scenario Z3 ("board updates live") quietly become a polling loop nobody specified. The ruling exists precisely so a non-reactive substrate cannot be picked by accident.
 
+## §2a. Sideways — the display-projection seam *(2026-08-22 — the header above promised three seams and the body specified two; this is the one the app builds its home screen on)*
+
+The four projections `SPEC.md §0` enumerates — the guest Shared projection, the owner's live board view, the FR38 template-bundle projection, the FD-34 candidate-shape ghost — are this seam's whole surface; a fifth is a spec change with its own ruling, exactly as a fifth seam verb would be.
+
+- **Every pushed value carries `{store_version, projection_id}`.** The app **discards any payload whose `store_version` is older than what it already holds** — one rule that kills the merge ambiguity in both directions, because the board has two content sources: `render(board, payload)` from the harness sets the *surface*, the projection sets the *contents* (`../app/SPEC.md §2` carries the same sentence). A `render` payload computed at version N arriving after a push at N+1 does not repaint the board backward.
+- **A subscription carries `unavailable` as a member.** A subscription that goes quiet is a *state*, never an empty board — the app renders *stale, reconnecting* (`../app/SPEC.md §1.1`'s never-lies-about-progress law reaches here). A handle's `expires` governs commit redemption (`SPEC.md §4`), not display; a displayed facet does not blank on expiry, it re-reads.
+- **A projection stub ships with the engine's stub** so the app suite can exercise subscription, push, staleness-discard and the `unavailable` member without a live store — the same stub discipline §4 applies to everything else.
+
 ## §3. What the engine OWNS (and what it must never absorb)
 
 - **Owns:** the store of record (§1 objects), all deterministic math (§2–§8), the travel cache, materialization, arbitration.

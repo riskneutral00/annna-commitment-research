@@ -127,7 +127,10 @@ Commitment {
            //   written by the loop, cleared ONLY by a human act (D4, K2)
 
   preconditions [ { kind: signature|id|payment|…,
-                    satisfied_by { principal, at, evidence }? } ]   // evidence, not a bare tag
+                    satisfied_by { principal, at, evidence }? } ]   // evidence, not a bare tag — a CLOSED union (2026-08-22):
+                    //   { kind: 'vault-attestation', class, vault_ref, verified_by, at }   // rides on_form_return (INTERFACES §3.3)
+                    // | { kind: 'in-form-consent', form_ref, at }
+                    //   principal = who SUPPLIED it (the guest); verified_by = who VERIFIED it (the vault) — two roles, never merged
   expires_at                              // hold timer → feeds the expired_at latch
 
   provenance [ { field, value, author: owner|customer|template|engine|llm,
@@ -277,6 +280,21 @@ PatternDecline {
 
 **The owner is told, once, per party.** Suppression is not silent — an act that comes back unsent surfaces as a gap the ordinary way, saying which party and why, so "they never replied" cannot be confused with "we stopped writing to them."
 
+### 3.12 PartyContact — the object behind "the party's stored contact" and "channel choice, stored per recipient"
+
+*(2026-08-22 — the addressing law read a store nothing declared: per-party channel preference fits none of the five store-routing shapes in §6, which is the exact situation that forced `PatternDecline` into existence. Same cure: a named object.)*
+
+```
+PartyContact {
+  party_ref,                       // the principal or external party it describes
+  addresses: [{ channel, address, verified_at? }],
+  preferred_channel,               // asked once (the ask-once policy), owner- or party-answered
+  updated { who, basis, when }     // ordinary attributed writes; engine-resident, PII rules apply
+}
+```
+
+Engine-resident (contact PII crypto-shreds with the party, `../security/SPEC.md §4`); read by the harness when resolving `notify_and_await`'s `recipient` (§7's fire-time resolution, `INTERFACES.md §3.3`); never readable by a display projection (`../engine/SPEC.md §0`'s fences stand — no projection can select an address). D4's "the answer is stored" stores here; D6's "X's stored channel" reads `preferred_channel`.
+
 ---
 
 ## 4. Responsibility 1 — the loop
@@ -314,6 +332,7 @@ One canonical surface (resolves the prior double-statement). **Every tool declar
 | `CRUD_Shared` | **outward** (publish) | publish rules/SOP to an audience+scope; produces the board-blind export |
 | rule writes | internal; diff-only | rules are managed where they attach (board/kind/audience), not via a separate zoo tool |
 | `notify_and_await` | **outward** (third-party comms) | carries a catalog-typed form payload to an off-app party — or an escalation notice to an on-call rung under the FD-25 grant (§3.9) — and feeds the reply back (fires the loop) |
+| `import_fetch` | internal — **caller-initiated firings only** *(FD-49, 2026-08-22)* | pulls the owner's connected outside-calendar data **now**, through the app against the vault-resident held credential (`../security/SPEC.md §3.1`; providers and connect law `../app/SPEC.md §9`); returns provider items whose free text is **`import`-tagged** (§8's wire law) for the ordinary propose→confirm walk — nothing auto-commits. Reachable from `handleTurn` (console or external client) and **never from `handleTrigger`** — FR12's no-background-poll is structural, not a policy (B10) |
 
 There is intentionally **no tool zoo**: a new domain adds *content* (kinds/rules), not new tools. (This bet is carried as a hypothesis, not a law — see history.)
 
@@ -375,7 +394,7 @@ The one thing a user cannot configure away. Everything above it is user-configur
 
 **Re-entry never re-fires an attributed act.** When the loop re-enters after a check-work mismatch (§4), it re-verifies and may re-commit stored structure; it does **not** re-issue an across-the-line act that already fired. The `{who, basis, when}` record in rule 4 is the evidence that it fired, and the basis it names is spent — a second send is a new act needing a new basis, exactly as rule 2 requires of any crossing. **Idempotent internal writes re-commit harmlessly** — diffs, and any write carrying its caller-supplied write id (`INTERFACES.md §1.2`), which returns the original result rather than applying twice; a create without its id is not in that set, which is why the id exists. This rule exists because an outward send is not idempotent at all. (The same discipline the guest seam already carries at `../security/SPEC.md §3`, where hold creation is idempotent per guest-and-interval — a double-tap returns the existing hold, never a second one.)
 
-**A live confirmation is content-addressed.** The basis rule 2 accepts — "a live confirmation" — binds to the **exact act it confirmed**: the tool plus its canonicalized arguments. Approve *"send Maria the 3 pm move"* and let the argument become 4 pm before it fires, and the 4 pm send has **no basis** — it is a new act needing a fresh confirmation or a matching grant (rule 3), never carried by the 3 pm approval. The confirmation's identity — tool + canonicalized args — is exactly what `basis` records in rule 4's `{who, basis, when}`, so an approve-then-swap-args can never read as authorized after the fact. (A grant basis is already content-scoped by its `action_class` + `scope`; this closes the same gap for the live-confirmation basis, so the two basis kinds fail the same way when the act drifts from what was authorized.) **And the binding is re-verified at fire time, over what the recipient will actually receive** *(2026-08-21, closing the deep-pass drift finding)*: the arguments name a payload and a party, but the narrated content is derived from stored structure *as of the send*, and the address is resolved from the party's stored contact *as of the send* (`../app/SPEC.md §6`) — both can drift after approval through ordinary internal writes. So the send fires only if the narrated-content identity and the resolved address match what the confirmation was shown; either drifting makes it a **new act needing a fresh basis**, exactly as a changed argument does.
+**A live confirmation is content-addressed.** The basis rule 2 accepts — "a live confirmation" — binds to the **exact act it confirmed**: the tool plus its canonicalized arguments. Approve *"send Maria the 3 pm move"* and let the argument become 4 pm before it fires, and the 4 pm send has **no basis** — it is a new act needing a fresh confirmation or a matching grant (rule 3), never carried by the 3 pm approval. The confirmation's identity — tool + canonicalized args — is exactly what `basis` records in rule 4's `{who, basis, when}`, so an approve-then-swap-args can never read as authorized after the fact. (A grant basis is already content-scoped by its `action_class` + `scope`; this closes the same gap for the live-confirmation basis, so the two basis kinds fail the same way when the act drifts from what was authorized.) **And the binding is re-verified at fire time, over what the recipient will actually receive** *(2026-08-21, closing the deep-pass drift finding)*: the arguments name a payload and a party, but the narrated content is derived from stored structure *as of the send*, and the address is resolved **by the harness** from the party's stored contact *as of the send* (2026-08-22 — resolution moved here from the app, which sends to the literal it is given and resolves nothing; `INTERFACES.md §3.3`'s `recipient` shape) — both can drift after approval through ordinary internal writes. So the send fires only if the narrated-content identity, the resolved address, **and the party's un-suppressed state** (§3.11 — a complaint latching between confirmation and fire must stop the send, because that direction is the unrecoverable one) match what the confirmation was shown; any drifting makes it a **new act needing a fresh basis**, exactly as a changed argument does.
 
 **Standing authorization = a grant:** `{ action_class, scope, expiry, revocable }`, sitting above the floor, elicited from and owned by the user.
 

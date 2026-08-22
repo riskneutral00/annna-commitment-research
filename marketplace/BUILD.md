@@ -17,7 +17,7 @@ The store shelf in the gallery riser, the seam-granted entitlement + pack fetch 
 The browse riser, the install door wired to the real harness, the propose→confirm parameter walk **as a session (save/resume/abandon — `SPEC.md §3`)**, uninstall, and the installed copy's independence from the service (an install is a local fork, so an outage cannot reach it — `SPEC.md §3`). Gate: **P1 (fork isolation — moved from Step 1, now that installs exist), I1–I6, I8 (the dive-center-scale walk), E3, D3 (template half), P2 (re-gated — the riser is a surface)**; re-run harness **B1/B2** unchanged — *zero new verbs is the exam*.
 
 ## Step 4 — Discovery (minimal)
-Categories + tags at publish (through `catalog.publish` — the admin-only verb), featured shelves, the New shelf, the client-side text filter; `popularity` present in the format, unused by any surface. Gate: **D1–D5 (the agent-suggested entry — D5), P2 (re-gated — publish surfaces are the exact thing it forbids users reaching)**.
+Categories + tags at publish (through `catalog.publish` — the admin-only verb), featured shelves, the New shelf, the client-side text filter; `popularity` present in the format, unused by any surface. Gate: **D1–D6 (the agent-suggested entry — D5; the viewing owner's catalog language, FR32 — D6), P2 (re-gated — publish surfaces are the exact thing it forbids users reaching)**.
 
 ## Step 5 — Integration
 The two seeds end-to-end on real layers. Gate: **Z1**.
