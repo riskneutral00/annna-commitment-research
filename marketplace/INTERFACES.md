@@ -33,7 +33,7 @@ The store's infrastructure — catalog, curation, payments, entitlements, licens
 ## §4. To the engine
 
 - An installed template writes **only constructs the engine already accepts**: kinds, rules from the closed menu, Shared shapes, boards — with fork provenance recorded in history. An off-menu rule shape was already refused at the install door (`SPEC.md §3`), upstream of the engine's own refusal; the door is a courtesy, the engine is the law.
-- **The engine is not marketplace-aware** — deliberately. No marketplace field, flag, or table exists in engine truth. Note recorded in `SPEC.md §7`: the no-export ruling holds because a bundle is **authored as a data-free §1.2 shape, not extracted from a populated board**, and it re-opens together with user publishing (OR-28) — no-export and admin-only supply hold together.
+- **The engine is not marketplace-aware** — deliberately. No marketplace field, flag, or table exists in engine truth — the one ruled exception is a projection, not a field: the **candidate-shape ghost**, the engine's fourth display projection (FD-34, `../RULINGS.md` — the deliberate exception to the zero-new-seam-shapes posture), display-only and minting nothing, consumed by `SPEC.md §6`/D3. Note recorded in `SPEC.md §7`: the no-export ruling holds because a bundle is **authored as a data-free §1.2 shape, not extracted from a populated board**, and it re-opens together with user publishing (OR-28) — no-export and admin-only supply hold together.
 
 ## §5. Stub strategy
 

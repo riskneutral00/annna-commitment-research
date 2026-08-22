@@ -22,7 +22,7 @@ annnä knows its **own** boat completely — the manifest, the 40-strong club tr
 
 ## The failure — Wang Fang drops, and the record does the briefing
 
-Day 2 evening, **Wang Fang gets an ear infection**. She marks herself out on her own board — she's on annnä, so the fact lands instantly, not whenever she'd have reached the desk by phone. Jun Wang's remaining days need a Mandarin instructor, and annnä re-solves against what it can reach:
+Day 2 evening, **Wang Fang gets an ear infection**. She marks herself out on her own board — she's on annnä, so the fact lands instantly, not whenever she'd have reached the desk by phone. *(An employed staff member writing on Hug's board — the beat rides the unruled seat question situation-6 surfaces, registered as OR-42.)* Jun Wang's remaining days need a Mandarin instructor, and annnä re-solves against what it can reach:
 
 - Own bench: Wang Fang out, no second own Mandarin. **Own isn't enough.**
 - The offer goes to the top on-app Mandarin freelancer — **Matthew**, free now that Mei-Ling certified. But Matthew is out on a fun-dive day, phone dry in a boat locker. His offer's **clock runs out unanswered**, and the offer **lapses and cascades** — no human chased him, and the booking never sat in limbo.

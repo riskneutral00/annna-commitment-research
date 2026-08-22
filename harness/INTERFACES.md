@@ -14,7 +14,7 @@ The Engine owns deterministic compute + storage. The harness never computes thes
 ```
 calculate(query) -> Handle
 ```
-- `query` is a typed read-only request: availability of board(s) over a window, gap/buffer between placements, a candidate solution reconciling N boards, a balance draw check, a predicate evaluation over attributes, a **marks aggregate** (the closed money-marks reporting query), or a **stored-object read** by declared shape — uncleared parks, a `PendingDecision`, open escalations and the on-call list, the template-bundle projection, and the §2.1 relevant-slice assembly *(the last two members stated 2026-08-21: the engine's taxonomy carried them (`../engine/SPEC.md §5`) while this enumeration stopped at five, so under the zero-changes swap law the harness could not construct what its own SPEC required it to read)*.
+- `query` is a typed read-only request: availability of board(s) over a window, gap/buffer between placements, a candidate solution reconciling N boards, a balance draw check, a predicate evaluation over attributes, a **marks aggregate** (the closed money-marks reporting query), or a **stored-object read** by declared shape — uncleared parks, a `PendingDecision`, open escalations and the on-call list, a party's `PartyContact` (`SPEC.md §3.12`'s fire-time resolution), the stored delivery events (`SPEC.md §3.11`'s suppression read), a `PatternDecline` (`SPEC.md §3.10`'s pre-offer check), the template-bundle projection, and the §2.1 relevant-slice assembly *(the projection and slice members stated 2026-08-21, the contact/delivery/decline members 2026-08-22 — each time for the same reason: the engine's taxonomy or the harness's own SPEC required the read (`../engine/SPEC.md §5`) while this enumeration omitted it, and under the zero-changes swap law the harness cannot construct what is not enumerated)*.
 - Returns an **opaque `Handle`** — an engine-issued reference to a computed, validated value. The harness/LLM may pass a Handle into a subsequent tool call but may **not** read its internals to author a literal. (Stub: return a deterministic fake handle + a canned result table keyed by scenario.)
 - **Never** produces an outward effect.
 
@@ -128,18 +128,23 @@ publish(shared, recipients?) -> {artifact, minted: [{digest, bound_to}]}
                                                    //   minted[] is the digest return leg (2026-08-22): the
                                                    //   harness commits the mint set in the same firing —
                                                    //   the app records raw results and decides nothing,
-                                                   //   and a digest reaches the store on no other path
+                                                   //   and a digest reaches the store on no path but
+                                                   //   this leg and on_form_return's open-time ride
                                                    //   (engine/SPEC §1.7's {digest, bound_to} entries)
-send(form_payload, recipient) -> pending // OUTWARD; third-party comms (crosses the floor). Renamed from `notify_and_await` 2026-08-22: the verb never awaited — the reply arrives later through `on_form_return`, and the old name already produced one documented spec error (the retracted write-id retry sentence below). A seam call is a send; the awaiting is the loop's job.
+send(form_payload, recipient) -> {sent | delivered-failed | handed-to-owner} | {unavailable | timeout} // OUTWARD; third-party comms (crosses the floor). Renamed from `notify_and_await` 2026-08-22: the verb never awaited — the reply arrives later through `on_form_return`, and the old name already produced one documented spec error (the retracted write-id retry sentence in §1). A seam call is a send; the awaiting is the loop's job. The return is the delivery-outcomes bullet's immediate union (2026-08-22 — the signature previously read `pending`, the retired shape's leftover).
                                                    //   recipient = {party_ref, address, channel} — RESOLVED
                                                    //   BY THE HARNESS from the party's stored contact via
                                                    //   its own engine read (2026-08-22; the app sends to the
                                                    //   literal given and resolves nothing — app/SPEC §6)
 on_form_return(reply) -> Event                     // fires the trigger-driven loop; carries the token's attribution.
                                                    //   also the inbound ride for (2026-08-22): a vault
-                                                   //   attestation (harness/SPEC §3.4's evidence union) and
-                                                   //   a confirmation-time mint record (FD-43's manage
-                                                   //   token, minted with no seam call in flight)
+                                                   //   attestation (harness/SPEC §3.4's evidence union), a
+                                                   //   confirmation-time mint record (FD-43's manage
+                                                   //   token, minted with no seam call in flight), and
+                                                   //   FD-45's open-time single-visitor mint record —
+                                                   //   the entry-link open mints with no seam call in
+                                                   //   flight (security/SPEC §3), same class as FD-43's;
+                                                   //   this ride is how its digest reaches the store
 ```
 - The off-app party interacts with `publish`/`send` output as a **traditional pre-AI form** — no agent. Their consent (signature/payment) is captured by the form itself.
 - `on_form_return` is a **trigger source** into the loop; the owner's agent then processes the returned data (subject to the floor).

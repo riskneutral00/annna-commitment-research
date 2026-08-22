@@ -34,6 +34,8 @@
 
 Canonical source: [`../assets/packs/koi/palette.json`](../assets/packs/koi/palette.json). Koi is the product's permanent default skin, so the brand's first impression and the product's first impression are the same colors. **No hex may appear in brand material that is not in that file.**
 
+*(Corrected 2026-08-22 — `app/DESIGN.md` §Appearance now rules that no skin is special: koi is the **current** default, not a permanent one, and the dependency runs brand → fixture, never the reverse. The hexes in the table below are the brand's own constants; the koi palette file is the snapshot where they currently coincide, not their source. A restatement, not new outward material, so the `README.md` freeze is not engaged.)*
+
 | Role | Value | From palette |
 |---|---|---|
 | **Brand accent** (links, emphasis, the mark on light) | `#c46d00` | `accent` |

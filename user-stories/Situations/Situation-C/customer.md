@@ -12,7 +12,7 @@ His Mandarin is why the course has to land on a **Mandarin-speaking instructor**
 
 Everything through a **tokenized link**, on his phone, no account:
 - **Contact & identity** — passport, his languages, contact, arrival = pickup + hotel, emergency contact.
-- **Medical (PADI questionnaire)** — answers honestly about **surgery in the last 12 months**. That "yes" trips a **hard block in the app itself**: he can't reach payment until he uploads a doctor's note (stored to Amazon Glacier) *and* hands the physical paper in at the desk. No one has to chase it.
+- **Medical (PADI questionnaire)** — answers honestly about **surgery in the last 12 months**. That "yes" trips a **hard block in the app itself**: he can't reach payment until he uploads a doctor's note (stored to the cold vault — a Glacier-class store, `../../../security/SPEC.md §4`) *and* hands the physical paper in at the desk. No one has to chase it.
 - **Equipment sizing** — wetsuit, fins (feeds the gear the shop packs).
 - **Waiver** — reads and signs.
 

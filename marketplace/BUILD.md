@@ -20,7 +20,7 @@ The browse riser, the install door wired to the real harness, the propose→conf
 Categories + tags at publish (through `catalog.publish` — the admin-only verb), featured shelves, the New shelf, the client-side text filter; `popularity` present in the format, unused by any surface. Gate: **D1–D6 (the agent-suggested entry — D5; the viewing owner's catalog language, FR32 — D6), P2 (re-gated — publish surfaces are the exact thing it forbids users reaching)**.
 
 ## Step 5 — Integration
-The two seeds end-to-end on real layers. Gate: **Z1**.
+The two seeds end-to-end on real layers. Gates: **Z1, Z2** *(one row until the 2026-08-22 release-tag split — same content, two seeds)*.
 
 ## Guardrails
 - A new harness tool or seam verb has gone wrong — stop and flag (`INTERFACES.md` preamble).

@@ -19,7 +19,7 @@
 ## Step 3 — Qualification runs
 - Run the exam (EVALS §3) across candidate models per call type; grow the sets with harness check-work mismatches as they appear.
 - **Seed candidate list** *(founder-approved 2026-08-06; OpenRouter slugs verified against the live registry at Step 0 — the exam decides, this list only says who sits it first)*: cheap tier, expected to qualify for `narrate` first — `tencent/hy3:free` (the prior build's live binding) and one current DeepSeek chat slug; frontier tier, for authoring prompts and as the quality ceiling — one current Anthropic Claude slug and one current OpenAI GPT slug via OpenRouter. Grow from the registry at run time; never hardcode a slug outside the routing config.
-- **Verify:** at least one binding per call type passes; the 100%-bars (R-invention, J-forbidden, S-carry-through) are perfect; every required language's Z sub-set (th, zh-TW, en — SPEC §6) passed by the `normalize` **and `narrate`** bindings; **the P-set runs here for the first time** (its repetition rule, EVALS §2) and the qualifying `normalize` binding clears it. **At least one binding passes the S-set with carry-through perfect** — this is the `summarize` binding, and there is no fallback posture that lets an ungraded model serve the call (EVALS §3 step 5).
+- **Verify:** at least one binding per call type passes; the 100%-bars (`EVALS.md §1`'s canonical enumeration) are perfect; every required language's Z sub-set (th, zh-TW, en — SPEC §6) passed by the `normalize` **and `narrate`** bindings; **the P-set runs here for the first time** (its repetition rule, EVALS §2) and the qualifying `normalize` binding clears it. **At least one binding passes the S-set with carry-through perfect** — this is the `summarize` binding, and there is no fallback posture that lets an ungraded model serve the call (EVALS §3 step 5).
 
 ## Step 4 — Routing config
 - Write the qualified `routing` config (INTERFACES §2.2) with fallbacks and cost caps; wire the qualification-state record.
@@ -27,7 +27,7 @@
 
 ## Step 5 — ChatGPT-subscription slot — CUT (FD-65, 2026-08-22)
 - The step's content is removed with the slot: the vendor programme has been identity-only since 2026-08-02, so there is nothing to integrate and no terms check to run. The step number is kept so citations resolve; if the programme returns, the restoring ruling re-opens this step with the old content (one paragraph, preserved in history).
-- **Verify:** with BYO active, a trigger firing still resolves to `openrouter`; revoking BYO degrades to app-supplied with no behavior change beyond billing.
+- **Verify:** with BYO active, a trigger firing still resolves to an app-supplied binding (`openrouter` or `app-direct` — FD-67); revoking BYO degrades to app-supplied with no behavior change beyond billing.
 
 ## Guardrails
 - **The exam gates everything:** no model, prompt, or routing change goes live unqualified (EVALS §3).

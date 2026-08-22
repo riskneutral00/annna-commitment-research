@@ -5,14 +5,14 @@
 ## The afternoon's four pulls
 
 Off the same link, at overlapping times:
-- **Tom Becker** (English) — a **Honda Click**, one week (a model with twenty units — no contention).
+- **Tom Becker** (English) — a **Honda Click 125i**, one week (a model with fourteen units — no contention).
 - **Priya Nair** (English) — a **Yamaha NMAX 155**, four days (a model with only **two**).
 - **Marco Rossi** (English) — a **Yamaha NMAX 155**, three days.
 - **Anya Petrova** (English) — a **Yamaha NMAX 155**, two days — pulling at almost the same second as Marco, for the **last** free NMAX.
 
 ## It just resolves
 
-**Tom, 14:00.** He opens the link, taps a **Click**. The unit drops into a **hold** — off the link for everyone else, 1-hour clock running. He uploads passport and license (car-and-scooter class, fine for a Click), signs, places the deposit; all four clear by 14:40. The hold **confirms itself** (Auto). Clicks are abundant — nineteen still sit on the link — so nobody is competing with him.
+**Tom, 14:00.** He opens the link, taps a **Click**. The unit drops into a **hold** — off the link for everyone else, 1-hour clock running. He uploads passport and license (car-and-scooter class, fine for a Click), signs, places the deposit; all four clear by 14:40. The hold **confirms itself** (Auto). Clicks are abundant — thirteen still sit on the link — so nobody is competing with him.
 
 **Priya, 14:20.** She taps an **NMAX** — one of only two. It drops into her hold; she clears the checklist by 14:35; confirmed. **One NMAX left.** She never sees the Clicks or Tom.
 

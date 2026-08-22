@@ -102,6 +102,6 @@ I set my places, my sessions, and my patients' shapes down once, by talking — 
 
 - **Location as a first-class commitment attribute**, with the gap between two commitments measured in **travel, not minutes** — implies an external compute source (maps) behind the engine's `calculate`. General primitive, flagged; nothing PT-specific.
 - **Per-patient third-party constraints** ("will never move," "Tuesday mornings only") as stored objects the optimizer must honor absolutely — tests whether the fixed rule-type menu covers constraints owned by the *customer*, not the operator.
-- **Compaction = reshuffle-as-proposal** — the engine capability deferred to the revisit (`../../../.specs/deep-interview-engine.md` decisions 2/3/6). This story is its justification and its test: propose → owner approves → affected patient confirms; never auto-move.
+- **Compaction = reshuffle-as-proposal** — the engine capability once deferred to the revisit (`../../../.specs/deep-interview-engine.md` decisions 2/3/6), since brought in scope (`../../../engine/SPEC.md` §7 Reshuffle-as-proposal, the Proposal object §1.11; the X-family scenarios). This story is its justification and its test: propose → owner approves → affected patient confirms; never auto-move.
 - **Direction-parameterized optimization** ("toward morning" / "toward evening" / "inside a window") — an optimization *goal* picked per event, not a standing rule.
 - **Declared override beats computed value** (the bridge at rush hour) — the general shape: computed defaults, user rules win.

@@ -9,7 +9,7 @@ If you deleted the AI entirely, this layer is what would remain: the calendar-an
 Read in this order:
 
 1. **`SPEC.md`** — the store and math of record: the object model (including recurrence-as-materialized-instances and the Proposal object), the M3 type-value system, the **closed rule-type menu**, handles, `calculate` (with the travel seam), `commit`, `resolve` (place-only + reshuffle-as-proposal), consistency/coverage, the invariants ledger.
-2. **`INTERFACES.md`** — upward: the harness seam satisfied verbatim (zero new verbs); downward: the external travel source and the storage substrate requirements; and the read-only display-projection seam (the app renders a handle's display facet, never computing).
+2. **`INTERFACES.md`** — upward: the harness seam satisfied verbatim (zero new verbs); downward: the external travel source and the storage substrate requirements; and the sideways display-projection seam (the four §0 projections — two subscribed, two read on demand; the app renders verbatim, never computing).
 3. **`SCENARIOS.md`** — the deterministic acceptance suite (unlike the model's graded EVALS — this layer either holds or fails), ending in the stub-parity set.
 4. **`BUILD.md`** — the ordered plan, Step 0 (substrate) through Step 9 (**the stub-swap**). Storage-tech candidates live there only.
 

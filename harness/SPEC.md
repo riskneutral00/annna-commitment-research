@@ -75,7 +75,7 @@ Commitment-kind {            // OWD, rental, ER-shift, lesson…
   authority: governing | org | individual   // governing defines the kind; org/individual EXTEND, never override
 }
 ```
-Predicate rules quantify over these attributes (admission / qualification / composition). The *temporal* type (event/task) is separate and derived (§3.4).
+Predicate rules quantify over these attributes (admission / qualification; composition rides `dependency`/`fallback`, `../engine/SPEC.md §3`). The *temporal* type (event/task) is separate and derived (§3.4).
 
 **A kind may declare reminders (FD-61, 2026-08-22 — the product scored no-shows in detail and never prevented one).** `reminders?: [{ offset_before_start, channel? }]` is a **creator-set kind property**, and its whole mechanism is machinery that already exists: each reminder instant is an ordinary **clock-trigger firing** (§4's fifth source — no new source); the outward send rides `send` on an elicited **reminder-notify Grant** (the FD-25 shape: no grant, nothing sends, and the empty case is correct behaviour, not an error), addressed through the party's stored contact (§3.12), under `../security/SPEC.md §10`'s caps and §3.11's suppression; content is `narrate(structure)` from the commitment — never composed. Discharge-attention, not capture: a reminder goes to the party who committed, about their own commitment, and nothing else may ride the channel. Gated at D28.
 
@@ -123,10 +123,16 @@ Commitment {
            //                   review[completable past its end, no tick — awaiting the owner's word]
 
   // THE PARK — the loop stopped and a HUMAN must look. Neither a latch nor a status:
-  needs_human { reason: no_basis | unreachable | unverified,
+  needs_human { reason: no_basis | unreachable | unverified
+                      | budget_exhausted | slice_unfittable | quarantine_failed,
+                cause?,          // the deterministic detail the park must name — L3's named
+                                 //   covering rule, §4's spent ceiling, L5's failing layer
                 since, trigger_ref,
                 cleared_by { principal, at }? }?
            //   written by the loop, cleared ONLY by a human act (D4, K2)
+           //   (2026-08-22: the three mandated parks — §4's budget ceiling, §8's unfittable
+           //    slice, the failed quarantine — gained their members + the structured `cause`;
+           //    the union previously forced them into a wrong member, breaking D17's legibility)
 
   preconditions [ { kind: signature|id|payment|…,
                     satisfied_by { principal, at, evidence }? } ]   // evidence, not a bare tag — a CLOSED union (2026-08-22):
@@ -260,6 +266,8 @@ PatternDecline {
 }
 ```
 
+**What writes it.** A spoken decline of the offer writes it, and so does a **narrowed acceptance**: an accept carried as `../model/SPEC.md §2`'s `narrow(scope)` response writes a `PatternDecline` for the offered pattern in the same firing as the narrowed store — that record, not the scope ladder, is what keeps §6's "accepting a narrowed scope cannot make the same offer return" true (B8's assertion). *(Sentence added 2026-08-22: the promise existed with no named writer.)*
+
 **How it suppresses.** Before offering, the loop looks for a matching `PatternDecline` on `pattern_key`. A record with `permanent: true` suppresses **unconditionally** — every offer at that `pattern_key`, whatever value it would store. A record with `permanent: false` suppresses **only** an offer whose `proposed_value_hash` **equals** the stored one — a re-offer proposing the *same* value stays silent, while an offer proposing a **different** value is a new hash and may ask once. A revoked record suppresses nothing. This is what makes requirement 3 testable: "a later, better improvement may ask again" is exactly "it proposes a different value."
 
 **Why `pattern_key` holds references and `proposed_value_hash` is a hash, not text.** A decline must be comparable across turns without storing what the owner said. `pattern_key`'s structural references locate the pattern; `proposed_value_hash` is computed **harness-side from the offer's stored `{field_ref, scope_ref, value}`** — the value the offer *would store*, not any utterance — so it is deterministic, thin-agent-safe (the model authors no part of it), and equal exactly when the proposed value is equal. Both compare exactly, carry no personal data, and keep this object outside `../security/SPEC.md §4`'s PII classes — so no retention clock attaches to it.
@@ -297,7 +305,7 @@ PartyContact {
 }
 ```
 
-Engine-resident (contact PII crypto-shreds with the party, `../security/SPEC.md §4`); read by the harness when resolving `send`'s `recipient` (§7's fire-time resolution, `INTERFACES.md §3.3`); never readable by a display projection (`../engine/SPEC.md §0`'s fences stand — no projection can select an address). D4's "the answer is stored" stores here; D6's "X's stored channel" reads `preferred_channel`.
+Engine-resident (contact PII crypto-shreds with the party, `../security/SPEC.md §4`); read by the harness when resolving `send`'s `recipient` (§7's fire-time resolution, `INTERFACES.md §3.3`); never readable by a display projection (`../engine/SPEC.md §0`'s fences stand — no projection can select an address). `../app/SCENARIOS.md` D4's "the answer is stored" stores here; `../app/SCENARIOS.md` D6's "X's stored channel" reads `preferred_channel`.
 
 ### 3.13 PendingAsk — the object behind "the question the agent just asked"
 
@@ -356,7 +364,7 @@ One canonical surface (resolves the prior double-statement). **Every tool declar
 | `CRUD_SOP` | internal | manage the optional SOP bundle |
 | `CRUD_Shared` | **outward** (publish) | publish rules/SOP to an audience+scope; produces the board-blind export |
 | rule writes | internal; diff-only | rules are managed where they attach (board/kind/audience), not via a separate zoo tool |
-| `send` | **outward** (third-party comms) | carries a catalog-typed form payload to an off-app party — or an escalation notice to an on-call rung under the FD-25 grant (§3.9) — and feeds the reply back (fires the loop) |
+| `send` | **outward** (third-party comms) | carries a catalog-typed form payload to an off-app party — an escalation notice to an on-call rung under the FD-25 grant (§3.9) — or a reminder under the elicited reminder-notify Grant (FD-61, §3.3); the reply arrives later through `on_form_return`, which fires the loop |
 | `import_fetch` | internal — **caller-initiated firings only** *(FD-49, 2026-08-22)* | pulls the owner's connected outside-calendar data **now**, through the app against the vault-resident held credential (`../security/SPEC.md §3.1`; providers and connect law `../app/SPEC.md §9`); returns provider items whose free text is **`import`-tagged** (§8's wire law) for the ordinary propose→confirm walk — nothing auto-commits. Reachable from `handleTurn` (console or external client) and **never from `handleTrigger`** — FR12's no-background-poll is structural, not a policy (B10) |
 
 There is intentionally **no tool zoo**: a new domain adds *content* (kinds/rules), not new tools. (This bet is carried as a hypothesis, not a law — see history.)

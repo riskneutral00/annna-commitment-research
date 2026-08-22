@@ -16,7 +16,7 @@ Everything through a **tokenized link**, on his phone, no account:
 
 ## The others, same shape
 - **Millie** books off her Messenger link into the Thursday afternoon block; she tries 3:00 but it was **just taken**, so the page shows what's still open and she takes 4:00–6:00 (the max Sofia allows). Later she **moves her own lesson herself** from her link — Sofia is **not asked to approve it**; it's Millie's slot to give up, not Sofia's to okay.
-- **Brownie** books in-person by his text link.
+- **Brownie** books **Thursday 2:55–3:55, in-person**, by his text link.
 
 ## Bobby's thread — the standing lesson
 

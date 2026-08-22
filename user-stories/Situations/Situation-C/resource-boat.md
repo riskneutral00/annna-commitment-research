@@ -8,7 +8,7 @@ Every boat sets up over the same admin-made **boat template**: it asks for the v
 
 ## Two owners, three boats
 
-**M.V. Hug Ocean — owned by a dive center.** Hug Ocean owns its own boat, so it's added *inside* Hug's console (`operator-dive-center.md`) using this same boat form. Capacity ~50, on-board air, min-pax to run. Its **route is simple**: it runs the **Racha** route most days (Racha Yai / Racha Noi), because Hug likes to train Open Water at Racha. It sits under Hug Ocean, first in the center's own boat list.
+**M.V. Hug Ocean — owned by a dive center.** Hug Ocean owns its own boat, so it's added *inside* Hug's console (`operator-dive-center.md`) using this same boat form. Capacity ≈45, on-board air, min-pax to run. Its **route is simple**: it runs the **Racha** route most days (Racha Yai / Racha Noi), because Hug likes to train Open Water at Racha. It sits under Hug Ocean, first in the center's own boat list.
 
 **Mandarin Queen — a standalone operator with a fleet.** **Kittisak Charoen** owns no dive center; he sells seats. He signs up, lands on the empty board, and adds **two vessels** under one account, each its own resource with its **own rotation**:
 

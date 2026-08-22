@@ -6,4 +6,4 @@
 OPENROUTER_API_KEY=… MODEL=<openrouter-slug> node model/spike/run-nset.mjs
 ```
 
-`MODEL` defaults to `openai/gpt-4o-mini`. No key is committed or defaulted — without `OPENROUTER_API_KEY` the runner exits non-zero naming the variable it needs. Running it spends money.
+`MODEL` defaults to `openai/gpt-5-mini` (default refreshed 2026-08-22). No key is committed or defaulted — without `OPENROUTER_API_KEY` the runner exits non-zero naming the variable it needs. Running it spends money.

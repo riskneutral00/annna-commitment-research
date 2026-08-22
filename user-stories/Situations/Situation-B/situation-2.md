@@ -4,18 +4,18 @@
 
 ## The afternoon's four bikes
 
-- **Tom** (walk-in) — wants a **Click**, one week (abundant — no contention).
+- **Tom** (walk-in) — wants a **Click 125i**, one week (abundant — no contention).
 - **Marco** (WhatsApp) — wants an **NMAX**, three days.
 - **Priya** (walk-in) — wants an **NMAX**, four days.
 - **Anya** (WhatsApp) — wants an **NMAX**, two days.
 
-All four land in the same hour and three of them want an **NMAX**, of which Ploy has only **two** — the exact contention the app would have blocked in a glance. (Tom's Click she has twenty of; that one's never in doubt.)
+All four land in the same hour and three of them want an **NMAX**, of which Ploy has only **two** — the exact contention the app would have blocked in a glance. (Tom's Click she has fourteen of; that one's never in doubt.)
 
 ## Holds by memory
 
 **Marco messages first**, 13:50: *"Hold an NMAX for me, I'll come by after 4."* Ploy taps back *"ok 👍"* and means to keep one aside. There's no clock and nothing marks the bike — it's a promise she's holding in her head while she runs the counter.
 
-**Tom walks in, 14:00.** He wants a Click for the week. Ploy has twenty of them — no thought required; she photocopies Tom's passport, has him sign the paper T&C on a clipboard, takes a cash deposit into the envelope, and hands him keys. The one thing that goes smoothly all afternoon is the model with no contention.
+**Tom walks in, 14:00.** He wants a Click for the week. Ploy has fourteen of them — no thought required; she photocopies Tom's passport, has him sign the paper T&C on a clipboard, takes a cash deposit into the envelope, and hands him keys. The one thing that goes smoothly all afternoon is the model with no contention.
 
 **Priya walks in, 14:20.** Wants an NMAX. Ploy has two; one she's *mentally* holding for Marco, one is free. She gives Priya the free one — photocopies, signs, deposits, keys. Now the **only NMAX left is the one she's holding in her head for Marco.**
 

@@ -17,6 +17,7 @@ Every failure return on every seam is one of the six kinds (`INTERFACES.md §1`)
 | `conflict` | `latch` | the latch invariant — a lapsed hold or set latch refuses the write (`INTERFACES.md §1.2`; `SPEC.md §3.4`) |
 | `conflict` | `precondition` | commit-time precondition check (`../engine/SPEC.md §7.1` item 3) |
 | `conflict` | `governing-rule` | a governing-authority rule refusing the write (`../engine/SPEC.md §7.1` item 3; hard stop, `SPEC.md §6`) |
+| `conflict` | `write-id-reuse` | a reused write id whose payload differs from the recorded one (`../engine/SPEC.md §6` item 6) *(row added 2026-08-22 — collects law older than this file, not a §2 widening: the engine ruled the shape before this table was authored and the table missed it)* |
 | `decline` | `no-feasible-placement` | "the math ran; nothing fits" — `detail` carries the tightest refusing constraint class (`../engine/SPEC.md §5`, §7's exhaustion rule) |
 | `decline` | `travel-unknown` | "the math could not run" on the travel envelope — never collapsed into the row above; `detail.cause` says why, `ceiling` (the warm-up is running; expect a re-offer) or `provider-failed` (the map is down) — a `detail` discriminator, not a reason widening *(2026-08-22)* (`../engine/SPEC.md §5`, §9) |
 | `invalid` | `malformed` | a malformed model return or tool call (`../model/SPEC.md §8`; `SPEC.md §5`'s no-repair-loop rule) |
@@ -29,6 +30,7 @@ Every failure return on every seam is one of the six kinds (`INTERFACES.md §1`)
 | `refused` | `byo-binding` | `summarize` rejecting any `byo-*` provider (FD-3, `INTERFACES.md §2.4`) |
 | `refused` | `policy-missing` | credential issuance with no compatibility policy on record (`SCENARIOS.md` X7) |
 | `refused` | `provider-refused` | the model seam's own `refused` member surfacing through a call (`INTERFACES.md §1`'s mapping of `../model/SPEC.md §8`'s error union) |
+| `refused` | `credential-invalid` | a call on a withdrawn, suspended, or revoked credential — any surface (`../security/SPEC.md §3`'s lifecycle; `SPEC.md §5.3`) *(row added 2026-08-22 — collects law older than this file, not a §2 widening: the credential lifecycle predates the table's authoring and no member covered its refusals)* |
 | `unavailable` | `substrate` | the seam's infrastructure member — the math did not run (`INTERFACES.md §1`, the paragraph above the envelope) |
 | `unavailable` | `provider` | a third-party provider down: travel source, calendar provider (`../engine/SPEC.md §9`; `import_fetch`, `INTERFACES.md §3.3`) |
 | `timeout` | `substrate` | the seam call's own deadline (`INTERFACES.md §1`) |

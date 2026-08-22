@@ -29,7 +29,7 @@
 
 **Instructors and divemasters can be _freelance or employed_.** Freelance = a standalone account any center can reach on the open market. Employed = exclusive to one dive center, added *under* it, reachable *only* through that center's bookings. This is why the market fragments by language: a center reaches its own staff + freelancers, and a customer whose language its staff can't teach gets **referred out** to a center whose employed instructor can. (**A divemaster is just an instructor with a narrower rating** — the loaded agency documentation is what forbids it from certifying and limits it to fun dives + assisting.)
 
-> **v1-scope note *(founder-ruled 2026-08-06)*.** The **referral out through the agent** these situations lean on — handing a customer to a center annnä holds **no prior relationship with** — is a **post-v1 beat**. In v1, annnä reaches every supplier *already on annnä* (a center's own staff and freelancers alike), **across account lines**, through the **handshake**; only the reach to *strangers* by referral is deferred. The stories below stay true as written — see the corpus scope note in [`../../README.md`](../../README.md).
+> **v1-scope note *(founder-ruled 2026-08-06)*.** The **referral out through the agent** these situations lean on — handing a customer to a center annnä holds **no prior relationship with** — is a **post-v1 beat**. In v1, annnä reaches every supplier *already on annnä* (a center's own staff and freelancers alike), **across account lines**, through the **share seam** (one creator-owned commitment reaching boards annnä already holds an availability grant from — `../../../engine/SPEC.md §7.1`); only the reach to *strangers* by referral is deferred. The stories below stay true as written — see the corpus scope note in [`../../README.md`](../../README.md).
 
 ---
 
@@ -66,7 +66,7 @@
 Hug Ocean *(owned; Somchai, 3 m, **cap 15**)* · **Neptune** *(Wei Lin, 2.5 m, **cap 6** — too small for a group)* · **Water Pro** *(Niran, 2.5 m, **cap 25** — the big fallback)* · Shark Bites *(Kittisak Wongsawat, 2.5 m, cap 8)*.
 
 ### Boats *(each a different weekly route — see `resource-boat.md`)*
-M.V. Hug Ocean *(owned; ~50, Racha route)* · MV Mandarin Queen 5 *(Kittisak Charoen, 70)* · MV Mandarin Queen 7 *(Kittisak Charoen, 90)* · MV Matchanu *(Aloha, **12 — boutique, fills early**)*. *(Wider bench in the market notes below.)*
+M.V. Hug Ocean *(owned; ≈45, Racha route)* · MV Mandarin Queen 5 *(Kittisak Charoen, 70)* · MV Mandarin Queen 7 *(Kittisak Charoen, 90)* · MV Matchanu *(Aloha, **12 — boutique, fills early**)*. *(Wider bench in the market notes below.)*
 
 ### Gear *(inventory by type × size — a bag needs every size)*
 Hug Ocean *(owned, full stock)* · **Scuba Revolution** *(Ta, full size grid)* · **Nicole Dive Center** *(Nicole Huang, **no mask sizes**)*.

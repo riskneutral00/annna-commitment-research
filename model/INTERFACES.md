@@ -102,7 +102,7 @@ The concrete JSON Schemas passed to `complete()`. v0 unblocks the Step 0 eval sc
   }
 ],
 "$defs": {
-  "intent": { "enum": ["commitment.create","commitment.edit","commitment.complete","commitment.cancel","commitment.confirm","commitment.mark","board.query","board.edit","rule.author","rule.edit","rule.override","proposal.respond","answer.provide","grant.give","grant.revoke","exception.record","sop.author","shared.author","shared.publish","notify.request","party.reenable","session.control"] },
+  "intent": { "enum": ["commitment.create","commitment.edit","commitment.complete","commitment.cancel","commitment.confirm","commitment.mark","board.query","board.edit","rule.author","rule.edit","rule.override","proposal.respond","answer.provide","grant.give","grant.revoke","exception.record","sop.author","shared.author","shared.publish","notify.request","party.reenable","import.fetch","display.settings","session.control"] },
   "ambiguities": { "type": "array", "items": {
     "type": "object", "additionalProperties": false,
     "required": ["question", "readings"],

@@ -274,7 +274,7 @@ T1–T6 are classified above by mechanism (property, wire), but the family also 
 
 ## Deployment — process gates, not layer tests
 
-*Criteria: [`deployment/SCENARIOS.md`](deployment/SCENARIOS.md) (nineteen scenarios). Law: [`deployment/SPEC.md`](deployment/SPEC.md). Added 2026-08-21 — the sixth suite was the one this file classified nowhere, and "deployment is not a layer" did not survive the strategy table's own contents (security is not a layer either).*
+*Criteria: [`deployment/SCENARIOS.md`](deployment/SCENARIOS.md) (twenty scenarios). Law: [`deployment/SPEC.md`](deployment/SPEC.md). Added 2026-08-21 — the sixth suite was the one this file classified nowhere, and "deployment is not a layer" did not survive the strategy table's own contents (security is not a layer either).*
 
 Deployment tests the **process**, not the product, so its two kinds are its own: **`[MUST]`** — a named mechanized check (a script in `deployment/scripts/`, run by `npm run check` and the pre-commit hook), verified by attempting the forbidden act and observing refusal, or by static assertion where the forbidden thing is an absence; **`[DRILL]`** — what only a runtime or a human can enforce, executed deliberately at least once and recorded (B4's verdict, the ladder walk, the rotation). The suite is self-classifying — every scenario carries its tag in-file — which is why no builder was ever stranded by the missing section; this section exists so the classification claim ("every criterion classified here") is true rather than nearly true. Mechanism gaps between a `[MUST]`'s law and its current script are ledgered at `deployment/SPEC.md §7a`, not papered over.
 

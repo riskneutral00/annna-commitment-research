@@ -9,7 +9,7 @@ Sofia imports her cycle from **Flow**, then talks her week onto the board: break
 ## The bookings land themselves
 
 - **Bobby** opens his WeChat link, reads her rhythm (only free teachable time shows — none of her life), and books **Monday 6:00–6:30, online**. It lands on her board labelled *Bobby · English*.
-- **Brownie** books **Thursday 3:00, in-person**.
+- **Brownie** books **Thursday 2:55–3:55, in-person**.
 - **Millie** opens her Messenger link, taps **Thursday 3:00** — but Brownie's in-person slot and her request collide; annnä shows her **"that time was just taken,"** offers what's still open, and she takes **4:00–6:00, online**. Two students aimed at the same afternoon; exactly one got each slot, silently.
 
 Over two days Sofia's week fills in on its own — each lesson pre-labelled with who, which language, online or at her place — and she gets a small note per booking. She copies nothing and answers no messages.

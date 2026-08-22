@@ -11,7 +11,7 @@ Before any layer's Step 0 closes: the two-file secrets discipline (`SPEC.md §7`
 With harness BUILD Step 5 (context assembly): source tags at every admitting door, quarantined assembly, the `document` tier. Gate: **Q1–Q4**.
 
 ## Step 2 — Tenant scoping
-With engine BUILD Step 1 (the object model): `owner_org` on every stored object, tenant-scoped read/write construction, the enumerated legal crossings — one crossing class and no second door, and a share that adds no read power (`SPEC.md §9`). Gate: **N1–N5**.
+With engine BUILD Step 1 (the object model): `owner_org` on every stored object, tenant-scoped read/write construction, the enumerated legal crossings — one crossing class and no second door, and a share that adds no read power (`SPEC.md §9`). Gate: **N1–N2, N4** *(N3 and N5 re-homed 2026-08-22 to Step 6b — both test the §7.1 share seam engine Step 8 builds, not the object model this step rides; a gate here was hostage to machinery the step never names)*.
 
 ## Step 3 — The vault
 After engine Step 0 (substrate pick); **before app Step 5** — the Situation B/C guest flows cannot be **completed or swapped** without it; they build against the documented mock. The vault substrate, the class table and clocks, encryption + key handling, the attestation/tombstone path, the crypto-shred keys. Gate: **V1–V3, V5**.
@@ -27,7 +27,7 @@ After engine Step 0 (substrate pick); **before app Step 5** — the Situation B/
 > **Gate-coverage still walks every scenario below.** Frozen is a statement about what is being worked, never about what must hold.
 
 ## Step 4 — The token law
-With app Step 5 (guest pages + tokens). Minting, digest storage, lifetimes, revocation latches, enumeration safety, transport headers, per-IP/per-token limits. **The printed gate: no public link goes live before T1–T6 are green** — the carried adversarial-test contract, **mechanized 2026-08-22** (`../deployment/scripts/t-six-before-link.mjs`: a token route under `app/` without a recorded T1–T6 green marker fails the chain; armed and passing while no route exists). This is also where the owner-session and guest-token credential models first coexist, so the one-model-per-mutation law is first proven here (M5; the third model joins at Step 4b). Gate: **T-family except T9, P-family, R1, R3, M5, N6 (the conversion claim — FD-46: account creation and token attribution first coexist here)**.
+With app Step 5 (guest pages + tokens). Minting, digest storage, lifetimes, revocation latches, enumeration safety, transport headers, per-IP/per-token limits. **The printed gate: no public link goes live before T1–T6 are green** — the carried adversarial-test contract, **mechanized 2026-08-22** (`../deployment/scripts/t-six-before-link.mjs`: a token route under `app/` without a recorded T1–T6 green marker fails the chain; armed and passing while no route exists). This is also where the owner-session and guest-token credential models first coexist, so the one-model-per-mutation law is first proven here (M5; the third model joins at Step 4b). Gate: **T-family except T8 and T9, P-family, R1, R3, M5, N6 (the conversion claim — FD-46: account creation and token attribution first coexist here)** *(T8 re-homed 2026-08-22 to Step 5b — its held-credential subjects are bound by the import connect, not by guest pages)*.
 
 ## Step 4b — The fifth token class *(added 2026-08-21 — the class previously had no owning step: its custody was handed to "security's build" by `../harness/BUILD.md` Step 8 while every candidate step here rode an app step, so a credential could be built and issued while its suite sat frozen)*
 **Rides `../harness/BUILD.md` Step 8, on the harness's clock — not the app's**, and unfreezes when that step begins, independent of the freeze block above (whose resume conditions are app steps). The `external-client` credential's minting, digest custody, suspension state (FD-33), withdrawal latch, and the §10 per-credential rate and spend caps. **T9 is its gate, green before any credential is issued** — the `SPEC.md §3` printed-gate posture, now with a step that owns it. M5 re-runs here against all three models (its own text always said so). Gate: **T9, M5 (three-model form)**.
@@ -35,10 +35,16 @@ With app Step 5 (guest pages + tokens). Minting, digest storage, lifetimes, revo
 ## Step 5 — Consent & signatures
 With app Steps 5–6: the evidence bundle at capture, version stamping, guardian variant, audit replay. Gate: **S1–S4**.
 
-## Step 6 — Abuse limits & delivery caps
-With app Step 6 (delivery): named limits as declared objects, email volume caps, and **both stops** — the per-owner send halt (bounce rate) and the per-party channel suppression (one complaint), which are separate walls with separate thresholds (`SPEC.md §10`, "Two stops"). **This step owns the thresholds, not the decision** — reading them is the harness's (`../harness/SPEC.md §3.11`). Gate: **R2, R4**.
+## Step 5b — Held import credentials *(added 2026-08-22 — the Step 4b pattern again: T8's subjects had no step that builds them)*
+**Rides `../app/BUILD.md` Step 6a (calendar import) and the model layer's BYO binding when made**: vault residency for every `SPEC.md §3.1` member — the calendar refresh token, a bound BYO provider key, the ICS secret-feed URL (FD-37's posture) — no-payload/no-log custody, read-only-by-construction, and the no-background-retry discipline T8 asserts. Gate: **T8**.
 
-*The per-party stop is asserted in the harness's own suite, not here — its scenarios are that layer's and are gated by that layer's BUILD. The per-recipient cap's defer-never-drop behavior is this layer's: R4 joins this step's gate.*
+## Step 6 — Abuse limits & delivery caps
+With app Step 6 (delivery): named limits as declared objects, email volume caps, and **both stops** — the per-owner send halt (bounce rate) and the per-party channel suppression (one complaint), which are separate walls with separate thresholds (`SPEC.md §10`, "Two stops"). **This step owns the thresholds, not the decision** — reading them is the harness's (`../harness/SPEC.md §3.11`). Gate: **R2, R4, R4b**.
+
+*The per-party stop is asserted in the harness's own suite, not here — its scenarios are that layer's and are gated by that layer's BUILD. The per-recipient cap's defer-never-drop behavior is this layer's: R4 joins this step's gate, and R4b — the rung-at-cap quiet-hours reading, split from R4 2026-08-22 — closes here too, once the harness ladder its Given needs exists.*
+
+## Step 6b — The share seam's crossing *(added 2026-08-22 — N3/N5's home; their Given needs the seam itself)*
+**Rides `../engine/BUILD.md` Step 8 (the §7.1 cross-owner share), on the engine's clock**: the one legal crossing exercised for real — exactly the goal and exposed availability cross, and no read power is added. Gate: **N3, N5**.
 
 ## Step 7 — Admin hardening, DR drill & takeout
 Pre-alpha ops: the third identity + hardware-key MFA, the logged vault path, the one publish path, error-report scrubbing; the restore drill; the takeout export. Gate: **M-family, D1–D2, D5, V6**.
