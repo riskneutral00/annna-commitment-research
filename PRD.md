@@ -332,6 +332,26 @@ An outward act — messaging a third party, moving value, destroying something �
 | RQ-13 | `harness/INTERFACES.md` — the compatibility policy, since it is a property of the seam |
 | The claim itself | `README.md` — annnä is an agent-first commitment harness, and the founder's *"APIs before dashboards"* is already true of the build order with no file saying so. `AGENTS.md` — the `RQ-##` series line and the doc count. `INDEX.md` — this document's row. `PR/IDENTITY.md` — §What it is, **landed 2026-08-08**; its §Mission third mechanism is **owed to the outward-copy pass** (§11 Q2). `PR/REPO-FACADE.md` — the About line, landed the same day under its own standing rule that the line is rewritten when it stops being true |
 
+### 4.6 Probe anchors — the register's tie to the falsification corpus
+
+*(2026-08-22 — every scenario in this corpus "derives from and is refutable against" `user-stories/` (§0), yet at this table's authoring the register and the probe corpus shared **zero** referents: no `RQ-##` appeared in any Situation and no Situation beat was cited by any requirement, so the two could drift without ever contradicting each other. This table is the tie. Every requirement names the Situation folder whose beat exercises it, or honestly declares the probe **owed** — with what the owed probe must show — and `deployment/scripts/probe-coverage.mjs` refuses a requirement that does neither. An `owed` row is a debt, not an exemption: it closes only by a probe landing in `user-stories/` and the row naming it.)*
+
+| Requirement | Probe anchor |
+|---|---|
+| RQ-1 | owed — a beat where the owner mints a credential for their own agent at the console, and an agent request cannot |
+| RQ-2 | owed — one act performed by console and by client with the identical result |
+| RQ-3 | owed — a wanted capability refused because it would need a new verb, resolved as a ruling (FD-49 is the process run once, on the corpus itself, not yet in a story) |
+| RQ-4 | owed — a renderless client obtaining a complete answer no page was read for |
+| RQ-5 | owed — a continuation picked up by handle from a second client |
+| RQ-6 | owed — an interrupted turn queried, then resumed or discarded, with no partial write |
+| RQ-7 | owed — an external client's across-the-line attempt refused on the console's exact terms, the refusal surfacing in the owner's console |
+| RQ-8 | owed — instruction-shaped text arriving through a credentialed call, quarantined, with structured parameters passing |
+| RQ-9 | owed — the enumeration of record read as the answer to "what can my agent reach" |
+| RQ-10 | owed — an owner reading the week at rest under their own dial, nothing hidden |
+| RQ-11 | owed — the attended surface waking to attention over the muted rest state |
+| RQ-12 | owed — a skin that fails the rest-state measurement refused at the door |
+| RQ-13 | owed — a breaking change held at the policy while a credential is outstanding |
+
 ## 5. Non-Goals (Explicit)
 
 What annnä is not, and will not become. These prevent the "let me also add this nearby thing" failure at every downstream level.
