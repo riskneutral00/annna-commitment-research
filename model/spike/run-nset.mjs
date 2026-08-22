@@ -44,8 +44,12 @@ const INTENTS = [
   "commitment.confirm", "commitment.mark", "board.query", "board.edit", "rule.author",
   "rule.edit", "rule.override", "proposal.respond", "answer.provide", "grant.give",
   "grant.revoke", "exception.record", "sop.author", "shared.author", "shared.publish",
+  "party.reenable", "import.fetch", "display.settings",
   "notify.request", "session.control",
 ];
+// 2026-08-22: three members restored to enum fidelity — SPEC §2 is the one
+// source ("an edit there is an edit here"); this list had lagged party.reenable
+// and predated the import.fetch/display.settings rows.
 
 // The `complete(model_id, messages, output_schema)` shape of ../INTERFACES.md §2.1,
 // as OpenRouter spells it.

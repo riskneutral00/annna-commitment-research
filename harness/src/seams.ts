@@ -50,13 +50,36 @@ export interface ModelSeam {
   summarize(raw_text: string, source_tag: SourceTag): Promise<{ summary: string; labels: string[] }>;
 }
 
+/** The immediate outcome union `send` returns on the seam call itself
+ *  (INTERFACES.md §3.3, the delivery-outcomes bullet): the app records the raw
+ *  result and decides nothing; the harness commits it as an attributed fact. */
+export type SendOutcome =
+  | { outcome: "sent" | "delivered-failed" | "handed-to-owner" }
+  | { unavailable: true }
+  | { timeout: true };
+
 export interface AppSeam {
   render(payload: unknown): Promise<void>;
-  publish(payload: unknown): Promise<void>;
+  /** Return leg per INTERFACES.md §3.3 (2026-08-22): `minted[]` is the digest
+   *  return leg — the harness commits the mint set in the same firing, and a
+   *  digest reaches the store on no path but this leg and `on_form_return`'s
+   *  open-time ride. */
+  publish(
+    payload: unknown,
+    recipients?: unknown,
+  ): Promise<{ artifact: unknown; minted: Array<{ digest: string; bound_to: string }> }>;
   /** Renamed from `notify_and_await` (INTERFACES.md §3.3, 2026-08-22): the verb
    *  never awaited — the reply arrives later through `on_form_return`, and the
-   *  old name already produced one documented spec error. */
-  send(payload: unknown): Promise<void>;
+   *  old name already produced one documented spec error. The immediate outcome
+   *  returns on this call itself; `pending` was the retired shape's leftover. */
+  send(payload: unknown, recipient?: unknown): Promise<SendOutcome>;
+  /** FD-49 (2026-08-22) — the attended calendar pull, reachable only inside a
+   *  caller-initiated firing (the no-trigger-path is the loop's structural
+   *  assertion, B10, not this signature's). Provider rejection surfaces the
+   *  visible disconnected state and is never retried. */
+  import_fetch(
+    connection_ref: unknown,
+  ): Promise<{ items: unknown[]; provider_status: string } | { unavailable: true } | { timeout: true }>;
   /** FD-66 (2026-08-22) — FD-42's ratified mechanism: the owner's display-only
    *  settings write into the app-owned store (app/SPEC.md §7's closed member
    *  set). `internal` class, diff-shaped; an off-set member is `invalid` and
