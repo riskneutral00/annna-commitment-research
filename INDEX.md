@@ -39,7 +39,7 @@
 | app/BUILD.md | derived | The app's ordered build steps, each gated by its scenarios and the design-law checklist; ends at the stub-swap |
 | app/DESIGN.md | SPEC | The visual and interaction law for every app surface. Ruled here, not carried — the prior build was released as law 2026-08-09 (FD-20) |
 | app/INTERFACES.md | derived | The app's two seams: upward to the harness contract, downward to its substrates |
-| app/NOTES.md | never | App backlog scratchpad — the five original ideas are absorbed and calendar import is closed; two items are still open (the untested direct-manipulation bet, perceived write-path latency) |
+| app/NOTES.md | never | App backlog scratchpad — the five original ideas are absorbed and calendar import is closed; **five items still open, three of them captured founder wants** (2026-08-23: the hour-grid board mode, the routines page, goal-setting) alongside the untested direct-manipulation bet and perceived write-path latency. `npm run check:status` prints the open set, wants first |
 | app/README.md | derived | The app package's purpose and read order |
 | app/SCENARIOS.md | derived | The app's deterministic acceptance suite — payloads, mappings, wire contents, state transitions |
 | app/SPEC.md | SPEC | The human-facing layer: what it renders, what it collects, and that it holds zero harness logic, engine math, or model calls |
