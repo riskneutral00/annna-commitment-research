@@ -37,6 +37,16 @@
 //   asserted against the form the corpus actually uses, not the form that was
 //   convenient to parse.
 
+//   NOTES.md open items — a second, smaller contract, added 2026-08-23:
+//     `## Still open — <title>`   (em-dash, same as above)
+//   AGENTS.md defines NOTES.md as the corpus's backlog scratchpad ("anything
+//   still open"), and this is the form those sections are written in. They are
+//   printed because a backlog nobody is pointed at is a backlog nobody reads:
+//   two of them sat unmentioned for a fortnight, and the founder-wants queue
+//   opened the same day this was added would have inherited exactly that fate.
+//   A title beginning `the founder` marks a captured founder want — a feature
+//   asked for, deliberately unplanned, waiting on a planning session.
+
 import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert";
@@ -45,6 +55,7 @@ import { fileURLToPath } from "node:url";
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const LAYERS = ["deployment", "harness", "engine", "app", "model", "security", "marketplace"];
 const HEADING = /^## Step (\d+) — (.*)$/;
+const OPEN_ITEM = /^## Still open — (.*)$/;
 
 function stateOf(body) {
   // A range declaration is a statement about other steps that happens to sit in
@@ -122,7 +133,34 @@ function steps(text) {
   });
 }
 
+// A NOTES.md open item, with the founder-want flag the heading itself carries.
+function openItems(text) {
+  return text
+    .split("\n")
+    .map((line) => line.match(OPEN_ITEM))
+    .filter(Boolean)
+    .map((m) => {
+      const title = m[1].trim();
+      return { title, want: /^the founder\b/i.test(title) };
+    });
+}
+
 function selfcheck() {
+  assert.deepStrictEqual(
+    openItems(
+      [
+        "## Still open — the founder wants a routines page (2026-08-23)",
+        "## Still open — perceived latency on the write path (2026-08-08)",
+        "### Still open — a deeper heading is not an open item",
+        "prose mentioning ## Still open — inline must not match",
+      ].join("\n"),
+    ),
+    [
+      { title: "the founder wants a routines page (2026-08-23)", want: true },
+      { title: "perceived latency on the write path (2026-08-08)", want: false },
+    ],
+  );
+
   const parsed = steps(
     [
       "## Step 0 — The spec/code boundary",
@@ -255,6 +293,29 @@ for (const layer of LAYERS) {
     .filter(([, n]) => n)
     .map(([k, n]) => `${n} ${k}`);
   console.log(`  ${layer} — ${parts.join(" · ")} of ${found.length}`);
+}
+
+const wants = [];
+const notes = [];
+for (const layer of LAYERS) {
+  const file = path.join(root, layer, "NOTES.md");
+  if (!fs.existsSync(file)) continue;
+  for (const item of openItems(fs.readFileSync(file, "utf8"))) {
+    (item.want ? wants : notes).push(`${layer}/NOTES.md — ${item.title}`);
+  }
+}
+
+if (wants.length) {
+  console.log(`\nFOUNDER WANTS — captured, not yet planned into the specs — ${wants.length}:`);
+  for (const w of wants) console.log(`  ${w}`);
+  console.log(
+    `  (Asked for by the founder and deliberately unplanned. A planning session takes these; ` +
+      `read the named section before touching the surface it names — some contradict a ruling and need a sitting, not a plan.)`,
+  );
+}
+if (notes.length) {
+  console.log(`\nBACKLOG OPEN ITEMS — ${notes.length}:`);
+  for (const n of notes) console.log(`  ${n}`);
 }
 
 if (blocked.length) {
