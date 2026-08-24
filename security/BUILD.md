@@ -47,7 +47,7 @@ With app Step 6 (delivery): named limits as declared objects, email volume caps,
 **Rides `../engine/BUILD.md` Step 8 (the §7.1 cross-owner share), on the engine's clock**: the one legal crossing exercised for real — exactly the goal and exposed availability cross, and no read power is added. Gate: **N3, N5**.
 
 ## Step 7 — Admin hardening, DR drill & takeout
-Pre-alpha ops: the third identity + hardware-key MFA, the logged vault path, the one publish path, error-report scrubbing; the restore drill; the takeout export. Gate: **M-family, D1–D2, D5, V6**.
+Pre-alpha ops: the third identity + hardware-key MFA, the logged vault path, the two publish paths (one per good), error-report scrubbing; the restore drill; the takeout export. Gate: **M-family, D1–D2, D5, V6**.
 
 **The backup substrate check, printed so it can be run rather than trusted** *(added 2026-08-22 — `SPEC.md §8`'s hourly/one-hour-loss/eight-hour-restore bounds were the one substrate commitment that never got the FR7/FD-11 printed-table treatment; the bounds are promises against Convex capabilities nobody has checked)*. Run at this step, **UNRUN today**, five criteria in the FR7 shape:
 

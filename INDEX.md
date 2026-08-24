@@ -22,6 +22,7 @@
 | .specs/deep-interview-app.md | history | The interview that pinned the app's open design decisions before its spec was authored |
 | .specs/deep-interview-engine.md | history | The interview that pinned the engine's open design decisions, incl. location and travel |
 | AGENTS.md | SPEC | The operating law for agents: authority order, package shape, citation conventions, ruling vocabularies. Injected every turn |
+| CLARIFY.md | SPEC | Leftover sittings (§§8–9) — research, not the session job. What a Situation is landed as FD-80; home `PRD.md` §6.5 |
 | INDEX.md | index | This file — every tracked markdown file and its authority tier |
 | PR/BRAND.md | SPEC | The visible identity: palette, marks, containment rules. Derives from the koi skin and `app/DESIGN.md` |
 | PR/BRIEF.md | SPEC | The investor/grant compression — mostly pointers to homes, and the corpus's only success criteria and only risk register |
@@ -32,10 +33,11 @@
 | PR/README.md | derived | The PR package's read order and its FROZEN status |
 | PR/REPO-FACADE.md | SPEC | How the repository itself presents as the storefront: description, topics, README's job, commercial silence |
 | PR/VOICE.md | SPEC | The tone law for every outward word — "neutral like water", and the banned registers |
-| PRD.md | SPEC | That annnä is an agent-first commitment harness for peace of mind — both senses of agent-first, capability parity for the owner's own agents, and the requirement that a full board not read as a wall |
+| PRD.md | SPEC | Agent-first, capability parity, peace requirement; §6.5 is the home of what ships (FD-80) |
 | README.md | derived | The repo's front page: what annnä is, the one-week-run-twice proof, the layer map, current build state |
 | RULINGS.md | index | The FR and FD ruling registry — what each ruling decided and which file holds it. Never a home itself |
 | TDD.md | derived | The testing strategy: the five kinds of test, the four laws, which kind each layer's criteria become, and the swap sequence integration is proven by rather than by a new suite |
+| THE-JOB.md | index | The prepare-to-build session job. Points at leftover research and the go-word. Never a home of product law |
 | app/BUILD.md | derived | The app's ordered build steps, each gated by its scenarios and the design-law checklist; ends at the stub-swap |
 | app/DESIGN.md | SPEC | The visual and interaction law for every app surface. Ruled here, not carried — the prior build was released as law 2026-08-09 (FD-20) |
 | app/INTERFACES.md | derived | The app's two seams: upward to the harness contract, downward to its substrates |
@@ -84,7 +86,7 @@
 | marketplace/NOTES.md | never | Marketplace backlog scratchpad, including the open rulings OR-28 and OR-29 |
 | marketplace/README.md | derived | The marketplace package's read order and its FROZEN status |
 | marketplace/SCENARIOS.md | derived | The marketplace acceptance suite, run against the service mock only |
-| marketplace/SPEC.md | SPEC | The open half of the store: skins and templates on shared publish/browse/install rails, and the authorship law |
+| marketplace/SPEC.md | SPEC | The open half of the store: skins (admin pack) and templates (owner-publish, FD-82) on shared rails; the authorship-and-publish law |
 | model/BUILD.md | derived | The model layer's ordered steps, and that Steps 1–5 want a built harness first |
 | model/EVALS.md | derived | The model's exam: the sets, seed items, thresholds, and grading rules — graded, not pass/fail |
 | model/INTERFACES.md | derived | The model's two seams — harness above, providers below — neither side trusted |

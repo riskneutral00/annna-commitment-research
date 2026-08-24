@@ -19,7 +19,7 @@ A reader coming to this corpus cold asks roughly eight things. Seven of them are
 | Why does it work? | `AGENTS.md` §Package shape, then the four layer `SPEC.md` files. The load-bearing idea is the model/engine split, stated in `README.md` §How it's built |
 | Why is the AI safe to trust with a whole life? | `harness/SPEC.md` (permission floor) and `security/SPEC.md` (injection quarantine). The short form: the model can emit a number, and nothing correctness-critical accepts one |
 | Who is it for? | `IDENTITY.md` §Who it's for — concentric circles, a mirror rather than a market |
-| What does the first version actually do? | `README.md` — the minimal-adoption caveat under "One week, run twice"; law at `harness/SPEC.md §2`, gated by `harness/SCENARIOS.md` O1–O5 |
+| What does the first version actually do? | `PRD.md` §6.5 (FD-80) — the application (harness + template builder). The dive week in `README.md` is a proof, not the SKU; the middle case is the honest proof when not everyone is on it. Law at `harness/SPEC.md §2`, gated by `harness/SCENARIOS.md` O1–O5 |
 | How was it validated? | `README.md` §Status, and the kill lists in `archive/` |
 | What could go wrong, and what counts as working? | **Below. Nowhere else.** |
 

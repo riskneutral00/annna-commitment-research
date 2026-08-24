@@ -41,13 +41,13 @@ The external evidence is unflattering and consistent: conversational interfaces 
 
 **What the corpus already answers with:** the console is present in every canvas state (`SPEC.md §1`, Supersession 2 — reversed on purpose so the owner can talk about the open thing), and `selected_ref` in the view-context makes *"push this back an hour"* resolve against the selected block — pointing and speaking combined, which is closer to the hybrid ideal than either alone. The riser is a direct-manipulation surface for the same edit.
 
-**The open part:** the design rests on a bet that the gesture becomes *rare* — if placement is good, nobody drags blocks all day. That bet is the product, and **nothing in `SCENARIOS.md` tests it.** C1–C8 assert the board renders correctly, never that an owner can *correct* it as fast as they could in a grid.
+**The open part:** the design rests on a bet that the gesture becomes *rare* — if placement is good, nobody drags blocks all day. That bet is the product, and **nothing in `SCENARIOS.md` tests time-to-correct.** C1–C8 assert the board renders correctly. **FD-81 makes drag constructible in hour-grid mode only**; packed default stays conversation-first. The measurement (correction vs a calendar) is still unrun.
 
 **Suggested resolution, not ruled:** add a **time-to-correct** measurement to the Z3 story walkthroughs rather than a new scenario — Sofia's and Debra's paths already exist, and the number that matters is how long a correction takes on the real canvas versus the grid it replaces. Measure before redesigning anything.
 
-## Still open — the founder wants a second board mode: a traditional hour-grid view (2026-08-23)
+## Closed — second board mode: traditional hour-grid (FD-81, 2026-08-24)
 
-*Founder ask, recorded 2026-08-23, **not ruled and not designed** — captured here so a future planning session picks it up as a decision rather than rediscovering it. It is **not a blocker for any build step** and nothing below changes the board that is specced.*
+*Direction landed. Home: `DESIGN.md` §Board rendering. **Residue still open:** where undated / deadline-only / all-day work sits on a clock. Do not build the grid or drag until that residue is ruled.*
 
 **The ask, in his words:** the board pushes blocks to the highest point regardless of the timeline; users may not be used to that and may prefer a traditional calendar whose **Y-axis is hours of the day**. He wants the optionality — a toggle between the two ways of displaying commitments.
 

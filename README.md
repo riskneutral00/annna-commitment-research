@@ -5,7 +5,7 @@ Your schedule lives in your head — every promise, every pickup, every "don't f
 **annnä is an agent-first commitment harness.** You talk; it holds what you promised and does the work the promise implies. The aim is peace — a schedule that feels like there is nothing on it, because the coordination leaves, and then your head no longer has to be where the schedule is kept.
 
 > ### 📋 This repository is a design specification, not a working application.
-> **131 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
+> **133 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
 
 ---
 
@@ -43,7 +43,7 @@ The proof is one busy week at a small Phuket dive center, run the way the indust
 
 **With annnä, once everyone in the week is on it:** the whole week placed in one pass against every instructor, boat, pool, tank and gear set at once — and placed weeks ahead, because the clashes that surfaced at 07:00 on the morning of were visible the day the booking was taken. Not one phone call between any of them.
 
-**What v1 actually does is the middle case**, and it is specified as its own thing: annnä places everything its network can reach, and for every edge it cannot it *prepares the call*, records the answer, and offers an invite. Two dozen calls become a handful of prepared ones. Handing a customer to a business annnä has no relationship with waits longer — that is a legal question before it is an engineering one.
+This week **tests** the general app — the commitment harness and the template builder — not a dive-center product (FD-80). **The middle case is the honest proof when not everyone in the week is on it yet:** annnä places everything its network can reach, and for every edge it cannot it *prepares the call*, records the answer, and offers an invite. Two dozen calls become a handful of prepared ones. Handing a customer to a business annnä has no relationship with waits longer — that is a legal question before it is an engineering one.
 
 > Read it: [the clean run](user-stories/Situations/Situation-C/situation-1.md) · [current reality](user-stories/Situations/Situation-C/situation-2.md) · [the middle case](user-stories/Situations/Situation-C/situation-5.md)
 
@@ -82,13 +82,13 @@ Your customers' data is legally yours, not annnä's — the business is the cont
 
 ## Status
 
-**Design complete. Implementation begun, and early.**
+**Specification is the surface the application is built from. Implementation is at Step 0.**
 
-The founding research, the five situations, all four layer specs with their acceptance suites, the security law, the build discipline and the testing strategy are done. Application code is Step-0 scaffolds in [`engine/`](engine/) and [`harness/`](harness/), the process gates in [`deployment/scripts/`](deployment/scripts/), and the asset pipeline in [`assets/`](assets/).
+The founding research, the five situations, all four layer specs with their acceptance suites, the security law, the build discipline and the testing strategy are written. Application code is Step-0 scaffolds in [`engine/`](engine/) and [`harness/`](harness/), the process gates in [`deployment/scripts/`](deployment/scripts/), and the asset pipeline in [`assets/`](assets/). The folder is being prepared so the next act is building that application. The session job is [`THE-JOB.md`](THE-JOB.md). Leftover sittings in [`CLARIFY.md`](CLARIFY.md) are research, not a second product.
 
 The design was attacked three times before being called done — structured adversarial reviews by fleets of independent AI reviewers with no stake in it, not external human audits. 93 findings across the first two rounds, 30 killed as unfounded; a third round on the newer material raised 46 raw findings — **30 distinct after dedup** — all 30 killed on first review, and then an audit of the refuters overturned four of those kills and surfaced five fresh gaps *(numbers restated 2026-08-21; the round's working tally had been quoted pre-dedup, which inflated the killed count by sixteen)*. The lesson held all three times: most attacks die, and the survivors are the ones worth having found. A fourth, whole-corpus pass ran 2026-08-21 and its findings are landed throughout, dated in place.
 
-**Next step:** build the harness against stubs, per [`harness/BUILD.md`](harness/BUILD.md).
+**Next step:** the founder’s go-word, then the harness against stubs, per [`harness/BUILD.md`](harness/BUILD.md).
 
 ## The principles
 
@@ -104,6 +104,8 @@ The design was attacked three times before being called done — structured adve
 | | |
 |---|---|
 | [`AGENTS.md`](AGENTS.md) | **Start here if you are an agent** — authority order, package shape, and the citation conventions that trip automated readers |
+| [`THE-JOB.md`](THE-JOB.md) | **The session job** — prepare this folder so the next act is building the application |
+| [`CLARIFY.md`](CLARIFY.md) | Leftover sittings — research still owed, not the build order |
 | [`INDEX.md`](INDEX.md) | Every tracked file, one line each: its authority tier and what it decides |
 | [`PRD.md`](PRD.md) | What agent-first means here, and what it requires |
 | [`RULINGS.md`](RULINGS.md) | The founder-ruling registry |

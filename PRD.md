@@ -2,7 +2,7 @@
 title: annnä
 status: final
 created: 2026-08-08
-updated: 2026-08-22
+updated: 2026-08-24
 ---
 
 # PRD: annnä
@@ -73,7 +73,7 @@ When agents become first-class callers, that envelope stops being an internal la
 
 ### 1.5 The end-state (founder-ruled 2026-08-22, FD-71 — internal direction; no outward surface carries it until its scenarios exist)
 
-**annnä's ambition is category replacement.** The commitment-shaped functions of the software a small operator runs beside their calendar today — the accounting ledger's who-owes-what, the CRM's who-promised-what-to-whom, the contract tool's what-was-agreed — eventually live in annnä, because each is a view over commitments and annnä holds the Commitment as its primitive. The stored money marks, party history, the signed-terms basis, and the template marketplace are that trajectory's seeds, already specced. **Nothing about v1 changes:** FD-50's first release, FR10's bar, and every §5 non-goal stand as written — the end-state is direction, not scope, and the path is the rulings cadence: a capability enters when its scenarios and its ruling exist, never before. `user-stories/README.md`'s gap 4 (non-calendar bulk import) is the first post-release rulings program on this path — the migration door.
+**annnä's ambition is category replacement.** The commitment-shaped functions of the software a small operator runs beside their calendar today — the accounting ledger's who-owes-what, the CRM's who-promised-what-to-whom, the contract tool's what-was-agreed — eventually live in annnä, because each is a view over commitments and annnä holds the Commitment as its primitive. The stored money marks, party history, the signed-terms basis, and the template marketplace are that trajectory's seeds, already specced. **Nothing about v1 changes:** FR10's bar, FD-80 (what ships is the application), and every §5 non-goal stand as written — the end-state is direction, not scope, and the path is the rulings cadence: a capability enters when its scenarios and its ruling exist, never before. `user-stories/README.md`'s gap 4 (non-calendar bulk import) is the first post-release rulings program on this path — the migration door.
 
 ## 2. Target User
 
@@ -115,7 +115,7 @@ The first cohort is a working freelancer who sells bookable time and also has a 
 - The state survives the session: returning the next day, the board and link are as left, and the first real booking through the link requires nothing new of the owner.
 - No step on the path assumes ring-two or ring-three adoption (centers, suppliers, other agents).
 
-**Notes:** Drafted 2026-08-22 (the fork sitting, FD-50's companion). The cohort's willingness to switch is the bet `PR/BRIEF.md` prices; this requirement is what makes "single-player value" falsifiable instead of reassuring. Cold start still bites the cross-employer half — a freelance instructor accepting *jobs* needs a center on annnä, and centers are ring three; that half is behind the first release (FD-50).
+**Notes:** Drafted 2026-08-22 (the fork sitting, FD-50's companion). The cohort's willingness to switch is the bet `PR/BRIEF.md` prices; this requirement is what makes "single-player value" falsifiable instead of reassuring. Cold start still bites the cross-employer half — a freelance instructor accepting *jobs* needs a center on annnä, and centers are ring three; that half is a Situation-C probe of the share seam (FD-80: not a ship cut).
 
 `[ASSUMPTION]` The founder uses annnä at its own console and admits no external agent until a beta cohort exists. The external surface is v1 specification, not v1 exercise.
 
@@ -126,7 +126,7 @@ The first cohort is a working freelancer who sells bookable time and also has a 
 | ID | The journey | Source |
 |---|---|---|
 | **UJ-A** | Sofia, freelance language teacher — her whole life on one board, and one outward slice published to students who never see the rest | `user-stories/Situations/Situation-A/` |
-| **UJ-A′** | Sofia again, installing a template from the store into an empty account — and one refusal at the door | `user-stories/Situations/Situation-A-prime/` |
+| **UJ-A′** | Sofia again, installing a template from the store into an empty account — she also publishes a shape she authored; extracting her populated board is refused | `user-stories/Situations/Situation-A-prime/` |
 | **UJ-B** | Ploy, motorbike rental — a traveller who pulls rather than books, against a hold with a clock and a gated checklist | `user-stories/Situations/Situation-B/` |
 | **UJ-C** | Hug Ocean, dive center — a whole week placed in one pass across instructors, boats, pools, gear and air; and the minimal-adoption run where annnä prepares the calls it cannot make | `user-stories/Situations/Situation-C/` |
 | **UJ-C′** | TingTing standing Hug Ocean up from a bundle, into an account that starts empty | `user-stories/Situations/Situation-C-prime/` |
@@ -411,19 +411,20 @@ What annnä is not, and will not become. These prevent the "let me also add this
 Stated as readiness conditions, never as schedule (FR2):
 
 - The founder uses annnä at its own console. No external client is admitted while he is the only user.
-- The external surface is exercised **when a beta cohort exists** and RQ-1 through RQ-9 have their scenarios green.
+- The external surface is exercised **when a beta cohort exists** and RQ-1 through RQ-9 have their scenarios green. **(2026-08-24 skip, G1-6:** the leftover restatement in `CLARIFY.md` §9.8 is skipped, not landed. Do not implement an owner-API consumer or mint the external-client credential this prompt. Do not rewrite §1.1 from that leftover. This section already says when the surface is exercised.)
 - Ring two — instructors he knows — is reached **when** the Situation A path runs end to end on real weeks, not simulated ones.
 - Centers, and with them the two-sided job-acceptance seam, are reached **when** ring two is producing the freelancer half of that seam.
 
-### 6.5 The first release (FD-50, 2026-08-22)
+### 6.5 What ships (FD-80, 2026-08-24)
 
-**§6.1 stands untouched — and it was always silent about one thing.** Its refusal to narrow protects the *specification* scope (the four Situations are the falsification instrument, and building to one builds *to* one) and the *build* instrument. It never named which slice ships first, and "v1 = A, B, C, D" read as a release plan is four products, four buyer types, and hundreds of MUST scenarios with no cut line. FD-50 names the release scope as its own word, distinct from both "v1" (FR10's spec scope, whole) and "MVP" (a word this corpus refuses):
+**This section is the one home of what ships (FR13).** §6.1 stands: FR10's specification scope is Situations A, B, C, D; E is held out; narrowing to one Situation was considered and refused. FD-50 invented “first release” as a second scope word and set it equal to use cases; FD-78 narrowed that to Situation A alone. **Both misread FR10.** A Situation is never a ship unit.
 
-- **The first release is ~~Situation A plus the freelancer half of Situation C~~ — Situation A alone** *(narrowed 2026-08-23, **FD-78**, amending FD-50; the struck text is kept because FD-50 is cited by that wording elsewhere)*. The founder's own teaching job, the only slice with a live first user — and **the freelancer half of Situation C moves to the following phase**, alongside the Situation-B forks below. **FR10's specification scope is untouched**: all four Situations stay specified and stay the falsification instrument; what narrows is the release slice, here and in the release tags, nowhere else. Stated as readiness, never schedule (FR2): the release exists when its slice's scenarios are green and the §6.4 conditions for its rings hold. **The reclassification FD-78 triggers is owed and not yet applied** — the freelancer-half-C rows currently carrying `[r1]` are identified by the deferral classes named below (cross-owner offers, operator-scale resources) and move to `[r2]`; `release-tags.mjs` must end green over the result, and the commit that does it is the place to argue with the classification.
-- **What defers with it, each at its own home:** the Situation-B forks (`held`/deposit trigger, license-class-vs-Auto, suppressed-stranger re-enable) ride B's own sprint; travel-provider integration sits behind the first release (the seam and stub stay); skins-as-purchasable-goods defers with its cross-layer machinery (templates and shipped skins keep everything; the law survives as spec); the external-client credential defers to the beta cohort it was specified for (§6.4 already said so — the parity disciplines stay, they are free).
-- **The owed mechanism — landed 2026-08-22, and this bullet is its one normative home (FR13):** every scenario row in the five `SCENARIOS.md` suites carries exactly one release tag — **`[r1]`** (must be green for the first release) or **`[r2]`** (deferred with its feature class, green required at that class's own release) — enforced by `deployment/scripts/release-tags.mjs`, which fails any untagged or double-tagged row. The tag composes with the row's own weight, never replaces it: a `[SHOULD]` row's tag names *which* release its should-weight belongs to, and a `[HELD-OUT]` row keeps its record-don't-gate law (its tag names the release whose out-of-sample record is taken — every held-out probe is `[r2]`, because a generality measure over a deliberately partial build measures the wrong thing). **Suite-parity scenarios read through the tags:** at the first-release bar, `engine/SCENARIOS.md` Z2 and `app/SCENARIOS.md` Z2 are satisfied over the `[r1]` subset of the harness suite; full-suite parity stays each layer's v1-whole definition of done, unchanged. The classification itself is judgment recorded, not mechanics: a row is `[r2]` only when it belongs to a deferred class above or to machinery the release slice cannot construct (cross-tenant offers, ranked on-call ladders, `min-occupancy` decisions, operator-scale resources), and the classifying commit is the place to argue with it.
+- **What ships is the application** — the commitment harness and the template builder. One product. General primitives. A Situation is a person saying “this is my situation; I want to build the template that lets me do this work.” TDD is that the app can do all the situations. Developers do not ship “Sofia’s teaching” or “Hug Ocean” as verticals (FR38).
+- **Proof order, not a feature cut.** After the application exists, the founder enters his real teaching (FD-68 / FD-77). Students are guest-token parties, never accounts. If that week does not fit, the app is not done. §6.4’s adoption rings stay readiness conditions (FR2).
+- **One list.** `[r1]` / `[r2]` as a ship-slice are retired. A row is not “later” because it belongs to Situation C. Share seam, min-occupancy, KindTemplate stay with the app. What remains postponed stays postponed **at its own home**: FR1 referral; recorded provider hard points; held-out E; closed-service money (OR-29); unruled `held` deposit; skins-as-purchasable as already deferred; the external-client credential as §6.4 already said. The stamps on scenario rows and `deployment/scripts/release-tags.mjs` are leftover machinery — they still run so a landing that does not move code stays green (S2); they are not law. A follow-on commit removes them.
+- **Suite-parity** (`engine/SCENARIOS.md` Z2, `app/SCENARIOS.md` Z2) is the full harness `[MUST]` suite, including P1 and P2 — not a tagged subset.
 
-RQ-14 (§2.3) is this release's falsifiable first-value bar.
+History of the cut: `RULINGS.md` FD-50 and FD-78, annotated from this ruling. RQ-14 (§2.3) is the falsifiable first-value bar for *onboarding*, not a ship slice.
 
 ## 7. The public surface and its contract
 

@@ -10,7 +10,7 @@ annnä is four layers — **Model / Harness / Engine / App** (`../README.md`) �
 - **Skins.** Photo backdrops that re-dress the board (`../app/DESIGN.md §Appearance`). Store images are licensed IP, delivered only to entitled accounts by the closed service. The four shipped skins + Plain are the permanent floor, present in every build and needing no entitlement.
 - **Templates.** Business-in-a-box bundles — the transferable *shape* of how someone runs bookable time: a domain's vocabulary, rule shapes with the numbers blanked, outward booking faces, resource boards to stand up. From a single "Free Time Available" share up to a whole dive center. Never anyone's data.
 
-Both goods ride the **same publish → browse → install rails**. Supply is **admin-only** — the founder publishes; users never can.
+Both goods ride the **same publish → browse → install rails**. **Templates are owner-publish** (FD-82): any signed-in owner may author, save, and publish a shape. **Skins stay the admin pack pipeline.** Authorization gates (official class, terms) may sit on top later; they are not this sitting.
 
 **The open/closed split is the whole architecture of this package.** The store's infrastructure — catalog, curation, payments, entitlements, licensed-asset delivery — is a **closed hosted service in a separate private repo**, reached over versioned APIs and **mocked in CI, always**. This repo specs only the **open half**: the two document formats, the install law, and the seams. A fork without the service is a complete-but-plain harness — that is the intended freemium boundary. Nothing in this repo may depend on the closed service to make sense.
 

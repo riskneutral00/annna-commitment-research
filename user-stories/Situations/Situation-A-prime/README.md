@@ -5,7 +5,7 @@
 ## How to read this folder
 
 1. The cast and Sofia's world are `../Situation-A/` — read that first; A′ adds no new people.
-2. `situation-1.md` is the single run: need → suggestion → preview → install → publish → first booking → uninstall → one refusal.
+2. `situation-1.md` is the single run: need → suggestion → preview → install → publish a link → first booking → uninstall → owner-publish of an authored shape → one extract-refusal.
 
 ## What this probe must exercise (the checklist it was built from)
 
@@ -14,4 +14,5 @@
 - Installing: the agent walks the **blanked parameters** (hours, duration, buffer, price) as ordinary proposals — *her* numbers, nothing written without confirm (I2).
 - Publishing a link from the installed shape; a booking lands (Z1, first half).
 - Uninstalling later — **her booked lessons stand** (I5).
-- **A refusal:** "publish my setup so other teachers can use it" — refused; supply is admin-only (P2's human face).
+- **Owner-publish:** she authors a shape, saves it, presses publish — the listing is public, with what it is and what it does (P2/P3).
+- **An extract-refusal:** "publish my setup" meaning the populated board — refused; the agent names the authored-bundle path (P4).

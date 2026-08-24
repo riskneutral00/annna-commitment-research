@@ -208,7 +208,9 @@ Render a component or canvas state from a fixed payload — the same discipline 
 ### Marketplace wire tests
 
 Real HTTP / absence-of-route assertions, the app G-family and D5 pattern applied to the marketplace's own doors:
-- **P2 [admin-only]** — no user-reachable publish surface or endpoint exists, tested as absence (no route, no UI affordance) — the app D5 pattern.
+- **P2 [owner-publish]** — a signed-in owner publishes a saved bundle; the listing is public with required description; another account can install it. Unsigned is refused. *(FD-82; was an absence test.)*
+- **P3 [save is not publish]** — saving a bundle does not list it.
+- **P4 [no extract]** — publishing a populated board is refused.
 - **E1 [entitled fetch]** — an entitled account receives short-lived signed URLs for a store skin's derivatives; an unentitled account receives none; the palette-only preview still works for both.
 
 ### End-to-end: the integration run
@@ -257,7 +259,7 @@ Rides the app's guest-route build (`app/BUILD.md` Step 5) and reuses its leak-te
 - **T2, T3, T4, T6** — the honest dead end on a lapsed/revoked token (T2); the store and logs hold digests only, never plaintext (T3); every token page carries `Cache-Control: no-store` and `Referrer-Policy: no-referrer` (T4); a hammered token route trips its limit and shows the plain retry page (T6).
 - **V1, V2, V6** — a guest upload streams to the vault and never touches an engine write or seam payload (V1); the retention clock destroys the artifact while the attestation and commitment history stand byte-identical (V2); a crash mid-upload or mid-read produces error reports with zero artifact bytes or PII (V6).
 - **P1, P2** — a guest month view's before/after diff around a private commitment shows an availability delta only (P1); no guest response carries another recipient's token, name, or existence, across the whole G-family fixture set (P2).
-- **M2 [one publish path]** — tested as absence of any other publish route or endpoint, the marketplace P2 pattern mirrored.
+- **M2 [two paths, one per good]** — template publish is the owner's session through the authoring path; skin publish is the admin pack pipeline; absence of any third path — marketplace P2/P4 mirrored.
 - **D3** — an owner's takeout fails marketplace install validation, tested against the real install door (`marketplace/BUILD.md` Step 0's validator) — the §8 carve's teeth.
 
 ### The printed gate — T-family, a special case
