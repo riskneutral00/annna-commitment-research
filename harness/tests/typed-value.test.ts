@@ -37,6 +37,15 @@ describe("typed_value — deterministic resolution, fail-closed", () => {
   it("fails closed on an unknown type_spec", () => {
     expect(isTvError(typed_value("x", { type: "vibes" }))).toBe(true);
   });
+
+  it("mints only COMPAT §1's closed reasons, with the prose in detail", () => {
+    const v = typed_value("2026-09-03T15:00:00", { type: "instant" });
+    expect(isTvError(v)).toBe(true);
+    if (isTvError(v)) {
+      expect(["type-mismatch", "malformed"]).toContain(v.reason);
+      expect(v.detail).toContain("ISO-8601");
+    }
+  });
 });
 
 describe("compare — same-kind, same-unit, or an error", () => {

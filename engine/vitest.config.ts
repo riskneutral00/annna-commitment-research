@@ -4,7 +4,7 @@ import TranscriptReporter from "../deployment/scripts/transcript-reporter.mjs";
 // convex-test runs engine functions in-memory (no deployment) under the
 // edge-runtime environment. Deterministic: no test reads wall time or the
 // network — the virtual clock and scripted travel provider (tests/harness.ts)
-// stand in. Any replay flake is an engine bug (TDD/engine.md).
+// stand in. Any replay flake is an engine bug (../TDD.md §Engine).
 export default defineConfig({
   test: {
     environment: "edge-runtime",

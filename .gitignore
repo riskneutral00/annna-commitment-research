@@ -48,3 +48,7 @@ node_modules/
 
 # Harness build — node modules for the layer's own suite
 harness/node_modules/
+
+# Agent-tool local state at the repo root — recurring, never corpus.
+.codex/
+.opencode/

@@ -91,7 +91,7 @@ describe("Step 0 — the injection point", () => {
   it("records every app call, so an act fired twice is countable", async () => {
     const h = wire();
     const app = h.app as AppSeam & { countOf(c: string): number };
-    await h.app.render({ surface: "board" });
+    await h.app.render("board", {});
     expect(app.countOf("render")).toBe(1);
   });
 });

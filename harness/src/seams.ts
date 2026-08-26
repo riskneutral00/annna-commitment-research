@@ -59,7 +59,11 @@ export type SendOutcome =
   | { timeout: true };
 
 export interface AppSeam {
-  render(payload: unknown): Promise<void>;
+  render(surface: "board" | "commitment-page" | "console", payload: unknown): Promise<void>;
+  /** §3.2 — the generative-UI leg: the harness hands a schema, the app returns
+   *  the composed view. Pinned by INTERFACES.md §3.2 and app/INTERFACES.md §4's
+   *  swap-parity clause; shape only at Step 0. */
+  render_generative(schema: unknown): Promise<unknown>;
   /** Return leg per INTERFACES.md §3.3 (2026-08-22): `minted[]` is the digest
    *  return leg — the harness commits the mint set in the same firing, and a
    *  digest reaches the store on no path but this leg and `on_form_return`'s

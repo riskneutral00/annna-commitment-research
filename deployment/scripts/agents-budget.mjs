@@ -1,5 +1,5 @@
-// AGENTS-BUDGET — AGENTS.md is injected on every agent turn, so its length is a
-// cost every reader pays every turn. This is the ratchet that bounds it.
+// AGENTS-BUDGET — AGENTS.md is every session's first read, so its length is a
+// cost every reader pays at every session start. This is the ratchet that bounds it.
 //
 // It lived inside `doc-count-check.mjs` until 2026-08-08. That file is otherwise
 // about how many markdown files the corpus claims to have — a different concern,

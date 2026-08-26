@@ -22,6 +22,8 @@ export class AppStub implements AppSeam {
     | { items: unknown[]; provider_status: string }
     | { unavailable: true }
     | { timeout: true } = { items: [], provider_status: "ok" };
+  nextRenderGenerative: unknown = { view: "generated" };
+  nextDisplaySettings: { ok: true } | { ok: false; invalid: true } = { ok: true };
 
   /** The inbound rides (INTERFACES.md §3.3): a test registers the harness's
    *  trigger entry here, then drives `simulateFormReturn` / the delivery-event
@@ -31,8 +33,13 @@ export class AppStub implements AppSeam {
 
   private mintCounter = 0;
 
-  async render(payload: unknown) {
-    this.calls.push({ call: "render", payload });
+  async render(surface: "board" | "commitment-page" | "console", payload: unknown) {
+    this.calls.push({ call: "render", payload: { surface, payload } });
+  }
+
+  async render_generative(schema: unknown): Promise<unknown> {
+    this.calls.push({ call: "render_generative", payload: schema });
+    return this.nextRenderGenerative;
   }
 
   async publish(payload: unknown, recipients?: unknown) {
@@ -57,9 +64,9 @@ export class AppStub implements AppSeam {
     return this.nextImportFetch;
   }
 
-  async display_settings(diff: unknown): Promise<{ ok: true }> {
+  async display_settings(diff: unknown): Promise<{ ok: true } | { ok: false; invalid: true }> {
     this.calls.push({ call: "display_settings", payload: diff });
-    return { ok: true };
+    return this.nextDisplaySettings;
   }
 
   /** Simulated form return — the trigger source the guest flow rides. */

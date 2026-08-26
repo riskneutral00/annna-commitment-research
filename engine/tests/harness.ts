@@ -1,4 +1,4 @@
-// The determinism harness for the engine scenario suite (TDD/engine.md).
+// The determinism harness for the engine scenario suite (../TDD.md §Engine).
 // Every scenario runs the real engine in-memory against these stubs: a virtual
 // clock and a scripted travel provider (INTERFACES §4). Nothing sleeps or reads
 // wall time; a replay flake is an engine bug.

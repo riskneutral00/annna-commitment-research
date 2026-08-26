@@ -14,12 +14,21 @@ export type TypedValue =
   | { kind: "instant"; epoch_ms: number }
   | { kind: "number"; value: number; unit?: string };
 
-export type TvError = { error: true; kind: "invalid"; reason: string };
+/** COMPAT.md §1's closed `invalid` reasons, as far as this library mints them.
+ *  Deliberately a two-of-three subset: COMPAT enumerates a third `invalid`
+ *  reason, `schema-mismatch`, which is return-leg and rejected-render
+ *  validation — the app's domain, not typed_value's. Do not "complete" the
+ *  union here. */
+export type TvReason = "type-mismatch" | "malformed";
+
+/** `detail` carries the human prose; it is already in the spec envelope —
+ *  INTERFACES.md §1 prints `{kind, reason, detail?, next?}`. */
+export type TvError = { error: true; kind: "invalid"; reason: TvReason; detail: string };
 
 export const isTvError = (v: unknown): v is TvError =>
   typeof v === "object" && v !== null && (v as TvError).error === true;
 
-const invalid = (reason: string): TvError => ({ error: true, kind: "invalid", reason });
+const invalid = (reason: TvReason, detail: string): TvError => ({ error: true, kind: "invalid", reason, detail });
 
 // Strict ISO-8601 with an EXPLICIT offset (Z or ±hh:mm). An ambient-zone
 // timestamp is not deterministic input and fails closed; a natural-language
@@ -35,18 +44,18 @@ export function typed_value(raw: unknown, type_spec: unknown): TypedValue | TvEr
   switch (spec.type) {
     case "instant": {
       if (typeof raw !== "string" || !ISO.test(raw))
-        return invalid("instant requires strict ISO-8601 with an explicit offset");
+        return invalid("type-mismatch", "instant requires strict ISO-8601 with an explicit offset");
       const epoch_ms = Date.parse(raw);
-      if (Number.isNaN(epoch_ms)) return invalid("instant does not parse");
+      if (Number.isNaN(epoch_ms)) return invalid("malformed", "instant does not parse");
       return { kind: "instant", epoch_ms };
     }
     case "number": {
       const value = typeof raw === "number" ? raw : typeof raw === "string" && raw.trim() !== "" ? Number(raw) : NaN;
-      if (!Number.isFinite(value)) return invalid("number is not finite");
+      if (!Number.isFinite(value)) return invalid("type-mismatch", "number is not finite");
       return spec.unit === undefined ? { kind: "number", value } : { kind: "number", value, unit: spec.unit };
     }
     default:
-      return invalid(`unknown type_spec.type: ${String(spec.type)}`);
+      return invalid("malformed", `unknown type_spec.type: ${String(spec.type)}`);
   }
 }
 
@@ -60,10 +69,10 @@ const OPS: Record<string, (a: number, b: number) => boolean> = {
 
 export function compare(a: TypedValue, op: string, b: TypedValue): boolean | TvError {
   const f = OPS[op];
-  if (!f) return invalid(`unknown operator: ${op}`);
-  if (a.kind !== b.kind) return invalid(`kind mismatch: ${a.kind} vs ${b.kind}`);
+  if (!f) return invalid("malformed", `unknown operator: ${op}`);
+  if (a.kind !== b.kind) return invalid("type-mismatch", `kind mismatch: ${a.kind} vs ${b.kind}`);
   if (a.kind === "number" && b.kind === "number" && a.unit !== b.unit)
-    return invalid(`unit mismatch: ${String(a.unit)} vs ${String(b.unit)}`);
+    return invalid("type-mismatch", `unit mismatch: ${String(a.unit)} vs ${String(b.unit)}`);
   const av = a.kind === "instant" ? a.epoch_ms : a.value;
   const bv = b.kind === "instant" ? b.epoch_ms : (b as { value: number }).value;
   return f(av, bv);

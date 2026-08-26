@@ -41,6 +41,16 @@ function envelopeKinds(md) {
   return m ? m[1].split("|").map((s) => s.trim()) : null;
 }
 
+// SPEC §3.4's printed park union — needs_human's own closed reason set, parsed
+// rather than restated so the gate cannot go stale against it again (the
+// pre-2026-08-22 three-member copy falsely redded slice_unfittable, which
+// SCENARIOS L3 mandates in Step-5 test code). The union spans two lines and
+// terminates at the first comma.
+function parkUnion(md) {
+  const m = md.match(/needs_human \{ reason: ([\s\S]*?),/);
+  return m ? m[1].split("|").map((s) => s.replace(/\s+/g, " ").trim()).filter(Boolean) : null;
+}
+
 // reason: "..." literals in code (single or double quotes).
 function codeReasons(dir) {
   const out = new Set();
@@ -58,12 +68,14 @@ function codeReasons(dir) {
   return out;
 }
 
-function check(compatMd, interfacesMd, reasonsInCode) {
+function check(compatMd, interfacesMd, reasonsInCode, specMd) {
   const bad = [];
   const rows = compatTable(compatMd);
   const kinds = envelopeKinds(interfacesMd);
   if (!rows.length) return ["COMPAT.md §1's table no longer parses — fix this script's contract"];
   if (!kinds) return ["INTERFACES.md §1's envelope sentence no longer parses — fix this script's contract"];
+  const park = parkUnion(specMd);
+  if (!park) return ["SPEC §3.4's park union no longer parses — fix this script's contract"];
   const tableKinds = [...new Set(rows.map((r) => r.kind))];
   for (const k of kinds) if (!tableKinds.includes(k)) bad.push(`envelope kind \`${k}\` has no COMPAT.md row`);
   for (const k of tableKinds) if (!kinds.includes(k)) bad.push(`COMPAT.md kind \`${k}\` is not in the envelope's six`);
@@ -71,7 +83,7 @@ function check(compatMd, interfacesMd, reasonsInCode) {
   for (const r of reasonsInCode) {
     // The park's needs_human.reason members are SPEC §3.4's own closed set,
     // not seam refusal reasons — out of this gate's domain.
-    if (["no_basis", "unreachable", "unverified"].includes(r)) continue;
+    if (park.includes(r)) continue;
     if (!reasons.has(r)) bad.push(`code uses reason "${r}" which COMPAT.md does not enumerate — widening is a breaking change (RQ-13)`);
   }
   return bad;
@@ -79,31 +91,43 @@ function check(compatMd, interfacesMd, reasonsInCode) {
 
 const COMPAT_FIXTURE = "| `conflict` | `capacity` | x |\n| `decline` | `no-feasible-placement` | x |\n| `invalid` | `malformed` | x |\n| `refused` | `no-basis` | x |\n| `unavailable` | `substrate` | x |\n| `timeout` | `substrate` | x |";
 const IFACE_FIXTURE = "six closed kinds — **`conflict | decline | invalid | refused | unavailable | timeout`**";
+const SPEC_FIXTURE =
+  "  needs_human { reason: no_basis | unreachable | unverified\n                      | budget_exhausted | slice_unfittable | quarantine_failed,";
 
 if (process.argv.includes("--selfcheck")) {
-  assert.deepStrictEqual(check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set()), [], "a matched pair passes");
+  assert.deepStrictEqual(check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set(), SPEC_FIXTURE), [], "a matched pair passes");
   assert.ok(
-    check(COMPAT_FIXTURE.replace("| `timeout` | `substrate` | x |", ""), IFACE_FIXTURE, new Set()).some((b) => b.includes("`timeout`")),
+    check(COMPAT_FIXTURE.replace("| `timeout` | `substrate` | x |", ""), IFACE_FIXTURE, new Set(), SPEC_FIXTURE).some((b) => b.includes("`timeout`")),
     "a kind with no row is caught",
   );
   assert.ok(
-    check(COMPAT_FIXTURE + "\n| `retry` | `later` | x |", IFACE_FIXTURE, new Set()).some((b) => b.includes("`retry`")),
+    check(COMPAT_FIXTURE + "\n| `retry` | `later` | x |", IFACE_FIXTURE, new Set(), SPEC_FIXTURE).some((b) => b.includes("`retry`")),
     "a seventh kind is caught",
   );
   assert.ok(
-    check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set(["surprise"])).some((b) => b.includes('"surprise"')),
+    check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set(["surprise"]), SPEC_FIXTURE).some((b) => b.includes('"surprise"')),
     "an unenumerated code reason is caught",
   );
-  assert.deepStrictEqual(check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set(["unverified"])), [], "the park's own reason set is out of domain");
+  assert.deepStrictEqual(check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set(["unverified"]), SPEC_FIXTURE), [], "the park's own reason set is out of domain");
+  assert.deepStrictEqual(
+    check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set(["slice_unfittable"]), SPEC_FIXTURE),
+    [],
+    "a park member beyond the original three is out of domain",
+  );
+  assert.ok(
+    check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set(), "no park union here").some((b) => b.includes("§3.4")),
+    "a broken §3.4 fixture fails closed",
+  );
   console.log("selfcheck OK");
   process.exit(0);
 }
 
 const compat = fs.readFileSync(path.join(ROOT, "harness/COMPAT.md"), "utf8");
 const iface = fs.readFileSync(path.join(ROOT, "harness/INTERFACES.md"), "utf8");
+const spec = fs.readFileSync(path.join(ROOT, "harness/SPEC.md"), "utf8");
 const inCode = codeReasons(path.join(ROOT, "harness/src"));
 for (const r of codeReasons(path.join(ROOT, "harness/tests"))) inCode.add(r);
-const bad = check(compat, iface, inCode);
+const bad = check(compat, iface, inCode, spec);
 if (bad.length) {
   console.log(`\nCOMPAT-REASONS FAIL:`);
   for (const b of bad) console.log(`  ${b}`);
@@ -112,5 +136,5 @@ if (bad.length) {
 const rows = compatTable(compat);
 console.log(
   `COMPAT-REASONS OK — ${new Set(rows.map((r) => r.kind)).size} kinds, ${rows.length} reasons, kinds equal the envelope's six both ways; ` +
-    `${inCode.size} reason literal(s) in harness code, all enumerated. NOT CHECKED: that every enumerated reason is exercised by a suite — checkable when the Step 1–5 suites land.`,
+    `${inCode.size} reason literal(s) in harness code, all enumerated. NOT CHECKED: that every enumerated reason is exercised by a suite — checkable when the Step 1–5 suites land; and reason values passed as a shorthand object property ({ …, reason }) are invisible to the literal scan.`,
 );
