@@ -25,6 +25,6 @@ Both goods ride the **same publish → browse → install rails**. **Templates a
 
 **Definition of done:** every scenario passes against the CI service mock; the app's degradation scenario (S6) holds; and a template install round-trips through the **real** harness propose→confirm suite with **zero new harness verbs** — installing is authoring.
 
-**Deliberately NOT here:** user supply or uploads of any kind · transaction handling of any sort, and the store's terms with it — both live inside the closed service and are not specified in this repo (`SPEC.md §5`) · ratings, reviews, or social machinery · live-subscription installs or upstream auto-update · recommendation engines · points as currency.
+**Deliberately NOT here:** user **asset** uploads — skins stay the admin pack pipeline; templates are owner-publish (FD-82) · transaction handling of any sort, and the store's terms with it — both live inside the closed service and are not specified in this repo (`SPEC.md §5`) · ratings, reviews, or social machinery · live-subscription installs or upstream auto-update · recommendation engines · points as currency.
 
-Carried rulings and their provenance are cited inline in `SPEC.md`; the open rulings this package inherits (curation/impersonation, template supply terms, user supply) are held open in `SPEC.md §7`, not resolved here.
+Carried rulings and their provenance are cited inline in `SPEC.md`; the open rulings this package inherits (curation/impersonation, template supply terms) are held open in `SPEC.md §7`, not resolved here; user supply closed 2026-08-24 (FD-82, recorded in `SPEC.md §7`).

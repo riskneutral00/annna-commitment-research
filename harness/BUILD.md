@@ -4,6 +4,8 @@
 
 **Definition of done:** every `[MUST]` scenario passes against stubs; `[HELD-OUT]` probes are executed and their results recorded (not fixed); no harness code reaches across a seam except through the `INTERFACES.md` contracts.
 
+**Readiness (G0-2):** Step 1 begins on the founder's go-word (`../THE-JOB.md`) — a condition, not a date. Step 0 is closed and needed no such word.
+
 ---
 
 ## Step 0 — Project setup

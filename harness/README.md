@@ -14,7 +14,7 @@ Everything a fresh agent session needs to **build the annnä harness**, with no 
 **Glossary** (labels inherited from the archive design docs — used throughout without re-definition):
 - **M1** — the inviolable clarify/permission floor: the reversibility line (SPEC §7).
 - **M2** — the governed-board classify gate and its go-live shape: kind-or-recorded-exception, no silent holes (SPEC §3.4, §6).
-- **M3** — the engine's type-value system (typed operands + operators), deferred behind the engine seam (INTERFACES §1.4).
+- **M3** — the engine's type-value system (typed operands + operators) — a shared library, not a seam round-trip: the vocabulary's home is `../engine/SPEC.md §2`; the library's home is `INTERFACES.md §1.4` (imported by the harness now, `src/typed-value.ts`).
 - **T2** — legacy label for what became H2's authoring/onboarding interview ("author the rules by which commitments involve other parties").
 - **H1 / H2** — the two harness instances: the board surface and the per-commitment support surface (SPEC §2). SCENARIOS section letters skip M to avoid colliding with the labels above.
 

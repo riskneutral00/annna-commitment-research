@@ -24,7 +24,7 @@ Until then this is still a prepare-to-build sitting, not a code sitting.
 
 ## Where the rest lives
 
-- Leftover research (not build gates): `CLARIFY.md` §§8–9 — messaging investigation, hour-grid residue, OR-42 proposal, Situation × layer map
+- Leftover research (not build gates): `CLARIFY.md` §§7–9 — messaging investigation, hour-grid residue, OR-42 proposal, Situation × layer map
 - Later acts, not this phase: Cloudflare, OpenRouter keys, `privacy@annna.dev`
 - A working checkout may also carry a living gate list under `docs/agents/` (absent from a clone). This file is what a clone has.
 - Do not add to `AGENTS.md` (950-word ceiling, 0 spare)

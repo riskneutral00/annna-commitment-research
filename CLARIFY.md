@@ -53,12 +53,14 @@ FD-50 and FD-78 were made under “do as much as you can without me” and confi
 
 ## 3. What currently contradicts this truth
 
+**This section is history of how FD-80 was reached — §§2–7 record the reasoning, and the §3 sweep landed 2026-08-24. Do not treat it as a second home.**
+
 Do not treat the following as law. List them, then the sitting decides how each is rewritten so it matches §1. Quote the phrase; do not cite line numbers.
 
 | Where | What it currently says | Why it is wrong under §1 |
 |---|---|---|
 | `PRD.md` §6.5 · `RULINGS.md` FD-50 / FD-78 | The first release / first phase **is Situation A** (was A plus freelancer-half-C) | Names a use case as a ship unit |
-| `deployment/scripts/release-tags.mjs` and every `[r1]` / `[r2]` row | First-release bar = the `[r1]` subset; FD-78 still owes a flip of freelancer-half-C rows to `[r2]` | A tag that means “do not build C primitives yet” is the defect |
+| `deployment/scripts/release-tags.mjs` and every `[r1]` / `[r2]` row | First-release bar = the `[r1]` subset; a flip of freelancer-half-C rows to `[r2]` was then recorded as owed under FD-78 *(struck 2026-08-26 — FD-80 explicitly reversed that owed flip)* | A tag that means “do not build C primitives yet” is the defect |
 | `README.md` §One week, run twice | “What v1 actually does is the middle case” — Situation C situation-5 | Sells a use case as the product. The dive week is a proof, not a SKU |
 | `PR/BRIEF.md` “What does the first version actually do?” | Points at that README caveat | Same leftover |
 | `PRD.md` §1.5 | “Nothing about v1 changes: FD-50’s first release” | Repeats the slice after FD-71 |

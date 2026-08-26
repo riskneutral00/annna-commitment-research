@@ -98,13 +98,13 @@ The first cohort is a working freelancer who sells bookable time and also has a 
 
 ### 2.3 The rings
 
-`PR/IDENTITY.md` describes the audience as *"the mirror, not the market"* that *"grows in circles"* The first two circles are now nameable, and naming them supplies the cohort the open pilot item in `PR/NOTES.md` needs — that item closes when one of them says "yes, I'll be first" on record, not here.
+`PR/IDENTITY.md` describes the audience as *"the mirror, not the market"* that *"grows in circles"* The first two circles are now nameable, and naming them supplies the cohort the pilot item needed — that item is closed (OR-40 → FD-77, 2026-08-23): `PR/BRIEF.md` records the founder's own English students as the named pilot.
 
 1. **The founder.** A working dive instructor and language teacher, using annnä directly at its own console.
 2. **Dive and English instructors he knows.** Same shape: freelance, bookable, multi-language, life and work on one board.
 3. **Onward** — a traveling physical therapist, then anyone who reads a page like `README.md` and recognizes their own week.
 
-**Consequence for scope, carried into §6:** rings one and two are Situation A shaped. `README.md` opens with the Situation C week because it is the strongest demonstration, and that is the right choice for a front page — but MVP scope is cut to the cohort, not to the demonstration. **On cold start, honestly** *(re-written 2026-08-22 — the prior sentence said cold start "barely bites this cohort", which conflated* works with one user *with* worth switching to*)*: Situation A is mechanically single-player, but a solo owner is not retained by mechanics — they are retained by reaching, alone, in one session, a state they would not give up. That is a requirement, not a hope, and it is registered:
+**Consequence for scope, carried into §6:** rings one and two are Situation A shaped. `README.md` opens with the Situation C week because it is the strongest demonstration, and that is the right choice for a front page — but the cohort is an **onboarding order**, not a feature cut — FR10 stands and v1 is not narrowed to the cohort (§6.1). **On cold start, honestly** *(re-written 2026-08-22 — the prior sentence said cold start "barely bites this cohort", which conflated* works with one user *with* worth switching to*)*: Situation A is mechanically single-player, but a solo owner is not retained by mechanics — they are retained by reaching, alone, in one session, a state they would not give up. That is a requirement, not a hope, and it is registered:
 
 #### RQ-14: First value is single-player
 
@@ -168,7 +168,7 @@ Two journeys were new with this document and had no story. One still doesn't (UJ
 - **ShareGrant** — the engine-minted object by which a commitment or board reaches another person or link token; `{holder, rung, scope, edit_mode}`, three rungs, availability by default (FR30). Home: `engine/SPEC.md §7.1`.
 - **Grant** *(the authorization Grant — a different object, same bare word)* — a standing authorization from the owner that satisfies the permission floor without a fresh confirmation; `{action_class, scope, expiry, revocable}`, and what an auto-accept is recorded as (FR6, FR28). Minting or widening one is an `authorization`-class act, console-only (FD-24), with FD-32's `ShareGrant` carve on the stored-accept path. Home: `harness/SPEC.md §7`; stored shape at `engine/SPEC.md §1.6`. **The two are deliberately separate and must not be merged** — a ShareGrant governs *who may see or edit*, an authorization Grant governs *which action class the floor permits*; `engine/SPEC.md §7.1` exists in part to keep them apart.
 - **Permission floor** *(also: the reversibility floor)* — the rule that nothing crossing into the real world happens without an explicit basis from the owner. Home: `harness/SPEC.md`.
-- **Board** — the owner's surface; no time axis, two gravities (events pack to the top, tasks flush to the bottom edge), time is block data. Home: `app/SPEC.md`, visual law `app/DESIGN.md`.
+- **Board** — the owner's surface; **default mode: no time axis** (a second mode is a traditional hour-grid, FD-81 — `app/DESIGN.md` §Board rendering), two gravities (events pack to the top, tasks flush to the bottom edge), time is block data. Home: `app/SPEC.md`, visual law `app/DESIGN.md`.
 - **Console** — the conversational surface where the owner talks to their agent and confirms proposals. Home: `app/SPEC.md`.
 - **Situation** — an end-to-end falsification probe in `user-stories/`, never a design target. Home: `user-stories/README.md`.
 - **Template** — the transferable shape of how someone runs bookable time; never anyone's data. Home: `marketplace/SPEC.md`.
@@ -421,7 +421,7 @@ Stated as readiness conditions, never as schedule (FR2):
 
 - **What ships is the application** — the commitment harness and the template builder. One product. General primitives. A Situation is a person saying “this is my situation; I want to build the template that lets me do this work.” TDD is that the app can do all the situations. Developers do not ship “Sofia’s teaching” or “Hug Ocean” as verticals (FR38).
 - **Proof order, not a feature cut.** After the application exists, the founder enters his real teaching (FD-68 / FD-77). Students are guest-token parties, never accounts. If that week does not fit, the app is not done. §6.4’s adoption rings stay readiness conditions (FR2).
-- **One list.** `[r1]` / `[r2]` as a ship-slice are retired. A row is not “later” because it belongs to Situation C. Share seam, min-occupancy, KindTemplate stay with the app. What remains postponed stays postponed **at its own home**: FR1 referral; recorded provider hard points; held-out E; closed-service money (OR-29); unruled `held` deposit; skins-as-purchasable as already deferred; the external-client credential as §6.4 already said. The stamps on scenario rows and `deployment/scripts/release-tags.mjs` are leftover machinery — they still run so a landing that does not move code stays green (S2); they are not law. A follow-on commit removes them.
+- **One list.** `[r1]` / `[r2]` as a ship-slice are retired. A row is not “later” because it belongs to Situation C. Share seam, min-occupancy, KindTemplate stay with the app. What remains postponed stays postponed **at its own home**: FR1 referral; recorded provider hard points; held-out E; closed-service money (OR-29); unruled `held` deposit; skins-as-purchasable as already deferred; the external-client credential as §6.4 already said. The stamps on scenario rows and `deployment/scripts/release-tags.mjs` were leftover machinery — kept only so a landing that did not move code stayed green (S2); not law. **Removed 2026-08-26** by the follow-on commit.
 - **Suite-parity** (`engine/SCENARIOS.md` Z2, `app/SCENARIOS.md` Z2) is the full harness `[MUST]` suite, including P1 and P2 — not a tagged subset.
 
 History of the cut: `RULINGS.md` FD-50 and FD-78, annotated from this ruling. RQ-14 (§2.3) is the falsifiable first-value bar for *onboarding*, not a ship slice.
@@ -475,7 +475,7 @@ The corpus has strong versioning discipline in two places: kind schemas are pinn
 
 ### 10.1 Product success — pointer only
 
-The success criteria are ruled and their only home is `PR/BRIEF.md`: how many people use it, whether they are still using it month after month, and what they say directly — with feedback as the primary instrument, and two admitted-hard secondary signals. **No numeric target is set there and none may be introduced by derivation.** This PRD introduces none, and §2.3 naming the first cohort supplies what the still-open pilot item needs before those criteria can be exercised.
+The success criteria are ruled and their only home is `PR/BRIEF.md`: how many people use it, whether they are still using it month after month, and what they say directly — with feedback as the primary instrument, and two admitted-hard secondary signals. **No numeric target is set there and none may be introduced by derivation.** This PRD introduces none, and §2.3 naming the first cohort supplies what the pilot item needed — closed as OR-40 → FD-77 (2026-08-23) at its home, `PR/BRIEF.md`.
 
 ### 10.2 Agent-first conformance — this PRD's own metric
 
