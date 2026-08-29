@@ -25,8 +25,22 @@
 //     a judgement from AGENTS.md's authority order, not a countable fact. The
 //     vocabulary is closed and checked; which word applies is not.
 //
+// `--write` (2026-08-29, `npm run derive`): rewrites the table in `git ls-files`
+// order — the order the file's own header says it is written in — PRESERVING
+// each existing row's tier and description BY PATH, dropping rows for files no
+// longer tracked, and inserting new rows with tier `SPEC` and the description
+// literal `TODO — describe what this file decides`.
+//
+// THE ANTI-FALSE-GREEN, and it is the load-bearing part of this whole mode: the
+// CHECK gains one refusal — a description beginning `TODO` is not a description.
+// Without it, `--write` would convert a LOUD missing row into a QUIET
+// placeholder, which is a worse defect than the one being fixed, because the
+// index would read as complete while saying nothing. Only the bookkeeping is
+// derived; the tier and the one-line description stay human work.
+//
 // Usage:
 //   node deployment/scripts/index-complete.mjs             check the index
+//   node deployment/scripts/index-complete.mjs --write     derive the table from git ls-files
 //   node deployment/scripts/index-complete.mjs --selfcheck assert-based self-test
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
@@ -40,6 +54,8 @@ const INDEX = "INDEX.md";
 // The closed tier vocabulary, from INDEX.md's tier legend, which defines what
 // each one means; this is only the spelling.
 const TIERS = new Set(["SPEC", "derived", "index", "history", "never"]);
+const PLACEHOLDER = "TODO — describe what this file decides";
+const isPlaceholder = (what) => /^TODO\b/.test(what);
 
 // A row is a table line whose first cell is a path ending `.md`. That test alone
 // skips the header, the separator, and the two-column tier legend above the
@@ -51,6 +67,13 @@ export function rows(text) {
     .filter(Boolean)
     .map((m) => ({ file: m[1].trim(), tier: m[2].trim(), what: m[3].trim() }))
     .filter((r) => r.file.endsWith(".md"));
+}
+
+// The derived table: `git ls-files` order, each existing row's tier and
+// description carried over by path, everything else placeheld.
+export function derive(tracked, existing) {
+  const by = new Map(existing.map((r) => [r.file, r]));
+  return tracked.map((f) => by.get(f) ?? { file: f, tier: "SPEC", what: PLACEHOLDER });
 }
 
 if (process.argv.includes("--selfcheck")) {
@@ -75,6 +98,28 @@ if (process.argv.includes("--selfcheck")) {
   // A row whose first cell is not a file is not a row.
   assert.deepStrictEqual(rows("| total | 131 | files |"), []);
 
+  // --- the --write mode and its anti-false-green ---
+  assert.ok(isPlaceholder(PLACEHOLDER), "the literal --write inserts is refused by the check that follows it");
+  assert.ok(isPlaceholder("TODO"), "and a bare TODO is refused too");
+  assert.ok(!isPlaceholder("What a decides"), "a real description is not a placeholder");
+  assert.ok(!isPlaceholder("The TODO list's own home"), "TODO inside a sentence is a description, not a placeholder");
+
+  // Derivation preserves by path, drops the untracked, and inserts placeholders.
+  const before = [
+    { file: "a/SPEC.md", tier: "SPEC", what: "what a decides" },
+    { file: "gone/SPEC.md", tier: "SPEC", what: "deleted since" },
+  ];
+  const derived = derive(["b/NEW.md", "a/SPEC.md"], before);
+  assert.deepStrictEqual(
+    derived,
+    [
+      { file: "b/NEW.md", tier: "SPEC", what: PLACEHOLDER },
+      { file: "a/SPEC.md", tier: "SPEC", what: "what a decides" },
+    ],
+    "git ls-files order, existing tier+description kept by path, untracked row dropped, new row placeheld",
+  );
+  assert.ok(derived.some((r) => isPlaceholder(r.what)), "and the inserted row REDS the check — a placeholder is not a description");
+
   console.log("\nselfcheck OK");
 }
 
@@ -85,7 +130,31 @@ const tracked = execFileSync("git", ["ls-files", "-z", "*.md"], {
   .split("\0")
   .filter(Boolean);
 
-const listed = rows(fs.readFileSync(path.join(ROOT, INDEX), "utf8"));
+const indexPath = path.join(ROOT, INDEX);
+const text = fs.readFileSync(indexPath, "utf8");
+const listed = rows(text);
+
+if (process.argv.includes("--write")) {
+  const next = derive(tracked, listed);
+  const line = (r) => `| ${r.file} | ${r.tier} | ${r.what} |`;
+  // Replace the run of existing rows in place, so everything above and below
+  // the table — the header, the tier legend, the caveat — is untouched.
+  const lines = text.split("\n");
+  const at = lines.findIndex((l) => rows(l).length);
+  const last = lines.length - 1 - [...lines].reverse().findIndex((l) => rows(l).length);
+  if (at === -1) {
+    console.log(`\nDERIVE FAIL — ${INDEX} holds no parseable rows; fix the table before deriving`);
+    process.exit(1);
+  }
+  fs.writeFileSync(indexPath, [...lines.slice(0, at), ...next.map(line), ...lines.slice(last + 1)].join("\n"));
+  const added = next.filter((r) => isPlaceholder(r.what));
+  console.log(
+    `\nINDEX DERIVED — ${next.length} row(s) in git ls-files order` +
+      (added.length ? `; ${added.length} new row(s) placeheld and NOW RED until described: ${added.map((r) => r.file).join(", ")}` : `; no new files`),
+  );
+  process.exit(0);
+}
+
 const named = new Set(listed.map((r) => r.file));
 
 const missing = tracked.filter((f) => !named.has(f));
@@ -93,15 +162,20 @@ const phantom = listed.filter((r) => !tracked.includes(r.file));
 const duplicate = listed.filter((r, i) => listed.findIndex((o) => o.file === r.file) !== i);
 const badTier = listed.filter((r) => !TIERS.has(r.tier));
 const empty = listed.filter((r) => !r.what);
+// A placeholder is not a description. This is what keeps `--write` from turning
+// a loud missing row into a quiet one.
+const todo = listed.filter((r) => isPlaceholder(r.what));
 
 for (const f of missing) console.log(`\nINDEX FAIL — ${f} is tracked but has no row in ${INDEX}`);
 for (const r of phantom) console.log(`\nINDEX FAIL — ${INDEX} names ${r.file}, which is not tracked`);
 for (const r of duplicate) console.log(`\nINDEX FAIL — ${r.file} has more than one row in ${INDEX}`);
 for (const r of badTier) console.log(`\nINDEX FAIL — ${r.file} has tier "${r.tier}"; the vocabulary is ${[...TIERS].join(", ")}`);
 for (const r of empty) console.log(`\nINDEX FAIL — ${r.file} has no description`);
+for (const r of todo) console.log(`\nINDEX FAIL — ${r.file} carries a placeholder description ("${r.what}"), which is not a description`);
 
-if (missing.length || phantom.length || duplicate.length || badTier.length || empty.length) {
+if (missing.length || phantom.length || duplicate.length || badTier.length || empty.length || todo.length) {
   console.log(`\n  The index is only worth reading while it is complete. Add the row; do not delete the file from the list.`);
+  if (todo.length) console.log(`  \`npm run derive\` inserts the row and the tier; the one-line description is yours, and until it is written this stays red.`);
   process.exit(1);
 }
 

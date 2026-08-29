@@ -40,6 +40,7 @@
     "check:shape": "node deployment/scripts/package-shape.mjs --selfcheck && node deployment/scripts/package-shape.mjs",
     "check:docs": "node deployment/scripts/doc-count-check.mjs",
     "check:index": "node deployment/scripts/index-complete.mjs --selfcheck && node deployment/scripts/index-complete.mjs",
+    "derive": "node deployment/scripts/doc-count-check.mjs --write && node deployment/scripts/index-complete.mjs --write",
     "cites": "node deployment/scripts/cite-check.mjs --selfcheck && node deployment/scripts/cite-check.mjs",
     "verdicts": "node deployment/scripts/b4-verdict-check.mjs --selfcheck && node deployment/scripts/b4-verdict-check.mjs"
   }
