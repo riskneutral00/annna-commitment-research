@@ -21,4 +21,5 @@
 export const NOT_A_GATE = {
   "transcript-reporter.mjs": "the vitest reporter B9 reads; it emits, it never refuses",
   "not-a-gate.mjs": "this file — the shared declaration itself, data rather than a check",
+  "rung-configs.mjs": "the one definition of `a rung config`, shared by r9-noindex-nodebug and t-six-before-link; data with no side effects, for the reason stated above",
 };

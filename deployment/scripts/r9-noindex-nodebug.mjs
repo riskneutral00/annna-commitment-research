@@ -13,16 +13,17 @@
 // instead of passing quietly, and becomes a real assertion at BUILD Step 2 when
 // the preview rung exists.
 //
-// The filename list below IS this gate's definition of "a rung config", so it
-// tracks the host: it named Vercel's and Next's files until FD-11 ruled
-// Cloudflare, and a host change that forgets this line leaves the gate looking
-// for a file nothing will ever write — permanently not-yet-constructible, which
-// reads like patience and is actually a dead gate.
+// "A rung config" tracks the host, so its definition moved to `rung-configs.mjs`
+// on 2026-08-29 when `t-six-before-link.mjs` became its second consumer — one
+// definition, imported, rather than the second copy `substrate-swap.md` warns
+// costs "a dead gate". It named Vercel's and Next's files until FD-11 ruled
+// Cloudflare, and a host change that forgets it leaves a gate looking for a file
+// nothing will ever write — which reads like patience and is actually dead.
 import { spawnSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
+import { RUNG_CONFIGS } from "./rung-configs.mjs";
 
 const FLAGS = ["(SKIP|DISABLE|BYPASS)_AUTH", "AUTH_(SKIP|DISABLE|BYPASS)", "DEBUG" + "_MODE", "ALLOW" + "_ANONYMOUS"];
-const RUNG_CONFIGS = ["wrangler.toml", "wrangler.jsonc", "wrangler.json"];
 
 // git grep skips binaries and honours pathspec exclusions; exit 1 means no match.
 const hit = spawnSync(
