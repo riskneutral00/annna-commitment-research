@@ -311,6 +311,26 @@ The closed value vocabulary — the only shapes a rule operand or correctness-cr
 - **Timeout:** **2 seconds** per batched request, one retry, then the legs are unknown. No placement waits on a slow provider.
 - **"No times" and "can't compute" are different answers, and the decline says which — and "can't compute" says why** *(the second discriminator added 2026-08-22, by V4's own reasoning applied one level down)*. A structured decline carries either `no-feasible-placement` (the math ran; nothing fits — the honest "your day is full") or `travel-unknown` (the math could not run), and a `travel-unknown`'s `detail` carries its cause, `ceiling | provider-failed` (the seam-envelope reason stays `travel-unknown` — the cause rides `detail` exactly as `no-feasible-placement`'s constraint class does, so the closed reason set does not widen, `../harness/INTERFACES.md §7.1`) — because the user's next moves differ again: *ceiling* means "still working it out, the warm-up is running, expect a re-offer" and *provider-failed* means "the map is down, try again later." The harness narrates all three differently. Collapsing any two into one message is a defect (§9).
 
+**The constants register** *(2026-08-29 — the engine has nine named tunables and had exactly one instruction to centralize them, covering the travel envelope alone (`BUILD.md` Step 4: "with its named constants centralized in one place"); nothing distinguished what a deployment may change from what is law. The discipline is dsh's: a `DEFAULT_*` constant or test hook is not configurability.)* Three classes, stated once:
+
+- **law** — fixed by the design; changing it is a spec change with its own ruling.
+- **tuned at BUILD** — a starting value measured and set during the build, printed beside its measurement.
+- **per-object configuration** — an owner or creator sets it per object; a default ships.
+
+**A deployment may change a configuration row, may not change a law row, and changes a tuned row only with the measurement that justified it.** Each row cites its own home, which keeps the constant's rule where it already lives (FR13); this table is an index, not a second home.
+
+| Constant | Value | Home | Class |
+|---|---|---|---|
+| candidate lattice | 5 minutes | §7 | **law** |
+| reshuffle move bound | ≤ 3 moves per proposal | §7 | **law** |
+| travel fetch ceiling | 8 fresh triples per `resolve` | §5 | tuned at BUILD |
+| re-solve round bound | 3 | §7 | tuned at BUILD |
+| departure buckets | 30 minutes | §5 | tuned at BUILD |
+| travel-fact TTL | 30 days | §5 | tuned at BUILD |
+| provider timeout + retry | 2 seconds, one retry | §5 | tuned at BUILD |
+| `horizon_policy` | 8 weeks, per-pattern overridable | §1.4 | per-object configuration |
+| offer `hold` | 5 minutes default, 0–24 h range | §7.1 | per-object configuration |
+
 `calculate` never produces an outward effect and writes nothing except the compute cache.
 
 ## §6. `commit` — write semantics
