@@ -459,7 +459,7 @@ The `grants[]` edge (each entry a `ShareGrant`) is the only **authorization** st
 | Only the engine mints a ShareGrant — the sole two-tenant *authorization* edge; no caller can author one, and engine-minted cross-tenant references grant nothing | §7.1 |
 | An interval-widening edit re-runs placement checks; a correction can never silently double-book | §6.7 |
 | Materialization never changes a capacity verdict; a blocked instance is a conflicted draft, never a double-book | §9 |
-| A restore conflicts loudly and can never resurrect a latched state | §9, `../security/SPEC.md §8` |
+| A restore conflicts loudly and can never resurrect a latched state | §9, §6.2 (the latch law reaching across the version chain), `../security/SPEC.md §8` |
 | A run under its minimum parks for a human; the engine never auto-cancels | §3 (`min-occupancy`) |
 | A PendingDecision is never chosen by the engine — `chosen` is a human write or absent | §1.14 |
 | Unknown travel and no-feasible-placement are distinguishable in every decline | §5, §9 |
