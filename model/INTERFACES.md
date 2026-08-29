@@ -151,11 +151,12 @@ The concrete JSON Schemas passed to `complete()`. v0 unblocks the Step 0 eval sc
 { "type": "object", "additionalProperties": false,
   "required": ["summary", "labels"],
   "properties": { "summary": { "type": "string" },
-                  "labels":  { "type": "array", "maxItems": 8, "items": {
+                  "labels":  { "type": "array", "uniqueItems": true, "items": {
                     "enum": ["contains-instruction","impersonation-attempt","document","question",
                              "request","confirmation","complaint","unresolved-reference"] } } } }
 ```
 - `additionalProperties: false` is load-bearing here, not stylistic: it is what stops a quarantined model from smuggling an extra field into the privileged context. A return that validates is the *whole* of what crosses.
+- **`uniqueItems: true`, not a length cap** *(corrected 2026-08-29 — the schema previously capped the array's length at the size of the enum below it, which over a closed enum can only ever trip on a duplicate; the constraint now states the rule it was always enforcing)*.
 - **`labels[]` is a closed enum** *(2026-08-21 — as an open string array it was a free-text channel that validated, unbounded and outside the S-set's carry-through bar, while this section's own argument is that a return that validates is the whole of what crosses)*: it carries what the summary reports **about** the text and structurally cannot carry the instruction — there is no string to put one in. The carry-through bar covers `summary` and the label *choice* both (SPEC §1). Growing the enum is an exam-and-schema edit, same review as the intent vocabulary. `source_tag` is an input; the return has no field for it, so it cannot be changed or elevated (`../harness/INTERFACES.md §2.4`).
 
 Judgment has no schema of its own — it rides inside `normalize`/`narrate` (SPEC §1).
