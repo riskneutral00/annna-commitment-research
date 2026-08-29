@@ -203,6 +203,63 @@ Each names the home that carries it. None of them is created here.
 9. **Owed — the escalation ladder beat.** `README.md` register entry 2: it is owed when a v1 Situation earns a ranked list, which no current protagonist has. Writing it first would be designing to the mechanism.
 10. **Investigation, not a Situation — how to application-test the owner's own agent** without our glass. RQ-1 to RQ-9 above.
 
+## Every bolded beat, audited
+
+The tables above map a Situation's *major* beats. This section is the exhaustive pass beneath them: **every bolded phrase in every story file, classified and disposed.**
+
+**The extraction set is 39 files** — every tracked file under `Situations/` except the seven folder `README.md` storybooks (they summarise the runs, so their beats are duplicates by construction) and the five `situation-2.md` current-reality runs (the world without the app, `None` for every product layer by this file's own standing note). Those 39 hold **1,107 bolded phrases**, every file carrying at least six. *(Counting rule, stated so the number reproduces: a bolded span on a single line, at least four characters. A looser rule that lets a span run across a line break, and counts two- and three-character emphasis, gives a larger number.)*
+
+**The whole body of each file is read, not a heading section.** Only three files — `Situation-A/situation-3.md`, `Situation-B/situation-3.md`, `Situation-D/situation-3.md` — carry the explicit `## Must work` / `## Must be refused / handled` pair; they hold 120 of the 1,107 phrases. The other thirty-six state their beats inline in narrative prose. Anything reading this corpus must handle both forms: a heading-gated pass sees 11% of the surface and then reports perfect coverage over it, which is a false green, not a result.
+
+**The result.**
+
+| | Count |
+|---|---|
+| Files in the extraction set | 39 |
+| Bolded phrases classified | 1,107 |
+| **Beats** — a claim about what the system must do, refuse, show, or never do | **422** |
+| **Emphasis** — weight on a name, price, place, time, quantity or story-colour noun | **685** |
+| Beats disposed to an existing scenario | 351 |
+| **Beats recorded as owed** | **71** |
+
+**A stated bound on this audit.** Beat-versus-emphasis is a reading judgement, and the boundary is genuinely fuzzy at the margin: a bolded configuration value (*"6-hour buffer"*) names a quantity and also implies the rule that applies it. The convention taken is that bolded names, prices, times, quantities and configuration values are emphasis, and only a claim about system behaviour is a beat. Marginal cases were called toward emphasis. What this audit establishes is that 422 beats are individually disposed and 71 debts are visible — not that the boundary is exact. The deeper bound is `probe-coverage.mjs`'s and it applies to every `Covered` cell above too: existence is mechanical, aboutness is a reading job.
+
+**Situation E is disposed `held-out` throughout**, per `README.md`'s principle and this file's E table. Five of its beats name a genuine v1 cousin — all of them the *park-don't-guess* floor, `../harness/SCENARIOS.md D4` — and each is written as *"held-out — cousin of …"* rather than as a citation, because a bare citation would read as E having been promoted into acceptance. The four shapes E was deliberately not designed to are cited to nothing at all.
+
+### The 71 owed beats, by what each one is
+
+**45 are genuine coverage gaps** — a beat no scenario asserts. They cluster into thirteen elicitation subjects; the cluster, not the individual beat, is what a brief is written against.
+
+| Subject | Owed beats | What the missing scenarios must assert |
+|---|---|---|
+| **Qualification and language matching** | 12 | That `resolve` places a customer only with a resource whose declared teaching language and specialty rating actually cover the request — and that spoken and written language are separate axes, so a resource who speaks Mandarin but does not type it still matches on the spoken axis. Also that a rating checked against loaded agency standards opens some roles and closes others: a Divemaster-rated resource guides and assists but is refused a certifying role, as a limit derived from a loaded document rather than a hardcoded app rule. `../engine/SCENARIOS.md P4`'s attribute refusal is exemplified only by address; nothing in any suite names a language or a rating |
+| **Cross-tenant routing through an agent** | 6 | That an agent tenant holding no resources of its own resolves against a *ranked list of other tenants*, falls to the next when the first cannot take it, and returns an honest decline once the list is exhausted. `../engine/SCENARIOS.md P7`'s ranked fallback is single-owner and board-internal; the share seam handles one counterparty, never a ranked list of them |
+| **Resource-form equivalence across operator kinds** | 4 | That a dive center's owned boat, pool or gear, filled through the identical form, produces a structurally identical stored object to a standalone operator's — the claim that makes "one general primitive" true rather than asserted |
+| **The guest's pre-commitment view** | 4 | That the guest's *booking* page shows the price terms and their own running month before they commit, and that the confirmation never reveals which unit or which person was assigned, that somebody lost a race for it, or what happens after return. `../app/SCENARIOS.md G10` asserts the money and quota render on the post-booking manage page only |
+| **Declared capability as a placement limit** | 3 | That a resource is placeable only for a capability it has explicitly configured — a gas mix it declared, a gear pack complete in every required type and size, a boat whose own compressor satisfies the air requirement without a separate air resource |
+| **Employment exclusivity** | 2 | That an employed instructor or divemaster is reachable only through their employing center's bookings and never surfaces in the open freelance market's ranked matching |
+| **Certification written on course completion** | 2 | That completing a course's required dives records or derives the certification. Grepping every suite for `certif` returns nothing: no layer names a certification write or a derived certification attribute anywhere |
+| **A cascade inherits the record** | 2 | That when a job cascades to a replacement after an offer lapses, the new assignee's context carries the commitment's full stored history with no separate human handover. `../engine/SCENARIOS.md I1` and `../harness/SCENARIOS.md C8` assert the offer-and-accept step only |
+| **The budget ceiling that produces a park** | 2 | That a firing hitting its declared step-and-spend ceiling parks rather than erroring or running on, and that the parked card names the budget as the reason. `../harness/SCENARIOS.md C9` asserts only that an existing park cannot self-clear. `README.md` register entry 6 already names this beat owed |
+| **Precondition provenance** | 2 | Which preconditions derive their gating basis from the operator's own uploaded documents versus from an outside legal standard, and that the two gate differently; and that a document-type precondition blocks intake until it is satisfied |
+| **The owner's own ledger surface** | 1 | That the owner's board renders the aggregate — *"who owes me what, this month, right now"*. The guest-side money render and the engine's derived `owed` are both asserted; the owner-facing surface is not |
+| **Instance versus series** | 1 | That the agent asks whether cancelling a recurring booking means this one or the whole series, before acting. Distinct from the general ambiguity law and from the latch mechanics |
+| **Windows, edits and rollovers** | 3 | That a monthly quota stands full again when the month turns (cap enforcement and cancel-restoration *within* a window are asserted; the boundary reset is not) · that per-language guest copy is hand-authored and never model-translated (FD-56) · that a rule authored by one named admin binds identically to a booking taken by a second |
+
+**15 are `UNRULED` — open ruling OR-42, the second seat.** Every one is a question `Situation-C/situation-6.md` and `operator-dive-center-second-seat.md` deliberately ask and no ruling answers: whether a second seat reads the identical board object · what act class *adding a seat* is · whether standing authorizations are board-scoped or person-scoped · what makes a non-founding admin's confirmation satisfy the singular-written floor · whether a narrower seat is a platform type or configuration on the same primitive. These are **missing rulings, never missing scenarios**, and no scenario should be written for them. The home is `../security/SPEC.md §2`, which carries the sitting's recorded proposal.
+
+**11 are `DEFERRED` — FR1, referral to a stranger shop.** Situation C's German and Drysuit hand-offs through the agent, and the commission that would ride them. No seam exists and none is owed: `README.md` gap 2 defers the referral flow, and `../engine/SPEC.md §7.1` is on-app only. The share seam is **not** coverage for these — it reaches suppliers already on annnä, across account lines, and that is a different act.
+
+**Zero beats contradicted a `SPEC` invariant.** Every disposition that could have become a finding resolved to existing law instead.
+
+**FD-68's carried limit produced no rows, and that is worth saying.** The freelance supplier's own board — an offer colliding with their own life, two centers reaching them at once, receivables across counterparties — is the corpus's largest permanent gap, and the ruling forbids both eliciting it and drafting a stand-in. It produced no owed row because `Situation-C/resource-instructor.md` is a setup file: its bolded phrases are template, rating, language and acceptance-mode content, and the beats FD-68 forbids never appear in it to be extracted. The gap is real and is recorded in the "Setup-only, no run" table above, where it belongs; the audit simply does not reach it. **Nothing about this is an invitation to close it.**
+
+### One finding routed out of this folder
+
+**A guest's erasure request has no originator, no surface and no story.** Guests are the corpus's most numerous data subjects and are never users. `../security/SCENARIOS.md V4` walks a deletion request end to end — vault shred, per-subject key destruction, backup age-out, a completion attestation naming all three — but names **nobody who asks**. Confirmed open at this audit: no story under `user-stories/` shows a guest requesting erasure, and no greppable "deletion request" or "data subject" originator language exists in `../security/SPEC.md`.
+
+This is recorded as a **finding for the security pillar's owners**, not fixed here. The missing piece is a surface and an originator, which is a `SPEC` question this folder does not own — and until it has one, the story that would probe it cannot be written either, because there would be nothing for the guest to do.
+
 ## What promotion caught
 
 Four defects the working map carried, invisible while it sat gitignored outside every gate's reach. Each is recorded rather than quietly fixed, because the same class will recur.
