@@ -481,34 +481,36 @@ Latent {                              // a member of `latent[]`
 
 ## §10. Invariants (the poka-yoke ledger)
 
-| Invariant | Constructed at |
-|---|---|
-| No double-book (concurrent ≤ capacity, always) | §6.1 |
-| Commit never fetches — a cache miss at commit is unknown and fails closed, and a failed commit writes nothing | §6.1 |
-| No un-expire; no latch ever cleared | §1.3, §6.2 |
-| A park is cleared by a human or not at all | §1.3 |
-| Diffs cannot wipe governing rules | §6.3 |
-| No hard delete exists | §1.10 |
-| Object shapes evolve additively only; every historic shape stays readable, and no row is rewritten | §1.10 |
-| Money tracked, never moved (recorded as latched marks) | §1.9 |
-| `held` is unsettable until its trigger is ruled; a write attempting it is refused | §1.9 |
-| Proposals never auto-apply; declined move = no change | §1.11, §6.5 |
-| Freed time fail-closed until the owner decides | §1.11, §6.5 |
-| Unknown ≠ free, unknown ≠ feasible | §1.2, §5 |
-| No caller-authored correctness literal reaches math | §2, §4 |
-| Shared projections cannot leak the board | §1.7 |
-| The template-bundle projection cannot select people or data | §1.7a |
-| The owner board projection cannot reach across the tenant line beyond the granted rung, and no projection selects an address | §1.7b |
-| The candidate-shape ghost renders shape alone — no people, bookings, history, ledger or personal data — and is never stored | §0 (the FD-34 carve); `SCENARIOS.md` S6 |
-| Terms bind at booking; edits govern forward only | §1.5, §3 (`pricing`) |
-| One commitment, creator-owned; a cross-owner share stands on both boards or neither | §7.1 |
-| Only the engine mints a ShareGrant — the sole two-tenant *authorization* edge; no caller can author one, and engine-minted cross-tenant references grant nothing | §7.1 |
-| An interval-widening edit re-runs placement checks; a correction can never silently double-book | §6.7 |
-| Materialization never changes a capacity verdict; a blocked instance is a conflicted draft, never a double-book | §9 |
-| A restore conflicts loudly and can never resurrect a latched state | §9, §6.2 (the latch law reaching across the version chain), `../security/SPEC.md §8` |
-| A run under its minimum parks for a human; the engine never auto-cancels | §3 (`min-occupancy`) |
-| A PendingDecision is never chosen by the engine — `chosen` is a human write or absent | §1.14 |
-| Unknown travel and no-feasible-placement are distinguishable in every decline | §5, §9 |
+| Invariant | Constructed at | Gating scenario |
+|---|---|---|
+| No double-book (concurrent ≤ capacity, always) | §6.1 | A1, A2 |
+| Commit never fetches — a cache miss at commit is unknown and fails closed, and a failed commit writes nothing | §6.1 | V6 |
+| No un-expire; no latch ever cleared | §1.3, §6.2 | B1, B2, B3 |
+| A park is cleared by a human or not at all | §1.3 | B4 |
+| Diffs cannot wipe governing rules | §6.3 | A3 |
+| No hard delete exists | §1.10 | B5 |
+| Object shapes evolve additively only; every historic shape stays readable, and no row is rewritten | §1.10 | B6 |
+| Money tracked, never moved (recorded as latched marks) | §1.9 | K2 |
+| `held` is unsettable until its trigger is ruled; a write attempting it is refused | §1.9 | K6 |
+| Proposals never auto-apply; declined move = no change | §1.11, §6.5 | X3, X4, X6 |
+| Freed time fail-closed until the owner decides | §1.11, §6.5 | X5 |
+| Unknown ≠ free, unknown ≠ feasible | §1.2, §5 | P5, T3 |
+| No caller-authored correctness literal reaches math | §2, §4 | Y2 |
+| Shared projections cannot leak the board | §1.7 | S1, S5 |
+| The template-bundle projection cannot select people or data | §1.7a | S3 |
+| The owner board projection cannot reach across the tenant line beyond the granted rung, and no projection selects an address | §1.7b | S4, S4b |
+| The candidate-shape ghost renders shape alone — no people, bookings, history, ledger or personal data — and is never stored | §0 (the FD-34 carve); `SCENARIOS.md` S6 | S6 |
+| Terms bind at booking; edits govern forward only | §1.5, §3 (`pricing`) | T5, P9 |
+| One commitment, creator-owned; a cross-owner share stands on both boards or neither | §7.1 | I1, I2 |
+| Only the engine mints a ShareGrant — the sole two-tenant *authorization* edge; no caller can author one, and engine-minted cross-tenant references grant nothing | §7.1 | I4 |
+| An interval-widening edit re-runs placement checks; a correction can never silently double-book | §6.7 | A5 |
+| Materialization never changes a capacity verdict; a blocked instance is a conflicted draft, never a double-book | §9 | M7 |
+| A restore conflicts loudly and can never resurrect a latched state | §9, §6.2 (the latch law reaching across the version chain), `../security/SPEC.md §8` | B7 |
+| A run under its minimum parks for a human; the engine never auto-cancels | §3 (`min-occupancy`) | O2, O3 |
+| A PendingDecision is never chosen by the engine — `chosen` is a human write or absent | §1.14 | O2, P9 |
+| Unknown travel and no-feasible-placement are distinguishable in every decline | §5, §9 | V4, V5 |
+
+**What the gating-scenario column is for, and what it is not** *(added 2026-08-29 — the corpus runs a scenario↔BUILD gate in **both** directions and **nothing checks law↔scenario**; every serious defect this ledger's own review found lived in that unwatched direction, a law stated here and executed by nothing, and the rows named a construction site and no scenario, so the ledger could not be walked)*. The column is the **bridge from a law to the suite that executes it**. Two rules govern filling it: a cell names a scenario id `SCENARIOS.md` **defines** — never one in another package, because an invariant executed only elsewhere is a finding, not a citation — and a cell that cannot be filled is **neither left blank nor filled with the nearest-looking id**: it reads `none — <what is owed>`, on the same discipline `BUILD.md` Step 0 uses when it states what is *not* done rather than rounding it up to closed. **The column is declared, not enforced: no gate walks it yet.** Until one exists, a filled cell is a declaration and must never be read as a passing check.
 
 **Printed residue on the board-blind row (FD-29, ruled 2026-08-21).** The Shared projection is leak-proof **per response**; a bearer polling on a schedule can difference successive responses and recover the board's occupancy *timing* with every label stripped — when things book and free, never what or whom. Accepted at v1 rather than coarsened: a publication grain would blunt every honest guest's view to slow a patient adversary who still learns the grain. The channel is bounded and visible instead — the projection read carries a declared per-token rate limit (`../security/SPEC.md §10`). A grain rule remains available to a future ruling; this row's guarantee should be quoted with this residue attached.
 
