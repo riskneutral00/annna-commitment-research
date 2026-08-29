@@ -23,6 +23,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 // Which files in the folder are not gates is declared once, in `not-a-gate.mjs`,
 // and imported here. It used to be declared locally here AND in
@@ -62,6 +63,40 @@ export const num = (t) => {
 
 // Parse the distinct `<name>.mjs` tokens out of a stretch of prose, in order.
 const scripts = (s) => [...new Set([...s.matchAll(/`([a-z0-9-]+\.mjs)`/g)].map((m) => m[1]))];
+
+// The parse helpers below are module-level on purpose: the checks and the
+// selfcheck run the SAME code over different input. The two older checks each
+// re-declare their parse inside --selfcheck, which is a second copy that can
+// drift from the one being tested — the exact defect one level down.
+const labels = (s) => [...s.matchAll(/OR-\d+/g)].map((m) => m[0]);
+
+// AGENTS.md's open-ruling sentence: "<word> open — <open list> (<closed list> closed)".
+const orSets = (src) => {
+  const m = src.match(/([A-Za-z-]+) open — ([^—]+?) \(([^)]*?) closed\)/);
+  return m && { word: m[1], open: labels(m[2]), closed: labels(m[3]) };
+};
+
+// The five filenames AGENTS.md's fenced package-shape block promises.
+const shapeNames = (src) => {
+  const block = src.match(/```\n<package>\/\n([\s\S]*?)```/);
+  return block && [...block[1].matchAll(/^\s+([A-Za-z]+\.md)\s/gm)].map((m) => m[1]);
+};
+
+// The set package-shape.mjs actually enforces, read from its source rather than
+// restated here — the declaredHosts pattern, one level over.
+const requiredNames = (src) => {
+  const m = src.match(/const REQUIRED = \[([^\]]*)\]/);
+  return m && [...m[1].matchAll(/"([^"]+)"/g)].map((x) => x[1]);
+};
+
+// Set difference both ways. A one-directional compare passes a superset, which
+// is how a shape law grows a sixth file nobody promised.
+const bothWays = (a, b) => [a.filter((x) => !b.includes(x)), b.filter((x) => !a.includes(x))];
+
+const trackedMd = () =>
+  execFileSync("git", ["ls-files", "-z", "*.md"], { cwd: ROOT, encoding: "utf8", maxBuffer: 1 << 28 })
+    .split("\0")
+    .filter(Boolean);
 
 // Each check returns { ok, label, detail }.
 const CHECKS = [
@@ -103,6 +138,61 @@ const CHECKS = [
       ? { ok: true, label: "FD-4 scenario count", detail: `deployment holds ${actual}, as claimed` }
       : { ok: false, label: "FD-4 scenario count", detail: `FD-4 claims ${claim[2]} surviving scenarios; deployment/SCENARIOS.md defines ${actual}` };
   },
+
+  function openRulings() {
+    // AGENTS.md declares the open set in one sentence and the corpus defines
+    // each label where it is used. Nothing ever compared the two, so three
+    // things could drift silently: the count word against the list beside it,
+    // a label sitting in the open AND closed lists at once, and a label
+    // declared open that no file defines — an open ruling nobody can read.
+    const s = orSets(read("AGENTS.md"));
+    if (!s) return { ok: false, label: "AGENTS.md open rulings", detail: "AGENTS.md no longer states its open-ruling set in a parseable form" };
+    const both = s.open.filter((l) => s.closed.includes(l));
+    if (both.length) return { ok: false, label: "AGENTS.md open rulings", detail: `${both.join(", ")} listed as open AND closed in the same sentence` };
+    if (num(s.word) !== s.open.length) return { ok: false, label: "AGENTS.md open rulings", detail: `AGENTS.md says ${s.word} open; the list beside it names ${s.open.length} (${s.open.join(", ")})` };
+    const corpus = trackedMd().filter((f) => f !== "AGENTS.md");
+    const orphan = s.open.filter((l) => !corpus.some((f) => read(f).includes(l)));
+    return orphan.length
+      ? { ok: false, label: "AGENTS.md open rulings", detail: `${orphan.join(", ")} declared open, but defined in no tracked file — "each fully defined where it is used" is false` }
+      : { ok: true, label: "AGENTS.md open rulings", detail: `${s.open.length} open, none also closed, each defined somewhere in the corpus` };
+  },
+
+  function situationCount() {
+    // README.md's front-door sentence states two numbers over one directory,
+    // and the split between them is the whole point: the primes are marketplace
+    // install probes, not end-to-end situations. Counting every Situation-*
+    // directory would make the correct sentence fail, so the check counts the
+    // way the sentence itself divides them.
+    const src = read("README.md");
+    const core = src.match(/([A-Za-z-]+) end-to-end situations in/);
+    const probe = src.match(/plus ([a-z-]+) marketplace install probes/);
+    if (!core || !probe) return { ok: false, label: "README situation count", detail: "README.md no longer states its situation counts in a parseable form" };
+    const dirs = fs
+      .readdirSync(path.join(ROOT, "user-stories/Situations"), { withFileTypes: true })
+      .filter((d) => d.isDirectory() && d.name.startsWith("Situation-"))
+      .map((d) => d.name);
+    const primes = dirs.filter((d) => d.endsWith("-prime"));
+    const actual = dirs.length - primes.length;
+    if (num(core[1]) !== actual) return { ok: false, label: "README situation count", detail: `README claims ${core[1]} end-to-end situations; user-stories/Situations/ holds ${actual} non-prime director(ies)` };
+    return num(probe[1]) === primes.length
+      ? { ok: true, label: "README situation count", detail: `${actual} situations and ${primes.length} install probes, as claimed` }
+      : { ok: false, label: "README situation count", detail: `README claims ${probe[1]} install probes; ${primes.length} prime director(ies) exist` };
+  },
+
+  function shapeFileSet() {
+    // AGENTS.md prints the package shape as law and package-shape.mjs enforces
+    // it — two copies of one set, never compared. A consolidation that moves
+    // the shape moves the script or the prose, rarely both, and whichever one
+    // lags stays green on its own terms.
+    const claimed = shapeNames(read("AGENTS.md"));
+    if (!claimed) return { ok: false, label: "package shape set", detail: "AGENTS.md no longer prints the package-shape block in a parseable form" };
+    const required = requiredNames(read("deployment/scripts/package-shape.mjs"));
+    if (!required) return { ok: false, label: "package shape set", detail: "package-shape.mjs no longer declares REQUIRED in a parseable form" };
+    const [promised, enforced] = bothWays(claimed, required);
+    return promised.length || enforced.length
+      ? { ok: false, label: "package shape set", detail: `AGENTS.md promises ${promised.join(", ") || "nothing"} that package-shape.mjs does not enforce; package-shape.mjs enforces ${enforced.join(", ") || "nothing"} that AGENTS.md does not promise` }
+      : { ok: true, label: "package shape set", detail: `${claimed.length} files, promised and enforced sets equal both ways` };
+  },
 ];
 
 if (process.argv.includes("--selfcheck")) {
@@ -127,6 +217,30 @@ if (process.argv.includes("--selfcheck")) {
   const defs = (src) => src.split("\n").filter((l) => /^\s*-\s*\*\*[A-Z]\d+\b/.test(l)).length;
   assert.strictEqual(defs("- **R1 [x]** y\n- **R2 [x]** y\nprose\n- not a def"), 2);
   assert.strictEqual(defs("**R1** in prose, not a list item"), 0, "prose mentions are not definitions");
+
+  // --- openRulings, with its three negatives ---
+  const live = "Three open — OR-28, OR-29, OR-42 (OR-39, OR-40, OR-41 closed) — each fully defined";
+  const s = orSets(live);
+  assert.deepStrictEqual(s.open, ["OR-28", "OR-29", "OR-42"], "the open list parses");
+  assert.deepStrictEqual(s.closed, ["OR-39", "OR-40", "OR-41"], "and the closed list does not bleed into it");
+  assert.strictEqual(num(s.word), s.open.length, "the live sentence agrees with itself");
+  // negative: the count word drifts from the list beside it.
+  const drifted = orSets("Four open — OR-28, OR-29, OR-42 (OR-39 closed)");
+  assert.notStrictEqual(num(drifted.word), drifted.open.length, "a count word ahead of its own list must not read as agreement");
+  // negative: one label in both lists at once.
+  const overlap = orSets("Three open — OR-28, OR-29, OR-42 (OR-42, OR-40 closed)");
+  assert.deepStrictEqual(overlap.open.filter((l) => overlap.closed.includes(l)), ["OR-42"], "a label declared open AND closed is caught");
+  assert.strictEqual(orSets("no such sentence here"), null, "an unparseable declaration is a failure, never a silent pass");
+
+  // --- shapeFileSet, with its negative ---
+  const shapeBlock = "```\n<package>/\n  README.md      purpose\n  SPEC.md        law\n```";
+  assert.deepStrictEqual(shapeNames(shapeBlock), ["README.md", "SPEC.md"]);
+  assert.deepStrictEqual(requiredNames('const REQUIRED = ["README.md", "SPEC.md"];'), ["README.md", "SPEC.md"]);
+  assert.deepStrictEqual(bothWays(["a", "b"], ["a", "b"]), [[], []], "equal sets differ in neither direction");
+  // negative: the sets differ by one file, in each direction separately.
+  assert.deepStrictEqual(bothWays(["a", "b"], ["a"]), [["b"], []], "prose promising a file the script does not enforce");
+  assert.deepStrictEqual(bothWays(["a"], ["a", "b"]), [[], ["b"]], "and the script enforcing one the prose never promised");
+  assert.strictEqual(shapeNames("no fenced block"), null, "an unparseable shape block is a failure, not an empty set");
 
   console.log("\nselfcheck OK");
 }
