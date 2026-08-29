@@ -27,7 +27,9 @@ _bmad-output
 
 # Agent-skill configuration — tooling, not corpus. Consistent with the
 # rest of the process artifacts kept off the public repo.
-docs/agents/
+# (No trailing slash: the pattern must also match the symlink form a
+# provisioned worktree carries.)
+docs/agents
 
 # Per-machine session pointers (they point into docs/agents/ working
 # material). Working material like the above; the corpus forbids schedule
