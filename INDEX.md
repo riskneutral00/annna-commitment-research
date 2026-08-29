@@ -80,7 +80,8 @@
 | security/README.md | derived | The security package's read order, doubling as the external posture statement |
 | security/SCENARIOS.md | derived | The attack suite: each scenario an adversary move that must fail, or a guarantee that must hold |
 | security/SPEC.md | SPEC | The cross-cutting security law: threat model, token and PII law, the injection quarantine, compliance posture |
-| user-stories/README.md | SPEC | That the Situations are the requirements source-of-truth, are founder proof scripts, and are never deleted |
+| user-stories/COVERAGE.md | derived | Which layer owes each Situation beat, and whether it is covered, owed, deferred, unruled or deliberately empty |
+| user-stories/README.md | SPEC | That the Situations are the probes the `PRD.md` requirements register is tested against, are founder proof scripts, and are never deleted |
 | user-stories/Situations/Situation-A-prime/README.md | SPEC | The marketplace probe, solo half — what installing from the store must do for one person |
 | user-stories/Situations/Situation-A-prime/situation-1.md | SPEC | The install run: suggestion, ghost preview, blanked-parameter install, first booking, uninstall, one refusal |
 | user-stories/Situations/Situation-A/README.md | SPEC | The whole-life probe: one person's entire life on one board, no market, no other operator |
