@@ -19,6 +19,8 @@ Two series were in play the same day and they were briefly both called `R#`:
 
 **`FR-B` and `FR9` are the same ruling.** FR9 was the first statement (*"the rule is removed; I don't know when or how yet"*); FR-B is the final one, with the execution consequences attached. **The corpus cites `FR-B`.** No file cites `FR9` as a live label. Outside this paragraph the label appears in exactly two places, and both exist only to say it is `FR-B`: the registry row below, and `AGENTS.md`'s ruling vocabulary. Do not add a third.
 
+**`FD-83` is a record, not a hole — confirmed 2026-08-29, and the question is closed.** The constitution census asked whether `FD-83` had ever been assigned or whether the `FD#` series simply skips it, the shape `OR-##` already carries for itself (*"The numbering is non-contiguous; missing numbers were never assigned"*). **It was assigned.** The row is in the `FD-83`–`FD-86` section below, PROPOSED, and its normative home is `harness/BUILD.md` §Guardrails, which cites the label by name. Two approved plans carry the same question as a seam ask; **this sentence is the one answer, and they resolve to it by citation** (FR13) rather than each recording their own. **Counted rather than assumed at the time of writing: `FD-1` through `FD-90` are all defined here, with no gap** — so unlike `OR-##`, a future census that finds a hole in this series is finding a defect, not a decision.
+
 ---
 
 ## FR1–FR13
