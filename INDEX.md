@@ -133,4 +133,17 @@
 | user-stories/Situations/Situation-E/situation-2.md | SPEC | The same ER today: a human scheduler, a magnetic whiteboard, and a phone tree |
 | user-stories/Situations/Situation-E/situation-3.md | SPEC | The must-work predictions, one primitive at a time — a failure names which general primitive is missing |
 | user-stories/Situations/Situation-E/situation-4.md | SPEC | The must-refuse predictions, and the one that matters most: an autonomous annnä stops at the edge of its authority |
+| user-stories/_briefs/README.md | index | What a brief is, that it states questions and never answers, and which owed subjects deliberately have no brief |
+| user-stories/_briefs/agent-ranked-reach.md | never | What to ask about an agent resolving across a ranked list of other tenants, and where FR1's deferral cuts it off |
+| user-stories/_briefs/escalation-ladder.md | never | What to ask before writing an escalation beat — starting with whether any v1 owner has anyone to escalate to |
+| user-stories/_briefs/external-client.md | never | What to ask to close RQ-1 to RQ-9, including whether an owner's own agent is a new Situation or a run inside A |
+| user-stories/_briefs/guest-before-committing.md | never | What to ask each owner about what their customer sees before booking, and what must never leak after |
+| user-stories/_briefs/noticed-pattern-offer.md | never | What to ask about the self-improvement offer — chiefly where a real person puts the line between helpful and creepy |
+| user-stories/_briefs/one-form-many-operators.md | never | What to ask about an owned resource versus a hired one, and whether employment is expressible in the atoms |
+| user-stories/_briefs/owner-money-and-quota.md | never | What to ask about the owner's own aggregate money view and the month a quota window turns on |
+| user-stories/_briefs/precondition-provenance.md | never | What to ask about whose "no" a refusal is — the operator's own document, or an outside standard |
+| user-stories/_briefs/qualification-and-language.md | never | What to ask about language, ratings and declared capability as placement limits — the largest coverage subject |
 | user-stories/_briefs/situation-d-debra.md | history | The elicitation brief that produced Situation D, written to pressure-test the engine |
+| user-stories/_briefs/skins-and-appearance.md | never | What to ask about appearance and the rest-state measurement that refuses a skin (RQ-12) |
+| user-stories/_briefs/the-ask-before-the-act.md | never | What to ask about the console hesitating — the ambiguous cancel, and the 3 a.m. budget park's card |
+| user-stories/_briefs/what-the-record-carries.md | never | What to ask about a certification written on completion, and what a cascaded job inherits |

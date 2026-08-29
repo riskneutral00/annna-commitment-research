@@ -5,7 +5,7 @@ Your schedule lives in your head — every promise, every pickup, every "don't f
 **annnä is an agent-first commitment harness.** You talk; it holds what you promised and does the work the promise implies. The aim is peace — a schedule that feels like there is nothing on it, because the coordination leaves, and then your head no longer has to be where the schedule is kept.
 
 > ### 📋 This repository is a design specification, not a working application.
-> **120 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
+> **133 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
 
 ---
 
