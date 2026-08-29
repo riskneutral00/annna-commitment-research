@@ -69,7 +69,9 @@ Four independent refuter sessions, each prompted to falsify, each on one lens: *
 
 An orchestration runtime (**Atomic**, `bastani-inc/atomic`) was on record as a maturity risk, mitigated by the pin + integrity hash law (W4/W5). FD-4 deleted the orchestration law entirely, so the risk has no surface: there is no orchestration runtime to pin. Recorded rather than dropped, because the *shape* of the argument survives — a floating install of any build-time runtime is a supply-chain hole, and the pin, not portability, is what answers it.
 
-## Still open
+## Still open — the DR series and its residue, held normatively at `SPEC.md §8` (2026-08-08)
+
+*The heading carried no title until 2026-08-29, which put it one character outside the `## Still open — ` contract `status-report.mjs` reads — so every item below was skipped by the build-status report for a fortnight while reading as present to a human. That is the silent-green the report's own near-miss check now refuses.*
 
 - **DR-1** — standing staging rung. Absent by decision.
 - **DR-2** — production exposure / launch. Post-build-phase.
