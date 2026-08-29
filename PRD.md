@@ -256,7 +256,7 @@ The external client calls the verbs the harness already defines and introduces n
 - An abandoned turn leaves no half-applied domain effect: the store holds either the turn's verified complete effect or none of it *(the wording is `harness/SCENARIOS.md` X4's — "no effect at all" was literally unsatisfiable, since attribution records and the turn record survive by law)*.
 - Neither path requires the client that started the turn to be the client that ends it.
 
-**Notes:** Raised by the harness research pass; folded out of `harness/NOTES.md` into `harness/SPEC.md §5.3` on 2026-08-21. Optional with one human at one console; load-bearing the moment a stateless caller exists.
+**Notes:** Raised by the harness research pass; folded into `harness/SPEC.md §5.3` on 2026-08-21, out of the harness backlog that was itself **folded** away 2026-08-29. Optional with one human at one console; load-bearing the moment a stateless caller exists.
 
 #### RQ-7: The permission floor binds every client identically
 
@@ -340,7 +340,7 @@ An outward act — messaging a third party, moving value, destroying something �
 | RQ-3 | `harness/INTERFACES.md` — the seam, asserting the verb roster is unchanged by its existence |
 | RQ-4 | `harness/INTERFACES.md` — declared schemas on the surface |
 | RQ-5 | `harness/SPEC.md` — no capability depends on session affinity; continuation by explicit handle |
-| RQ-6 | `harness/SPEC.md` + `harness/SCENARIOS.md` — resume-or-abandon. Closes the open item in `harness/NOTES.md` rather than adding one |
+| RQ-6 | `harness/SPEC.md` + `harness/SCENARIOS.md` — resume-or-abandon. Closes the harness backlog's open item rather than adding one |
 | RQ-7 | `harness/SPEC.md` — the floor binds every client identically; `harness/SCENARIOS.md` gains the refusal |
 | RQ-8 | `security/SPEC.md` §5 — the surface is a door that stamps `import`, and a client-asserted tag is ignored. `harness/INTERFACES.md` — the quarantine applies to free text, not structured parameters |
 | RQ-10–12 | `app/DESIGN.md`, `app/SPEC.md` §2, `app/SCENARIOS.md` — **landed**: the mechanism ruled 2026-08-09 (FD-22, §Board rendering), the wake scenarios `app/SCENARIOS.md` C9/C10 added 2026-08-21 (C10 re-cut 2026-08-22 twice — to the settings pane after FD-39, then to the closed scope menu at FD-70; C9's fixture re-cut with it), and RQ-12's install-door clause landed 2026-08-22 |

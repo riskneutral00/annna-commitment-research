@@ -74,12 +74,10 @@
 | engine/SCENARIOS.md | derived | The engine's deterministic acceptance suite — every item holds or the build fails |
 | engine/SPEC.md | SPEC | The store and the math of record: commitments, latches, the rule menu, availability, travel, placement |
 | harness/BUILD.md | derived | How a fresh session turns the harness SPEC into a working tested harness, against stubs only |
-| harness/COMPAT.md | SPEC | The RQ-13 compatibility policy and the closed refusal-reason vocabulary — the one home for both, authored ahead of Step 8 so stub declines have a contract |
-| harness/INTERFACES.md | derived | The contracts the harness depends on across three seams, the stubs that stand in for them, and the inbound external-client surface |
-| harness/NOTES.md | never | Harness backlog scratchpad — only what is still genuinely open |
+| harness/INTERFACES.md | SPEC | The contracts the harness depends on across three seams, the stubs that stand in for them, the inbound external-client surface, and — as §7 — the one home for the RQ-13 compatibility policy and the closed refusal vocabulary |
 | harness/README.md | derived | The harness package's read order — the first thing a builder opens |
 | harness/SCENARIOS.md | derived | The harness acceptance suite in Given/When/Then, tagged `[MUST]` and `[HELD-OUT]` |
-| harness/SPEC.md | SPEC | The harness layer's law: the loop, the tool contract, elicitation, the clarify/permission floor, the assisted off-app path, the external-client surface |
+| harness/SPEC.md | SPEC | The harness layer's law: the loop, the tool contract, elicitation, the clarify/permission floor, the assisted off-app path, the external-client surface; §10 carries the harness's open items |
 | marketplace/BUILD.md | derived | That the marketplace builds last, after all four layers, and what must be green first |
 | marketplace/INTERFACES.md | derived | The marketplace's four seams, under the constraint of zero new seam verbs |
 | marketplace/NOTES.md | never | Marketplace backlog scratchpad, including the open rulings OR-28 and OR-29 |

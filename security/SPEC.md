@@ -62,7 +62,7 @@ Plain language, deliberately. Every boundary names the scenario family that patr
 
 ## §3. The capability-token law
 
-*Carried in full from the prior build's ruling (`TECH-STACK:459-485`); resolves the open item at `../harness/NOTES.md` ("token generation/securing"). The harness contract only requires attribution (H6); this section is the rest.*
+*Carried in full from the prior build's ruling (`TECH-STACK:459-485`); resolves the harness backlog's "token generation/securing" open item (that file **folded** away 2026-08-29). The harness contract only requires attribution (H6); this section is the rest.*
 
 - **Minting:** cryptographically random, **≥128 bits**, URL-safe encoding. Never derived from anything guessable (no sequential IDs, no hashes of emails).
 - **Storage:** the store holds the **SHA-256 digest only — plaintext tokens are never stored** anywhere, including logs. (The engine's Shared object stores token *digests*, `../engine/SPEC.md §1.7`.)

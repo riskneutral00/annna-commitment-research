@@ -86,7 +86,7 @@
 
 *S-02 deliberately carries both traps in one item: a model can only pass it by reducing faithfully, not by reducing aggressively. Splitting the traps across two items would let a model pass each half with opposite failures.*
 
-### P-set — reliability (`pass^k` over engine state) *(moved here from `harness/NOTES.md` 2026-08-21 — the item that said this file grades capability and nothing grades repetition)*
+### P-set — reliability (`pass^k` over engine state) *(moved here from the harness backlog 2026-08-21 — the item that said this file grades capability and nothing grades repetition; that file **folded** away 2026-08-29)*
 
 FD-16's curve is about *repeated* success, and every set above grades single attempts. The P-set is the instrument for the other half, and it is deliberately cheap: **grading is an engine-state assertion, not a judgment about text** — after the turn runs, stored state either matches the expected commitment or it does not, code-graded, no judge. Cheap matters because FR5's BYO key means the exam re-runs per provider.
 
