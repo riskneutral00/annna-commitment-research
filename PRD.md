@@ -329,7 +329,7 @@ An outward act — messaging a third party, moving value, destroying something �
 
 ### 4.5 What the specs owe
 
-*The pathway from these requirements to a buildable corpus, as a map of edits to files that already exist. **No new specification file is created by any row except RQ-13's** — `harness/INTERFACES.md §6` rules the compatibility policy lands as its own spec-class markdown on the `deployment/egress-allowlist.md` precedent, carrying its INDEX row and count bump with it; the only other new artifact is RQ-2's gate script. `engine/` is untouched throughout, which is the clearest evidence that this PRD adds a door rather than an authority.*
+*The pathway from these requirements to a buildable corpus, as a map of edits to files that already exist. **No new specification file is created by any row** *(re-read 2026-08-29 — RQ-13's was the one exception: `harness/INTERFACES.md §6` had it land as its own spec-class markdown on the `deployment/egress-allowlist.md` precedent, carrying its own INDEX row and count bump, and that file was **folded** back into `harness/INTERFACES.md §7` when the harness package returned to its ruled five files; the row's law is unchanged and its home is now a section)*; the only new artifact is RQ-2's gate script. `engine/` is untouched throughout, which is the clearest evidence that this PRD adds a door rather than an authority.*
 
 *Landed: RQ-1's security rows on 2026-08-08 (FD-17, FD-18); the harness rows — RQ-2 through RQ-9 and RQ-13 — on 2026-08-21, at `harness/SPEC.md §5.3`, `harness/INTERFACES.md §6`, `harness/SCENARIOS.md` X1–X7 (X7 is RQ-13's gate), `harness/BUILD.md` Step 8, and `security/SPEC.md §5`'s door list. RQ-2's mechanical gate lands with the enumeration at that Step 8, per the printed-gate posture.*
 
