@@ -438,6 +438,7 @@ The `grants[]` edge (each entry a `ShareGrant`) is the only **authorization** st
 | Invariant | Constructed at |
 |---|---|
 | No double-book (concurrent ≤ capacity, always) | §6.1 |
+| Commit never fetches — a cache miss at commit is unknown and fails closed, and a failed commit writes nothing | §6.1 |
 | No un-expire; no latch ever cleared | §1.3, §6.2 |
 | A park is cleared by a human or not at all | §1.3 |
 | Diffs cannot wipe governing rules | §6.3 |
