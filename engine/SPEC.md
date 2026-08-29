@@ -421,6 +421,28 @@ The `grants[]` edge (each entry a `ShareGrant`) is the only **authorization** st
   - **The test is always against the *smallest* case, and this is the discipline that keeps the class honest.** A pair is unsatisfiable only when the **minimum** input already fails — `duration.min`, the longest available window, a single instance of a kind. It is **not** unsatisfiable merely because *large* inputs fail: a group of six exceeding a four-seat boat is an ordinary capacity refusal at commit (A1), not a broken ruleset, and refusing it at write would block a shop from storing rules that work fine for small bookings. **Getting this backwards turns a working configuration into an unstorable one**, which is worse than the problem the class was added to solve. **Every** row in §3's table must state its minimum-case test explicitly — not merely every new one. Two rows were narrowed by this discipline and two more were later **killed** by it (`dependency × pin` with the pin disambiguation; the three-rule joint row, whose minimum case reduced to an existing pair), all caught by asking "what is the smallest input that fails?" rather than by reading the row. A row whose test is not printed has not been checked.
 
   Because the menu is closed, clash conditions are **enumerable and strictly pairwise** (§3, 2026-08-21); the spec of each row's clash test lives with the menu entries (§3), not in open-ended logic, and §3's table marks which rows are unsatisfiable.
+
+**The two return members, printed** *(2026-08-29 — both sides of this seam printed an ellipsis (`{conflicts, latent}` here, `{ conflicts:[…], latent:[…] }` at `../harness/INTERFACES.md §1.3`) while two MUST scenarios asserted the payload: `SCENARIOS.md` G3 requires "the alert returns naming the row" and G6 requires "both offending operands and the remedy — never a bare 'invalid ruleset.'" §2 prints `TypedValue` as a literal struct for exactly this reason — two builders reading it must produce identical encodings.)*
+
+```
+Conflict {                            // a member of `conflicts[]`
+  class    : governing | own-rule | latent | unsatisfiable,   // §8's four, CLOSED
+  rules    : [ rule_ref, rule_ref ],  // both offending rules — the check is strictly pairwise (§3)
+  operands : [ TypedValue, TypedValue ],                      // both offending operands (§2)
+  clash_row: §3-clash-table row id,   // which printed row was hit
+  remedy   : { subject: rule_ref, direction: raise | lower, toward: TypedValue }[]
+}                                     // the naming message as STRUCTURED FIELDS, never a prose blob
+
+Latent {                              // a member of `latent[]`
+  class    : latent,
+  rules    : [ rule_ref, rule_ref ],
+  operands : [ TypedValue, TypedValue ],
+  clash_row: §3-clash-table row id
+}                                     // NO remedy member — a latent alert does not block, so there is nothing to fix
+```
+
+- **The remedy is structured, not a sentence.** §8's own example — *"capacity is 4 and you've set a minimum of 6 — raise the capacity or lower the minimum"* — is two `remedy` entries, and the harness narrates them in any language. A build that ships the English string satisfies G6 by accident and fails FR15 the moment the owner's stored language is not `en`.
+- **`class` is a closed enumeration**; an unrecognized member is refused under §2's unknown-member rule, never classified to the nearest neighbour.
 - `check_coverage(board) → {missing_required}` is **structural only**: required attributes/rules present per the governing kind's schema. Semantic completeness is undecidable and never claimed.
 
 ## §9. Failure & edge behavior
