@@ -65,6 +65,12 @@ The external evidence is unflattering and consistent: conversational interfaces 
 
 *Founder intuition and the recorded research agree here, which is why this is worth a real sitting rather than a default: the note above already found that users prefer the hybrid, and this ask is that finding arriving from the other side.*
 
+## Still open — personal-first native-send investigation (founder direction 2026-08-23; recorded here 2026-08-29)
+
+*Research, not a build (G1-2): a one-prompt implements the specified roster only (`SPEC.md §6` — email, Generate Link, LINE, WhatsApp). Do not implement a provider from this item. Findings may propose amendments to FD-61 / FD-74 / `SPEC.md §6` — the founder ratifies.*
+
+Investigate **native** send for LINE, WhatsApp, Instagram, Messenger, WeChat, **KakaoTalk**, and any other mainstream personal messenger the research names. **Priority: individual / personal accounts; business / official-account APIs stay in as the kept fallback** — founder, 2026-08-23: *"I don't mean to completely avoid business accounts. Individual accounts as the priority, but when it's not possible, but a business account is possible, we're still going to leave that option in."* Copy-and-paste stays the floor that always works. Per provider, the deliverable answers: (1) can a third party send *as the owner* from a **personal** account — and if not, what is the official business/official-account/bot door and the individual-legal middle (system share sheet, deep link with prefilled text — never called a silent API send); (2) hard point vs paperwork vs opens-the-other-app; (3) cost and identity — paid SKU, company entity, government-region entity (WeChat mainland OA is a recorded hard point); (4) a recommendation: personal send if it exists, else business-API as owner-linked opt-in, else Generate Link.
+
 ## Still open — the founder wants a routines page (2026-08-23)
 
 *Founder ask, recorded 2026-08-23, **not ruled and not designed**. **Not a blocker for any build step.** Same capture discipline as the board-mode note above.*

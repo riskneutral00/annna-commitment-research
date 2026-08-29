@@ -22,7 +22,6 @@
 | .specs/deep-interview-app.md | history | The interview that pinned the app's open design decisions before its spec was authored |
 | .specs/deep-interview-engine.md | history | The interview that pinned the engine's open design decisions, incl. location and travel |
 | AGENTS.md | SPEC | The operating law for agents: authority order, package shape, citation conventions, ruling vocabularies. The first read of every session |
-| CLARIFY.md | index | Leftover sittings (§§8–9) — research, not the session job. What a Situation is landed as FD-80; home `PRD.md` §6.5 |
 | INDEX.md | index | This file — every tracked markdown file and its authority tier |
 | PR/BRAND.md | SPEC | The visible identity: palette, marks, containment rules. Derives from the koi skin and `app/DESIGN.md` |
 | PR/BRIEF.md | SPEC | The investor/grant compression — mostly pointers to homes, and the corpus's only success criteria and only risk register |

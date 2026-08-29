@@ -411,7 +411,7 @@ What annnä is not, and will not become. These prevent the "let me also add this
 Stated as readiness conditions, never as schedule (FR2):
 
 - The founder uses annnä at its own console. No external client is admitted while he is the only user.
-- The external surface is exercised **when a beta cohort exists** and RQ-1 through RQ-9 have their scenarios green. **(2026-08-24 skip, G1-6:** the leftover restatement in `CLARIFY.md` §9.8 is skipped, not landed. Do not implement an owner-API consumer or mint the external-client credential this prompt. Do not rewrite §1.1 from that leftover. This section already says when the surface is exercised.)
+- The external surface is exercised **when a beta cohort exists** and RQ-1 through RQ-9 have their scenarios green. **(2026-08-24 skip, G1-6:** the leftover agent-first restatement in the retired `CLARIFY.md` §9.8 was skipped, not landed. Do not implement an owner-API consumer or mint the external-client credential this prompt. Do not rewrite §1.1 from that leftover. This section already says when the surface is exercised.)
 - Ring two — instructors he knows — is reached **when** the Situation A path runs end to end on real weeks, not simulated ones.
 - Centers, and with them the two-sided job-acceptance seam, are reached **when** ring two is producing the freelancer half of that seam.
 

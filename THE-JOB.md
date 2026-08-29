@@ -16,7 +16,7 @@ This file is the tracked session job. It is an index of the moment, not a home o
 ## Done
 
 - Live SPECs do not still name a Situation as a product to ship.
-- Leftover forks from `CLARIFY.md` §§8–9 are either law in their home or named as later research, not as a build inventable.
+- The leftover forks from the retired `CLARIFY.md` §§8–9 landed as law at their homes (FD-80 / FD-81 / FD-82, the harness ratifications, `model/SPEC.md` §7) or as named research at their homes (`app/NOTES.md`, `security/SPEC.md` §2); the file itself is deleted.
 - The README Status line matches that moment.
 - He has given the go-word.
 
@@ -24,7 +24,7 @@ Until then this is still a prepare-to-build sitting, not a code sitting.
 
 ## Where the rest lives
 
-- Leftover research (not build gates): `CLARIFY.md` §§7–9 — messaging investigation, hour-grid residue, OR-42 proposal, Situation × layer map
+- Leftover research (not build gates), each at its live home — the source file, the retired `CLARIFY.md`, is deleted: messaging investigation → `app/SPEC.md` §6 + `app/NOTES.md` · hour-grid residue → `app/NOTES.md` + the FD-81 row · OR-42 proposal → `security/SPEC.md` §2 · Situation × layer map → working material under `docs/agents/`
 - Later acts, not this phase: Cloudflare, OpenRouter keys, `privacy@annna.dev`
 - A working checkout may also carry a living gate list under `docs/agents/` (absent from a clone). This file is what a clone has.
 - Do not add to `AGENTS.md` (950-word ceiling, 0 spare)
