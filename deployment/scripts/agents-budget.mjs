@@ -11,7 +11,7 @@
 // anything is added. That mechanic is deliberately unchanged; what changed is
 // what it is measured against.
 //
-// Why 950 and not 1500. The old ceiling bounded the whole file, and 45% of the
+// Why this order of magnitude and not 1500. The old ceiling bounded the whole file, and 45% of the
 // whole file was `## The one green command` — a walkthrough of what each gate
 // does, needed once while debugging a red gate and paid for on every turn since.
 // It moved to `deployment/README.md`, where the gates it describes already live.
@@ -37,7 +37,12 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
-const CEILING = 950;
+// Ratcheted 950 → 935 on 2026-08-29, to the MEASURED landed count after the
+// consolidation wave, per the rule on the line above: spare that is never
+// claimed is spare the next session spends on one more sentence. The number is
+// what the file actually weighs, not a target with room in it — which is the
+// whole difference between a ratchet and a budget.
+const CEILING = 935;
 
 export const countWords = (text) => text.split(/\s+/).filter(Boolean).length;
 
