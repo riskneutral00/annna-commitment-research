@@ -3,7 +3,7 @@
   "private": true,
   "description": "Specification corpus. `npm run check` is the repo's one green command — the CI floor declared by deployment/SPEC.md §4.",
   "scripts": {
-    "check": "npm run check:gates && npm run check:paths && npm run check:hermetic && npm run check:modelkey && npm run check:rungs && npm run check:closed && npm run check:seed && npm run check:credfloor && npm run check:secrets && npm run check:swap && npm run check:egress && npm run check:engine && npm run check:harness && npm run check:seams && npm run check:triggers && npm run check:compat && npm run check:probes && npm run check:tsix && npm run check:determinism && npm run check:reactive && npm run check:size && npm run check:shape && npm run check:docs && npm run check:index && npm run check:status && npm run check:claims && npm run check:budget && npm run check:ignored && npm run check:citeform && npm run check:xcite && npm run check:hex && npm run check:packs && npm run check:designlaw && npm run check:roster && npm run check:wiring",
+    "check": "npm run check:gates && npm run check:paths && npm run check:hermetic && npm run check:modelkey && npm run check:rungs && npm run check:closed && npm run check:seed && npm run check:credfloor && npm run check:secrets && npm run check:swap && npm run check:egress && npm run check:engine && npm run check:harness && npm run check:seams && npm run check:triggers && npm run check:compat && npm run check:mintrevoke && npm run check:probes && npm run check:tsix && npm run check:determinism && npm run check:reactive && npm run check:size && npm run check:shape && npm run check:docs && npm run check:index && npm run check:status && npm run check:claims && npm run check:budget && npm run check:ignored && npm run check:citeform && npm run check:xcite && npm run check:hex && npm run check:packs && npm run check:designlaw && npm run check:roster && npm run check:wiring",
     "check:budget": "node deployment/scripts/agents-budget.mjs --selfcheck && node deployment/scripts/agents-budget.mjs",
     "check:ignored": "node deployment/scripts/ignore-claim.mjs --selfcheck && node deployment/scripts/ignore-claim.mjs",
     "check:citeform": "node deployment/scripts/cite-form.mjs --selfcheck && node deployment/scripts/cite-form.mjs",
@@ -30,6 +30,7 @@
     "check:seams": "node deployment/scripts/seam-async.mjs --selfcheck && node deployment/scripts/seam-async.mjs",
     "check:triggers": "node deployment/scripts/trigger-union.mjs --selfcheck && node deployment/scripts/trigger-union.mjs",
     "check:compat": "node deployment/scripts/compat-reasons.mjs --selfcheck && node deployment/scripts/compat-reasons.mjs",
+    "check:mintrevoke": "node deployment/scripts/mint-revoke-pairing.mjs --selfcheck && node deployment/scripts/mint-revoke-pairing.mjs",
     "check:probes": "node deployment/scripts/probe-coverage.mjs --selfcheck && node deployment/scripts/probe-coverage.mjs",
     "check:engine": "npm --prefix engine test",
     "check:harness": "npm --prefix harness test",

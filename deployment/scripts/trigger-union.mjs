@@ -63,8 +63,41 @@ function compare(spec, code) {
   return bad;
 }
 
+// ---------------------------------------------------------------------------
+// The second checked pair (2026-08-28) — prose⇄prose this time, on the hook the
+// header above left: "each gets this treatment when its second copy exists."
+//
+// The stored-object read member naming the firing log is enumerated twice, in
+// two closed enumerations that must swap cleanly: engine/SPEC.md §5 item 7 and
+// harness/INTERFACES.md §1.1. A member named `FiringEvent` in one file and
+// anything else in the other is a red, not a warning — under the zero-changes
+// swap law the harness cannot construct what the engine does not enumerate.
+//
+// The extraction is anchored on the entry's *prose*, never on the token itself:
+// anchoring on the token would turn a rename in one file into "absent", and the
+// gate would report the weaker of the two facts. Anchored on prose, a rename
+// reports as divergence and a deletion reports as absence.
+const MEMBER_ANCHOR = /`([A-Za-z][A-Za-z0-9_]*)`\s*—\s*the firing log's record by firing id/;
+
+export function readMemberToken(md) {
+  const m = md.match(MEMBER_ANCHOR);
+  return m ? m[1] : null;
+}
+
+export function compareMember(engineMd, harnessMd) {
+  const e = readMemberToken(engineMd);
+  const h = readMemberToken(harnessMd);
+  const bad = [];
+  if (!e) bad.push("engine/SPEC.md §5 item 7 carries no firing-log read member — the enumeration lost it, or its entry no longer parses");
+  if (!h) bad.push("harness/INTERFACES.md §1.1 carries no firing-log read member — the enumeration lost it, or its entry no longer parses");
+  if (e && h && e !== h) bad.push(`the firing-log read member is \`${e}\` in engine/SPEC.md and \`${h}\` in harness/INTERFACES.md — one canonical token, or the swap law is a lie`);
+  return bad;
+}
+
 const SPEC_FIXTURE = `the loop may fire on a *sale*, a *hold expiry*, a *decline*, a *returned form*, a *clock time*, or a *delivery report* — not only a human turn. **Six sources**, and`;
 const CODE_FIXTURE = `export type TriggerEvent = { kind: "sale" | "hold-expiry" | "decline" | "returned-form" | "clock" | "delivery-report"; at: number };`;
+const ENGINE_MEMBER_FIXTURE = "the template-bundle projection (§1.7a), and a `FiringEvent` — the firing log's record by firing id, both parts (§1.16).";
+const HARNESS_MEMBER_FIXTURE = "the §2.1 relevant-slice assembly, and a `FiringEvent` — the firing log's record by firing id, both parts (`SPEC.md §3.14`).";
 
 if (process.argv.includes("--selfcheck")) {
   assert.deepStrictEqual(compare(SPEC_FIXTURE, CODE_FIXTURE), [], "the matched pair passes");
@@ -72,20 +105,32 @@ if (process.argv.includes("--selfcheck")) {
   assert.ok(compare(SPEC_FIXTURE, five).length > 0, "the historical five-member drift is caught");
   const extra = CODE_FIXTURE.replace('"delivery-report"', '"delivery-report" | "webhook"');
   assert.ok(compare(SPEC_FIXTURE, extra).some((b) => b.includes("webhook")), "an invented seventh member is caught");
+
+  assert.deepStrictEqual(compareMember(ENGINE_MEMBER_FIXTURE, HARNESS_MEMBER_FIXTURE), [], "the matched read-member pair passes");
+  const diverged = HARNESS_MEMBER_FIXTURE.replace("`FiringEvent`", "`FiringRecord`");
+  assert.ok(
+    compareMember(ENGINE_MEMBER_FIXTURE, diverged).some((b) => b.includes("FiringRecord")),
+    "a divergent spelling is caught as divergence, not as absence",
+  );
+  assert.ok(compareMember(ENGINE_MEMBER_FIXTURE, "no such member here").some((b) => b.includes("harness/INTERFACES.md")), "absence in the harness enumeration is caught");
+  assert.ok(compareMember("no such member here", HARNESS_MEMBER_FIXTURE).some((b) => b.includes("engine/SPEC.md")), "absence in the engine enumeration is caught");
   console.log("selfcheck OK");
   process.exit(0);
 }
 
 const spec = fs.readFileSync(path.join(ROOT, "harness/SPEC.md"), "utf8");
 const code = fs.readFileSync(path.join(ROOT, "harness/src/index.ts"), "utf8");
-const bad = compare(spec, code);
+const engineSpec = fs.readFileSync(path.join(ROOT, "engine/SPEC.md"), "utf8");
+const harnessIface = fs.readFileSync(path.join(ROOT, "harness/INTERFACES.md"), "utf8");
+const bad = [...compare(spec, code), ...compareMember(engineSpec, harnessIface)];
 if (bad.length) {
-  console.log(`\nTRIGGER-UNION FAIL — harness/SPEC.md §4 vs harness/src/index.ts:`);
+  console.log(`\nTRIGGER-UNION FAIL:`);
   for (const b of bad) console.log(`  ${b}`);
   process.exit(1);
 }
 const n = unionMembers(code).length;
 console.log(
-  `TRIGGER-UNION OK — ${n} trigger sources, spec and union in agreement. ` +
-    `NOT CHECKED: other closed enums stated in both prose and types — each gets this treatment when its second copy exists.`,
+  `TRIGGER-UNION OK — ${n} trigger sources, spec and union in agreement; ` +
+    `the \`${readMemberToken(engineSpec)}\` read member is one canonical token in engine/SPEC.md §5 item 7 and harness/INTERFACES.md §1.1. ` +
+    `NOT CHECKED: other closed enums stated twice — each gets this treatment when its second copy exists.`,
 );
