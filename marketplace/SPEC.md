@@ -19,11 +19,64 @@ The catalog form of a skin (`../app/DESIGN.md §Appearance` is the law of how a 
 | Field | What it is |
 |---|---|
 | `id` / `name` / `version` | Identity. A re-publish is a new version (§2). |
-| `palette` | The approved token set — the shipped packs' `palette.json` shape **as it actually is, all thirteen fields** *(enumerated in full 2026-08-21 — the old cell named eight-ish and omitted `name`, `master`, and the two load-bearing measurements, so a schema built from it could not compute the veil and would refuse every real pack at §3's unknown-field door)*: `name` · `master` · **`luminance`** and **`colorfulness`** (the measured values the veil derivation and the pack-acceptance floor read) · `dominants` · `semantic` roles · `accent` / `accentDeep` · `ambientDark` / `ambientLight` gradient pairs · `tintDarkAlpha` / `tintLightAlpha` · `suggestedMode` (`light` \| `dark`). The **veil** — the tint every glass surface is made of — **derives** per `../app/DESIGN.md §Appearance`, by mode from the pack's stored **`brightestRegion`** *(a fourteenth-and-fifteenth stored pair with `veil` itself, added 2026-08-22 — the V1 fix: the spike proved the old "continuous function of `luminance`" claim described a mechanism the packs could not feed, and a pack the build never saw needs the measurement stored to derive at install time)* plus 18% of its `DarkMuted`. **The install door also runs the derived AA floors** (`../app/DESIGN.md §Appearance`; a11y A12) — a pack that derives cleanly but fails contrast over its own regions refuses exactly as one missing a field does. **`darkestRegion` is a sixteenth stored field beside that pair** *(added 2026-08-22, the same argument one field over: `../app/DESIGN.md`'s A1 urgency walk and A12 install floors solve against the pack's `brightestRegion` **and its darkest counterpart**, and a pack the build never saw needs both measurements stored to derive at install time — measured and written by the admin pipeline exactly as `brightestRegion` is, never a per-name table)*. *(2026-08-09: this was a two-value warm\|dark "glass temperature" switched on `suggestedMode`, and that rule is gone — `suggestedMode` still selects ink and density pair, never the veil.)* **The LQIP is not in this half (FD-31, ruled 2026-08-21):** a 24px inlined rendition of the licensed photograph is a rendition of the licensed photograph, so it lives in `derivatives` — **landed 2026-08-22**: the pipeline change shipped (`c49c1d2`) and all four packs' `palette.json` no longer carry it; the compliance note that stood here is discharged. |
-| `derivatives` | The responsive image set (WebP + AVIF at 640/1280/2048 + mobile aliases) **and, since FD-31, the LQIP**. **Licensed IP: delivered only to entitled accounts** (§4) — never in a public repo, client bundle, or unentitled-reachable document, **as a URL or as inlined data** (E4's content-based restatement). |
-| `license` | The licensed-IP marker. The asset license is not the code license; MIT covers this repo, not store images. |
-| `preview` | **Palette-only** preview material — the gallery re-tints the owner's board from **swatches alone** *before* the account is entitled, without touching a licensed image or any rendition of one (FD-31). |
+| `palette` | The approved token set — the shipped packs' `palette.json` shape **as it actually is: sixteen fields**, in the enumeration order the gate itself carries: `name` · `master` · `luminance` · `colorfulness` · `suggestedMode` · `dominants` · `semantic` · `accent` · `accentDeep` · `ambientDark` · `ambientLight` · `tintDarkAlpha` · `tintLightAlpha` · `brightestRegion` · `darkestRegion` · `veil`. **Every sub-shape is printed below the table.** *(Enumerated in full 2026-08-21 — the old cell named eight-ish and omitted `name`, `master`, and the two load-bearing measurements, so a schema built from it could not compute the veil and would refuse every real pack at §3's unknown-field door. Restated as **sixteen** 2026-08-29: the cell read "all thirteen fields" while naming more than thirteen, and the shipped packs and the gate both carry sixteen — the number was false the moment it was read as a count.)* **`luminance` and `colorfulness`** are the measured values the veil derivation and the pack-acceptance floor read. The **veil** — the tint every glass surface is made of — **derives** per `../app/DESIGN.md §Appearance`, by mode from the pack's stored **`brightestRegion`** *(stored alongside `veil` itself, added 2026-08-22 — the V1 fix: the spike proved the old "continuous function of `luminance`" claim described a mechanism the packs could not feed, and a pack the build never saw needs the measurement stored to derive at install time)* plus 18% of its `DarkMuted`. **The install door also runs the derived AA floors** (`../app/DESIGN.md §Appearance`; a11y A12) — a pack that derives cleanly but fails contrast over its own regions refuses exactly as one missing a field does. **`darkestRegion` is stored beside that pair** *(added 2026-08-22, the same argument one field over: `../app/DESIGN.md`'s A1 urgency walk and A12 install floors solve against the pack's `brightestRegion` **and its darkest counterpart**, and a pack the build never saw needs both measurements stored to derive at install time — measured and written by the admin pipeline exactly as `brightestRegion` is, never a per-name table)*. *(2026-08-09: this was a two-value warm\|dark "glass temperature" switched on `suggestedMode`, and that rule is gone — `suggestedMode` still selects ink and density pair, never the veil.)* **The LQIP is not in this half (FD-31, ruled 2026-08-21):** a 24px inlined rendition of the licensed photograph is a rendition of the licensed photograph, so it lives in `derivatives` — **landed 2026-08-22**: the pipeline change shipped (`c49c1d2`) and all four packs' `palette.json` no longer carry it; the compliance note that stood here is discharged. |
+| `derivatives` | The responsive image set (WebP + AVIF at 640/1280/2048 + mobile aliases) **and, since FD-31, the LQIP**. **Printed below**, filenames and all. **Licensed IP: delivered only to entitled accounts** (§4) — never in a public repo, client bundle, or unentitled-reachable document, **as a URL or as inlined data** (E4's content-based restatement). |
+| `license` | The licensed-IP marker. **Printed below.** The asset license is not the code license; MIT covers this repo, not store images. |
+| `preview` | **Palette-only** preview material — the gallery re-tints the owner's board from **swatches alone** *before* the account is entitled, without touching a licensed image or any rendition of one (FD-31). **Printed below.** |
 | catalog metadata | Category, tags, featured flag, `popularity` (§6). |
+
+**The pack document, printed** *(2026-08-29 — the fields were named and their shapes were not, so a schema built from this section alone could not accept a real pack; the derivatives grammar existed nowhere but `../assets/make-pack.mjs`)*. `#rrggbb` stands for a hex colour throughout; no example colour is written here on purpose:
+
+```
+pack : {
+  id, name, version,       // `name` is the PACK's name — what the install door's unknown-field
+                           // check reads, and what palette.json and derivatives.json each carry.
+                           // The listing's display title is publish-assigned catalog metadata
+                           // (§6) and is never what the door validates against.
+  palette, derivatives, license, preview,
+  category, tags, featured, popularity          // catalog metadata (§6)
+}
+
+palette : {
+  name            : string,               // the pack name again — palette.json is its own document
+  master          : string,               // the master image filename
+  luminance       : number,               // measured
+  colorfulness    : number,               // measured
+  suggestedMode   : "light" | "dark",     // selects ink and the density pair, never the veil
+  dominants       : [ { hex: "#rrggbb", share: 0..1 } ],
+  semantic        : { Vibrant, Muted, DarkVibrant, DarkMuted, LightVibrant, LightMuted },
+                                          // six fixed keys, each a "#rrggbb" string
+  accent          : "#rrggbb",
+  accentDeep      : "#rrggbb",
+  ambientDark     : [ "#rrggbb", "#rrggbb" ],     // gradient pair
+  ambientLight    : [ "#rrggbb", "#rrggbb" ],     // gradient pair
+  tintDarkAlpha   : number,
+  tintLightAlpha  : number,
+  brightestRegion : "#rrggbb",
+  darkestRegion   : "#rrggbb",
+  veil            : "#rrggbb"
+}
+
+derivatives : {
+  name : string,                          // the pack name; this is the pack's derivatives.json
+  lqip : "data:image/webp;base64,..."     // a 24px-wide WebP of the master, inlined (FD-31)
+}
+// The renditions that sit beside it, by filename: photo-640, photo-1280 and photo-2048, each
+// as .webp AND .avif; plus the aliases photo@1x, photo@2x and photo@3x (.webp only), bound to
+// 640, 1280 and 2048 respectively. Every one of them — the LQIP included — is a rendition of
+// the licensed photograph: entitled accounts only, by short-lived signed URL (§4), never in a
+// public repo, a client bundle, or an unentitled-reachable document, as a URL or as inlined
+// data (E4).
+
+license : { holder, terms }
+// The licensed-IP marker: who holds the photograph's rights, and under what licence. The
+// licence text itself is not carried in this repo. The asset licence is not the code licence.
+
+preview : { swatches : [ "#rrggbb", ... ] }
+// Palette-only by construction: the gallery re-tints the owner's own board from swatches
+// alone, before the account is entitled. No rendition of the licensed photograph appears
+// here in any form, the LQIP included (FD-31, E4).
+```
 
 The shipped four (dark · koi · nudi · treestars) + Plain are the **permanent floor** beneath this format: they ship in every build, need no entitlement, and are the guaranteed floor when the store is unreachable — installed store skins additionally survive from their persisted device copies (§3, §4).
 
