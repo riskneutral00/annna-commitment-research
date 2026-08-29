@@ -446,6 +446,7 @@ The `grants[]` edge (each entry a `ShareGrant`) is the only **authorization** st
 | A park is cleared by a human or not at all | §1.3 | `type-level construction` — `cleared_by` has no `engine`/`llm` member to write |
 | Diffs cannot wipe governing rules | §6.3 | `scenario-suite-only` — §6.3 calls the wipe unconstructable; the construction is the diff applier, unshipped |
 | No hard delete exists | §1.10 | `type-level construction` — no delete operation is exposed above the substrate |
+| Object shapes evolve additively only; every historic shape stays readable, and no row is rewritten | §1.10 | `scenario-suite-only` — the store's additive-evolution discipline, unshipped |
 | Money tracked, never moved (recorded as latched marks) | §1.9 | `type-level construction` — no operation in this layer moves value |
 | Proposals never auto-apply; declined move = no change | §1.11, §6.5 | `scenario-suite-only` — §6.5's confirmed-moves gate, unshipped |
 | Freed time fail-closed until the owner decides | §1.11, §6.5 | `scenario-suite-only` |
