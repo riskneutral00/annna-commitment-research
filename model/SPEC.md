@@ -111,7 +111,7 @@ Every factual claim in `narrate` output must trace to a field in the input struc
 
 The **harness validates output shape at the seam** — the model is never trusted to self-validate. No failure path may skip the floor or invent a partial result.
 
-**One ladder, for every failure of every call type** *(one statement, reconciled here 2026-08-29 — four texts carried four incompatible ladders: this section's two paragraphs, §7's BYO-fallback sentence, and the `timeout | model` row at `../harness/COMPAT.md §1`, and no two agreed on when the fallback engages or whether a timeout is retried)*. Every failure arrives as a member of the error union — **malformed, refused, timeout, unavailable** (`INTERFACES.md §2.1`; malformed covers schema violation, unknown intent, unparseable) — and every member takes the same three rungs:
+**One ladder, for every failure of every call type** *(one statement, reconciled here 2026-08-29 — four texts carried four incompatible ladders: this section's two paragraphs, §7's BYO-fallback sentence, and the `timeout | model` row at `../harness/INTERFACES.md §7.1`, and no two agreed on when the fallback engages or whether a timeout is retried)*. Every failure arrives as a member of the error union — **malformed, refused, timeout, unavailable** (`INTERFACES.md §2.1`; malformed covers schema violation, unknown intent, unparseable) — and every member takes the same three rungs:
 
 1. **one bounded retry on the same binding**;
 2. on a second failure, **one attempt on the fallback binding** for that call type (`INTERFACES.md §2.2`);
