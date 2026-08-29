@@ -228,3 +228,10 @@ Supply for **templates** is owner-publish (FD-82); **skins** stay admin. Discove
 | A store transaction never touches board money records | §5 (the lane distinction) |
 | A withdrawn entitlement deactivates at the next check, without deleting the device copy | §4 (FR14) |
 | A template install cannot bypass propose→confirm | §3 (parameters walk ordinary elicitation) |
+| A bundle stamped with a newer catalog-manifest version than the client's refuses whole | §3 (the door compare) + §1.2 (the field it compares) |
+| The install walk is a session — save, resume, abandon | §3 (the authoring twin's law) |
+| The store never self-opens | §6 (the suggestion is the entry; D5) |
+| A pack the grammar has moved past degrades to the shipped floor, never silently | §4 (grammar evolution, pack side) |
+| The candidate-shape ghost mints nothing | §6 (FD-34 — a display projection, fenced by construction) |
+| Skins stay the admin pack pipeline | §0 + §2 |
+| Deleting a saved bundle never mutates a listing | §2 (delete-saved) |
