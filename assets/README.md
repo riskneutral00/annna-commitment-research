@@ -8,9 +8,11 @@
 The four shipped default skins — **dark, koi, nudi, treestars** — extracted from the
 prior build at `~/Desktop/annnä/assets/` — a tree **outside this repo**, on the founder's
 machine; the citation is provenance, not required reading, and the assets themselves are
-here (founder-approved there 2026-07-17; owner: the founder). Founder ruling carried: every version ships exactly this default set, plus
-**Plain** (no photo; boring mode's ground — never a picker row) so more skins can be
-added later. Coffee and eagle-ray were reviewed and rejected.
+here (founder-approved there 2026-07-17; owner: the founder). Founder ruling carried: the shipped
+packs are **fixtures, not canon** — no token, table or constant may name a pack — and **koi is the
+default until the founder picks a shipping set** (`../app/DESIGN.md §Appearance`, the home).
+**Plain** stays beside them: no photo; boring mode's ground — never a picker row.
+Coffee and eagle-ray were reviewed and rejected.
 
 These four are the free, built-in set the user cycles through. Additional skins are
 **paid**, sold through the marketplace, and supplied by the admin only — users never
