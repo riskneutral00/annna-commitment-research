@@ -228,7 +228,7 @@ The tables above map a Situation's *major* beats. This section is the exhaustive
 
 ### The 71 owed beats, by what each one is
 
-**45 are genuine coverage gaps** — a beat no scenario asserts. They cluster into thirteen elicitation subjects; the cluster, not the individual beat, is what a brief is written against.
+**45 are genuine coverage gaps** — a beat no scenario asserts. They cluster into fourteen elicitation subjects; the cluster, not the individual beat, is what a brief is written against.
 
 | Subject | Owed beats | What the missing scenarios must assert |
 |---|---|---|
@@ -242,6 +242,7 @@ The tables above map a Situation's *major* beats. This section is the exhaustive
 | **A cascade inherits the record** | 2 | That when a job cascades to a replacement after an offer lapses, the new assignee's context carries the commitment's full stored history with no separate human handover. `../engine/SCENARIOS.md I1` and `../harness/SCENARIOS.md C8` assert the offer-and-accept step only |
 | **The budget ceiling that produces a park** | 2 | That a firing hitting its declared step-and-spend ceiling parks rather than erroring or running on, and that the parked card names the budget as the reason. `../harness/SCENARIOS.md C9` asserts only that an existing park cannot self-clear. `README.md` register entry 6 already names this beat owed |
 | **Precondition provenance** | 2 | Which preconditions derive their gating basis from the operator's own uploaded documents versus from an outside legal standard, and that the two gate differently; and that a document-type precondition blocks intake until it is satisfied |
+| **The decline that offers the next opening** | 1 | That a structured decline caused by a scarce qualification — one instructor holds the rating and is busy — offers the next date that person is actually free. `../engine/SCENARIOS.md P2` asserts the honest decline itself and `../engine/SCENARIOS.md A1` offers alternatives only for a capacity race; neither asserts this |
 | **The owner's own ledger surface** | 1 | That the owner's board renders the aggregate — *"who owes me what, this month, right now"*. The guest-side money render and the engine's derived `owed` are both asserted; the owner-facing surface is not |
 | **Instance versus series** | 1 | That the agent asks whether cancelling a recurring booking means this one or the whole series, before acting. Distinct from the general ambiguity law and from the latch mechanics |
 | **Windows, edits and rollovers** | 3 | That a monthly quota stands full again when the month turns (cap enforcement and cancel-restoration *within* a window are asserted; the boundary reset is not) · that per-language guest copy is hand-authored and never model-translated (FD-56) · that a rule authored by one named admin binds identically to a booking taken by a second |
