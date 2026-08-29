@@ -491,6 +491,23 @@ Ruled through the wayfinder decision map (GitHub issues #1–#12 on this repo; e
 
 **How to read a drafted decision.** Treat its *reasoning* as a proposal and its *presence in the spec* as provisional. Where a drafted decision and a founder ruling disagree, the ruling wins. Where a drafted decision is simply wrong, it can be changed without overturning anything — that is the point of recording this.
 
+### The drafted-marker registry
+
+*Added 2026-08-29. **The scar:** the canonical literal is *"drafted, not founder-ratified"*, and a reader or a script grepping for it finds three files — while the corpus actually carries **eight distinct wordings** of the same marker. A marker is how a reader tells a proposal from law, so a marker phrased in a way nobody can find is a proposal that reads as law. This table is the declared set, and `deployment/scripts/label-registry.mjs` asserts it **both ways**: a marker in the tree with no row here fails, and a row here whose phrase no file carries any more is a **spent** marker and fails too — the class that had to be struck by hand the same day (FD-42's, L-230). The **canonical site** column names one file that must still carry the phrase, so the column cannot quietly rot. **Status** is a closed vocabulary: `live` (awaiting the founder's ratification) · `exempt-class` (a class FR37 already answered, where no ruling is owed at all).*
+
+*What this does **not** decide is whether a marker should still be live — that is the founder's ratification queue, and eight rows is a worklist kept visible rather than a backlog quietly closed.*
+
+| marker phrase | canonical site | status |
+|---|---|---|
+| `drafted, not founder-ratified` | `app/SPEC.md` | live |
+| `drafted not founder-ratified` | `app/SPEC.md` | live |
+| `drafted-not-ratified` | `AGENTS.md` | live |
+| `drafted 2026-08-28, not ratified` | `harness/BUILD.md` | live |
+| `drafted by an agent and not yet ratified` | `model/SPEC.md` | live |
+| `drafted in the same sitting and not founder-ratified` | `RULINGS.md` | live |
+| `PROPOSED, not ratified` | `RULINGS.md` | live |
+| `no founder ruling is owed` | `engine/SPEC.md` | exempt-class |
+
 ---
 
 ## Provenance — the working documents beneath this index
