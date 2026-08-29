@@ -45,7 +45,7 @@ Two series were in play the same day and they were briefly both called `R#`:
 
 | # | Ruling | Landed at |
 |---|---|---|
-| **FR-A** | **Preview is not a step.** The proposal card *is* the preview. The elicitation law stays **propose → accept-or-narrow** | `harness/SPEC.md` (unchanged — it never had the step) · `marketplace/SPEC.md §3` (the Templates bullet — the home), `marketplace/NOTES.md` |
+| **FR-A** | **Preview is not a step.** The proposal card *is* the preview. The elicitation law stays **propose → accept-or-narrow** | `harness/SPEC.md` (unchanged — it never had the step) · `marketplace/SPEC.md §3` (the Templates bullet — the home) |
 | **FR-B** | **The console-silent rule is removed. Entirely.** Not narrowed, not rewritten | `app/SPEC.md §3` |
 | **FR-C** | ~~**The ChatGPT-subscription slot is v1**~~ — **cut 2026-08-22 (FD-65), which executes FR-C's own accepted risk below**. Kept in the series rather than renumbered; the letter is cited elsewhere | `model/SPEC.md §7` · `model/BUILD.md` Step 5 |
 

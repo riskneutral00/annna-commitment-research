@@ -1,6 +1,6 @@
 # Situation C′ — Hug Ocean installs the dive-center bundle (the marketplace probe, multi-resource half)
 
-*A **probe, not a design target** (`../../../marketplace/NOTES.md` §Prepared): the multi-resource twin of A′. Situation C told the dive market running; nobody ever told how a dive center's board **came to exist**. C′ is that beginning. Domain-brief ruling (founder, 2026-08-07, wayfinder #6): Hug Ocean installs into an **empty account** — the bundle stands up a fresh shop from nothing. (Recorded consequence: install-into-lived-in-board stays covered at scenario level only.)*
+*A **probe, not a design target**: the multi-resource twin of A′. Situation C told the dive market running; nobody ever told how a dive center's board **came to exist**. C′ is that beginning. Domain-brief ruling (founder, 2026-08-07, wayfinder #6): Hug Ocean installs into an **empty account** — the bundle stands up a fresh shop from nothing. (Recorded consequence: install-into-lived-in-board stays covered at scenario level only.)*
 
 ## How to read this folder
 

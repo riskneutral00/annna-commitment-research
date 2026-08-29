@@ -80,10 +80,9 @@
 | harness/SPEC.md | SPEC | The harness layer's law: the loop, the tool contract, elicitation, the clarify/permission floor, the assisted off-app path, the external-client surface; §10 carries the harness's open items |
 | marketplace/BUILD.md | derived | That the marketplace builds last, after all four layers, and what must be green first |
 | marketplace/INTERFACES.md | derived | The marketplace's four seams, under the constraint of zero new seam verbs |
-| marketplace/NOTES.md | never | Marketplace backlog scratchpad, including the open rulings OR-28 and OR-29 |
 | marketplace/README.md | derived | The marketplace package's read order and its FROZEN status |
 | marketplace/SCENARIOS.md | derived | The marketplace acceptance suite, run against the service mock only |
-| marketplace/SPEC.md | SPEC | The open half of the store: skins (admin pack) and templates (owner-publish, FD-82) on shared rails; the authorship-and-publish law |
+| marketplace/SPEC.md | SPEC | The open half of the store: skins (admin pack) and templates (owner-publish, FD-82) on shared rails; the authorship-and-publish law; §7 carries the open-ruling briefs (OR-28/OR-29) |
 | model/BUILD.md | derived | The model layer's ordered steps, and that Steps 1–5 want a built harness first |
 | model/EVALS.md | derived | The model's exam: the sets, seed items, thresholds, and grading rules — graded, not pass/fail |
 | model/INTERFACES.md | derived | The model's two seams — harness above, providers below — neither side trusted |

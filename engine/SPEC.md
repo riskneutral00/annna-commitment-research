@@ -123,7 +123,7 @@ Proposal {
 
 ### §1.12 Kind template — the multi-day shape (F7, resolved 2026-08-06 — **Claude-drafted mechanism; per FR37 no founder ruling is owed**: the course content is user-built, and the proof is the founder building real courses as a user — `../RULINGS.md` §Provenance)
 
-*The open item at `../marketplace/NOTES.md` (F7): "the saved course fills the whole assembly at once" was not representable — `dependency` carries only a board-ref list, and the archive's `composition` mechanism was dropped without a recorded resolution. This is the resolution.*
+*The marketplace backlog's open item (F7, that backlog since **folded** away): "the saved course fills the whole assembly at once" was not representable — `dependency` carries only a board-ref list, and the archive's `composition` mechanism was dropped without a recorded resolution. This is the resolution.*
 
 **The ruling, in one line: the shape is authoring-time vocabulary, and it expands into `order` + `depends_on`. There is still no third mechanism.**
 
