@@ -1,6 +1,6 @@
 # annnä — Harness Specification (source of truth)
 
-*This is the single authoritative specification of the annnä **harness** layer. It supersedes, for the harness, everything in `../archive/DESIGN.md`, `../archive/05-post-critique-decisions.md`, `../archive/06-round-two-decisions.md`, and `../archive/07-elicitation-mechanism.md` (kept as history). Build from THIS document plus its three companions: `INTERFACES.md` (the seams to other layers), `SCENARIOS.md` (the pass/fail acceptance suite), `BUILD.md` (the ordered implementation plan).*
+*This is the single authoritative specification of the annnä **harness** layer. It supersedes, for the harness, everything in `../archive/DESIGN.md`, `../archive/05-post-critique-decisions.md`, `../archive/06-round-two-decisions.md`, and `../archive/07-elicitation-mechanism.md` (kept in git history). Build from THIS document plus its three companions: `INTERFACES.md` (the seams to other layers), `SCENARIOS.md` (the pass/fail acceptance suite), `BUILD.md` (the ordered implementation plan).*
 
 *Read order for a fresh builder: SPEC (what it is) → INTERFACES (what it depends on) → SCENARIOS (how you know it works) → BUILD (in what order).*
 
