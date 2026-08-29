@@ -57,6 +57,43 @@ const LAYERS = ["deployment", "harness", "engine", "app", "model", "security", "
 const HEADING = /^## Step (\d+) — (.*)$/;
 const OPEN_ITEM = /^## Still open — (.*)$/;
 
+// --- the NOTES contract, made refusable 2026-08-29 (L-220) ---
+//
+// The scar, confirmed on all three counts: this report matched only the exact
+// `## Still open — ` em-dash form and existsSync-SKIPPED a missing file, so a
+// malformed heading or a deleted NOTES file went silent-green — and a founder
+// want sat unmentioned for a fortnight. A report that cannot be wrong out loud
+// is not a gate.
+//
+// The declared set is read from AGENTS.md's own deviations sentence rather than
+// hardcoded here. A hardcoded list would red the day a fold lands and force a
+// code commit to chase a spec change; reading the declaration means the fold's
+// own AGENTS.md edit updates this gate — and a fold that deletes the file
+// WITHOUT editing that sentence now reds, which is exactly the survivor class
+// AGENTS.md's standing discipline names.
+//
+// Scope, stated because it is a real bound: PACKAGE directories only — the ones
+// carrying a tracked SPEC.md, which is the set the deviations sentence is about.
+// `PR/NOTES.md` is not in a package and is not governed by that sentence.
+//
+// Zero open items stays legal: a declared file with no `## Still open — `
+// section passes and reports 0. What is illegal is the file being ABSENT while
+// AGENTS.md says it is there.
+const DECLARES_NOTES = /((?:`[a-z]+\/`(?:,| and)? ?)+) carry `NOTES\.md`/;
+
+export function declaredNotes(agents) {
+  const m = agents.match(DECLARES_NOTES);
+  return m && [...m[1].matchAll(/`([a-z]+)\/`/g)].map((x) => x[1]);
+}
+
+// A heading line that means to be an open item but is not the contract. Prose
+// mentioning "Still open" mid-sentence is not a heading and is not a near-miss.
+export function malformedHeadings(text) {
+  return text
+    .split("\n")
+    .filter((l) => l.startsWith("#") && /Still open/.test(l) && !OPEN_ITEM.test(l));
+}
+
 function stateOf(body) {
   // A range declaration is a statement about other steps that happens to sit in
   // this one's body — markdown has no way to write it "between" steps. Strip it
@@ -160,6 +197,20 @@ function selfcheck() {
       { title: "perceived latency on the write path (2026-08-08)", want: false },
     ],
   );
+
+  // --- the NOTES contract, with its negatives ---
+  const sentence = "Deviations: `model/` uses `EVALS.md` · `app/` and `deployment/` carry `NOTES.md` · `deployment/` is a process spec.";
+  assert.deepStrictEqual(declaredNotes(sentence), ["app", "deployment"], "the declaration parses out of the deviations sentence");
+  assert.deepStrictEqual(declaredNotes("`harness/`, `app/`, `marketplace/` and `deployment/` carry `NOTES.md`"), ["harness", "app", "marketplace", "deployment"], "and it parses a longer list, so a fold shrinking it needs no code change");
+  assert.strictEqual(declaredNotes("AGENTS.md with no such sentence"), null, "an unparseable declaration is a failure, never an empty set");
+
+  assert.deepStrictEqual(malformedHeadings("## Still open — a real one (2026-01-01)"), [], "the contract form is not a near-miss");
+  assert.deepStrictEqual(malformedHeadings("## Still open"), ["## Still open"], "a BARE heading is a near-miss — the live deployment/NOTES.md case");
+  assert.deepStrictEqual(malformedHeadings("## Still open - hyphen"), ["## Still open - hyphen"], "a hyphen is not an em-dash");
+  assert.deepStrictEqual(malformedHeadings("## Still open – en-dash"), ["## Still open – en-dash"], "and neither is an en-dash");
+  assert.deepStrictEqual(malformedHeadings("### Still open — too deep"), ["### Still open — too deep"], "a deeper heading is skipped by the reader, so it is a near-miss too");
+  assert.deepStrictEqual(malformedHeadings("- prose saying Still open: three things"), [], "prose is not a heading and must not red");
+  assert.deepStrictEqual(malformedHeadings("## Nothing open at all"), [], "an unrelated heading is not one either");
 
   const parsed = steps(
     [
@@ -295,12 +346,27 @@ for (const layer of LAYERS) {
   console.log(`  ${layer} — ${parts.join(" · ")} of ${found.length}`);
 }
 
+// The NOTES contract — set equality against AGENTS.md's declaration, then the
+// heading shape. Both refuse; neither skips.
+const agentsPath = path.join(root, "AGENTS.md");
+const declared = fs.existsSync(agentsPath) ? declaredNotes(fs.readFileSync(agentsPath, "utf8")) : null;
+const notesFaults = [];
+if (!declared) {
+  notesFaults.push(`AGENTS.md no longer declares which packages carry NOTES.md in a parseable form — the "carry \`NOTES.md\`" sentence`);
+} else {
+  const present = LAYERS.filter((l) => fs.existsSync(path.join(root, l, "NOTES.md")));
+  for (const l of declared) if (!present.includes(l)) notesFaults.push(`AGENTS.md declares ${l}/NOTES.md and no such file exists — a fold that deleted the file without editing the declaration`);
+  for (const l of present) if (!declared.includes(l)) notesFaults.push(`${l}/NOTES.md exists and AGENTS.md's deviations sentence does not declare it`);
+}
+
 const wants = [];
 const notes = [];
-for (const layer of LAYERS) {
+for (const layer of declared ?? []) {
   const file = path.join(root, layer, "NOTES.md");
   if (!fs.existsSync(file)) continue;
-  for (const item of openItems(fs.readFileSync(file, "utf8"))) {
+  const text = fs.readFileSync(file, "utf8");
+  for (const l of malformedHeadings(text)) notesFaults.push(`${layer}/NOTES.md has a near-miss heading, silently skipped by the old contract: ${l}`);
+  for (const item of openItems(text)) {
     (item.want ? wants : notes).push(`${layer}/NOTES.md — ${item.title}`);
   }
 }
@@ -326,4 +392,20 @@ if (blocked.length) {
       `the marker is the mechanical arrival point; this report cannot read ratification itself.)`,
   );
 }
+if (notesFaults.length) {
+  console.log(`\nSTATUS FAIL — the NOTES contract:`);
+  for (const f of notesFaults) console.log(`  ${f}`);
+  console.log(
+    `  AGENTS.md's deviations sentence is the declaration this reads; a fold that moves a NOTES.md` +
+      `\n  edits that sentence in the same commit, or this reds. The open-item heading is exactly` +
+      `\n  \`## Still open — \` with an em-dash — a near-miss is what went silent-green for a fortnight.`,
+  );
+  process.exit(1);
+}
+console.log(
+  `\nNOTES OK — ${(declared ?? []).length} declared NOTES file(s) (${(declared ?? []).join(", ")}), each present, ` +
+    `every open-item heading on contract, ${wants.length} want(s) and ${notes.length} backlog item(s) reported. ` +
+    `Scope: package directories only — PR/NOTES.md is not in a package and AGENTS.md's sentence does not govern it.`,
+);
+
 if (brokenPrecondition) process.exit(1);
