@@ -1,6 +1,6 @@
 # annnä App — SCENARIOS (deterministic acceptance suite)
 
-*Pass/fail, deterministic, replayable. These test **structure and behavior** — payloads, mappings, wire contents, state transitions. Visual/design law lives in `DESIGN.md` and gates `BUILD.md` steps as a checklist, not as scenarios. Run against a stubbed harness (scripted seam calls) and, for the G-family, real HTTP against the guest routes. Sources: `../harness/INTERFACES.md §3`, the user-stories corpus, `.specs/deep-interview-app.md` acceptance list. Every scenario is MUST.*
+*Pass/fail, deterministic, replayable. These test **structure and behavior** — payloads, mappings, wire contents, state transitions. Visual/design law lives in `DESIGN.md` and gates `BUILD.md` steps as a checklist, not as scenarios. Run against a stubbed harness (scripted seam calls) and, for the G-family, real HTTP against the guest routes. Sources: `../harness/INTERFACES.md §3`, the user-stories corpus, `../.specs/deep-interview-app.md` acceptance list *(path corrected 2026-08-29 — `app/.specs/` does not exist; this is the form `README.md` and `INTERFACES.md` already carry)*. Every scenario is MUST.*
 
 *(Section letters are local to this file.)*
 
@@ -72,6 +72,9 @@
 - **V2 [SOP library routes edits]** Opening an SOP from the library and editing routes through the normal authoring seam — the library itself never writes.
 
 ## O — Onboarding & starters
+
+*(The family starts at **O2**: **O1 was deleted by FR-B and is never recycled** — the number was assigned and struck, not skipped, and reusing it would silently hand a future reader the wrong test when they compare against an older revision. The registry's rule: `../RULINGS.md`, FR-B's residue note. Tombstone added 2026-08-29.)*
+
 - **O2 [starters compile to seam writes]** Tapping a starter template produces ordinary commitment/rule writes through the seam, pre-filled and owner-confirmed — byte-equivalent in shape to what the console path would produce.
 - **O3 [saved locations]** "home" typed in any place field resolves to the stored address; editing the stored address updates resolution everywhere; an unknown name is just a literal, not an error.
 
