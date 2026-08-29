@@ -67,4 +67,4 @@ The **five** projections `SPEC.md §0` enumerates — the guest Shared projectio
 
 ## §4. Stub strategy for this layer's own build
 
-`SCENARIOS.md` runs the engine against: the **scripted travel provider** (§2.1), a **virtual clock** (drive holds, expiries, horizon jobs deterministically), and **direct API calls standing in for the harness** (the scenarios call `calculate/commit/resolve/…` exactly as the harness contract states — which is what makes the final stub-swap a formality rather than an integration adventure).
+`SCENARIOS.md` runs the engine against: the **scripted travel provider** (§2.1), a **virtual clock** (drive holds, expiries, horizon jobs deterministically), **direct API calls standing in for the harness** (the scenarios call `calculate/commit/resolve/…` exactly as the harness contract states — which is what makes the final stub-swap a formality rather than an integration adventure), and the **projection stub** (§2a — the one this layer ships for the app suite: subscription, push, staleness-discard and the `unavailable` member, without a live store; stood up at `BUILD.md` Step 0 beside its three siblings).
