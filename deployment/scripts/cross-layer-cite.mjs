@@ -89,6 +89,95 @@ export function citations(text) {
   return out;
 }
 
+// ---------------------------------------------------------------------------
+// The SPEC-target half (2026-08-29). The corpus's densest citation form is
+// `engine/SPEC.md §1.12`, and until now nothing resolved it — a plan claiming
+// this gate as proof for SPEC-target citations took a Codex BLOCKER for it.
+//
+// THE TRAP, and it has claimed three automated checkers already: **`§6.5` means
+// item 5 of §6's numbered list, not a subsection.** `engine/SPEC.md` says so in
+// its own header, and all three checkers that resolved `§N.M` against headings
+// alone filed the same false phantom. So the resolution order is: a heading
+// carrying the ref, THEN item M of §N's numbered list, and only a ref that is
+// neither is a failure. The positive assertion — a numbered-list item resolving
+// — is the selfcheck line that must never be dropped for brevity.
+//
+// NOT CHECKED here, and stated rather than silently skipped: a NAMED section
+// ref (`§Law tiers`, `§Guardrails`). In prose a name has no closing delimiter,
+// so any matcher for one guesses where the name ends, and a wrong guess is a
+// false red on a correct citation — the exact class this comment opens with.
+// The numeric form is the dense one and it is the one resolved.
+const SPEC_FILES = String.raw`(?:SPEC|EVALS|INTERFACES|BUILD)`;
+const SREF = String.raw`\d+(?:\.\d+)?[a-z]?`;
+const SPEC_CITE = new RegExp(
+  String.raw`\`([^\`\n]*?)(${SPEC_FILES})\.md(?:\s+§(${SREF}))?\`(?:\s+§(${SREF}))?`,
+  "g",
+);
+
+// Every section ref a heading declares.
+//
+// THE SECOND TRAP, found by running this against the corpus before trusting it:
+// **the § sigil is not written in headings everywhere.** `engine/` and
+// `deployment/` write `## §1.` and `### §1.7a`; `harness/` and `model/` write
+// `## 1.` and `### 3.4`, with no sigil at all. Citations use `§` uniformly in
+// both directions. A matcher that required the sigil in the heading reported
+// 464 dangling citations against a corpus with none — a fourth false phantom,
+// caught here only because the first live run was read instead of assumed.
+// So the sigil is optional, and the ref is anchored to the START of the heading
+// text, where a section number is, rather than found anywhere inside it.
+const HEAD_REF = String.raw`^(#{1,6})\s+§?(${SREF})[.\s]`;
+
+export function headingRefs(text) {
+  const refs = new Set();
+  for (const line of text.split("\n")) {
+    const m = line.match(new RegExp(HEAD_REF));
+    if (m) refs.add(m[2]);
+  }
+  return refs;
+}
+
+// Item M of §N's numbered list — the form the trap is about. The section runs
+// from its own heading to the next heading at the same depth or shallower, so a
+// `###` subsection's list does not leak into its parent's item numbering.
+export function listItem(text, section, item) {
+  const lines = text.split("\n");
+  const head = new RegExp(String.raw`^(#{1,6})\s+§?${section.replace(".", "\\.")}[.\s]`);
+  let start = -1;
+  let depth = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const m = lines[i].match(head);
+    if (m) {
+      start = i + 1;
+      depth = m[1].length;
+      break;
+    }
+  }
+  if (start === -1) return false;
+  for (let i = start; i < lines.length; i++) {
+    const h = lines[i].match(/^(#{1,6})\s+/);
+    if (h && h[1].length <= depth) break;
+    if (new RegExp(String.raw`^${item}\.\s`).test(lines[i])) return true;
+  }
+  return false;
+}
+
+export function resolveRef(text, ref) {
+  if (headingRefs(text).has(ref)) return true;
+  const m = ref.match(/^(\d+)\.(\d+)$/);
+  return m ? listItem(text, m[1], m[2]) : false;
+}
+
+export function specCitations(text) {
+  const out = [];
+  for (const m of text.matchAll(SPEC_CITE)) {
+    const ref = m[3] ?? m[4];
+    if (!ref) continue; // a bare file reference names no section and cannot dangle
+    const line = text.slice(0, m.index).split("\n").length;
+    out.push({ dir: m[1], file: `${m[2]}.md`, ref, line });
+  }
+  return out;
+}
+
 if (process.argv.includes("--selfcheck")) {
   assert.deepStrictEqual([...defined("- **Z2 [MUST]** x\nprose Z9")], ["Z2"]);
 
@@ -104,6 +193,45 @@ if (process.argv.includes("--selfcheck")) {
   // The negative that matters: the real defect this was written for.
   const harness = defined("- **L5 [MUST]** x\n- **D22 [MUST]** y");
   assert.ok(!harness.has("Z2"), "the harness defines no Z2 — the 2026-08-08 phantom");
+
+  // --- the SPEC-target half ---
+  const srefs = (t) => specCitations(t).map((c) => `${c.dir}${c.file}|${c.ref}`);
+  assert.deepStrictEqual(srefs("see `../engine/SPEC.md §1.12` now"), ["../engine/SPEC.md|1.12"], "§ inside the backticks");
+  assert.deepStrictEqual(srefs("see `../app/SPEC.md` §5 now"), ["../app/SPEC.md|5"], "§ after the backticks");
+  assert.deepStrictEqual(srefs("`../model/EVALS.md` §3"), ["../model/EVALS.md|3"], "EVALS is a SPEC-family target");
+  assert.deepStrictEqual(srefs("`../harness/INTERFACES.md §7.1`"), ["../harness/INTERFACES.md|7.1"], "and so is INTERFACES");
+  assert.deepStrictEqual(srefs("the whole of `../security/SPEC.md`"), [], "a bare file ref names no section");
+  assert.deepStrictEqual(srefs("`../app/SPEC.md` §Law tiers"), [], "a NAMED section is out of scope, not a failure");
+
+  const doc = [
+    "## §0. What this is",
+    "### §1.7a A subsection with a letter",
+    "## §6. Items",
+    "1. **First.** x",
+    "2. **Second.** y",
+    "3. **Third.** z",
+    "4. **Fourth.** w",
+    "5. **Fifth.** v",
+    "## §7. After",
+    "1. **Only one here.** q",
+  ].join("\n");
+  assert.deepStrictEqual([...headingRefs(doc)].sort(), ["0", "1.7a", "6", "7"], "heading refs, letters included");
+  // The sigil is optional in headings and mandatory in citations — the corpus
+  // writes `## §1.` in engine/ and deployment/ and `## 1.` in harness/ and
+  // model/. Requiring it reported 464 phantoms; this pair is why.
+  const unsigiled = "## 3. The object model\n### 3.4 Commitment — the atom\n1. **First.** x\n2. **Second.** y";
+  assert.deepStrictEqual([...headingRefs(unsigiled)].sort(), ["3", "3.4"], "a heading with no § sigil still declares its ref");
+  assert.ok(resolveRef(unsigiled, "3.4"), "and a citation of it resolves");
+  assert.ok(!headingRefs("Prose mentioning 3.4 mid-sentence").size, "a number in prose is not a heading ref");
+  assert.ok(resolveRef(doc, "0"), "a plain heading resolves");
+  assert.ok(resolveRef(doc, "1.7a"), "a lettered subsection heading resolves");
+  // THE ASSERTION THAT MUST NEVER BE DROPPED. Three checkers filed this as a
+  // phantom-section bug and were wrong all three times.
+  assert.ok(resolveRef(doc, "6.5"), "§6.5 resolves to item 5 of §6's numbered list — NOT a phantom");
+  assert.ok(!resolveRef(doc, "6.9"), "but item 9 of a five-item list does not exist");
+  assert.ok(!resolveRef(doc, "7.2"), "and §7's list stops at one — an item count is not shared between sections");
+  assert.ok(!resolveRef(doc, "9"), "a section no heading carries fails");
+  assert.ok(!listItem(doc, "1.7a", "1"), "a section with no numbered list has no items to resolve against");
 
   console.log("\nselfcheck OK");
   process.exit(0);
@@ -148,11 +276,45 @@ for (const file of tracked) {
   }
 }
 
+// The SPEC-target pass. Same two resolution bases, for the same reason.
+const textCache = new Map();
+const textAt = (rel) => {
+  if (!textCache.has(rel)) {
+    const abs = path.join(ROOT, rel);
+    textCache.set(rel, fs.existsSync(abs) ? fs.readFileSync(abs, "utf8") : null);
+  }
+  return textCache.get(rel);
+};
+const resolveSpec = (file, dir, name) => {
+  const rel = path.normalize(path.join(path.dirname(file), dir, name));
+  if (textAt(rel) !== null) return rel;
+  const fromRoot = path.normalize(path.join(dir, name));
+  return textAt(fromRoot) !== null ? fromRoot : rel;
+};
+
+let specChecked = 0;
+for (const file of tracked) {
+  for (const { dir, file: name, ref, line } of specCitations(fs.readFileSync(path.join(ROOT, file), "utf8"))) {
+    const target = resolveSpec(file, dir, name);
+    const text = textAt(target);
+    specChecked++;
+    if (text === null) dangling.push(`${file}:${line} cites ${target} — no such file`);
+    else if (!resolveRef(text, ref)) dangling.push(`${file}:${line} cites §${ref} in ${target}, which carries no such section and no such numbered item`);
+  }
+}
+
 if (dangling.length) {
-  console.log(`\nCROSS-LAYER-CITE FAIL — ${dangling.length} citation(s) name a scenario their target does not define:`);
+  console.log(`\nCROSS-LAYER-CITE FAIL — ${dangling.length} citation(s) name something their target does not carry:`);
   for (const d of dangling) console.log(`    ${d}`);
   console.log(`\n  A citation that names its own path has no ambiguity to hide behind. Either the ID`);
   console.log(`  moved and the path is stale, or the path is right and the family lives elsewhere.`);
+  console.log(`  For a §ref: remember §N.M is item M of §N's numbered list, not a subsection — this`);
+  console.log(`  gate resolves both, so a failure here is a real dangler, not the phantom three`);
+  console.log(`  earlier checkers filed.`);
   process.exit(1);
 }
-console.log(`\nCROSS-LAYER-CITE OK — ${checked} path-qualified scenario citation(s), every one resolving`);
+console.log(
+  `\nCROSS-LAYER-CITE OK — ${checked} path-qualified scenario citation(s) and ${specChecked} SPEC-target §citation(s), every one resolving.` +
+    `\n  NOT CHECKED: whether the cited section still SUPPORTS the sentence — existence is mechanical, aboutness is a reading job;` +
+    `\n  and NAMED section refs (§Law tiers), which have no closing delimiter in prose and whose matcher would red correct citations.`,
+);
