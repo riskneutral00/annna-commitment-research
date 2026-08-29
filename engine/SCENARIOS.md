@@ -72,7 +72,7 @@
 - **X4 [declined move]** One move's confirmation is `declined`: apply refuses; the board is unchanged; nothing was moved piecemeal.
 - **X5 [freed fail-closed]** The proposal's freed window is unbookable while its decision is `pending`; `keep-blocked` keeps it so; `reopen` restores it to projections. *(The afternoon that stays hers.)*
 - **X6 [confirmations required]** Apply-proposal with any `pending` confirmation refuses.
-- **X7 [bound respected]** A compaction needing 4 moves returns the best ≤3-move proposal or a decline — never an unbounded search. *(The printed v1 bound.)*
+- **X7 [bound respected]** A compaction needing 4 moves returns the **first feasible ≤3-move proposal in §7's printed enumeration order** — or a decline — never an unbounded search *(reworded 2026-08-29: the row previously promised the "best" proposal, which `SPEC.md §7` refuses to define — "the promise is feasibility and improvement in the chosen direction, not optimality" — and a SPEC outranks a derived suite)*. And the clause that makes the reword load-bearing: the **identical trigger returns the identical proposal on replay**, which is exactly what the printed enumeration buys. *(The printed v1 bound.)*
 
 ## K — Money marks
 - **K1 [owed derived]** Cancelling a visit corrects the record: the amount is no longer owed, with no mutable-balance write anywhere — **on a commitment carrying no `no-show` mark** *(carved 2026-08-21, FD-30: a marked record is K4's case, and before the carve K1 and K3 were both MUST on one commitment with nothing ordering them)*. *(The $140 never owed; Bobby's credit.)*
