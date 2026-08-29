@@ -23,9 +23,11 @@ Two properties of that seam this layer must preserve, never weaken:
 
 ### 2.1 Provider contract (primary: OpenRouter)
 ```
-complete(model_id, messages, output_schema) -> structured JSON | error(malformed|refused|timeout)
+complete(model_id, messages, output_schema) -> structured JSON | error(malformed|refused|timeout|unavailable)
 ```
 - Chat-completions with **enforced structured output** (JSON schema per call type). One API shape for every model — that uniformity is why OpenRouter is the primary supply: swapping `model_id` is the whole swap.
+- **The error union is closed at four members, and this is its home.** `malformed` — the return violated the schema, named an intent outside the vocabulary, or would not parse · `refused` — the model answered, and the answer was a refusal · `timeout` — no answer inside the binding's `timeout_ms` (§2.2) · **`unavailable`** *(fourth member, 2026-08-29)* — **the provider did not answer at all**: an outage, a 5xx, a gateway that never reached a model. The distinction `unavailable` carries is that **the math did not run** — nothing was asked of a model and nothing was decided — which is a different answer from "the model refused", and the seam above forbids collapsing the two (`../harness/INTERFACES.md §1`: a provider being down is "a different answer from every semantic return and is never collapsed into one"). Every member takes the same failure ladder (`SPEC.md §8`).
+- **Envelope mapping.** Upward, `unavailable` surfaces as the refusal envelope's **existing** `` `unavailable` | `provider` `` reason (the closed reason table, `../harness/COMPAT.md §1`) — the model provider is a third-party provider like the travel source and the calendar provider, so this names a cell that already exists rather than widening a closed set. Naming the model provider in that cell is the harness's own edit, not this layer's.
 
 ### 2.2 Routing config (the layer's one real artifact)
 ```
@@ -46,13 +48,15 @@ firing_budget: { max_steps_per_firing, max_cost_per_firing }
 //   APP-SUPPLIED (`openrouter` or `app-direct` — FD-67, 2026-08-22: the vendor name was a single
 //   point of failure written into law; the property was always "app-supplied", and `app-direct`
 //   is an app-held direct provider key, vault-custodied like any §3.1 credential) · any `byo-*`
-//   in an `unattended` binding refuses · any `byo-*` anywhere on `summarize` refuses (FD-3).
+//   in an `unattended` binding refuses · any `byo-*` anywhere on `summarize` refuses (FD-3) ·
+//   any unknown `call_type` key refuses — `judgment` included, per the note below.
 // provider = openrouter | app-direct | byo-key
 //   (byo-chatgpt LEFT the enum — FD-65, 2026-08-22: the vendor programme has been identity-only
 //   since 2026-08-02; a slot for a programme that no longer exists is speculative machinery.
 //   One ruling restores it if the programme returns.)
 // timeout_ms defaults: 10_000 attended (a console turn), 30_000 unattended (trigger firings —
-//   nobody is waiting, and the fallback hop still runs). Timeout → fallback per SPEC §8.
+//   nobody is waiting, and the fallback hop still runs). A timeout takes SPEC §8's ladder,
+//   which is the same ladder every other error-union member takes — do not gloss it here.
 // context_budget_tokens (2026-08-21) is the assembly budget the harness truncates against
 //   (../harness/SPEC.md §8). A binding is QUALIFIED AT its budget (EVALS.md §3): swapping to a
 //   model with a smaller budget is a re-qualification, never a silent config diff — otherwise a
@@ -62,8 +66,12 @@ firing_budget: { max_steps_per_firing, max_cost_per_firing }
 //   summarize reads, tool round-trips, narrate, check-work). It sits beside the per-call routing
 //   because §4 cites this section for it and no field carried it: max_cost_per_call bounds one
 //   call, never the firing.
-// call_type = normalize | narrate | judgment | summarize (judgment rides inside normalize/narrate's
-//   calls; listed so a future split stays representable. summarize is a real, separately bound call.)
+// call_type = normalize | narrate | summarize
+//   Judgment is NOT a config key (2026-08-29): it rides inside normalize/narrate's calls and is
+//   never separately dispatched, so a `routing.judgment` block would load a binding nothing ever
+//   reaches. The seam above states the shape and owns it — "There are exactly four call types",
+//   one of which "rides inside `normalize`/`narrate` rather than being separately bound"
+//   (../harness/INTERFACES.md §2). Three call types are separately bound; four exist.
 ```
 - **Config, never code.** A routing change (new model, new fallback, provider flip) requires re-qualification (`EVALS.md §3`) and nothing else.
 - `byo-key` is the **owner's own provider API key** (FR5, 2026-08-06 — the ban is reversed; SPEC §7's tertiary supply). It is an ordinary `{call_type → model_id}` binding whose credential happens to be the owner's: **no new mechanism and no second code path**, which is the whole reason it is a provider value here rather than a parallel config. Attended-only confinement per SPEC §7 (**FR31**, founder-ruled 2026-08-07). The binding is stored here; **the secret never is** — it is vault-resident, and this config holds only the reference (`../security/SPEC.md §3.1`, member 2, asserted at `../security/SCENARIOS.md` T8).
