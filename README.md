@@ -5,13 +5,13 @@ Your schedule lives in your head — every promise, every pickup, every "don't f
 **annnä is an agent-first commitment harness.** You talk; it holds what you promised and does the work the promise implies. The aim is peace — a schedule that feels like there is nothing on it, because the coordination leaves, and then your head no longer has to be where the schedule is kept.
 
 > ### 📋 This repository is a design specification, not a working application.
-> **129 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
+> **115 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
 
 ---
 
 ## The three words
 
-**Commitment.** The one thing on the board. Not an appointment — something you promised, to someone, under conditions. When a promise needs people and equipment, the commitment carries them too — optional axes, never the definition: a title is the only thing every commitment requires. "Event" and "task" are presets derived from it, and nobody ever picks a type. That result came from four research streams — philosophy, contract law, calendar data models, task data models — run blind to each other, and it is what everything else stands on ([`archive/`](archive/)).
+**Commitment.** The one thing on the board. Not an appointment — something you promised, to someone, under conditions. When a promise needs people and equipment, the commitment carries them too — optional axes, never the definition: a title is the only thing every commitment requires. "Event" and "task" are presets derived from it, and nobody ever picks a type. That result came from four research streams — philosophy, contract law, calendar data models, task data models — run blind to each other, and it is what everything else stands on.
 
 **Agent-first.** Agents are first-class users, alongside people, in two senses at once.
 
@@ -112,9 +112,8 @@ The design was attacked three times before being called done — structured adve
 | [`harness/`](harness/) · [`engine/`](engine/) · [`app/`](app/) · [`model/`](model/) | The four layers |
 | [`marketplace/`](marketplace/) · [`security/`](security/) · [`deployment/`](deployment/) | The store's open half · the cross-cutting security law · the discipline of the build |
 | [`TDD.md`](TDD.md) · [`assets/`](assets/) · [`.specs/`](.specs/) | Test strategy · shipped skins · interview records |
-| [`archive/`](archive/) | The original research and full design history — *how we got here*, not what to build |
 
-**Reading suggestion:** this page, then [`user-stories/`](user-stories/) for what it actually does, then [`archive/`](archive/) for why the commitment primitive is shaped the way it is. A security reviewer can start, and mostly stay, at [`security/README.md`](security/README.md).
+**Reading suggestion:** this page, then [`user-stories/`](user-stories/) for what it actually does. A security reviewer can start, and mostly stay, at [`security/README.md`](security/README.md).
 
 ## License
 

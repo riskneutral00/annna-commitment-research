@@ -27,5 +27,5 @@ nothing here cites them. If you grep the `.gitignore` and find their names, that
 whole of what there is to find.
 
 *Interviews are not run for every package. `harness/`, `model/`, `marketplace/`,
-`deployment/` and `security/` were settled in the design history ([`archive/`](../archive/))
+`deployment/` and `security/` were settled in the design history (`archive/`)
 or by direct founder ruling ([`RULINGS.md`](../RULINGS.md)).*

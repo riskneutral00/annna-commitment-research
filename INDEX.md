@@ -1,6 +1,6 @@
 # INDEX — every tracked markdown file, and what it decides
 
-*One row per tracked `.md`, in `git ls-files` order. Read this before grepping: a recursive search surfaces `archive/` first, so a naive hit is likely to be superseded material. The **Tier** column says how much authority a file has before you open it. `deployment/scripts/index-complete.mjs` fails the build if this list and `git ls-files '*.md'` ever disagree.*
+*One row per tracked `.md`, in `git ls-files` order. Read this before grepping: the **Tier** column says how much authority a file has before you open it. `deployment/scripts/index-complete.mjs` fails the build if this list and `git ls-files '*.md'` ever disagree.*
 
 **Tiers** — what this file's Tier column means. The vocabulary is closed and is defined here; the authority order it grades against is `AGENTS.md` §Authority order.
 
@@ -44,20 +44,6 @@
 | app/README.md | derived | The app package's purpose and read order |
 | app/SCENARIOS.md | derived | The app's deterministic acceptance suite — payloads, mappings, wire contents, state transitions |
 | app/SPEC.md | SPEC | The human-facing layer: what it renders, what it collects, and that it holds zero harness logic, engine math, or model calls |
-| archive/01-commitment-anatomy.md | history | The founding research on what a commitment is, from philosophy and contract law |
-| archive/02-data-models-event-vs-task.md | history | The founding research on real calendar and task data models, and where event and task blur |
-| archive/03-model-fields-and-board.md | history | The originally proposed one-object N-axis model, field catalog, and board rendering |
-| archive/04-use-cases-and-board-model.md | history | The original domain capture and the model those use cases implied |
-| archive/05-post-critique-decisions.md | history | The strategic forks settled after the first adversarial critique |
-| archive/06-round-two-decisions.md | history | The harness decisions after round two — where lifecycle statuses became latched, attributed events |
-| archive/07-elicitation-mechanism.md | history | The original ask-once-apply-forever machinery, since absorbed into the harness SPEC |
-| archive/CRITIQUE-BRIEF-2.md | history | The verbatim prompt given to the round-two adversarial reviewer |
-| archive/CRITIQUE-BRIEF.md | history | The verbatim prompt given to the round-one adversarial reviewer |
-| archive/CRITIQUE-FINDINGS-2.md | history | Round two's 48 findings against the revised harness: 26 killed, 22 survived |
-| archive/CRITIQUE-FINDINGS.md | history | Round one's 45 findings against the original harness: 4 killed, 40 survived |
-| archive/DESIGN.md | history | The original living design doc. Superseded — read for reasoning, never for the current model |
-| archive/README.md | history | What `archive/` holds, and that the layer SPECs beat it wherever they disagree |
-| archive/appendix-raw-research.md | history | The four blind research streams verbatim, with their source citations |
 | assets/README.md | derived | The shipped skin assets, where they came from, and how the pack pipeline builds them |
 | deployment/BUILD.md | derived | Deployment's ordered steps, and that Steps 0–1 close before any layer's build begins |
 | deployment/INTERFACES.md | derived | Deployment's four seams, and that it owns the space *between* layers and nothing inside one |

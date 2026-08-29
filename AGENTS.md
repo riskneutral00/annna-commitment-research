@@ -1,11 +1,11 @@
 # AGENTS.md — operating instructions for agents in this repo
 
-**This repo is a specification corpus — its source of truth is markdown.** Code now executes in a few places: `engine/` and `harness/` each carry real TypeScript and a vitest suite (both at Step 0); `engine/scripts/reactive-push-check.mjs` probes the reactive-push criterion against a live Convex deployment (normative home: `engine/BUILD.md` Step 0, I4); `assets/make-pack.mjs` builds the admin asset pack; `model/spike/run-nset.mjs` is an executable OpenRouter runner that **spends money** on every execution and is deliberately unrun (FD-5, and `deployment/SPEC.md §8` DR-7); and thirty-five process gates sit in `deployment/scripts/` — each wired to an `npm` script in `package.json`, which is executable and therefore the only copy that cannot go stale (what each is for: "The one green command"). Everything else is specification, not code: **129** tracked markdown files (`git ls-files '*.md'` — what a clone contains, and the count `README.md` states). A working checkout also carries gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent for every reader and no count of it is asserted (FD-10). Read that as a standing caveat on everything below.
+**This repo is a specification corpus — its source of truth is markdown.** Code now executes in a few places: `engine/` and `harness/` each carry real TypeScript and a vitest suite (both at Step 0); `engine/scripts/reactive-push-check.mjs` probes the reactive-push criterion against a live Convex deployment (normative home: `engine/BUILD.md` Step 0, I4); `assets/make-pack.mjs` builds the admin asset pack; `model/spike/run-nset.mjs` is an executable OpenRouter runner that **spends money** on every execution and is deliberately unrun (FD-5, and `deployment/SPEC.md §8` DR-7); and thirty-five process gates sit in `deployment/scripts/` — each wired to an `npm` script in `package.json`, which is executable and therefore the only copy that cannot go stale (what each is for: "The one green command"). Everything else is specification, not code: **115** tracked markdown files (`git ls-files '*.md'` — what a clone contains, and the count `README.md` states). A working checkout also carries gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent for every reader and no count of it is asserted (FD-10). Read that as a standing caveat on everything below.
 
 ## Authority order
 
 1. **A `SPEC` is the source of truth.** Build from it. `SPEC` is a tier `INDEX.md` grades, not a location — root files carry it too.
-2. **`archive/` is history, not authority.** It records how the design was reached. It is there to *justify*, not to build from. Where `archive/` and a `SPEC` disagree, **the SPEC wins**. It sorts first in recursive grep, so a naive search will surface superseded material before live material. Check which side your hit falls on.
+2. **A `history`-tier file is not authority.** It records how the design was reached — there to *justify*, not to build from. Where one disagrees with a `SPEC`, **the SPEC wins**. `INDEX.md`'s Tier column marks them.
 3. **`NOTES.md` is never authoritative** — a backlog scratchpad of items absorbed into the spec, plus anything still open.
 
 ## Package shape
@@ -25,8 +25,8 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 
 - **`§6.5` means item 5 of §6's numbered list, not a subsection.** Three separate automated checkers have filed this as a phantom-section bug. It is not one. See the note at the top of `engine/SPEC.md`.
 - **Section citations mix relative and repo-root-relative forms.** Some resolve only from the repo root, not from the citing file's directory.
-- **Citations of the form `DESIGN:line` and `research/<name>.md:line` point outside this repo**, into a prior build on the founder's machine. They are traceability, not required reading; every law is stated in full in-repo. Nothing is lost if they don't resolve.
-- **Never cite an in-repo line number. Quote the phrase instead** — a line number rots the next time anything is inserted above it, silently. Enforced by `cite-form.mjs`; `archive/` targets are exempt, being history that does not move.
+- **Citations of the form `DESIGN:line`, `research/<name>.md:line` and any `archive/…` path point outside the tracked tree** — the first two into a prior build on the founder's machine, `archive/` into this repo's own git history. They are traceability, not required reading; every law is stated in full in-repo. Nothing is lost if they don't resolve.
+- **Never cite an in-repo line number. Quote the phrase instead** — a line number rots the next time anything is inserted above it, silently. Enforced by `cite-form.mjs`.
 
 ## Rulings
 
@@ -38,7 +38,7 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 
 ## Where to start
 
-**`INDEX.md` lists every tracked file with its authority tier and what it decides — read it before grepping.** To build a layer: `harness/BUILD.md` first, in isolation against stubs. To write tests: `user-stories/`, the top of the hierarchy. To trace a decision: `archive/`.
+**`INDEX.md` lists every tracked file with its authority tier and what it decides — read it before grepping.** To build a layer: `harness/BUILD.md` first, in isolation against stubs. To write tests: `user-stories/`, the top of the hierarchy. To trace a decision: `RULINGS.md`.
 
 ## The one green command
 
