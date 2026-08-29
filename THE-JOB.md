@@ -27,7 +27,7 @@ Until then this is still a prepare-to-build sitting, not a code sitting.
 - Leftover research (not build gates), each at its live home — the source file, the retired `CLARIFY.md`, is deleted: messaging investigation → `app/SPEC.md` §6 + `app/NOTES.md` · hour-grid residue → `app/NOTES.md` + the FD-81 row · OR-42 proposal → `security/SPEC.md` §2 · Situation × layer map → working material under `docs/agents/`
 - Later acts, not this phase: Cloudflare, OpenRouter keys, `privacy@annna.dev`
 - A working checkout may also carry a living gate list under `docs/agents/` (absent from a clone). This file is what a clone has.
-- Do not add to `AGENTS.md` (950-word ceiling, 0 spare)
+- Do not add to `AGENTS.md` (935-word ceiling, 0 spare — ratcheted to the measured count 2026-08-29)
 
 ## When this file retires
 
