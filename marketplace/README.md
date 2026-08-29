@@ -17,7 +17,7 @@ Both goods ride the **same publish → browse → install rails**. **Templates a
 **This folder's purpose:** the complete design for the open half. Read in order:
 
 1. **`SPEC.md`** — the goods (both document formats), the publish and install law (snapshot forks, the install door), entitlements & degradation, the closed-service lane, minimal discovery, open rulings, invariants.
-2. **`INTERFACES.md`** — the four seams: closed service (mocked always), app (renders the store, stubs nothing), harness (installs are ordinary propose→confirm elicitation), engine (not marketplace-aware). Zero new seam verbs anywhere.
+2. **`INTERFACES.md`** — the four seams: closed service (mocked always), app (renders the store, stubs nothing), harness (installs are ordinary propose→confirm elicitation), engine (not marketplace-aware). Zero new seam verbs on the inward seams; the downward list grows by ruling only.
 3. **`SCENARIOS.md`** — the acceptance suite: formats, publish, install, entitlement/degradation, discovery, and the two seed bundles end-to-end.
 4. **`BUILD.md`** — the ordered plan. **Builds last**, after all four layers; gated on their suites.
 
