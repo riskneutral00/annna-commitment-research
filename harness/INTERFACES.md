@@ -14,7 +14,7 @@ The Engine owns deterministic compute + storage. The harness never computes thes
 ```
 calculate(query) -> Handle
 ```
-- `query` is a typed read-only request: availability of board(s) over a window, gap/buffer between placements, a candidate solution reconciling N boards, a balance draw check, a predicate evaluation over attributes, a **marks aggregate** (the closed money-marks reporting query), or a **stored-object read** by declared shape — uncleared parks, a `PendingDecision`, open escalations and the on-call list, a party's `PartyContact` (`SPEC.md §3.12`'s fire-time resolution), the stored delivery events (`SPEC.md §3.11`'s suppression read), a `PatternDecline` (`SPEC.md §3.10`'s pre-offer check), the template-bundle projection, and the §2.1 relevant-slice assembly *(the projection and slice members stated 2026-08-21, the contact/delivery/decline members 2026-08-22 — each time for the same reason: the engine's taxonomy or the harness's own SPEC required the read (`../engine/SPEC.md §5`) while this enumeration omitted it, and under the zero-changes swap law the harness cannot construct what is not enumerated)*.
+- `query` is a typed read-only request: availability of board(s) over a window, gap/buffer between placements, a candidate solution reconciling N boards, a balance draw check, a predicate evaluation over attributes, a **marks aggregate** (the closed money-marks reporting query), or a **stored-object read** by declared shape — uncleared parks, a `PendingDecision`, open escalations and the on-call list, a party's `PartyContact` (`SPEC.md §3.12`'s fire-time resolution), the stored delivery events (`SPEC.md §3.11`'s suppression read), a `PatternDecline` (`SPEC.md §3.10`'s pre-offer check), the template-bundle projection, the §2.1 relevant-slice assembly, and a `FiringEvent` — the firing log's record by firing id, both parts (`SPEC.md §3.14`; engine storage at `../engine/SPEC.md §1.16`) *(member added 2026-08-28)* *(the projection and slice members stated 2026-08-21, the contact/delivery/decline members 2026-08-22 — each time for the same reason: the engine's taxonomy or the harness's own SPEC required the read (`../engine/SPEC.md §5`) while this enumeration omitted it, and under the zero-changes swap law the harness cannot construct what is not enumerated)*.
 - Returns an **opaque `Handle`** — an engine-issued reference to a computed, validated value. The harness/LLM may pass a Handle into a subsequent tool call but may **not** read its internals to author a literal. (Stub: return a deterministic fake handle + a canned result table keyed by scenario.)
 - **Never** produces an outward effect.
 
@@ -117,7 +117,7 @@ render(surface: board | commitment-page | console, payload)
 ```
 render_generative(schema) -> view        // schema = typed nodes from the FIXED component catalog
 ```
-- The harness/LLM emits a **typed schema**; the app maps types → vetted components. The LLM composes; it never invents a widget. The same types are validated by the engine.
+- The harness/LLM emits a **typed schema**; the app maps types → vetted components. The LLM composes; it never invents a widget — **and composing a payload the harness requested is not choosing a call** (`SPEC.md §4a`'s reconciliation; dispatch is harness-owned). The same types are validated by the engine.
 
 ### 3.3 Delivery channels + the traditional guest flow
 ```

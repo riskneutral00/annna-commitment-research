@@ -94,7 +94,7 @@ Engine-owned specifics:
 ### §1.10 History & diffs
 - **Append-only:** every write is a diff with attribution and timestamp. **No hard-delete operation exists in the engine's API.** Cancellation, revocation, expiry are latches; the record survives. (Reconciled with lawful erasure at `../security/SPEC.md §4`: sensitive artifacts never enter this store, and engine-resident contact PII crypto-shreds — the ciphertext history stays, the key doesn't.)
 - Point-in-time reads (v1-minimal): a per-object version chain sufficient to answer "the terms this commitment was made under" and to let check-work re-read what was stored.
-- **Schema evolution of the store itself** *(2026-08-22 — `store_version` is a read chain and FR16 covers kind schemas only; nothing said how a change to a §1 object shape lands against rows already written, and in an append-only store the old rows are permanent by law)*: object-shape changes are **additive-only with declared defaults** — no field is removed or re-typed, every historic shape stays readable (upcast on read, never rewrite), and a change that cannot be expressed additively is a spec change with its own ruling. The mirror for installed marketplace packs: `../marketplace/SPEC.md §4`.
+- **Schema evolution of the store itself** *(2026-08-22 — `store_version` is a read chain and FR16 covers kind schemas only; nothing said how a change to a §1 object shape lands against rows already written, and in an append-only store the old rows are permanent by law)*: object-shape changes are **additive-only with declared defaults** — no field is removed or re-typed, every historic shape stays readable (upcast on read, never rewrite), and a change that cannot be expressed additively is a spec change with its own ruling. The mirror for installed marketplace packs: `../marketplace/SPEC.md §4`. **One carve, named here and stated at its home:** the `FiringEvent` vocabulary reads **required-on-read, fail-closed** instead — §1.16, whose home is `../harness/SPEC.md §3.14`. Pointer only; the reasoning lives there.
 
 ### §1.11 Proposal (new object — the reshuffle deliverable)
 ```
@@ -187,6 +187,15 @@ TriggerRegistration {
 - **One mechanism, every scheduled law:** `min-occupancy` (§3), the conflicted-draft instant (§9), reminders (`../harness/SPEC.md §3.3`), hold/offer expiry clocks, the unused-token age-out (FD-53, `../security/SPEC.md §3`) — all register here; none invents its own tracking.
 - **The bridge to the harness clock is seam law, stated at the seam** *(2026-08-22 — before this pointer no spec on either side said how a registered `fire_at` becomes a firing)*: arming on the substrate's clock facility, `scheduler_handle` cancellation, and the surfacing of a firing as the harness's **ordinary clock source** are all at `INTERFACES.md §2.2`, tested by `SCENARIOS.md` N1–N3.
 
+### §1.16 FiringEvent — the storage note (the shape's home is the harness)
+
+*The §1.13 pattern: the `FiringEvent` **shape** is the harness's — `../harness/SPEC.md §3.14` is its normative home and this section restates nothing of it. This is only the engine's storage of it. **Drafted 2026-08-28, not ratified — pending FD-84.***
+
+- **Persisted through the existing verbs.** The record's two parts ride `commit` — birth bundled inside the firing's first work commit's transaction, the seal riding a terminal bookkeeping write or standing alone — and are read through `calculate`'s stored-object member (§5 item 7). **No firing-event-specific entry point**, the same guard §1.13 and the cross-owner share obey.
+- **Append-only, write-once per part, required-on-read.** §1.10's append-only law governs the store; each part is written once and never rewritten. The **read path enforces required-on-read**: a read encountering an unknown member of this vocabulary refuses whole, fail-closed — the deliberate reverse of §1.10's additive-only-with-upcast rule for domain records, and the harness home says why.
+- **The part identity, and the one-id-per-call law it must not break.** The record's identity is the pair **(firing id, part)** — encoded as the branded derived `birth_write_id`/`seal_write_id`, with **the firing id the parent key and never itself a write id**. That identity is a **write identity at record grain** under §6 item 6's idempotency law: an identical payload returns the original result, a different payload under the same part identity is refused `{conflict, reason: write-id-reuse}`. On a **standalone** landing the derived id **is** the call's caller-supplied write id; on a **co-write** the part rides the host commit's single id (§6 item 5(c)'s bundle shape) and is checked **in the same transaction**.
+- **Atomic uniqueness on (firing id, part).** At most one birth and one seal per firing id is representable — on every path, under any mix of call ids — and a bundle attempting a conflicting part is **refused whole** under §6 item 1's atomicity. This is what makes the harness's exactly-one-record invariant a construction rather than a convention.
+
 ## §2. The type-value system (M3)
 
 The closed value vocabulary — the only shapes a rule operand or correctness-critical field may hold:
@@ -277,7 +286,7 @@ The closed value vocabulary — the only shapes a rule operand or correctness-cr
 4. **Quota / balance draw** check.
 5. **Predicate evaluation** over attributes (admission/qualification comparators).
 6. **Marks aggregate** — one closed reporting query over money marks ("what did the week make"). It does not grow options; anything richer is an app read surface. *(Carried in the harness contract's §1.1 enumeration since 2026-08-21 — before that the harness could not construct it under the zero-changes swap law.)*
-7. **Stored-object read** *(2026-08-21 — the member the taxonomy always used and never named; widened 2026-08-22 with the contact, delivery-event and pattern-decline members, the same defect found again)* — a read of stored engine objects by declared shape: uncleared parks (§1.3), a `PendingDecision` (§1.14), open escalations and the on-call list (§1.13), a party's `PartyContact` (`../harness/SPEC.md §3.12`'s fire-time resolution), the stored delivery events (`../harness/SPEC.md §3.11`'s suppression read), a `PatternDecline` (`../harness/SPEC.md §3.10`), the template-bundle projection (§1.7a), and the harness's relevant-slice assembly (`../harness/INTERFACES.md §2.1`). Every one of these was already specified as "an ordinary `calculate` read"; the closed taxonomy just had no member for them, so the claim "closed at six" was false the day §1.13 landed. The member is **shape-scoped like every projection**: it returns declared object shapes, never arbitrary queries — anything richer is still an app read surface.
+7. **Stored-object read** *(2026-08-21 — the member the taxonomy always used and never named; widened 2026-08-22 with the contact, delivery-event and pattern-decline members, the same defect found again)* — a read of stored engine objects by declared shape: uncleared parks (§1.3), a `PendingDecision` (§1.14), open escalations and the on-call list (§1.13), a party's `PartyContact` (`../harness/SPEC.md §3.12`'s fire-time resolution), the stored delivery events (`../harness/SPEC.md §3.11`'s suppression read), a `PatternDecline` (`../harness/SPEC.md §3.10`), the template-bundle projection (§1.7a), the harness's relevant-slice assembly (`../harness/INTERFACES.md §2.1`), and a `FiringEvent` — the firing log's record by firing id, both parts (§1.16; shape at `../harness/SPEC.md §3.14`) *(member added 2026-08-28)*. Every one of these was already specified as "an ordinary `calculate` read"; the closed taxonomy just had no member for them, so the claim "closed at six" was false the day §1.13 landed. The member is **shape-scoped like every projection**: it returns declared object shapes, never arbitrary queries — anything richer is still an app read surface.
 
 **The travel seam.** `travel(place-A, place-B, at) → computed duration` is answered by an **external source (maps provider) behind the engine's own interface** — the harness never fetches or carries a travel number. Results are cached as stored facts with `author: engine` provenance, so replays are deterministic and scenarios run against a scripted provider (`INTERFACES.md §2`).
 
@@ -416,31 +425,36 @@ The `grants[]` edge (each entry a `ShareGrant`) is the only **authorization** st
 
 ## §10. Invariants (the poka-yoke ledger)
 
-| Invariant | Constructed at |
-|---|---|
-| No double-book (concurrent ≤ capacity, always) | §6.1 |
-| No un-expire; no latch ever cleared | §1.3, §6.2 |
-| A park is cleared by a human or not at all | §1.3 |
-| Diffs cannot wipe governing rules | §6.3 |
-| No hard delete exists | §1.10 |
-| Money tracked, never moved (recorded as latched marks) | §1.9 |
-| Proposals never auto-apply; declined move = no change | §1.11, §6.5 |
-| Freed time fail-closed until the owner decides | §1.11, §6.5 |
-| Unknown ≠ free, unknown ≠ feasible | §1.2, §5 |
-| No caller-authored correctness literal reaches math | §2, §4 |
-| Shared projections cannot leak the board | §1.7 |
-| The template-bundle projection cannot select people or data | §1.7a |
-| The owner board projection cannot reach across the tenant line beyond the granted rung, and no projection selects an address | §1.7b |
-| The candidate-shape ghost renders shape alone — no people, bookings, history, ledger or personal data — and is never stored | §0 (the FD-34 carve); `SCENARIOS.md` S6 |
-| Terms bind at booking; edits govern forward only | §1.5, §3 (`pricing`) |
-| One commitment, creator-owned; a cross-owner share stands on both boards or neither | §7.1 |
-| Only the engine mints a ShareGrant — the sole two-tenant *authorization* edge; no caller can author one, and engine-minted cross-tenant references grant nothing | §7.1 |
-| An interval-widening edit re-runs placement checks; a correction can never silently double-book | §6.7 |
-| Materialization never changes a capacity verdict; a blocked instance is a conflicted draft, never a double-book | §9 |
-| A restore conflicts loudly and can never resurrect a latched state | §9, `../security/SPEC.md §8` |
-| A run under its minimum parks for a human; the engine never auto-cancels | §3 (`min-occupancy`) |
-| A PendingDecision is never chosen by the engine — `chosen` is a human write or absent | §1.14 |
-| Unknown travel and no-feasible-placement are distinguishable in every decline | §5, §9 |
+**How to read the third column, and why it exists** *(added 2026-08-28)*. "Constructed at" names the spec text that *states* an invariant; it does not say what actually holds it up, and those are different facts. **How it executes** says which: `type-level construction` — the illegal state has no representation, so nothing has to run · `runtime check` — a check in **shipped production code, which the cell must name** · `scenario-suite-only` — the suite asserts it and nothing in production does. The law of the column: **a "test-only" invariant silently becomes "no invariant" in production**, so the ledger states which guarantee each row actually is rather than letting a reader assume the strongest. **A row claiming `runtime check` must name its production code path or be reclassified.**
+
+**Today's honest state: no row names one.** The engine is at `BUILD.md` Step 0 — there is no shipped store and no shipped write path, so every row that will *become* a runtime check is recorded as `scenario-suite-only` now and is re-graded when the code that holds it exists. That is the column doing its job on the day it lands, not a defect in the ledger.
+
+| Invariant | Constructed at | How it executes |
+|---|---|---|
+| No double-book (concurrent ≤ capacity, always) | §6.1 | `scenario-suite-only` — becomes a runtime check inside §6.1's transaction when Step 2 ships it |
+| No un-expire; no latch ever cleared | §1.3, §6.2 | `scenario-suite-only` — the write path's latch check, unshipped |
+| A park is cleared by a human or not at all | §1.3 | `type-level construction` — `cleared_by` has no `engine`/`llm` member to write |
+| Diffs cannot wipe governing rules | §6.3 | `scenario-suite-only` — §6.3 calls the wipe unconstructable; the construction is the diff applier, unshipped |
+| No hard delete exists | §1.10 | `type-level construction` — no delete operation is exposed above the substrate |
+| Money tracked, never moved (recorded as latched marks) | §1.9 | `type-level construction` — no operation in this layer moves value |
+| Proposals never auto-apply; declined move = no change | §1.11, §6.5 | `scenario-suite-only` — §6.5's confirmed-moves gate, unshipped |
+| Freed time fail-closed until the owner decides | §1.11, §6.5 | `scenario-suite-only` |
+| Unknown ≠ free, unknown ≠ feasible | §1.2, §5 | `scenario-suite-only` — §5's precedence ends in fail-closed; the precedence is unshipped |
+| No caller-authored correctness literal reaches math | §2, §4 | `type-level construction` — a literal in a handle-typed position is a type error (§4), bounded by that section's printed free-position residue |
+| Shared projections cannot leak the board | §1.7 | `type-level construction` — the selectable set omits it, so no access rule has to be right |
+| The template-bundle projection cannot select people or data | §1.7a | `type-level construction` — same mechanism |
+| The owner board projection cannot reach across the tenant line beyond the granted rung, and no projection selects an address | §1.7b | `type-level construction` — same mechanism |
+| The candidate-shape ghost renders shape alone — no people, bookings, history, ledger or personal data — and is never stored | §0 (the FD-34 carve); `SCENARIOS.md` S6 | `type-level construction` for the selectable set; `scenario-suite-only` for never-stored |
+| Terms bind at booking; edits govern forward only | §1.5, §3 (`pricing`) | `scenario-suite-only` |
+| One commitment, creator-owned; a cross-owner share stands on both boards or neither | §7.1 | `scenario-suite-only` — atomicity is §6.1's transaction, unshipped |
+| Only the engine mints a ShareGrant — the sole two-tenant *authorization* edge; no caller can author one, and engine-minted cross-tenant references grant nothing | §7.1 | `type-level construction` — no caller-reachable mint exists |
+| An interval-widening edit re-runs placement checks; a correction can never silently double-book | §6.7 | `scenario-suite-only` |
+| Materialization never changes a capacity verdict; a blocked instance is a conflicted draft, never a double-book | §9 | `scenario-suite-only` |
+| A restore conflicts loudly and can never resurrect a latched state | §9, `../security/SPEC.md §8` | `scenario-suite-only` |
+| A run under its minimum parks for a human; the engine never auto-cancels | §3 (`min-occupancy`) | `scenario-suite-only` |
+| A PendingDecision is never chosen by the engine — `chosen` is a human write or absent | §1.14 | `type-level construction` — `chosen.by` has no `engine`/`llm` member |
+| Unknown travel and no-feasible-placement are distinguishable in every decline | §5, §9 | `scenario-suite-only` |
+| Exactly one `FiringEvent` per firing id — at most one birth and one seal, neither mutated | §1.16 | `type-level construction` — the atomic (firing id, part) uniqueness makes a second part unrepresentable |
 
 **Printed residue on the board-blind row (FD-29, ruled 2026-08-21).** The Shared projection is leak-proof **per response**; a bearer polling on a schedule can difference successive responses and recover the board's occupancy *timing* with every label stripped — when things book and free, never what or whom. Accepted at v1 rather than coarsened: a publication grain would blunt every honest guest's view to slow a patient adversary who still learns the grain. The channel is bounded and visible instead — the projection read carries a declared per-token rate limit (`../security/SPEC.md §10`). A grain rule remains available to a future ruling; this row's guarantee should be quoted with this residue attached.
 
