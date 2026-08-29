@@ -13,7 +13,7 @@
 - **Verify:** every harness tool action is reachable from exactly one intent; no intent lands nowhere — **ranging over the full derivation surface SPEC §2 names** *(widened 2026-08-21: the check previously walked §5's tool tables only, so it passed while proving nothing about the eight intents that derive from the latch, mark, grant, re-enable and session laws)*.
 
 ## Step 2 — Prompt authoring
-- Write the per-call instruction assets (normalize / narrate) against real assembled contexts from the built harness. Version them like code.
+- Write the per-call instruction assets (normalize / narrate) against real assembled contexts from the built harness — **at the path and in the version form INTERFACES §3 states**; this is the step that creates them.
 - **Verify:** prompts reference only the context contract's fields (`../harness/INTERFACES.md §2.1`); no prompt asks the model to compute or permit anything (SPEC §5/§9).
 
 ## Step 3 — Qualification runs
@@ -24,7 +24,7 @@
 
 ## Step 4 — Routing config
 - Write the qualified `routing` config (INTERFACES §2.2) with fallbacks and cost caps; wire the qualification-state record.
-- **Verify:** an unqualified binding cannot go live (poka-yoke at config load, not review-time discipline). **A `byo-*` provider on `summarize` — in `model_id` or `fallback_model_id` — is unconstructable at config load**: the config refuses to load, the same mechanism as the unqualified-binding rule above, not a review checklist item (SPEC §7, **FD-3** founder-ruled 2026-08-07; INTERFACES §2.2).
+- **Verify:** an unqualified binding cannot go live (poka-yoke at config load, not review-time discipline) — **and `fallback_model_id` entries are bindings** (EVALS §3), so an unqualified fallback refuses to load on the same mechanism. **A `byo-*` provider on `summarize` — in `model_id` or `fallback_model_id` — is unconstructable at config load**: the config refuses to load, the same mechanism as the unqualified-binding rule above, not a review checklist item (SPEC §7, **FD-3** founder-ruled 2026-08-07; INTERFACES §2.2).
 
 ## Step 5 — ChatGPT-subscription slot — CUT (FD-65, 2026-08-22)
 - The step's content is removed with the slot: the vendor programme has been identity-only since 2026-08-02, so there is nothing to integrate and no terms check to run. The step number is kept so citations resolve; if the programme returns, the restoring ruling re-opens this step with the old content (one paragraph, preserved in history).

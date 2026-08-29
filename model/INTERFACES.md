@@ -21,11 +21,17 @@ Two properties of that seam this layer must preserve, never weaken:
 
 ## 2. Downward — the provider seam
 
-### 2.1 Provider contract (primary: OpenRouter)
+### 2.1 Provider contract — the adapter interface **every** provider enum member satisfies
 ```
 complete(model_id, messages, output_schema) -> structured JSON | error(malformed|refused|timeout|unavailable)
 ```
-- Chat-completions with **enforced structured output** (JSON schema per call type). One API shape for every model — that uniformity is why OpenRouter is the primary supply: swapping `model_id` is the whole swap.
+This signature is **the contract an adapter for any `provider` value must satisfy** — `openrouter`, `app-direct` and `byo-key` alike *(reframed 2026-08-29: the section was titled and argued as an OpenRouter contract while the enum had three members, so a builder wiring a direct vendor key invented the adapter boundary)*. OpenRouter's one-API-shape-for-every-model uniformity is **why it is the primary supply** — swapping `model_id` is the whole swap — not what the contract is. The obligations, stated rather than left implicit:
+
+- **Structured output is enforced server-side**, against the per-call schema (§2.4), by the provider. A provider that merely *requests* a schema and hopes is **not a lawful `app-direct` value**: on `summarize`, `additionalProperties: false` is the **structural** control (§2.4's own argument — a return that validates is the *whole* of what crosses), and a requested-but-unenforced schema is a labeling defense wearing a structural one's clothes. What the schema is, per call type, is §2.4's; this section states only that enforcement is the adapter's obligation.
+- **The error taxonomy is exactly the union above** — four members, nothing outside it. An adapter that cannot distinguish "the provider did not answer" from "the model refused" is not finished; collapsing them is the thing the seam forbids.
+- **No partial return.** An adapter returns a schema-valid structure or an error union member. A truncated, streamed-and-cut, or best-effort object is an `error(malformed)`, never a return.
+- **This layer composes `messages`, and the composition is deterministic** *(2026-08-29 — `complete()` takes a `messages` array and no prompt argument, so somebody joins the prompt to the context, and neither side said which)*. The harness hands the assembled **`context` object** across the seam (`../harness/INTERFACES.md §2.1`'s `{standing_frame, board_summary, relevant_slice, handoff_frame?}`) and hands no prompt. **The join `{prompt asset (§3), serialized context} → messages` is this layer's**, and it is **byte-identical on replay**: the same context object and the same prompt hash produce the same bytes every time, which is what makes a recorded firing replayable at all. It **satisfies** the wire-order law rather than restating it — stable material first, volatile slice after, so provider prompt caching gets a stable prefix; that law's home is `../harness/SPEC.md §8` ("the serialized prompt puts the **stable material first**"). **Nothing else enters `messages`.** In particular **no tool schemas ride**, and the model never selects a tool call: the seam carries exactly four call types and owns that fact at `../harness/INTERFACES.md §2` — cited, not re-ruled here. *(The seam states no owner for this composition today. The harness is asked to state the same fact at its own home; until it does, this is the only statement of it, and if the two ever disagree the seam's governs.)*
+- **`model_id` is a per-provider namespace.** An OpenRouter slug is not a vendor model id and does not resolve against a direct vendor key. Which namespace a `model_id` is read in is decided by the `provider` beside it in the same binding (§2.2), never guessed.
 - **The error union is closed at four members, and this is its home.** `malformed` — the return violated the schema, named an intent outside the vocabulary, or would not parse · `refused` — the model answered, and the answer was a refusal · `timeout` — no answer inside the binding's `timeout_ms` (§2.2) · **`unavailable`** *(fourth member, 2026-08-29)* — **the provider did not answer at all**: an outage, a 5xx, a gateway that never reached a model. The distinction `unavailable` carries is that **the math did not run** — nothing was asked of a model and nothing was decided — which is a different answer from "the model refused", and the seam above forbids collapsing the two (`../harness/INTERFACES.md §1`: a provider being down is "a different answer from every semantic return and is never collapsed into one"). Every member takes the same failure ladder (`SPEC.md §8`).
 - **Envelope mapping.** Upward, `unavailable` surfaces as the refusal envelope's **existing** `` `unavailable` | `provider` `` reason (the closed reason table, `../harness/COMPAT.md §1`) — the model provider is a third-party provider like the travel source and the calendar provider, so this names a cell that already exists rather than widening a closed set. Naming the model provider in that cell is the harness's own edit, not this layer's.
 
@@ -33,12 +39,15 @@ complete(model_id, messages, output_schema) -> structured JSON | error(malformed
 ```
 routing: {
   <call_type>: {
-    attended:   { model_id, provider, fallback_model_id, fallback_provider },
-    unattended: { model_id, provider, fallback_model_id, fallback_provider },
+    attended:   { model_id, provider, temperature, reasoning_effort?,
+                  fallback_model_id, fallback_provider, fallback_temperature, fallback_reasoning_effort? },
+    unattended: { model_id, provider, temperature, reasoning_effort?,
+                  fallback_model_id, fallback_provider, fallback_temperature, fallback_reasoning_effort? },
     max_cost_per_call, timeout_ms: { attended, unattended }, context_budget_tokens
   }
 }
 firing_budget: { max_steps_per_firing, max_cost_per_firing }
+judge: { model_id, provider, prompt_hash, languages_qualified[] }
 // Restructured 2026-08-21: the old single per-entry `provider` field made three standing rules
 //   structurally unexpressible — "Fallback is app-supplied, always" (SPEC §7: a byo primary's
 //   fallback is another byo), the attended-only confinement (FR31: a single entry had nowhere to
@@ -66,6 +75,13 @@ firing_budget: { max_steps_per_firing, max_cost_per_firing }
 //   summarize reads, tool round-trips, narrate, check-work). It sits beside the per-call routing
 //   because §4 cites this section for it and no field carried it: max_cost_per_call bounds one
 //   call, never the firing.
+// max_cost_per_call's behavior when a call would exceed it is SPEC §8's — a failure of that call,
+//   taking §8's ladder, with the spend still counted. Stated there, cited here, never twice.
+// judge (2026-08-29) sits BESIDE routing, never inside it, and is emphatically NOT a fourth
+//   call_type: the exam's judge is never dispatched by the harness and has no seam. What it is
+//   is a real model with real obligations (EVALS.md §1), so it needs a recordable identity —
+//   model_id, provider, the content hash of its frozen prompt (§3), and the languages whose
+//   Z-N mirrors it has passed, which is what licenses it to grade that language's Z-R items.
 // call_type = normalize | narrate | summarize
 //   Judgment is NOT a config key (2026-08-29): it rides inside normalize/narrate's calls and is
 //   never separately dispatched, so a `routing.judgment` block would load a binding nothing ever
@@ -74,6 +90,7 @@ firing_budget: { max_steps_per_firing, max_cost_per_firing }
 //   (../harness/INTERFACES.md §2). Three call types are separately bound; four exist.
 ```
 - **Config, never code.** A routing change (new model, new fallback, provider flip) requires re-qualification (`EVALS.md §3`) and nothing else.
+- **Sampling is config too, and a binding is qualified at its sampling values** *(added 2026-08-29)*. `temperature` sits on every binding; `reasoning_effort` is optional and is an **adapter-owned opaque string** — handed to the provider unchanged, never translated, and deliberately **not** a shared cross-provider vocabulary: there is no settled industry one to adopt, and inventing a mapping here would be a claim no adapter could honour. Both are **qualified-at** fields, exactly as `context_budget_tokens` is: changing either is a **re-qualification, never a silent config diff**. The reason is the P-set — a variance instrument scored over independent triples (`EVALS.md §2`), and temperature is the single largest lever on that score, so a binding whose temperature moved is not the binding that passed. A fallback entry carries its own values the way it already carries its own `provider`.
 - `byo-key` is the **owner's own provider API key** (FR5, 2026-08-06 — the ban is reversed; SPEC §7's tertiary supply). It is an ordinary `{call_type → model_id}` binding whose credential happens to be the owner's: **no new mechanism and no second code path**, which is the whole reason it is a provider value here rather than a parallel config. Attended-only confinement per SPEC §7 (**FR31**, founder-ruled 2026-08-07). The binding is stored here; **the secret never is** — it is vault-resident, and this config holds only the reference (`../security/SPEC.md §3.1`, member 2, asserted at `../security/SCENARIOS.md` T8).
 - **`summarize` rejects every `byo-*` provider** — attended or not, console or trigger (SPEC §7, **FD-3** founder-ruled 2026-08-07). Both `model_id` and `fallback_model_id` must be app-supplied bindings (`openrouter` or `app-direct` — FD-67); a config naming a `byo-*` provider on this call type **does not load** (`BUILD.md` Step 4). Its `timeout_ms` rides the same attended/unattended defaults as every other call type — no special budget, and the retry/fallback path is SPEC §8's, ending fail-closed rather than in a degraded admit.
 
@@ -146,8 +163,8 @@ Judgment has no schema of its own — it rides inside `normalize`/`narrate` (SPE
 ## 3. What this layer OWNS (for contrast)
 
 - The **intent vocabulary** (SPEC §2) and the per-call **output schemas**.
-- The **prompt/instruction assets** (authored at BUILD Step 2, versioned like code).
-- The **routing config** and its qualification state.
+- The **prompt/instruction assets** — and this section is their home, their location and their version form *(stated 2026-08-29; "versioned like code" was a simile, and three files referenced these assets while none said where they were or what a version of one is)*. They live **in-repo under `model/prompts/`**, one file per separately-bound call type, **created by the build step that first needs them** (`BUILD.md` Step 2) — the FD-8 precedent, where a location is ruled for files that do not exist yet. **A prompt's version is the asset's content hash**: there is no second version register to keep in step, and the hash is exactly the value `EVALS.md §3`'s record means by "prompt version". A prompt edit changes the hash, and **a changed hash re-qualifies every binding that uses it** — `EVALS.md §3` step 1 already names "prompt" as a re-qualification trigger; the hash is what makes that trigger checkable rather than remembered. Prompt assets are **not `.md` documents**: they are instruction text, and they neither enter the tracked-markdown corpus nor move its counts.
+- The **routing config** and its qualification-state records — **versioned the same way**, by the content hash of the artifact *(2026-08-29)*. They are **loaded at harness boot and again on every config change**, and §2.2's load-refusals apply at that moment rather than at review time, which is the whole of what makes them poka-yoke. **Where the artifact physically lives is `BUILD.md` Step 4's decision** — the step that first writes one — and is cited here, not pre-empted.
 - The **exam** (`EVALS.md`) and its graded sets.
 
 Everything correctness-critical is above (harness floor/loop) or beside (engine truth) — never here.
