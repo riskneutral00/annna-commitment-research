@@ -36,7 +36,7 @@
 | README.md | derived | The repo's front page: what annnä is, the one-week-run-twice proof, the layer map, current build state |
 | RULINGS.md | index | The FR and FD ruling registry — what each ruling decided and which file holds it. Never a home itself |
 | TDD.md | derived | The testing strategy: the five kinds of test, the four laws, which kind each layer's criteria become, and the swap sequence integration is proven by rather than by a new suite |
-| THE-JOB.md | index | The prepare-to-build session job. Points at leftover research and the go-word. Never a home of product law |
+| THE-JOB.md | index | The prepare-to-build session job. Points at leftover research and the go-word. Never a home of product law. Carries its own proposed retirement condition (FD-88, unratified) |
 | app/BUILD.md | derived | The app's ordered build steps, each gated by its scenarios and the design-law checklist; ends at the stub-swap |
 | app/DESIGN.md | SPEC | The visual and interaction law for every app surface. Ruled here, not carried — the prior build was released as law 2026-08-09 (FD-20) |
 | app/INTERFACES.md | derived | The app's two seams: upward to the harness contract, downward to its substrates |

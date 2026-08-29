@@ -29,6 +29,22 @@ Until then this is still a prepare-to-build sitting, not a code sitting.
 - A working checkout may also carry a living gate list under `docs/agents/` (absent from a clone). This file is what a clone has.
 - Do not add to `AGENTS.md` (950-word ceiling, 0 spare)
 
+## When this file retires
+
+This file retires on readiness, never on a date: when the go-word has been given and
+`harness/BUILD.md` Step 1 has opened, it describes a moment that has passed.
+
+One thing here is law, and it moves rather than dies — **G0-2**, the go-word gate. Its
+normative home becomes `harness/BUILD.md`, the only file that cites it and where its
+Readiness line already names it. Nothing else in this file is law.
+
+Retirement is the founder's act, in one commit: delete this file, remove its `INDEX.md`
+row, and re-point or remove the two `README.md` references to it — the Status paragraph’s
+session-job sentence and the map row — setting the tracked-markdown count in `AGENTS.md`
+and `README.md` to the then-current tracked count, never to a number written here.
+
+*Drafted, not founder-ratified.* **PROPOSED FD-88**, registered in `RULINGS.md`.
+
 ## Hard guardrails
 
 - Start harness Step 1 only after the go-word.
