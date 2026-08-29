@@ -38,7 +38,7 @@ describe("typed_value — deterministic resolution, fail-closed", () => {
     expect(isTvError(typed_value("x", { type: "vibes" }))).toBe(true);
   });
 
-  it("mints only COMPAT §1's closed reasons, with the prose in detail", () => {
+  it("mints only INTERFACES §7.1's closed reasons, with the prose in detail", () => {
     const v = typed_value("2026-09-03T15:00:00", { type: "instant" });
     expect(isTvError(v)).toBe(true);
     if (isTvError(v)) {

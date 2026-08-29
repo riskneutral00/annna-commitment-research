@@ -1,17 +1,20 @@
 // The COMPAT-vocabulary gate (2026-08-22 strategy review, S3's gate half).
 //
-// harness/COMPAT.md is the single home of the closed refusal-reason set per
-// kind (FR13), and from its authoring onward widening a reason set is a
+// `harness/INTERFACES.md §7.1` is the single home of the closed refusal-reason
+// set per kind (FR13) — authored 2026-08-22 as `harness/COMPAT.md`, folded
+// there 2026-08-29 — and from its authoring onward widening a reason set is a
 // breaking change (RQ-13). Two copies exist that can drift from it: the six
-// kinds named in harness/INTERFACES.md §1's envelope, and whatever `reason:`
-// string literals the harness code comes to use as the Steps 1–5 suites land.
+// kinds named in that same file's §1 envelope sentence — two enumerations
+// inside one file, which drift no less easily for sharing a file — and
+// whatever `reason:` string literals the harness code comes to use as the
+// Steps 1–5 suites land.
 //
 // What it checks:
-//   1. COMPAT.md §1's kind column is exactly the envelope's six kinds — both
-//      directions (a seventh kind in either file fails).
+//   1. §7.1's kind column is exactly the envelope's six kinds — both
+//      directions (a seventh kind on either side fails).
 //   2. Every kind carries at least one reason.
 //   3. Every `reason: "..."` string literal in harness/src (and tests) is a
-//      member of COMPAT.md's reason set — the consuming direction.
+//      member of §7.1's reason set — the consuming direction.
 // What it cannot check yet, printed as the honest bound: the reverse of (3) —
 // that every enumerated reason is exercised by some suite. That becomes
 // checkable as the Step 1–5 suites land; until then an unexercised reason is
@@ -28,7 +31,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
-// COMPAT.md §1's table rows: | `kind` | `reason` | collected from |
+// INTERFACES.md §7.1's table rows: | `kind` | `reason` | collected from |
 function compatTable(md) {
   const rows = [];
   for (const m of md.matchAll(/^\| `([a-z-]+)` \| `([a-z-]+)` \|/gm)) rows.push({ kind: m[1], reason: m[2] });
@@ -72,19 +75,19 @@ function check(compatMd, interfacesMd, reasonsInCode, specMd) {
   const bad = [];
   const rows = compatTable(compatMd);
   const kinds = envelopeKinds(interfacesMd);
-  if (!rows.length) return ["COMPAT.md §1's table no longer parses — fix this script's contract"];
+  if (!rows.length) return ["INTERFACES.md §7.1's table no longer parses — fix this script's contract"];
   if (!kinds) return ["INTERFACES.md §1's envelope sentence no longer parses — fix this script's contract"];
   const park = parkUnion(specMd);
   if (!park) return ["SPEC §3.4's park union no longer parses — fix this script's contract"];
   const tableKinds = [...new Set(rows.map((r) => r.kind))];
-  for (const k of kinds) if (!tableKinds.includes(k)) bad.push(`envelope kind \`${k}\` has no COMPAT.md row`);
-  for (const k of tableKinds) if (!kinds.includes(k)) bad.push(`COMPAT.md kind \`${k}\` is not in the envelope's six`);
+  for (const k of kinds) if (!tableKinds.includes(k)) bad.push(`envelope kind \`${k}\` has no §7.1 row`);
+  for (const k of tableKinds) if (!kinds.includes(k)) bad.push(`§7.1 kind \`${k}\` is not in the envelope's six`);
   const reasons = new Set(rows.map((r) => r.reason));
   for (const r of reasonsInCode) {
     // The park's needs_human.reason members are SPEC §3.4's own closed set,
     // not seam refusal reasons — out of this gate's domain.
     if (park.includes(r)) continue;
-    if (!reasons.has(r)) bad.push(`code uses reason "${r}" which COMPAT.md does not enumerate — widening is a breaking change (RQ-13)`);
+    if (!reasons.has(r)) bad.push(`code uses reason "${r}" which §7.1 does not enumerate — widening is a breaking change (RQ-13)`);
   }
   return bad;
 }
@@ -118,22 +121,34 @@ if (process.argv.includes("--selfcheck")) {
     check(COMPAT_FIXTURE, IFACE_FIXTURE, new Set(), "no park union here").some((b) => b.includes("§3.4")),
     "a broken §3.4 fixture fails closed",
   );
+
+  // The property the 2026-08-29 fold creates: both enumerations now live in one
+  // file, so the gate reads that file as both inputs. Reading one file twice
+  // must not cross-contaminate — and in particular the envelope sentence's own
+  // `conflict | decline | …` must not parse as a table row, which would hand
+  // the table a kind column it never declared.
+  const COMBINED = `${IFACE_FIXTURE}\n\n${COMPAT_FIXTURE}`;
+  assert.deepStrictEqual(check(COMBINED, COMBINED, new Set(), SPEC_FIXTURE), [], "one file as both inputs passes");
+  assert.strictEqual(compatTable(COMBINED).length, 6, "the envelope sentence contributes no table row");
+  assert.ok(
+    check(`${IFACE_FIXTURE}\n\n${COMPAT_FIXTURE}\n| \`retry\` | \`later\` | x |`, COMBINED, new Set(), SPEC_FIXTURE).some((b) => b.includes("`retry`")),
+    "a seventh kind is still caught when both enumerations share a file",
+  );
   console.log("selfcheck OK");
   process.exit(0);
 }
 
-const compat = fs.readFileSync(path.join(ROOT, "harness/COMPAT.md"), "utf8");
 const iface = fs.readFileSync(path.join(ROOT, "harness/INTERFACES.md"), "utf8");
 const spec = fs.readFileSync(path.join(ROOT, "harness/SPEC.md"), "utf8");
 const inCode = codeReasons(path.join(ROOT, "harness/src"));
 for (const r of codeReasons(path.join(ROOT, "harness/tests"))) inCode.add(r);
-const bad = check(compat, iface, inCode, spec);
+const bad = check(iface, iface, inCode, spec);
 if (bad.length) {
   console.log(`\nCOMPAT-REASONS FAIL:`);
   for (const b of bad) console.log(`  ${b}`);
   process.exit(1);
 }
-const rows = compatTable(compat);
+const rows = compatTable(iface);
 console.log(
   `COMPAT-REASONS OK — ${new Set(rows.map((r) => r.kind)).size} kinds, ${rows.length} reasons, kinds equal the envelope's six both ways; ` +
     `${inCode.size} reason literal(s) in harness code, all enumerated. NOT CHECKED: that every enumerated reason is exercised by a suite — checkable when the Step 1–5 suites land; and reason values passed as a shorthand object property ({ …, reason }) are invisible to the literal scan.`,

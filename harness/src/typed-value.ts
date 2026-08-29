@@ -14,8 +14,8 @@ export type TypedValue =
   | { kind: "instant"; epoch_ms: number }
   | { kind: "number"; value: number; unit?: string };
 
-/** COMPAT.md §1's closed `invalid` reasons, as far as this library mints them.
- *  Deliberately a two-of-three subset: COMPAT enumerates a third `invalid`
+/** `INTERFACES.md §7.1`'s closed `invalid` reasons, as far as this library mints
+ *  them. Deliberately a two-of-three subset: §7.1 enumerates a third `invalid`
  *  reason, `schema-mismatch`, which is return-leg and rejected-render
  *  validation — the app's domain, not typed_value's. Do not "complete" the
  *  union here. */
