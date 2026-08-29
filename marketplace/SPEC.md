@@ -33,19 +33,62 @@ A template is a **business-in-a-box** (personal cases included): the transferabl
 
 | Field | What it is |
 |---|---|
-| `id` / `name` / `version` / `provenance` | Identity + who published it (OR-28 governs how identity is vouched — open, §7). |
-| `domain` | The vocabulary: commitment-kinds with their typed fields ("dive course", "lesson"), display naming. Bounded by the same meta-schema as all generative UI (`../app/SPEC.md §4`). |
-| `rule_shapes` | Entries from the engine's **closed rule menu** — with operands **blanked or marked as the publisher's choices**. "Buffer between dives" is transferable wisdom; *their* 30 minutes is their setting. An off-menu rule shape is refused at the install door, upstream of the engine's own refusal. |
-| `shared_shapes` | The outward faces: bookable-availability and booking-form shapes — the authoring side of the engine's Shared projection. |
-| `resource_shapes` | Boards to create: instructor roster slots, boat, pool, gear — **shapes only, no people**. |
+| `id` / `name` / `version` / `manifest_version` | Identity and the authoring envelope. **`version` is content-addressed**: it increments when the document's content changes, never once per save call — which is what keeps `../engine/SPEC.md §1.7a`'s determinism guarantee ("the same session projects an **identical bundle** every time") true of the whole document and not only of its projected core. **`manifest_version` is the manifest-version stamp** *(field added 2026-08-29 — §3 has said since 2026-08-22 that the install door compares the catalog-manifest version a bundle was authored against, and the format carried no field for it to compare, so the door's rule was undecidable in fact)*: the app catalog-manifest version (`../app/SPEC.md §4.1`) the bundle was authored under, written by the save step **around** the projected set, so the projection itself stays the pure read §1.7a specifies. A re-publish is a new version (§2). |
+| `domain` | The vocabulary: commitment-kinds with their typed fields ("dive course", "lesson"), display naming. Bounded by the same meta-schema as all generative UI (`../app/SPEC.md §4.1` — typed nodes from the closed list, a per-language `label` map, closed per-type prop lists). |
+| `rule_shapes` | Entries from the engine's **closed rule menu** (`../engine/SPEC.md §3`) — with operands **blanked (the sentinel below) or set as the publisher's choices**. "Buffer between dives" is transferable wisdom; *their* 30 minutes is their setting. An off-menu rule shape is refused at the install door, upstream of the engine's own refusal. |
+| `shared_shapes` | The outward faces: bookable-availability and booking-form shapes — the authoring side of the engine's Shared projection. **Printed below.** |
+| `resource_shapes` | Boards to create: instructor roster slots, boat, pool, gear — **shapes only, no people**. **Printed below**, with its strips. |
 | `kind_templates` | *(Field added 2026-08-21 — `KindTemplate` unblocked F5/Z1 in the engine while this table had no field for it to travel in, so the dive course was projectable in prose and refused at §3's unknown-field door in fact.)* Multi-day course shapes (`../engine/SPEC.md §1.12`), carried **role-only**: `{kind, sessions[{label, offset, duration, consumes[{board_role, quantity}], requires}], anchor_policy}`. **The hard fence binds this field with two named exclusions**: a session's `consumes` may carry **`board_role` only, never `board_ref`** (a concrete board on the publisher's account is their data), and the object travels **without `owner_org`** — both are stripped by the fence's selectable-set construction (`../engine/SPEC.md §1.7a`), not filtered after. |
 | catalog metadata | Category, tags, featured flag, `popularity` (§6). |
 
-**Authored vs publish-assigned, split** *(2026-08-21 — the flat table made G8 and I6 undecidable: if catalog metadata were required at authoring, no projected bundle could ever validate)*: the **authored set** — `id`/`name`/`version`, `domain`, `rule_shapes`, `shared_shapes`, `resource_shapes`, `kind_templates` — is what the engine projection emits and what G8/I6 validate against. The **publish-assigned set** — `provenance`, category, tags, featured, `popularity`, listing copy — is attached at §2's publish step by the **publishing owner** (featured remains an admin merchandising flag) and is **absent from an authored/saved bundle by definition**; the install door's unknown-field refusal checks against the full grammar, in which the publish-assigned fields are optional-at-authoring and present-at-catalog.
+**The wire grammar, printed** *(2026-08-29 — two fields were named with no shape a builder could implement and the blanking convention had no printed form, so the F4 and F5 seeds were writable only by guessing)*. Field names and their types; nothing here adds semantics the corpus has not ruled:
+
+```
+shared_shapes: [ {
+    id, label,
+    face     : "bookable-availability" | "booking-form",
+
+    // bookable-availability — the three operands the "Free Time Available" seed blanks
+    hours    : recurring-window | "blanked",
+    duration : duration-range   | "blanked",
+    buffer   : duration         | "blanked",
+
+    // booking-form — a generative-UI schema, bounded by the app's meta-schema: typed
+    // nodes from the closed list, per-language label map, closed per-type prop lists,
+    // no code, no event handlers, no lifecycle
+    form     : schema
+} ]
+
+resource_shapes: [ {
+    role       : string,                 // "instructor", "boat", "pool", "gear" — a role, never a board
+    kind       : string,                 // the board kind to stand up
+    capacity   : unit-number | "blanked",
+    attributes : [ { name, type } ]      // declared shape only, never a value about a person
+} ]
+// STRIPPED, by construction: `owner`. A concrete owner is the publisher's data. The strip is
+// the projection's selectable-set construction, never a filter run afterwards — exactly as the
+// kind_templates fence strips board_ref and owner_org.
+```
+
+**The blanked-operand sentinel, one printed form.** A blanked operand travels as a **required-present key carrying the reserved value `"blanked"`** — never as an absent key. **Omission is malformed**, refused whole at the door with the failing entry named; only the sentinel means "the publisher left this one to the installer". That is what makes F2's and I3's refusal decidable at the door rather than a judgement about what a missing key was supposed to mean, and it is the printed form of `../engine/SPEC.md §1.7a`'s "operands are blanked either way".
+
+**Bounding schema, field by field** (so F1's and F3's unrepresentability is checkable one field at a time): `domain` → the meta-schema at `../app/SPEC.md §4.1` · `rule_shapes` → the closed menu at `../engine/SPEC.md §3`, plus the sentinel above · `kind_templates` → `../engine/SPEC.md §1.12` · `shared_shapes` / `resource_shapes` → the structs printed above.
+
+**Authored vs publish-assigned, split** *(2026-08-21 — the flat table made G8 and I6 undecidable: if catalog metadata were required at authoring, no projected bundle could ever validate)*: the **authored set** is *what the engine projection emits, plus the save step's stamped envelope* — `domain`, `rule_shapes`, `shared_shapes`, `resource_shapes`, `kind_templates` from the projection (`../engine/SPEC.md §1.7a`), wrapped in `id`/`name`/`version`/`manifest_version` by the save step — and it is what G8/I6 validate against. The **publish-assigned set** — **`provenance`**, category, tags, featured, `popularity`, listing copy — is attached at §2's publish step by the **publishing owner**, with two members that are never the publisher's to set: **featured** is an admin merchandising flag and **`popularity`** is service-computed (§6). The publish-assigned set is **absent from an authored/saved bundle by definition**; the install door's unknown-field refusal checks against the full grammar, in which the publish-assigned fields are optional-at-authoring and present-at-catalog. The two that had no printed shape:
+
+```
+provenance : { publisher, published_at }   // who listed it, and when. HOW that publisher identity
+                                           // is vouched is OR-28 — open, §7
+listing    : { title, summary, detail }    // §2's "detailed information on what it is and what it
+                                           // does"; rendered in the viewing owner's language with
+                                           // English fallback (§6, the home of that rule)
+```
+
+**Three version species, never conflated:** the **seam API version** — the closed service's versioned API (`INTERFACES.md §1`); the **bundle document version** — `version` above, content-addressed; and the **catalog-manifest version** — the manifest-version stamp `manifest_version` carries and §3's door compares.
 
 - **Hard fence — people and data never travel.** No counterparty, booking, history, ledger or personal-data record is *representable* in the format: the fields do not exist (poka-yoke, asserted as schema-level unrepresentability — `SCENARIOS.md` F3).
 - **The format spans the seed catalog.** Smallest legal bundle: **"Free Time Available"** — one shared bookable-availability shape with blanked hours/duration/buffer (a teacher's bookings, a date, any meeting). Largest: the **dive-center** bundle — multi-resource shapes, course kinds, governed rules with blanked operands. Both must validate against one grammar (`SCENARIOS.md` F4/F5).
-- **Relationship to onboarding starters.** The app's starter templates (`../app/SPEC.md §8` — meals, workouts, share-my-availability) are **app-local stored templates, deliberately a separate system**: same spirit, different artifact, never merged. A future ruling may let a marketplace bundle *ship* starters; none may replace them.
+- **Relationship to onboarding starters.** The app's starter templates are **app-local stored templates, deliberately a separate system** — same spirit, different artifact, never merged, and never replaceable by a marketplace bundle; their home, including which starters exist, is `../app/SPEC.md §8` (FR13, and the second list that used to stand here had already drifted from it).
 - **Divergence from the prior bundle, recorded** (the supersessions discipline): the prior ruling's bundle was "domain schema + booking templates + rule shapes." `shared_shapes` and `resource_shapes` are **deliberate additions** — this architecture makes the outward faces and the resource boards first-class, so the bundle carries their shapes too.
 
 ## §2. Publish (owner-publish for templates, FD-82)
