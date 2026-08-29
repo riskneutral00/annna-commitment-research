@@ -16,13 +16,9 @@
 //     outside-repo traceability forms (`research/<name>.md:line`, `DESIGN:line`)
 //     pointing into a prior build on the founder's machine. They cannot rot
 //     here because they were never here.
-//   - Targets under `archive/`. Archive is history: frozen adversarial reviews
-//     and dated records that are not edited, so their line numbers are stable
-//     by construction. Note this exempts the citation's TARGET, not its author —
-//     a file under `archive/` citing OUT of archive is checked like anyone else.
-//     The FR/FD registry used to be the one live file in there and the standing
-//     exception to "archive does not move"; it left for `../../RULINGS.md` on
-//     2026-08-08, so the exemption is now exactly what it says it is.
+//     `archive/` used to carry an exemption of its own here; the tree was
+//     retired from the tracked corpus, so its citations are now exempt under
+//     this bullet like any other target that does not resolve.
 //
 // Resolution mirrors how the corpus actually writes citations (`AGENTS.md`:
 // "Section citations mix relative and repo-root-relative forms") — try relative
@@ -38,7 +34,6 @@ import assert from "node:assert";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const EXEMPT_TREES = ["archive/"];
 
 // One matcher, shared by the selfcheck and the real pass.
 const CITATION = /`([A-Za-z0-9_./-]+\.(?:md|mjs|ts|tsx|json)):(\d+)/g;
@@ -55,8 +50,7 @@ export function resolveTarget(target, fromFile, exists) {
   return null;
 }
 
-export const isExempt = (resolved) =>
-  resolved === null || EXEMPT_TREES.some((t) => resolved.startsWith(t));
+export const isExempt = (resolved) => resolved === null;
 
 if (process.argv.includes("--selfcheck")) {
   assert.deepStrictEqual(
@@ -68,19 +62,18 @@ if (process.argv.includes("--selfcheck")) {
   assert.deepStrictEqual(citationsIn("`deployment/SPEC.md` §8 and §6.5"), [], "a section citation is not a line citation");
   assert.deepStrictEqual(citationsIn("the meeting is at 12:30"), [], "a bare number is not a citation");
 
-  const has = (p) => ["archive/DESIGN.md", "app/DESIGN.md", "security/SPEC.md"].includes(p);
-  assert.strictEqual(resolveTarget("DESIGN.md", "archive/CRITIQUE-FINDINGS-2.md", has), "archive/DESIGN.md",
+  const has = (p) => ["harness/SPEC.md", "app/DESIGN.md", "security/SPEC.md"].includes(p);
+  assert.strictEqual(resolveTarget("SPEC.md", "harness/BUILD.md", has), "harness/SPEC.md",
     "relative-to-citer wins first");
-  assert.strictEqual(resolveTarget("app/DESIGN.md", "archive/08-rulings.md", has), "app/DESIGN.md",
+  assert.strictEqual(resolveTarget("app/DESIGN.md", "harness/BUILD.md", has), "app/DESIGN.md",
     "root-relative is the fallback");
   assert.strictEqual(resolveTarget("research/astryx.md", "app/DESIGN.md", has), null,
     "an unresolvable target is outside the repo");
 
-  assert.ok(isExempt(resolveTarget("DESIGN.md", "archive/CRITIQUE-FINDINGS-2.md", has)), "archive→archive is exempt");
   assert.ok(isExempt(null), "outside-repo is exempt");
-  // The negative case: archive citing OUT of archive is not exempt.
-  assert.ok(!isExempt(resolveTarget("app/DESIGN.md", "archive/08-rulings.md", has)),
-    "an archive file citing a live file is checked like anyone else");
+  // The negative case: anything that resolves in-repo is checked.
+  assert.ok(!isExempt(resolveTarget("app/DESIGN.md", "harness/BUILD.md", has)),
+    "an in-repo target is checked, whoever cites it");
   console.log("\nselfcheck OK");
   process.exit(0);
 }

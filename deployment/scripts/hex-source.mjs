@@ -111,8 +111,7 @@ const sourced = known(palettes, fs.existsSync(pipeline) ? fs.readFileSync(pipeli
 
 const tracked = execFileSync("git", ["ls-files", "-z", "*.md"], { encoding: "utf8", maxBuffer: 1 << 28 })
   .split("\0")
-  .filter(Boolean)
-  .filter((f) => !f.startsWith("archive/")); // history does not move, and its colours are not law
+  .filter(Boolean);
 
 const unsourced = [];
 let checked = 0;
