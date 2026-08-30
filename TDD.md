@@ -54,7 +54,7 @@ Many fast engine unit/property tests at the bottom · the full harness behaviora
 
 1. **Tests first.** Every layer's `BUILD.md` step already names its gating scenarios. The build discipline is: turn that step's scenarios into failing executable tests, **then** implement until green. Never the reverse; never delete a red test to pass a step.
 2. **The swap is the exam.** A layer is done only when the real thing replaces its stub and every suite that ran against the stub runs green **unchanged** (§Integration).
-3. **HELD-OUT stays held out.** Scenarios marked `[HELD-OUT]` (harness J-family) are run and their results **recorded** — the design is never patched to make them pass. They measure generality, they don't gate it.
+3. **HELD-OUT stays held out.** Scenarios marked `[HELD-OUT]` (harness **J1–J4**; J5 was re-homed to `[MUST]` 2026-08-30) are run and their results **recorded** — the design is never patched to make them pass. They measure generality, they don't gate it.
 4. **Visual law is a checklist, not a test.** The app's design law (`app/DESIGN.md`) gates build steps by human review — pixels are judged, not asserted (§App).
 
 ## Read order
@@ -119,7 +119,7 @@ Same inputs → same run, every time. L2 pins this as a criterion: the same trig
 
 **A** board authoring (incl. **A7** return-leg validation) · **B** rules/elicitation (incl. **B9** the duration floor) · **C** status latches · **D** the floor (incl. **D10–D11** auto-accept-as-Grant, **D18–D20** content-bound confirmation / fail-closed / the floor property, **D22–D23** channel suppression, **D24–D26** the authorization class, **D27** no-signed-term-no-debt) · **D′** the escalation ladder (**D12–D17, D21** — the ladder-walk set re-provenanced `[SHOULD]` under FD-59, D15 the family's `[MUST]`) · **E** M2 gate · **F** conflict/versioning (incl. **F6** in-flight operands) · **G** elicitation store · **H** orders/groups/guest (incl. **H9** the counterparty's move) · **I** the cross-owner share (**I1–I4**) · **K** check-work · **L** context assembly · **N** money · **O** the assisted off-app path (**O1–O5**) · **P** engine-originated round-trips (**P1–P2**) · **X** the external surface (**X1–X7**) — `[MUST]` throughout save the FD-59 re-provenance above, all behavioral, all on stubs.
 
-**J family is different.** `[HELD-OUT]` probes run against the *finished* harness and their results are **recorded, pass or fail** — a failure means "which general primitive is missing," never "patch the atom." Do not design or fix toward J.
+**J1–J4 are different.** `[HELD-OUT]` probes run against the *finished* harness and their results are **recorded, pass or fail** — a failure means "which general primitive is missing," never "patch the atom." Do not design or fix toward them. **J5 is not one of them** — re-homed to `[MUST]` 2026-08-30, it gates the build and is fixed toward like any other requirement.
 
 `[ENGINE]`-tagged parts (e.g. A4's enforcement) assert only the harness's half — the stub's verdict is surfaced; real enforcement is proven later at the swap.
 

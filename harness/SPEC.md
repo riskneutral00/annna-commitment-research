@@ -191,7 +191,9 @@ Rules edit by **diff** (as boards). Instance-level facts (e.g. "day 2 depends on
 Order {
   id
   customers [ principal ]        // one order may have MANY customers (group class)
-  payment_preconditions [ … ]
+  payment_preconditions [ … ]      // each member is a §3.4 precondition with kind: payment;
+                                 // its optional satisfied_by.evidence is §3.4's closed
+                                 // two-member union. §3.4 is the home; nothing is added here.
   members [ commitment_id ]      // commitments that belong together
 }
 ```
@@ -539,7 +541,8 @@ What the harness loads into the model on every firing — the model sees only wh
 - **Meta-principle:** design the harness's **general capability**; never make a decision catering to a specific use case. The use cases (teacher / dive / rental / ER) are **falsification probes**, not design targets. A probe that breaks the model reveals a missing *general primitive* — build the primitive, not the use case.
 - **Authority levels:** `governing > org > individual`; governing content is admin-seeded and non-overridable; org/individual may extend. Governing standards are seeded at **highest fidelity, most-current** (a deliberate business posture; propagation is silent adoption — app concern).
 - **Completion semantics:** events auto-complete by time (`completed` = in the past); `actual_end` is free and completion is `actual_end ?? (end passed)`; tasks complete by action.
-- **Held-out validation:** use case E and one personal preset are deliberately **not** designed-to** — kept as out-of-sample generality tests (predictions in `SCENARIOS.md`).
+- **Held-out validation:** use case E is deliberately **not** designed-to** — kept as an out-of-sample generality test (predictions in `SCENARIOS.md`), and it is the only one (`../user-stories/README.md`, FR10's home).
+- **Commercial machinery is entered, never acquired** *(founder-ruled 2026-08-30, the ruling that re-homed `SCENARIOS.md` J5 from held-out to v1)*: an ordinary commitment that binds no kind carrying a `pricing` rule, belongs to no order and is shared with nobody — a personal preset (a meal/workout/cycle entry) is the worked case — creates no money mark, binds no `pricing` rule, mints no guest token and no Shared row, and gives rise to no outward act. Each absence composes law stated elsewhere (§3.4's single universal required field, `../engine/SPEC.md §3`'s binding table, §2's guest flow, §7's basis requirement); this bullet is where the composition binds as v1 behavior.
 
 **Self-modification is a named refusal, not an absence** *(2026-08-28; the recorded-absence pattern §5's no-repair-loop and no-tool-zoo already use)*. annnä does **not** adopt the **self-modification capability class** of open-code-plane coding harnesses — the agent inspecting, editing, mounting or extending its own plugins and tool surface at runtime (DeepSeek Harness named as the external precedent, in the CaMeL/AgentDojo naming style). annnä's whole counterpart is the **noticed-pattern offer** (§6): owner-gated, data-plane, propose-only, and declinable permanently (§3.10) — plus FD-24's rule that the loop can never author its own basis. Recorded here so that a future contribution inspired by such a harness does not import the class as an obvious improvement; refusing it is the decision.
 
