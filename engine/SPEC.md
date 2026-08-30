@@ -220,7 +220,7 @@ The closed value vocabulary — the only shapes a rule operand or correctness-cr
 | rate over recurring window | 10 h / month / customer | draw + window arithmetic (quota math) |
 | recurring time-window set | Tue 09:00–12:00 weekly | membership of an instant/interval |
 | **place** | declared address + ≤1 resolved geo-ref | equality; input to `travel()` (§5) |
-| **computed duration (travel)** | drive(place-A, place-B, at) | `< ≤ = ≥ >`; produced only by the engine (§5), never authored — **except** the `travel-override` rule's operand (§3), which is authored and is why §5's precedence has a top rung |
+| **computed duration (travel)** | drive(place-A, place-B, at) | `< ≤ = ≥ >`; produced only by the engine (§5), never authored — **except** the `travel-override` rule's operand (§3 — *status: drafted at its home §3*), which is authored and is why §5's precedence has a top rung |
 | **instant** *(FD-27, 2026-08-21)* | a zone-resolved point in time | `< ≤ = ≥ >`; ordering in UTC |
 | **interval** *(FD-27)* | an ordered instant pair (start, end) | containment, overlap, duration |
 
@@ -302,7 +302,7 @@ The closed value vocabulary — the only shapes a rule operand or correctness-cr
 
 **The travel seam.** `travel(place-A, place-B, at) → computed duration` is answered by an **external source (maps provider) behind the engine's own interface** — the harness never fetches or carries a travel number. Results are cached as stored facts with `author: engine` provenance, so replays are deterministic and scenarios run against a scripted provider (`INTERFACES.md §2`).
 
-**Override precedence, exact:** an enabled `travel-override` rule (§3's row is the type's home; scoped to a route / time-of-day) **>** cached computed fact **>** fresh external fetch **>** **fail-closed**. If no value is obtainable, the gap is *unknown* — and **unknown ≠ feasible**: the slot is not offered, the move is not proposed. (Same posture as `empty_means: unknown`, §1.2.)
+**Override precedence, exact:** an enabled `travel-override` rule (§3's row is the type's home — *status: drafted at its home §3*; scoped to a route / time-of-day) **>** cached computed fact **>** fresh external fetch **>** **fail-closed**. If no value is obtainable, the gap is *unknown* — and **unknown ≠ feasible**: the slot is not offered, the move is not proposed. (Same posture as `empty_means: unknown`, §1.2.)
 
 **The travel envelope (bounded, so the seam cannot become the product's latency).** An external call sits inside the hot path of every placement, so its cost is capped by law, not by hope:
 
