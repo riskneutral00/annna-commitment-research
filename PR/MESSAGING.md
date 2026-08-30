@@ -34,6 +34,8 @@ Grouped by family. One flagship is chosen per surface; the rest are the bench, n
 
 *Ruled order (Matt, 2026-08-06): **worry first** — the crowded head leads, the coordination work proves it. This order governs every worded explanation: README, pitches, the future video's narration.*
 
+**Standing rule, ruled 2026-08-30 — neither pitch below is reusable verbatim outward until it is rewritten.** Both open from the product noun retired 2026-08-08; `IDENTITY.md` §What it is is the identity home and names a different opening sentence. **The ruled order above is unaffected — only the noun is.** No replacement copy is authored here and not one word of either pitch is changed: the rewrite belongs to the pass that lifts the freeze. `README.md`'s freeze preamble scopes this annotation as its second exception; `../RULINGS.md` indexes the ruling.
+
 **10 seconds** —
 > Right now your schedule is kept in your head. annnä holds it instead — all of it, on one board — and does the coordination behind each promise too. Your calendar is replaced by an agent you talk to.
 
