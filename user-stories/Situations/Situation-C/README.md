@@ -20,6 +20,8 @@
 
 **The rule underneath it all:** *every resource type is a market of at least two suppliers* — a first choice and a fallback — so a cancellation always has somewhere to go.
 
+**Read that as the fixture's topology at resource-type level, not as a platform guarantee** *(added 2026-08-30)*: the roster is built with two suppliers per type so ranked fallback has something to exercise. A qualification filter can still empty the market — Drysuit has exactly one qualified instructor, and Situation 4 is what happens when he is gone. When it does, the honest answer is Situation 4's refusal, never a manufactured substitute.
+
 ---
 
 ## The two kinds of stakeholder

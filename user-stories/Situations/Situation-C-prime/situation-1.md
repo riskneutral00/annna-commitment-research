@@ -20,4 +20,4 @@ A different bundle — tampered, or simply over-reaching — arrives carrying a 
 
 ## The point
 
-A shop went from nothing to bookable through one conversation and one bundle, deciding every number that was hers to decide — and the same door that let a clean bundle stand a shop up refused a dirty one whole. Supply is admin-curated today; the door behaves as if it weren't.
+A shop went from nothing to bookable through one conversation and one bundle, deciding every number that was hers to decide — and the same door that let a clean bundle stand a shop up refused a dirty one whole. Template supply is owner-publish — anybody can publish a bundle (FD-82; the authoring-and-publish law's home is `../../../marketplace/SPEC.md §2`), and skins alone stay the admin pack pipeline. The door never trusted supply in either regime, which is the point: an owner-published bundle meets the same whole-bundle refusal a curated one would.

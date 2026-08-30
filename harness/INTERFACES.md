@@ -180,7 +180,7 @@ Implement each seam as the thinnest deterministic fake that lets `SCENARIOS.md` 
 - App `render`/`publish`/`send`: record-and-return spies (assert the payload/reversibility class; simulate `on_form_return`). The escalation ladder's per-rung notifications ride this same spy — asserting *who was notified, when, on which rung* needs no new stub. **`AppStub` also carries a delivery-event fixture** — scripted `sent`/`delivered-failed`/`handed-to-owner` returns per scenario, plus an out-of-band `complaint` event it can inject — so D22–D23's Given is producible against stubs.
 - **The credential check (Step 8)** is a fourth scripted fake alongside the three seams — a deterministic valid/withdrawn verdict per scenario key. It stubs the `external-client` class's authorization check (`../security/SPEC.md §3`), not a seam: the surface is the harness's own contract (§6), so there is nothing else to fake.
 
-The harness is "done" when every scenario passes against these stubs. Swapping stubs for the real Engine/Model/App is the later phases' job and must not require harness changes.
+The harness is "done" when every `[MUST]` scenario passes against these stubs; held-out probes are **run and their results recorded**, never designed or fixed toward (`README.md` states this in the same form). Swapping stubs for the real Engine/Model/App is the later phases' job and must not require harness changes.
 
 ---
 

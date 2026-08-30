@@ -78,7 +78,7 @@ preview : { swatches : [ "#rrggbb", ... ] }
 // here in any form, the LQIP included (FD-31, E4).
 ```
 
-The shipped four (dark · koi · nudi · treestars) + Plain are the **permanent floor** beneath this format: they ship in every build, need no entitlement, and are the guaranteed floor when the store is unreachable — installed store skins additionally survive from their persisted device copies (§3, §4).
+The shipped four (dark · koi · nudi · treestars) + Plain are the **floor** beneath this format: whichever packs a build ships need no entitlement, and they are the guaranteed floor when the store is unreachable *(restated 2026-08-30 — the floor is structural, and which packs occupy it is not canon: "No skin is special — the shipped packs are fixtures, not canon", founder-ruled 2026-08-22 at the home, `../app/DESIGN.md §Appearance`)* — installed store skins additionally survive from their persisted device copies (§3, §4).
 
 ### §1.2 The template bundle document (the "blueprint")
 

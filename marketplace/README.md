@@ -7,7 +7,7 @@
 
 annnä is four layers — **Model / Harness / Engine / App** (`../README.md`) — and this fifth package sits beside them: **the store**. One marketplace, two goods:
 
-- **Skins.** Photo backdrops that re-dress the board (`../app/DESIGN.md §Appearance`). Store images are licensed IP, delivered only to entitled accounts by the closed service. The four shipped skins + Plain are the permanent floor, present in every build and needing no entitlement.
+- **Skins.** Photo backdrops that re-dress the board (`../app/DESIGN.md §Appearance`). Store images are licensed IP, delivered only to entitled accounts by the closed service. The shipped skins + Plain are the floor: whichever packs ship need no entitlement (`SPEC.md §1.1`, and the fixtures-not-canon ruling at `../app/DESIGN.md §Appearance`).
 - **Templates.** Business-in-a-box bundles — the transferable *shape* of how someone runs bookable time: a domain's vocabulary, rule shapes with the numbers blanked, outward booking faces, resource boards to stand up. From a single "Free Time Available" share up to a whole dive center. Never anyone's data.
 
 Both goods ride the **same publish → browse → install rails**. **Templates are owner-publish** (FD-82): any signed-in owner may author, save, and publish a shape. **Skins stay the admin pack pipeline.** Authorization gates (official class, terms) may sit on top later; they are not this sitting.
