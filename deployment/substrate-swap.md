@@ -54,7 +54,7 @@ These were not the same job, and treating them as one would have left a hole.
 - Its framework answer rejected **static-first** frameworks for a live authenticated app. TanStack Start is client-first React, so **that reasoning was never overturned** — what changed is the choice inside the live-React family.
 - Its line recording hosting as *"Assumed (BUILD-only, flagged not asked)"* is the most load-bearing line in the file: the corpus admitting in its own words that the host was inherited from a default and never chosen. **A flagged assumption is worth more than a quiet one** — that flag is what made this swap cheap to reason about long after the fact.
 
-`.specs/` is **tracked** (`git ls-files .specs/`), despite `../AGENTS.md`'s caveat listing that directory among the gitignored material. Check before assuming either way.
+`.specs/` is **tracked** (`git ls-files .specs/`). Check before assuming either way.
 
 ---
 
