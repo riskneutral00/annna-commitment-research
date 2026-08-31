@@ -150,8 +150,11 @@ on_form_return(reply) -> Event                     // fires the trigger-driven l
                                                    //   sources, each with its payload —
                                                    //     {kind: form-return, token, reply}
                                                    //   | {kind: delivery-report, party_ref, outcome}
-                                                   //   | {kind: clock, registration_ref, registration_kind}
-                                                   //   | {kind: hold-expiry, hold_ref, registration_ref}
+                                                   //   | {kind: clock, registration_ref, registration_kind?}
+                                                   //   | {kind: hold-expiry, hold_ref, registration_ref, registration_kind}
+                                                   //     (registration_kind: present exactly when the registration carried
+                                                   //     a harness kind — absent only on an engine-internal clock firing;
+                                                   //     required on hold-expiry, which only offer-hold reaches — 2026-08-31)
                                                    //   | {kind: sale, offering_ref, buyer_party_ref, terms_ref}
                                                    //   | {kind: decline, offer_ref, party_ref, structured_reason}
                                                    //   — and the four riders below are further discriminated
