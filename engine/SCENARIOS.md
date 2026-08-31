@@ -66,7 +66,7 @@
 
 ## P — Place-only resolve & projections
 - **P1 [placement]** `resolve` returns a placement satisfying every board and rule it touches.
-- **P2 [honest decline]** No placement exists: structured decline naming the refusing constraint class — never a forced fit. *(Situation-B's "no bike"; Situation-E's safe park.)*
+- **P2 [honest decline]** No placement exists: structured decline naming the refusing constraint class — never a forced fit. *(Situation-B's "no bike"; **held-out E's** safe park — the Situation-E example, re-provenanced under FD-59 2026-08-31: the widened probe gate classifies this row under the suite's every-scenario-is-MUST preamble and admits the citation only through this marker.)*
 - **P3 [site-day projection]** A `location-window` rule (Eastside only Mon/Wed): availability projections offer the day's place only. *(Debra's link; Situation-C's boat route rotation — which site the boat runs which day is the same rule.)*
 - **P4 [domain refusal]** An `attribute-domain` violation (address outside service area) refuses at intake with the honest no.
 - **P5 [unknown is not free — §1.2]** A proxy board with `empty_means: unknown` and no confirmations: every availability computation over it returns **nothing** — emptiness never reads as free; a confirmed window then appears, and only it is offered. *(The §1.2 law had no scenario; T3/V4 cover only the travel half of unknown-fails-closed.)*
