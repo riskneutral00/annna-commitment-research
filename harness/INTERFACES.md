@@ -147,18 +147,20 @@ send(form_payload, recipient) -> {sent | delivered-failed | handed-to-owner} | {
 on_form_return(reply) -> Event                     // fires the trigger-driven loop; carries the token's attribution.
                                                    //   Event is PRINTED (2026-08-31, Q2-007's owed definition):
                                                    //   a `kind`-discriminated union over exactly SPEC §4's six
-                                                   //   sources, each with its payload —
-                                                   //     {kind: form-return, token, reply}
-                                                   //   | {kind: delivery-report, party_ref, outcome}
-                                                   //   | {kind: clock, registration_ref, registration_kind?}
-                                                   //   | {kind: hold-expiry, hold_ref, registration_ref, registration_kind}
+                                                   //   sources, each with its payload — the common `at` printed on
+                                                   //   every arm, spelling canonical with the TriggerEvent union
+                                                   //   (normalized 2026-09-01, OBS-1) —
+                                                   //     {kind: returned-form, at, token, reply}
+                                                   //   | {kind: delivery-report, at, party_ref, outcome}
+                                                   //   | {kind: clock, at, registration_ref, registration_kind?}
+                                                   //   | {kind: hold-expiry, at, hold_ref, registration_ref, registration_kind}
                                                    //     (registration_kind: present exactly when the registration carried
                                                    //     a harness kind — absent only on an engine-internal clock firing;
                                                    //     required on hold-expiry, which only offer-hold reaches — 2026-08-31)
-                                                   //   | {kind: sale, offering_ref, buyer_party_ref, terms_ref}
-                                                   //   | {kind: decline, offer_ref, party_ref, structured_reason}
+                                                   //   | {kind: sale, at, offering_ref, buyer_party_ref, terms_ref}
+                                                   //   | {kind: decline, at, offer_ref, party_ref, structured_reason}
                                                    //   — and the four riders below are further discriminated
-                                                   //   members of form-return's payload (attestation, manage-mint,
+                                                   //   members of returned-form's payload (attestation, manage-mint,
                                                    //   open-mint, verification), so a consumer branches on the
                                                    //   source without a cast (H6 attributes from the event's own
                                                    //   token; engine N1 reads the registered ref off the clock member).

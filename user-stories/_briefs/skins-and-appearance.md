@@ -4,7 +4,7 @@
 
 **The debt this closes.** `../README.md`'s invented-and-justified register, entries **3** and **4**: the appearance and entitlement machinery was designed in the UI/UX and marketplace sittings with no probe, and the wake policy's residue — **RQ-12**, a skin failing the rest-state measurement and being refused at the door — has no beat anywhere. `Situation-A-prime/README.md` says so in its own words: templates only, the skin half deferred.
 
-**What rests on it.** Fifteen MUST scenarios: `../../app/SCENARIOS.md` S1–S7 and `../../marketplace/SCENARIOS.md` E1–E7 plus I7. *(Counted by each file's own preamble — both state that every scenario in them is MUST. The per-row `[MUST]` tags mark emphasis on a handful of rows and undercount the suite roughly fivefold; a review once filed the tag count as the census, and this note exists so it is not filed twice.)*
+**What rests on it.** Sixteen MUST scenarios: `../../app/SCENARIOS.md` S1–S8 and `../../marketplace/SCENARIOS.md` E1–E7 plus I7. *(Counted by each file's own preamble — both state that every scenario in them is MUST. The per-row `[MUST]` tags mark emphasis on a handful of rows and undercount the suite roughly fivefold; a review once filed the tag count as the census, and this note exists so it is not filed twice.)*
 
 ## World
 
