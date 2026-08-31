@@ -73,6 +73,21 @@ describe("the Event union — six sources, kind-routed discriminators (SPEC §4)
     expect([holdExpiry.kind, reminder.kind, internal.kind]).toEqual(["hold-expiry", "clock", "clock"]);
     expect("registration_kind" in internal).toBe(false);
   });
+
+  it("constructs all six arms with their discriminator-specific required fields (LWR-01)", () => {
+    // `satisfies` makes each arm's field roster a compile-time assertion: a
+    // dropped required field or an invented one is a red build, not a green run.
+    const sale = { kind: "sale", at: 1, offering_ref: "off-1", buyer_party_ref: "buyer-1", terms_ref: "terms-1" } satisfies Event;
+    const decline = {
+      kind: "decline", at: 2, offer_ref: "offer-1", party_ref: "party-1",
+      structured_reason: { kind: "decline", reason: "no-feasible-placement" },
+    } satisfies Event;
+    const returned = { kind: "returned-form", at: 3, token: "tok-1", reply: { signed: true } } satisfies Event;
+    const report = { kind: "delivery-report", at: 4, party_ref: "party-2", outcome: "complaint" } satisfies Event;
+    expect([sale.offering_ref, sale.buyer_party_ref, sale.terms_ref]).toEqual(["off-1", "buyer-1", "terms-1"]);
+    expect([decline.offer_ref, decline.party_ref, decline.structured_reason.kind]).toEqual(["offer-1", "party-1", "decline"]);
+    expect([returned.token, report.party_ref, report.outcome]).toEqual(["tok-1", "party-2", "complaint"]);
+  });
 });
 
 describe("publish — the nullable bound_to (m-40)", () => {

@@ -77,14 +77,24 @@ export type RegistrationKind = "reminder" | "offer-hold" | "ask-age-out";
  *  discriminator-carrying arms (engine/INTERFACES.md §2.2, 2026-08-31):
  *  `offer-hold` registrations surface as `hold-expiry`; `reminder` and
  *  `ask-age-out` registrations — and every engine-internal registration,
- *  which carries no kind — surface as the ordinary `clock` source. */
+ *  which carries no kind — surface as the ordinary `clock` source.
+ *
+ *  Field-for-field the printed contract of INTERFACES.md §3.3 (normalized
+ *  2026-09-01, OBS-1; the trigger-union gate compares the two both ways):
+ *  every arm carries the common `at`, and no arm hides behind an anonymous
+ *  `ref`/`event` member. `structured_reason` is the closed decline envelope
+ *  (engine/SPEC.md §7's structured decline crosses the seam in the failure
+ *  envelope, reasons from INTERFACES.md §7.1). `outcome` is the out-of-band
+ *  pair §3.3's delivery-report prose names: a complaint, or a late
+ *  delivered-failed — the immediate `sent | delivered-failed | handed-to-owner`
+ *  union returns on the `send` call itself (SendOutcome), never as an event. */
 export type Event =
-  | { kind: "sale"; at: number; ref: unknown }
+  | { kind: "sale"; at: number; offering_ref: CommitmentRef; buyer_party_ref: CommitmentRef; terms_ref: CommitmentRef }
   | { kind: "hold-expiry"; at: number; hold_ref: CommitmentRef; registration_ref: CommitmentRef; registration_kind: RegistrationKind }
-  | { kind: "decline"; at: number; ref: unknown }
-  | { kind: "returned-form"; at: number; reply: unknown }
+  | { kind: "decline"; at: number; offer_ref: CommitmentRef; party_ref: CommitmentRef; structured_reason: Envelope<"decline"> }
+  | { kind: "returned-form"; at: number; token: string; reply: unknown }
   | { kind: "clock"; at: number; registration_ref: CommitmentRef; registration_kind?: RegistrationKind }
-  | { kind: "delivery-report"; at: number; event: unknown };
+  | { kind: "delivery-report"; at: number; party_ref: CommitmentRef; outcome: "complaint" | "delivered-failed" };
 
 export interface EngineSeam {
   calculate(query: unknown): Promise<Handle | Envelope<"unavailable" | "timeout">>;

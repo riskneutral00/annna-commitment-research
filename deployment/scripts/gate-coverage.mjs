@@ -72,6 +72,21 @@ function scenarioDefs(text) {
   return defs;
 }
 
+// Duplicate scenario IDs (LWR-01, 2026-09-01 — PF-01's code half): `defs` is a
+// Map, so a second definition of one ID silently replaced the first — [app]
+// printed 62 scenarios over 63 rows while two S7s sat in the suite, and every
+// downstream consumer (orphans, phantoms, famRanges, the probe scope) read the
+// collapsed set. Collected from the raw text BEFORE the Map exists and
+// reported id-by-id — never as a count diff, which the next added row re-hides.
+export function duplicateDefs(text) {
+  const seen = new Map();
+  for (const line of text.split("\n")) {
+    const m = line.match(/^\s*-\s*\*\*([A-Z]\d+[a-z]?)\b/);
+    if (m) seen.set(m[1], (seen.get(m[1]) || 0) + 1);
+  }
+  return [...seen].filter(([, n]) => n > 1).map(([id, n]) => ({ id, n }));
+}
+
 // Every scenario ID a BUILD text names, with ranges expanded. A lone trailing
 // "s" is a plural ("two H1s"), never a real suffix (real suffixes are a/b), so it
 // is dropped rather than read as its own ID. `defs` is the layer's scenario set:
@@ -215,7 +230,9 @@ export function famRanges(defs) {
 }
 
 function checkLayer(layer) {
-  const defs = scenarioDefs(fs.readFileSync(path.join(ROOT, layer.scenarios), "utf8"));
+  const scenText = fs.readFileSync(path.join(ROOT, layer.scenarios), "utf8");
+  const dups = duplicateDefs(scenText);
+  const defs = scenarioDefs(scenText);
   const buildText = fs.readFileSync(path.join(ROOT, layer.build), "utf8");
   const homed = buildIds(buildText, defs); // whole build: J-family etc. are named in step bodies
   const gated = buildIds(gateLines(buildText), defs); // gate lines only: where a phantom would live
@@ -223,7 +240,7 @@ function checkLayer(layer) {
   const orphans = [...defs.keys()].filter((id) => owesHome(defs.get(id)) && !homed.has(id));
   const phantoms = [...gated].filter((id) => families.has(id[0]) && !defs.has(id));
   const ledger = layer.name === "harness" ? checkpointLedger(buildText, defs, REQUIRED_PAIRS) : [];
-  return { defs, orphans, phantoms, ledger };
+  return { defs, dups, orphans, phantoms, ledger };
 }
 
 function selfcheck() {
@@ -233,6 +250,12 @@ function selfcheck() {
   assert.deepStrictEqual([...defs.keys()], ["X1", "X2", "X3", "X4", "X5", "X6"], "parses six IDs");
   assert.strictEqual(defs.get("X3").tag, "HELD-OUT", "reads HELD-OUT tag");
   assert.ok(defs.get("X5").engine, "reads the ENGINE tag");
+  assert.deepStrictEqual(duplicateDefs(S), [], "the unique fixture carries no duplicate IDs");
+  assert.deepStrictEqual(
+    duplicateDefs("- **S1 [a]** x\n- **S2 [b]** y\n- **S1 [c]** z"),
+    [{ id: "S1", n: 2 }],
+    "two definitions of one ID fail, and the finding names the ID — never a bare count",
+  );
 
   // The law's tag set, and its one exemption.
   assert.ok(owesHome(defs.get("X1")) && owesHome(defs.get("X3")) && owesHome(defs.get("X5")),
@@ -299,10 +322,15 @@ if (process.argv.includes("--selfcheck")) {
 let bad = 0;
 const rangesBySuite = {};
 for (const layer of LAYERS) {
-  const { defs, orphans, phantoms, ledger } = checkLayer(layer);
+  const { defs, dups, orphans, phantoms, ledger } = checkLayer(layer);
   rangesBySuite[layer.name] = famRanges(defs);
-  const status = orphans.length || phantoms.length || ledger.length ? "FAIL" : "ok";
+  const status = dups.length || orphans.length || phantoms.length || ledger.length ? "FAIL" : "ok";
   console.log(`\n[${layer.name}] ${defs.size} scenarios — ${status}`);
+  if (dups.length) {
+    bad++;
+    for (const d of dups)
+      console.log(`  DUPLICATE ID: [${layer.name}] ${layer.scenarios} defines ${d.id} ${d.n} times — one ID, one scenario`);
+  }
   if (orphans.length) {
     bad++;
     const tagged = orphans.map((id) => `${id}(${defs.get(id).tag})`);

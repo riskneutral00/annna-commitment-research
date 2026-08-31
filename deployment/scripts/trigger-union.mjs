@@ -94,10 +94,70 @@ export function compareMember(engineMd, harnessMd) {
   return bad;
 }
 
+// ---------------------------------------------------------------------------
+// The third checked pair (2026-09-01, LWR-01 — OBS-1's gate): the Event union
+// is printed arm-by-arm in harness/INTERFACES.md §3.3 and carried as TS in
+// harness/src/seams.ts. The first two checks compare kind NAMES against SPEC
+// §4's prose; they cannot see a renamed kind's twin drifting field-by-field
+// (`form-return` vs `returned-form` lived exactly there). Compared BOTH
+// directions on the arm set and on each arm's required and optional field sets.
+export function ifaceArms(md) {
+  const sec = md.split("### 3.3")[1]?.split("### 3.4")[0];
+  if (!sec) return null;
+  const arms = new Map();
+  for (const m of sec.matchAll(/\{kind: ([a-z-]+), ([^}]+)\}/g)) {
+    const req = new Set(["kind"]);
+    const opt = new Set();
+    for (const f of m[2].split(",").map((s) => s.trim()).filter(Boolean))
+      f.endsWith("?") ? opt.add(f.slice(0, -1)) : req.add(f);
+    arms.set(m[1], { req, opt });
+  }
+  return arms.size ? arms : null;
+}
+export function codeArms(code) {
+  const block = code.match(/export type Event =([\s\S]*?\});\n/);
+  if (!block) return null;
+  const arms = new Map();
+  for (const m of block[1].matchAll(/\{ kind: "([a-z-]+)"([^}]*)\}/g)) {
+    const req = new Set(["kind"]);
+    const opt = new Set();
+    for (const f of m[2].matchAll(/(\w+)(\?)?:/g)) (f[2] ? opt : req).add(f[1]);
+    arms.set(m[1], { req, opt });
+  }
+  return arms.size ? arms : null;
+}
+export function compareArms(md, code) {
+  const a = ifaceArms(md);
+  const c = codeArms(code);
+  if (!a) return ["harness/INTERFACES.md §3.3's printed Event arms no longer parse — fix this script's contract"];
+  if (!c) return ["harness/src/seams.ts's Event union no longer parses — fix this script's contract"];
+  const bad = [];
+  for (const k of a.keys()) if (!c.has(k)) bad.push(`printed arm "${k}" has no seams.ts Event member`);
+  for (const k of c.keys()) if (!a.has(k)) bad.push(`seams.ts Event member "${k}" has no printed §3.3 arm`);
+  for (const k of a.keys()) {
+    if (!c.has(k)) continue;
+    const [ar, cr] = [a.get(k), c.get(k)];
+    for (const f of ar.req) if (!cr.req.has(f)) bad.push(`arm "${k}": required field "${f}" is printed in §3.3 but missing from seams.ts`);
+    for (const f of cr.req) if (!ar.req.has(f)) bad.push(`arm "${k}": required field "${f}" is in seams.ts but not printed in §3.3`);
+    for (const f of ar.opt) if (!cr.opt.has(f)) bad.push(`arm "${k}": optional field "${f}" is printed in §3.3 but not optional in seams.ts`);
+    for (const f of cr.opt) if (!ar.opt.has(f)) bad.push(`arm "${k}": optional field "${f}" is optional in seams.ts but not printed as one in §3.3`);
+  }
+  return bad;
+}
+
 const SPEC_FIXTURE = `the loop may fire on a *sale*, a *hold expiry*, a *decline*, a *returned form*, a *clock time*, or a *delivery report* — not only a human turn. **Six sources**, and`;
 const CODE_FIXTURE = `export type TriggerEvent = { kind: "sale" | "hold-expiry" | "decline" | "returned-form" | "clock" | "delivery-report"; at: number };`;
 const ENGINE_MEMBER_FIXTURE = "the template-bundle projection (§1.7a), and a `FiringEvent` — the firing log's record by firing id, both parts (§1.16).";
 const HARNESS_MEMBER_FIXTURE = "the §2.1 relevant-slice assembly, and a `FiringEvent` — the firing log's record by firing id, both parts (`SPEC.md §3.14`).";
+
+const IFACE_ARMS_FIXTURE = `### 3.3 x
+{kind: returned-form, at, token, reply}
+| {kind: clock, at, registration_ref, registration_kind?}
+### 3.4 y`;
+const CODE_ARMS_FIXTURE = `export type Event =
+  | { kind: "returned-form"; at: number; token: string; reply: unknown }
+  | { kind: "clock"; at: number; registration_ref: CommitmentRef; registration_kind?: RegistrationKind };
+`;
 
 if (process.argv.includes("--selfcheck")) {
   assert.deepStrictEqual(compare(SPEC_FIXTURE, CODE_FIXTURE), [], "the matched pair passes");
@@ -114,6 +174,17 @@ if (process.argv.includes("--selfcheck")) {
   );
   assert.ok(compareMember(ENGINE_MEMBER_FIXTURE, "no such member here").some((b) => b.includes("harness/INTERFACES.md")), "absence in the harness enumeration is caught");
   assert.ok(compareMember("no such member here", HARNESS_MEMBER_FIXTURE).some((b) => b.includes("engine/SPEC.md")), "absence in the engine enumeration is caught");
+
+  assert.deepStrictEqual(compareArms(IFACE_ARMS_FIXTURE, CODE_ARMS_FIXTURE), [], "the matched arm pair passes");
+  const renamed = IFACE_ARMS_FIXTURE.replace("returned-form", "form-return");
+  assert.ok(compareArms(renamed, CODE_ARMS_FIXTURE).some((b) => b.includes("form-return")) &&
+    compareArms(renamed, CODE_ARMS_FIXTURE).some((b) => b.includes("returned-form")), "a renamed kind is caught from both directions");
+  const dropped = CODE_ARMS_FIXTURE.replace(" token: string;", "");
+  assert.ok(compareArms(IFACE_ARMS_FIXTURE, dropped).some((b) => b.includes('"token"') && b.includes("missing from seams.ts")), "a missing field is caught");
+  const invented = CODE_ARMS_FIXTURE.replace("reply: unknown }", "reply: unknown; extra: number }");
+  assert.ok(compareArms(IFACE_ARMS_FIXTURE, invented).some((b) => b.includes('"extra"') && b.includes("not printed")), "an invented field is caught");
+  const optDrift = CODE_ARMS_FIXTURE.replace("registration_kind?:", "registration_kind:");
+  assert.ok(compareArms(IFACE_ARMS_FIXTURE, optDrift).length > 0, "an optionality drift is caught");
   console.log("selfcheck OK");
   process.exit(0);
 }
@@ -122,7 +193,8 @@ const spec = fs.readFileSync(path.join(ROOT, "harness/SPEC.md"), "utf8");
 const code = fs.readFileSync(path.join(ROOT, "harness/src/index.ts"), "utf8");
 const engineSpec = fs.readFileSync(path.join(ROOT, "engine/SPEC.md"), "utf8");
 const harnessIface = fs.readFileSync(path.join(ROOT, "harness/INTERFACES.md"), "utf8");
-const bad = [...compare(spec, code), ...compareMember(engineSpec, harnessIface)];
+const seamsCode = fs.readFileSync(path.join(ROOT, "harness/src/seams.ts"), "utf8");
+const bad = [...compare(spec, code), ...compareMember(engineSpec, harnessIface), ...compareArms(harnessIface, seamsCode)];
 if (bad.length) {
   console.log(`\nTRIGGER-UNION FAIL:`);
   for (const b of bad) console.log(`  ${b}`);
@@ -131,6 +203,7 @@ if (bad.length) {
 const n = unionMembers(code).length;
 console.log(
   `TRIGGER-UNION OK — ${n} trigger sources, spec and union in agreement; ` +
-    `the \`${readMemberToken(engineSpec)}\` read member is one canonical token in engine/SPEC.md §5 item 7 and harness/INTERFACES.md §1.1. ` +
+    `the \`${readMemberToken(engineSpec)}\` read member is one canonical token in engine/SPEC.md §5 item 7 and harness/INTERFACES.md §1.1; ` +
+    `the §3.3 printed Event arms and seams.ts's union agree on ${ifaceArms(harnessIface).size} arms' kinds and field sets, both directions. ` +
     `NOT CHECKED: other closed enums stated twice — each gets this treatment when its second copy exists.`,
 );
