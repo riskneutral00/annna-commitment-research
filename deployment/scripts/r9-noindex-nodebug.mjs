@@ -9,7 +9,7 @@
 // a flag that is only ever written about is not a reachable flag. This file is
 // excluded for the same reason: it names the patterns it hunts.
 // The NOINDEX half needs a rung config to assert against. There is none yet
-// (no wrangler.toml, no wrangler.jsonc), so it reports as not-yet-constructible
+// (none of RUNG_CONFIGS' three names is present), so it reports as not-yet-constructible
 // instead of passing quietly, and becomes a real assertion at BUILD Step 2 when
 // the preview rung exists.
 //

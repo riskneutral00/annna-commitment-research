@@ -98,8 +98,33 @@ const trackedMd = () =>
     .split("\0")
     .filter(Boolean);
 
+// The Step-0 tracked-artifact-claims contract (2026-08-31, Q2-076/G3):
+// harness/BUILD.md prints exactly one machine-readable line
+//   `- Tracked-artifact-claims (Step 0): <value>`
+// where `none` claims no tracked rig artifact, and otherwise every listed
+// repo-relative path must resolve through `git ls-files`. Exported for the
+// selfcheck; the canaries are a missing marker and an untracked claimed path.
+const CLAIMS_MARKER = /^- Tracked-artifact-claims \(Step 0\): (.+)$/;
+export function checkStepZeroClaims(text, lsFiles) {
+  const matches = text.match(new RegExp(CLAIMS_MARKER.source, "gm")) ?? [];
+  if (matches.length !== 1)
+    return { ok: false, label: "harness Step-0 tracked-artifact claims", detail: `expected exactly one marker line, found ${matches.length}` };
+  const value = matches[0].match(CLAIMS_MARKER)[1].trim();
+  if (value === "none") return { ok: true, label: "harness Step-0 tracked-artifact claims", detail: "none claimed, none owed" };
+  for (const p of value.split(",").map((x) => x.trim())) {
+    if (!lsFiles.has(p)) return { ok: false, label: "harness Step-0 tracked-artifact claims", detail: `claimed artifact not tracked: ${p}` };
+  }
+  return { ok: true, label: "harness Step-0 tracked-artifact claims", detail: "every claimed artifact is tracked" };
+}
+const trackedAll = () =>
+  new Set(execFileSync("git", ["ls-files"], { cwd: ROOT, encoding: "utf8", maxBuffer: 1 << 28 }).split("\n").filter(Boolean));
+
 // Each check returns { ok, label, detail }.
 const CHECKS = [
+  function stepZeroClaims() {
+    return checkStepZeroClaims(read("harness/BUILD.md"), trackedAll());
+  },
+
   function gateInventory() {
     // AGENTS.md states the count and NOT the roster, deliberately. The division
     // is roster-check.mjs's: `package.json` owns the wiring and the order,
@@ -242,7 +267,17 @@ if (process.argv.includes("--selfcheck")) {
   assert.deepStrictEqual(bothWays(["a"], ["a", "b"]), [[], ["b"]], "and the script enforcing one the prose never promised");
   assert.strictEqual(shapeNames("no fenced block"), null, "an unparseable shape block is a failure, not an empty set");
 
-  console.log("\nselfcheck OK");
+  // The Step-0 claims canaries (Q2-076/G3): the missing marker and the
+  // untracked claimed path must each fail; `none` and a tracked path pass.
+  const ls = new Set(["harness/BUILD.md", "tracked/file.md"]);
+  assert.ok(!checkStepZeroClaims("no marker here", ls).ok, "a missing marker fails");
+  assert.ok(!checkStepZeroClaims("- Tracked-artifact-claims (Step 0): does/not/exist.md", ls).ok, "an untracked claimed path fails");
+  assert.ok(checkStepZeroClaims("- Tracked-artifact-claims (Step 0): none", ls).ok, "the explicit none form passes");
+  assert.ok(checkStepZeroClaims("- Tracked-artifact-claims (Step 0): tracked/file.md", ls).ok, "a tracked claimed path passes");
+  assert.ok(!checkStepZeroClaims("- Tracked-artifact-claims (Step 0): none\n- Tracked-artifact-claims (Step 0): none", ls).ok, "two marker lines fail — exactly one is the contract");
+
+  console.log("\nCLAIM SELFCHECK OK — parse/compare fixtures and the Step-0 marker canaries fire");
+  process.exit(0);
 }
 
 const results = CHECKS.map((c) => c());

@@ -62,6 +62,48 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 const MARKER = "held-out E's";
 const GATING = /^(?:MUST|ENGINE)\b/;
 
+// --- the obligation-cardinality half (2026-08-31 — Q1-01 widened; H1–H3) ---
+//
+// The canonical universe is the audit's part-(a) classifier (plan Appendix A-3):
+// every bold-ID bullet across the six SCENARIOS suites; a row is a LAWFUL
+// EXCLUSION when its bracket tag opens SHOULD/HELD-OUT or a trailing backticked
+// marker immediately before the closing ** reads [DRILL]; everything else is
+// obligation. The four product suites (engine/app/marketplace/security) declare
+// "Every scenario is MUST" in their own preambles, so their rows are GATING
+// regardless of bracket text — which is what finally puts engine P2 inside the
+// held-out-citation check, admitted only through FD-59's exact marker.
+export const SUITE_FILES = {
+  harness: "harness/SCENARIOS.md",
+  engine: "engine/SCENARIOS.md",
+  app: "app/SCENARIOS.md",
+  marketplace: "marketplace/SCENARIOS.md",
+  security: "security/SCENARIOS.md",
+  deployment: "deployment/SCENARIOS.md",
+};
+const PERM = /^\s*-\s*\*\*([A-Z]\d+[a-z]?)\b/;
+const SHIP = /^\s*-\s*\*\*([A-Z]\d+[a-z]?)\s*\[([^\]]*)\]\*\*/;
+const WIDE = /^\s*-\s*\*\*([A-Z]\d+[a-z]?)\s*\[([^\]]*)\](?:\s*`\[[^\]]*\]`)?\*\*(.*)$/;
+const TRAIL = /`\[([A-Z-]+)\]`\*\*/;
+
+export function classifySuite(text, preambleMust) {
+  const rows = [];
+  for (const line of text.split("\n")) {
+    const perm = line.match(PERM);
+    if (!perm) continue;
+    const ship = line.match(SHIP);
+    const wide = line.match(WIDE);
+    const tag = ship ? ship[2].trim() : wide ? wide[2].trim() : "";
+    const trail = line.match(TRAIL);
+    const excluded = tag.startsWith("SHOULD") || tag.startsWith("HELD-OUT") || (trail !== null && trail[1] === "DRILL");
+    const gating =
+      !excluded && (GATING.test(tag) || (trail !== null && (trail[1] === "MUST" || trail[1] === "ENGINE")) || preambleMust);
+    rows.push({ id: perm[1], body: wide ? wide[3] : line, excluded, gating });
+  }
+  return rows;
+}
+
+export const declaresPreambleMust = (text) => /Every scenario is MUST/.test(text);
+
 export function registerNames(readme) {
   const m = readme.match(/([A-Za-z]+) registers, recorded per probe[^\n]*\n\n((?:- \*\*[^\n]*\n)+)/);
   if (!m) return null;
@@ -78,10 +120,14 @@ export function rows(text) {
   return out;
 }
 
-export function heldOutViolations(text, file) {
-  return rows(text)
-    .filter((r) => GATING.test(r.tag) && /Situation[-\s]E\b/.test(r.body) && !r.body.includes(MARKER))
-    .map((r) => `${file} ${r.id} [${r.tag.slice(0, 30)}] cites held-out Situation E with no "${MARKER}" re-provenance marker (FR10, FD-59)`);
+export function heldOutViolations(text, file, preambleMust = false) {
+  // Widened 2026-08-31 (Q1-01): the checked set is every GATING row under the
+  // classification above — bracket/trailing MUST/ENGINE, plus the product
+  // suites' preamble-MUST — not only bracket-tagged rows. A row is admitted
+  // with an E citation only through FD-59's exact marker.
+  return classifySuite(text, preambleMust)
+    .filter((r) => r.gating && /Situation[-\s]E\b/.test(r.body) && !r.body.includes(MARKER))
+    .map((r) => `${file} ${r.id} cites held-out Situation E with no "${MARKER}" re-provenance marker (FR10, FD-59)`);
 }
 
 export function registerTags(text) {
@@ -149,6 +195,28 @@ if (process.argv.includes("--selfcheck")) {
   assert.strictEqual(heldOutViolations("- **D15 [SHOULD / exhaustion parks]** Situation-E roster.", "f").length, 0, "nor is a SHOULD");
   assert.strictEqual(heldOutViolations("prose about Situation-E outside any row", "f").length, 0, "prose is not a definition row");
 
+  // --- the widened classification's canaries (2026-08-31, Q1-01/H2/H3) ---
+  // shape 2/3: the tag rides a trailing backticked marker before the closing **.
+  const shape2 = "- **S3 [nothing from outside: no fetched spec] `[MUST]`** Given Situation-E text arrives.";
+  assert.strictEqual(heldOutViolations(shape2, "f").length, 1, "a trailing-[MUST] row (shape 2/3) is inside the checked set now");
+  const shape2marked = `- **S3 [nothing from outside] \`[MUST]\`** Given **${MARKER}** text arrives (Situation-E, re-provenanced).`;
+  assert.strictEqual(heldOutViolations(shape2marked, "f").length, 0, "and the marker admits it");
+  const drill = "- **R10 [the ladder drill] `[DRILL]`** walks Situation-E once.";
+  assert.strictEqual(heldOutViolations(drill, "f").length, 0, "a trailing-[DRILL] row is a lawful exclusion, not a gate");
+  assert.deepStrictEqual(
+    classifySuite(shape2 + "\n" + drill, false).map((r) => [r.id, r.excluded, r.gating]),
+    [["S3", false, true], ["R10", true, false]],
+    "the cardinality classification: trailing-MUST guarded, trailing-DRILL exempt",
+  );
+
+  // preamble-MUST: an untagged-bracket row in a product suite is gating — the
+  // live case is engine P2, admitted only through FD-59's exact marker.
+  const p2marked = `- **P2 [honest decline]** No placement exists. *(Situation-B's "no bike"; **${MARKER}** safe park — the Situation-E example.)*`;
+  const p2stripped = `- **P2 [honest decline]** No placement exists. *(Situation-B's "no bike"; Situation-E's safe park.)*`;
+  assert.strictEqual(heldOutViolations(p2marked, "engine/SCENARIOS.md", true).length, 0, "marked P2 is admitted under the preamble classification");
+  assert.strictEqual(heldOutViolations(p2stripped, "engine/SCENARIOS.md", true).length, 1, "a marker-stripped P2 fails — the DEV-07 completion canary");
+  assert.strictEqual(heldOutViolations(p2stripped, "engine/SCENARIOS.md", false).length, 0, "outside a preamble-MUST suite the same row is not gating — the classification, not the string, decides");
+
   // --- the register half, with its negatives ---
   const readme = "Four registers, recorded per probe so nobody has to reconstruct this later:\n\n- **elicited-blind** — a\n- **elicited-to-design** — b\n- **scripted** — c\n- **held-out** — d\n\nprose after";
   const reg = registerNames(readme);
@@ -172,13 +240,28 @@ const tracked = execFileSync("git", ["ls-files", "-z", "*.md"], { cwd: ROOT, enc
   .filter(Boolean);
 const readOne = (f) => fs.readFileSync(path.join(ROOT, f), "utf8");
 
-// Check 1 — no build-gating row cites held-out E without FD-59's marker.
-const suites = tracked.filter((f) => /(?:SCENARIOS|EVALS)\.md$/.test(f));
-let gatingRows = 0;
-for (const f of suites) {
-  const text = readOne(f);
-  gatingRows += rows(text).filter((r) => GATING.test(r.tag)).length;
-  bad.push(...heldOutViolations(text, f));
+// Check 1 — no gating row cites held-out E without FD-59's marker, over the
+// widened classification; and the obligation cardinality, printed per suite.
+const perSuite = [];
+let totalParsed = 0;
+let totalGuarded = 0;
+let totalExempt = 0;
+for (const [suite, file] of Object.entries(SUITE_FILES)) {
+  const text = readOne(file);
+  const preambleMust = declaresPreambleMust(text);
+  const rowsHere = classifySuite(text, preambleMust);
+  const parsed = rowsHere.length;
+  const guarded = rowsHere.filter((r) => !r.excluded).length;
+  totalParsed += parsed;
+  totalGuarded += guarded;
+  totalExempt += parsed - guarded;
+  perSuite.push(`${suite} ${parsed}/${guarded}`);
+  bad.push(...heldOutViolations(text, file, preambleMust));
+}
+// EVALS files stay outside the cardinality (the canonical universe is the six
+// SCENARIOS suites) but inside the held-out-citation law at tag grain.
+for (const f of tracked.filter((x) => /EVALS\.md$/.test(x))) {
+  bad.push(...heldOutViolations(readOne(f), f, false));
 }
 
 // Check 2 — every register tag in use is one the declared home enumerates.
@@ -206,7 +289,8 @@ const rqRows = anchorRows(prd);
 const owed = rqRows.filter((r) => r.anchor.startsWith("owed")).length;
 console.log(
   `PROBE-COVERAGE OK — ${rqRows.length} requirement(s): ${rqRows.length - owed} anchored to a Situation, ${owed} declared owed (a debt kept visible, not an exemption); ` +
-    `${gatingRows} build-gating scenario row(s), none citing held-out E without FD-59's re-provenance marker; ` +
+    `obligation scope per suite (parsed/guarded): ${perSuite.join(", ")} — summing ${totalParsed}/${totalGuarded}, ${totalExempt} declared exempt; ` +
+    `no gating row cites held-out E without FD-59's re-provenance marker; ` +
     `${tagCount} recorded provenance tag(s), every one among the ${reg.names.length} user-stories/README.md declares. ` +
     `NOT CHECKED: whether an anchored beat actually exercises its requirement, or whether a register tag is TRUE — existence is mechanical, aboutness is a reading job.`,
 );

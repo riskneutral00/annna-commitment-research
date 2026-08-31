@@ -3,10 +3,13 @@
 // first; the code then builds to a spec someone already read. This is the one
 // property the deleted vendored read-only tree was buying.
 //
-// Spec is decided by EXTENSION, not directory, deliberately: layer code will
+// Spec is decided by CLASS, not directory, deliberately: layer code will
 // live beside its specs (harness/*.ts next to harness/SPEC.md), so a directory
-// rule would be wrong the day the first .ts lands. `.md` is spec; everything
-// else is code.
+// rule would be wrong the day the first .ts lands. `.md` is spec — and so is
+// `.github/workflows/**` (F-37, 2026-08-31: SPEC.md §7 put the CI workflow
+// definitions on the floor because a weakened workflow rides in with the code
+// it stops catching — the exact ride commit c49c1d2 landed while this
+// classifier read the workflow as code); everything else is code.
 //
 // IT CLASSIFIES THE RESULTING COMMIT, NOT THE INDEX (SPEC.md §7a item 1, fixed
 // 2026-08-21). Under `git commit --amend` the staged set is only the NEW paths
@@ -26,14 +29,16 @@
 //                    staged there, so the hook mode alone made "CI is the
 //                    second reader" false for exactly this gate (§7a item 2).
 import { execFileSync } from "node:child_process";
+import assert from "node:assert";
 import { pathToFileURL } from "node:url";
 
 const git = (args, opts) => execFileSync("git", args, { encoding: "utf8", maxBuffer: 1 << 28, ...opts });
 const zsplit = (s) => s.split("\0").filter(Boolean);
 
+export const isSpec = (f) => f.endsWith(".md") || f.startsWith(".github/workflows/");
 export const classify = (paths) => ({
-  spec: paths.filter((f) => f.endsWith(".md")),
-  code: paths.filter((f) => !f.endsWith(".md")),
+  spec: paths.filter(isSpec),
+  code: paths.filter((f) => !isSpec(f)),
 });
 
 // An `--amend` anywhere in a `git commit` invocation above this process.
@@ -95,7 +100,25 @@ function report(label, paths) {
   return 1;
 }
 
+function selfcheck() {
+  // The floor classes, asserted from both sides (SPEC.md §1 + §7's F-37 half).
+  assert.deepStrictEqual(classify(["a/SPEC.md", "b/x.ts"]), { spec: ["a/SPEC.md"], code: ["b/x.ts"] }, "md is spec, ts is code");
+  const wf = classify([".github/workflows/check.yml", "deployment/scripts/x.mjs"]);
+  assert.deepStrictEqual(wf, { spec: [".github/workflows/check.yml"], code: ["deployment/scripts/x.mjs"] }, "a workflow file is FLOOR — the .yml+.mjs pair is a mixed commit now, which is the c49c1d2 ride this widening refuses");
+  assert.strictEqual(isSpec(".github/workflows/anything.yaml"), true, "yaml too");
+  assert.strictEqual(isSpec("harness/src/seams.ts"), false, "layer code stays code");
+  assert.strictEqual(isSpec("workflows/check.yml"), false, "only the .github/workflows/ prefix is the floor, not any workflows/ directory");
+  // The amend detector's canaries, unchanged.
+  assert.strictEqual(isAmend(["/usr/bin/git commit --amend -m x"]), true);
+  assert.strictEqual(isAmend(["git commit -m plain"]), false);
+  console.log("S2 SELFCHECK OK — spec/code classes hold, the workflow floor and the amend detector fire");
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  if (process.argv.includes("--selfcheck")) {
+    selfcheck();
+    process.exit(0);
+  }
   const flag = (name) => {
     const i = process.argv.indexOf(name);
     return i >= 0 ? process.argv[i + 1] : process.argv.find((a) => a.startsWith(`${name}=`))?.slice(name.length + 1);

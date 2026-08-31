@@ -66,6 +66,7 @@ function scenarioDefs(text) {
     let tag = "MUST";
     if (/\[HELD-OUT\]/.test(rest)) tag = "HELD-OUT";
     else if (/\[DRILL\]/.test(rest)) tag = "DRILL";
+    else if (/\[SHOULD\b/.test(rest)) tag = "SHOULD";
     defs.set(m[1], { tag, engine: /\[ENGINE\]/.test(rest) });
   }
   return defs;
@@ -112,7 +113,10 @@ function gateLines(text) {
 
 // Which tags owe a BUILD home. Exported so the selfcheck and the real pass
 // cannot drift onto two readings of one law.
-export const owesHome = (def) => def.tag !== "DRILL" || def.engine;
+export const owesHome = (def) => (def.tag !== "DRILL" && def.tag !== "SHOULD") || def.engine;
+// [SHOULD] joined the exempt classes 2026-08-31 (Q2-078): the pre-fix parser
+// read a [SHOULD / …] row as MUST — a widened obligation the law never made.
+// A SHOULD that is also [ENGINE] owes a home exactly as a DRILL-ENGINE does.
 
 // The checkpoint ledger (harness/BUILD.md Step 5, 2026-08-22). Two countable
 // halves of the step's own stated laws: (a) "every ID in the Verify set sits in
@@ -122,7 +126,7 @@ export const owesHome = (def) => def.tag !== "DRILL" || def.engine;
 // empty-ladder path; a Depends pair makes that misplacement fail the chain.
 // NOT CHECKED: that the Depends line is COMPLETE — naming a new
 // Given-dependency is a reading job; enforcing a named one is mechanical.
-export function checkpointLedger(buildText, defs = new Map()) {
+export function checkpointLedger(buildText, defs = new Map(), required = []) {
   const bad = [];
   // Scope to the checkpoint block: from the declaration sentence to the next
   // Verify line — a bold-numbered list anywhere else in the file is not a
@@ -157,8 +161,57 @@ export function checkpointLedger(buildText, defs = new Map()) {
       else if (!placed.includes(p[2])) bad.push(`Depends says ${p[1]} → (${p[2]}) but it sits in (${placed.join(",")})`);
     }
     if (!pairs) bad.push("the Depends line parses but names no ID → (n) pair");
+    // The required set (2026-08-31, Q2-077/H2): the four Given-needs-machinery
+    // edges the corpus has ruled. A missing one fails — a scenario scheduled
+    // ahead of its machinery must be caught at the gate, not the checkpoint.
+    const named = new Set([...dep[1].matchAll(PAIR_RE)].map((x) => x[1]));
+    for (const need of required) {
+      if (!named.has(need)) bad.push(`the Depends line is missing the required pair for ${need} (Q2-077's law: D4, A6, D26 and D5 each carry their Given-needs-machinery edge)`);
+    }
   }
   return bad;
+}
+const PAIR_RE = /([A-Z]\d+[a-z]?)\s*→\s*\((\d+)\)/g;
+export const REQUIRED_PAIRS = ["D4", "A6", "D26", "D5"];
+
+// --- the TDD-map span checker (2026-08-31, Q2-072(c); the H3 grammar) ---
+// A bold range that OPENS a family's parenthetical in a TDD family map is a
+// COMPLETE SPAN CLAIM and must equal that suite family's actual minimum and
+// maximum. An `incl.`-prefixed range is an explicitly bounded subset mention —
+// not a complete-span claim, and that bound is printed in the OK line rather
+// than silently assumed. Section→suite attribution rides the `## ` headings.
+const SPAN_CLAIM = /\*\*([A-Z])′?\*\*[^(·]*\((\*\*([A-Z])(\d+)[–-]\3(\d+)\*\*)/g;
+export function tddSpanClaims(tddText, famRangesBySuite) {
+  const bad = [];
+  let sec = null;
+  let claims = 0;
+  for (const line of tddText.split("\n")) {
+    if (line.startsWith("## ")) {
+      const low = line.toLowerCase();
+      sec = Object.keys(famRangesBySuite).find((k) => low.includes(k)) ?? null;
+    }
+    if (!sec) continue;
+    for (const m of line.matchAll(SPAN_CLAIM)) {
+      const fam = m[3];
+      const [a, b] = [+m[4], +m[5]];
+      const range = famRangesBySuite[sec][fam];
+      if (!range) continue;
+      claims++;
+      if (a !== range[0] || b !== range[1])
+        bad.push(`TDD.md's ${sec} map claims the ${fam} span as ${fam}${a}–${fam}${b}; the suite's is ${fam}${range[0]}–${fam}${range[1]}`);
+    }
+  }
+  return { bad, claims };
+}
+
+export function famRanges(defs) {
+  const out = {};
+  for (const id of defs.keys()) {
+    const f = id[0];
+    const n = parseInt(id.slice(1), 10);
+    out[f] = out[f] ? [Math.min(out[f][0], n), Math.max(out[f][1], n)] : [n, n];
+  }
+  return out;
 }
 
 function checkLayer(layer) {
@@ -169,7 +222,7 @@ function checkLayer(layer) {
   const families = new Set([...defs.keys()].map((id) => id[0]));
   const orphans = [...defs.keys()].filter((id) => owesHome(defs.get(id)) && !homed.has(id));
   const phantoms = [...gated].filter((id) => families.has(id[0]) && !defs.has(id));
-  const ledger = layer.name === "harness" ? checkpointLedger(buildText, defs) : [];
+  const ledger = layer.name === "harness" ? checkpointLedger(buildText, defs, REQUIRED_PAIRS) : [];
   return { defs, orphans, phantoms, ledger };
 }
 
@@ -217,6 +270,23 @@ function selfcheck() {
   assert.ok(checkpointLedger(cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X3 → (1)"), defs).some((b) => b.includes("X3")), "a misplaced Depends pair is caught");
   assert.ok(checkpointLedger(cp("**(1) a** `X1` · **(2) b** `X1`", "X1 → (1)"), defs).some((b) => b.includes("exactly one")), "double membership is caught");
   assert.ok(checkpointLedger("no checkpoint block here").length, "a non-parsing checkpoint block is a failure, not a skip");
+
+  // The required-pairs canary (2026-08-31, Q2-077/H2): a Depends line missing a
+  // required Given-needs-machinery edge fails, and the full four-pair line passes.
+  const cpq = cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X1 → (1)");
+  assert.ok(checkpointLedger(cpq, defs, ["X1", "X3"]).some((b) => b.includes("missing the required pair for X3")), "a missing required pair is caught");
+  assert.deepStrictEqual(checkpointLedger(cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X1 → (1) · X3 → (2)"), defs, ["X1", "X3"]), [], "the complete required set passes");
+
+  // The TDD-map span grammar's canaries (2026-08-31, Q2-072(c)/H3): a bold
+  // range opening a family's parenthetical is a complete span claim; an
+  // `incl.`-prefixed range is a bounded subset mention and never fires.
+  const ranges = { harness: { K: [1, 11], D: [1, 29] } };
+  const staleMap = "## Harness — behavioral\n**K** check-work (**K1–K10** incl. things)";
+  const trueMap = "## Harness — behavioral\n**K** check-work (**K1–K11** incl. things)";
+  const inclMap = "## Harness — behavioral\n**D** the floor (incl. **D10–D11** auto-accept)";
+  assert.ok(tddSpanClaims(staleMap, ranges).bad.some((b) => b.includes("K1–K10")), "a stale complete span fails");
+  assert.deepStrictEqual(tddSpanClaims(trueMap, ranges).bad, [], "a true span passes");
+  assert.deepStrictEqual(tddSpanClaims(inclMap, ranges), { bad: [], claims: 0 }, "an incl. subset mention is not a span claim");
   assert.deepStrictEqual(checkpointLedger(`bold list elsewhere **(4) prose** \`X9\`\n${cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X3 → (2)")}`, defs), [], "a bold-numbered list outside the block is ignored");
   console.log("selfcheck OK");
 }
@@ -227,8 +297,10 @@ if (process.argv.includes("--selfcheck")) {
 }
 
 let bad = 0;
+const rangesBySuite = {};
 for (const layer of LAYERS) {
   const { defs, orphans, phantoms, ledger } = checkLayer(layer);
+  rangesBySuite[layer.name] = famRanges(defs);
   const status = orphans.length || phantoms.length || ledger.length ? "FAIL" : "ok";
   console.log(`\n[${layer.name}] ${defs.size} scenarios — ${status}`);
   if (orphans.length) {
@@ -246,5 +318,17 @@ for (const layer of LAYERS) {
   }
 }
 console.log(`\nmodel: N/A — graded EVALS, not a per-item gated suite`);
+
+// The TDD family maps against the suites (Q2-072(c), the H3 span-claim grammar).
+const tdd = fs.readFileSync(path.join(ROOT, "TDD.md"), "utf8");
+const spans = tddSpanClaims(tdd, rangesBySuite);
+if (spans.bad.length) {
+  bad++;
+  for (const b of spans.bad) console.log(`  TDD MAP: ${b}`);
+}
+console.log(
+  `TDD maps: ${spans.claims} complete span claim(s) checked against the suites' own min–max. ` +
+    `NOT A SPAN CLAIM: an \`incl.\`-prefixed range — an explicitly bounded subset mention, unchecked by design.`,
+);
 console.log(bad ? `\nGATE-COVERAGE FAIL (${bad} issue group(s))` : `\nGATE-COVERAGE OK`);
 process.exit(bad ? 1 : 0);

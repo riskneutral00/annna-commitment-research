@@ -13,8 +13,15 @@
 //   node deployment/scripts/status-report.mjs <root>      report over another tree
 //   node deployment/scripts/status-report.mjs --selfcheck assert-based self-test
 //
-// Parsing contract (verified against all seven BUILD.md files 2026-08-08):
-//   step heading:  `## Step <n> — <title>`   (em-dash U+2014)
+// Parsing contract (verified against all seven BUILD.md files 2026-08-08;
+// widened 2026-08-31 to the grammar deployment/README.md now prints — F-36):
+//   step heading:  `## Step <n>[<letter>] — <title>`   (em-dash U+2014)
+//   Lettered steps (security 4b/5b/6b, app 6a) are steps of their own; the
+//   NUMERIC part alone decides freeze-range membership. A title carrying
+//   ` — CUT (<ruling>, <date>)` is terminally disposed — it reports as CUT,
+//   never as open (model Step 5's written form, adopted as-is). A step body
+//   printing its own unfreeze exception — security 4b's "independent of the
+//   freeze block" — overrides the covering range.
 //   step body:     every line up to the next `## ` heading
 //   state, in this order — the order matters, "NOT CLOSED" contains "CLOSED":
 //     body has `**NOT CLOSED` -> NOT CLOSED · `**CLOSED` -> CLOSED ·
@@ -54,7 +61,7 @@ import { fileURLToPath } from "node:url";
 
 const REPO = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const LAYERS = ["deployment", "harness", "engine", "app", "model", "security", "marketplace"];
-const HEADING = /^## Step (\d+) — (.*)$/;
+const HEADING = /^## Step (\d+)([a-z])? — (.*)$/;
 const OPEN_ITEM = /^## Still open — (.*)$/;
 
 // --- the NOTES contract, made refusable 2026-08-29 (L-220) ---
@@ -148,7 +155,7 @@ function steps(text) {
   for (const line of lines) {
     const m = line.match(HEADING);
     if (m) {
-      cur = { n: +m[1], title: m[2].trim(), body: [] };
+      cur = { n: +m[1], letter: m[2] ?? "", title: m[3].trim(), body: [] };
       out.push(cur);
     } else if (line.startsWith("## ")) {
       cur = null; // a non-step heading ends the previous step's body
@@ -159,12 +166,20 @@ function steps(text) {
   const isFrozen = frozenRange(text);
   return out.map((s) => {
     const body = s.body.join("\n");
+    // The terminal disposition rides the TITLE (the grammar's CUT form): a cut
+    // step is disposed, never open — and never overridden by a range.
+    if (/ — CUT \(/.test(s.title)) {
+      return { n: s.n, letter: s.letter, title: s.title, state: "CUT", blockedOn: [] };
+    }
     const state = stateOf(body);
-    // A range freezes only what has not already declared itself finished.
+    // A range freezes only what has not already declared itself finished — and
+    // a step printing its own unfreeze exception (the 4b form) is outside it.
+    const exempt = body.includes("independent of the freeze block");
     return {
       n: s.n,
+      letter: s.letter,
       title: s.title,
-      state: state === "open" && isFrozen(s.n) ? "FROZEN" : state,
+      state: state === "open" && isFrozen(s.n) && !exempt ? "FROZEN" : state,
       blockedOn: preconditions(body),
     };
   });
@@ -229,12 +244,71 @@ function selfcheck() {
   assert.deepStrictEqual(
     parsed,
     [
-      { n: 0, title: "The spec/code boundary", state: "CLOSED", blockedOn: [] },
-      { n: 1, title: "Landing law", state: "NOT CLOSED", blockedOn: [] },
-      { n: 2, title: "The rung ladder", state: "open", blockedOn: [] },
-      { n: 3, title: "Frozen work", state: "FROZEN", blockedOn: [] },
+      { n: 0, letter: "", title: "The spec/code boundary", state: "CLOSED", blockedOn: [] },
+      { n: 1, letter: "", title: "Landing law", state: "NOT CLOSED", blockedOn: [] },
+      { n: 2, letter: "", title: "The rung ladder", state: "open", blockedOn: [] },
+      { n: 3, letter: "", title: "Frozen work", state: "FROZEN", blockedOn: [] },
     ],
     "number, title and all four states parse",
+  );
+
+  // --- the widened grammar's canaries (F-36, 2026-08-31) ---
+  // A lettered step parses as a step of its own — the four live ones (security
+  // 4b/5b/6b, app 6a) were invisible to the old HEADING and their bodies (state
+  // markers, Preconditions) vanished with them.
+  const lettered = steps(
+    [
+      "## Step 4 — The umbrella",
+      "prose",
+      "## Step 4b — The fifth token class",
+      "**NOT CLOSED 2026-08-22 —** rides the harness clock",
+      "## Step 6a — Calendar import (inbound)",
+      "prose only",
+    ].join("\n"),
+  );
+  assert.deepStrictEqual(
+    lettered.map((x) => [x.n, x.letter, x.state]),
+    [
+      [4, "", "open"],
+      [4, "b", "NOT CLOSED"],
+      [6, "a", "open"],
+    ],
+    "lettered steps parse, carrying their own bodies",
+  );
+
+  // Range membership rides the NUMERIC part: 5b sits inside Steps 4–8. And the
+  // 4b unfreeze-exception form overrides the covering range.
+  const letteredRange = steps(
+    [
+      "> **FROZEN 2026-08-08 — Steps 4–8 are specified, not being built.**",
+      "## Step 4b — Exempt",
+      "unfreezes when that step begins, independent of the freeze block above",
+      "## Step 5b — Held import credentials",
+      "prose only",
+    ].join("\n"),
+  );
+  assert.deepStrictEqual(
+    letteredRange.map((x) => [x.n + x.letter, x.state]),
+    [
+      ["4b", "open"],
+      ["5b", "FROZEN"],
+    ],
+    "a lettered step is range-frozen by its numeric part, unless it prints its own unfreeze exception",
+  );
+
+  // The terminal disposition: a CUT title reports as CUT — never open, and a
+  // covering range cannot reopen or refreeze it.
+  const cut = steps(
+    [
+      "> **FROZEN 2026-08-08 — Steps 4–6**",
+      "## Step 5 — ChatGPT-subscription slot — CUT (FD-65, 2026-08-22)",
+      "prose about the removal",
+    ].join("\n"),
+  );
+  assert.deepStrictEqual(
+    cut.map((x) => [x.n, x.state]),
+    [[5, "CUT"]],
+    "a CUT step is terminally disposed, outranking a covering freeze",
   );
 
   // The precondition resolver, against the marker form the corpus writes
@@ -249,6 +323,7 @@ function selfcheck() {
     ].join("\n"),
   );
   assert.deepStrictEqual(pre[0].blockedOn, ["FD-42"], "a Precondition marker's ruling IDs are read");
+  assert.strictEqual(pre[0].letter, "", "an unlettered step carries the empty letter");
   assert.deepStrictEqual(pre[1].blockedOn, [], "a bare mention outside a marker is not a precondition");
   // The ordering trap this script exists to avoid.
   assert.strictEqual(stateOf("**NOT CLOSED yet"), "NOT CLOSED", "NOT CLOSED is not read as CLOSED");
@@ -324,11 +399,11 @@ for (const layer of LAYERS) {
   const file = path.join(root, layer, "BUILD.md");
   if (!fs.existsSync(file)) continue;
   const found = steps(fs.readFileSync(file, "utf8"));
-  const tally = { CLOSED: 0, "NOT CLOSED": 0, FROZEN: 0, open: 0 };
+  const tally = { CLOSED: 0, "NOT CLOSED": 0, FROZEN: 0, CUT: 0, open: 0 };
   console.log(`\n${layer}`);
   for (const s of found) {
     tally[s.state]++;
-    const label = `  Step ${s.n} — ${s.title} `;
+    const label = `  Step ${s.n}${s.letter ?? ""} — ${s.title} `;
     const suffix = s.blockedOn.length ? ` ${s.state} — BLOCKED on ${s.blockedOn.join(", ")}` : ` ${s.state}`;
     console.log(label.padEnd(width, ".") + suffix);
     for (const id of s.blockedOn) {
