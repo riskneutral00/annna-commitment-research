@@ -47,7 +47,7 @@ Under the video, the page in full:
 
 - **The page wears no photograph.** Photography appears only *contained* — inside the video frame, the progress stills, and screenshots of the board — where it is the product being shown, not the page's own dress. When it does appear it is never washed, blurred, or scrimmed.
 - The ground is the koi-derived ambient gradient (both themes), so the brand colors still greet the reader without the sensory load of a full image.
-- Copy sits on quiet cards that follow the breathing-glass law's spirit (rest = near-invisible; presence under attention).
+- Copy sits on quiet cards that follow the breathing-glass law's spirit — **at rest the governed-legibility law holds** (rest is *legible under the owner's own dial*, FD-21/FD-22's re-cut; never the pre-FD-21 "near-invisible" absolute) — presence under attention *(restated 2026-08-31, m-34, under the freeze's in-place truth-correction class, FD-101)*.
 - No testimonials, social proof, counters, or pricing furniture. No carousels, parallax, or ambient motion. SVG-only icons.
 - The page never shows anything that doesn't exist yet. Screenshots over renders, always.
 - One page. No nav bar of sections. Scrolling is the only navigation.

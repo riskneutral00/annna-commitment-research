@@ -36,6 +36,8 @@ This signature is **the contract an adapter for any `provider` value must satisf
 - **Envelope mapping.** Upward, `unavailable` surfaces as the refusal envelope's **existing** `` `unavailable` | `provider` `` reason (the closed reason table, `../harness/INTERFACES.md §7.1`) — the model provider is a third-party provider like the travel source and the calendar provider, so this names a cell that already exists rather than widening a closed set. Naming the model provider in that cell is the harness's own edit, not this layer's.
 
 ### 2.2 Routing config (the layer's one real artifact)
+
+**An external-client turn resolves to the app-supplied binding** *(2026-08-31, F-12 — the surface existed with no routing binding named)*: a turn arriving through the external surface (`../PRD.md §4.2`; `../harness/SPEC.md §5.3`) runs on the **app-supplied** binding exactly as an unattended firing does — BYO powers *attended console calls only* (`SPEC.md §7`'s confinement), and an agent's credentialed call is not the owner attending; the config carries no per-client override.
 ```
 routing: {
   <call_type>: {

@@ -15,7 +15,7 @@
 
 **One story per type, many players.** There's one shop and one resource type, but the *fleet* is many units (see the roster) — that plurality is the point: a hold on one unit must not touch another, and a race for the *last* unit of a model must resolve to exactly one winner.
 
-**The rule underneath it all:** *a resource type is a market of at least two units* — so a held or cooling-down bike always leaves a sibling to fall to. The **dead-end** in this fleet is the pair of license-gated **CBRs** — the only units a typical renter can't legally take — deliberately there so the market can run *out* (both booked, or the wrong license) and annnä has to say **no**.
+**The rule underneath it all:** *a resource type is a market of at least two units* — so a held or cooling-down bike always leaves a sibling to fall to — **read as this fleet's fixture topology, not as a platform guarantee** *(2026-08-31, Q1-32 — the C-README precedent)*: the platform never requires two units of anything; this folder's market is built that way so the fall-to paths are exercisable. The **dead-end** in this fleet is the pair of license-gated **CBRs** — the only units a typical renter can't legally take — deliberately there so the market can run *out* (both booked, or the wrong license) and annnä has to say **no**.
 
 ---
 

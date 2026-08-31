@@ -24,7 +24,7 @@ Until then this is still a prepare-to-build sitting, not a code sitting.
 
 ## Where the rest lives
 
-- Leftover research (not build gates), each at its live home — the source file, the retired `CLARIFY.md`, is deleted: messaging investigation → `app/SPEC.md` §6 + `app/NOTES.md` · hour-grid residue → `app/NOTES.md` + the FD-81 row · OR-42 proposal → `security/SPEC.md` §2 · Situation × layer map → working material under `docs/agents/`
+- Leftover research (not build gates), each at its live home — the source file, the retired `CLARIFY.md`, is deleted: messaging investigation → `app/SPEC.md` §6 + `app/NOTES.md` · hour-grid residue → `app/NOTES.md` + the FD-81 row · OR-42 proposal → `security/SPEC.md` §2 · Situation × layer map → `user-stories/COVERAGE.md` *(promoted 2026-08-30 — no longer working material)*
 - Later acts, not this phase: Cloudflare, OpenRouter keys, `privacy@annna.dev`
 - A working checkout may also carry a living gate list under `docs/agents/` (absent from a clone). This file is what a clone has.
 - Do not add to `AGENTS.md` (935-word ceiling, 0 spare — ratcheted to the measured count 2026-08-29)
@@ -35,8 +35,12 @@ This file retires on readiness, never on a date: when the go-word has been given
 `harness/BUILD.md` Step 1 has opened, it describes a moment that has passed.
 
 One thing here is law, and it moves rather than dies — **G0-2**, the go-word gate. Its
-normative home becomes `harness/BUILD.md`, the only file that cites it and where its
-Readiness line already names it. Nothing else in this file is law.
+normative home becomes `harness/BUILD.md`, where its Readiness line already names it —
+**and the retirement commit re-points every citer** *(corrected 2026-08-31, F-40 — "the
+only file that cites it" was false)*: `G0-2` is cited by five tracked files — this one,
+`harness/BUILD.md`, `model/BUILD.md`, `deployment/SPEC.md` and `RULINGS.md` — so the
+recipe below re-points or absorbs each remaining citation, leaving no dangle. Nothing
+else in this file is law.
 
 Retirement is the founder's act, in one commit: delete this file, remove its `INDEX.md`
 row, and re-point or remove the two `README.md` references to it — the Status paragraph’s

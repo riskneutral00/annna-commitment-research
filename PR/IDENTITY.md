@@ -1,5 +1,7 @@
 # IDENTITY — who annnä is
 
+*Status (2026-08-31, F-33 — this sentence sits outside the PR freeze by the freeze's own derived-copy carve): written present-tense by craft for the founding **cohort**, ahead of any public surface — the three surfaces §6.2 qualifies do not exist yet, and this file's present tense is voice, not a claim that they do.*
+
 *The source document. Every outward statement — landing page, repo, pitch, store copy — derives from this file. If a claim isn't grounded here, it doesn't ship.*
 
 ---

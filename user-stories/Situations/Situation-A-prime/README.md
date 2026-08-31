@@ -6,6 +6,7 @@
 
 1. The cast and Sofia's world are `../Situation-A/` — read that first; A′ adds no new people.
 2. `situation-1.md` is the single run: need → suggestion → preview → install → publish a link → first booking → uninstall → owner-publish of an authored shape → one extract-refusal.
+3. **The depicted seed and the grammar** *(2026-08-31 — FDR-11's selected arm, `../../../RULINGS.md`'s delegated-selection sitting)*: where this folder's prose sketches a bundle, `../../../marketplace/SPEC.md §1.2`'s closed grammar **governs** — the story illustrates, the format decides, and nothing here widens the grammar by a single member.
 
 ## What this probe must exercise (the checklist it was built from)
 

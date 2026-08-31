@@ -1,5 +1,7 @@
 # VOICE — how annnä speaks
 
+*This file carries FR18's outward half — commercial silence is repo-wide, and outward copy never mentions money or commerce (`../RULINGS.md` FR18, whose row cites this home; recorded 2026-08-31, m-37).*
+
 *The tone law for every outward word. The standard is Matt's own phrase: **neutral like water.***
 
 ---

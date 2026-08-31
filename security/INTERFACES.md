@@ -16,14 +16,14 @@
 | Rate limits & abuse (§10) | **App** (public doors); hold idempotency is already engine law | none — limits sit in front of existing routes | scripted limit clock |
 | The external-client surface (§3 fifth class; §10 its caps; FD-33 suspension) | **Harness** (it is the harness's own tool contract exposed, `../harness/SPEC.md §5.3`); credential custody is this package's Step 4b | the existing tool contract — zero new verbs (`../harness/INTERFACES.md §6`) | the scripted credential check (`../harness/INTERFACES.md §5`) *(row added 2026-08-21 — the one door attributing to a principal inside had no owner, seam, or stub here)* |
 | Tenant scoping (§9) | **Engine** (store construction, `../engine/SPEC.md §1.1`) | none — it is how every existing read/write is built | the engine build itself; N-family probes it |
-| Compliance tooling (§12) | **App** (§7-class views: retention surface, deletion runbook surface) + **harness** ask-once (clock answers) | existing view + elicitation machinery | canned stored answers |
+| Compliance tooling (§12) | **App** (§7-class views: the retention surface) + **the §12 ops runbook** (the deletion-request runbook is an operations document, not an app surface — repointed 2026-08-31, F-16; the in-product surface stays Tier-1-optional, not required) + **harness** ask-once (clock answers) | existing view + elicitation machinery | canned stored answers |
 | DR & takeout (§8) | **Ops** + the engine substrate (the version chain is what takeout reads) | none — operational procedure over the store | restore drill against a seeded **two-tenant** store, backups carrying a **per-tenant watermark**, and a **simulated partial loss** — D1's platform drill and D5's detect → confirm → replay share the fixture |
 
 ## §2. The vault seam (the one new contract)
 
 Named by shape, like the marketplace service (`../marketplace/INTERFACES.md §1`):
 
-- `vault.put(artifact, class, subject) → attestation` — encrypts, stores, starts the class clock; returns `{class, verified_by, at, vault_ref}` for the engine's precondition evidence.
+- `vault.put(artifact, class, subject) → attestation` — encrypts, stores, and records the class (**the retention clock arms on the purpose-served registration, not on put** — `SPEC.md §4`'s F-19 sentence; put narrowed 2026-08-31); returns `{class, verified_by, at, vault_ref}` for the engine's precondition evidence.
 - `vault.get(vault_ref, basis) → artifact | tombstone` — **every get is logged with its basis** to the audit surface, admin included (SPEC §11). After destruction, an honest tombstone: what class existed, when destroyed, under which clock.
 - `vault.shred(subject | vault_ref, basis) → completion attestation` — destruction by clock or by lawful request; for engine-resident contact PII, shredding the **per-subject key** is the erasure (SPEC §4).
 - **The clock job** — internal, deterministic, idempotent (the engine's horizon-job pattern): scans clocks, shreds what's due, writes completion attestations.
