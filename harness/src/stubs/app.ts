@@ -1,4 +1,4 @@
-import type { AppSeam, SendOutcome } from "../seams.js";
+import type { AppSeam, Envelope, SendOutcome } from "../seams.js";
 
 // AppStub — INTERFACES.md §5: record-and-return spies. Assert the payload and
 // its reversibility class; simulate `on_form_return`. Async per the seam's law
@@ -20,10 +20,9 @@ export class AppStub implements AppSeam {
   nextSendOutcome: SendOutcome = { outcome: "sent" };
   nextImportFetch:
     | { items: unknown[]; provider_status: string }
-    | { unavailable: true }
-    | { timeout: true } = { items: [], provider_status: "ok" };
+    | Envelope<"unavailable" | "timeout"> = { items: [], provider_status: "ok" };
   nextRenderGenerative: unknown = { view: "generated" };
-  nextDisplaySettings: { ok: true } | { ok: false; invalid: true } = { ok: true };
+  nextDisplaySettings: { ok: true } | ({ ok: false } & Envelope<"invalid">) = { ok: true };
 
   /** The inbound rides (INTERFACES.md §3.3): a test registers the harness's
    *  trigger entry here, then drives `simulateFormReturn` / the delivery-event
@@ -45,16 +44,19 @@ export class AppStub implements AppSeam {
   async publish(payload: unknown, recipients?: unknown) {
     this.calls.push({ call: "publish", payload: { payload, recipients } });
     const list = Array.isArray(recipients) ? recipients : [];
+    // m-40: `bound_to` is the engine's nullable shape — a recipient that is a
+    // commitment ref binds; an entry-class digest (no recipient ref) is null,
+    // never a stringified placeholder.
     return {
       artifact: payload,
       minted: list.map((r) => ({
         digest: `digest-${++this.mintCounter}`,
-        bound_to: String(r),
+        bound_to: typeof r === "string" && r !== "" ? r : null,
       })),
     };
   }
 
-  async send(payload: unknown, recipient?: unknown): Promise<SendOutcome> {
+  async send(payload: unknown, recipient: unknown): Promise<SendOutcome> {
     this.calls.push({ call: "send", payload: { payload, recipient } });
     return this.nextSendOutcome;
   }
@@ -64,7 +66,7 @@ export class AppStub implements AppSeam {
     return this.nextImportFetch;
   }
 
-  async display_settings(diff: unknown): Promise<{ ok: true } | { ok: false; invalid: true }> {
+  async display_settings(diff: unknown): Promise<{ ok: true } | ({ ok: false } & Envelope<"invalid">)> {
     this.calls.push({ call: "display_settings", payload: diff });
     return this.nextDisplaySettings;
   }

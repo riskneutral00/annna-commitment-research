@@ -15,8 +15,8 @@ import { AppStub } from "./stubs/app.js";
 
 export type Harness = { engine: EngineSeam; model: ModelSeam; app: AppSeam; clock: Clock };
 
-export function makeEngine(): EngineSeam {
-  return new EngineStub();
+export function makeEngine(clock?: Clock): EngineSeam {
+  return new EngineStub(clock);
 }
 
 export function makeModel(script: ModelScript = {}): ModelSeam {
@@ -32,10 +32,14 @@ export function makeApp(): AppSeam {
  *  and an adapter can be passed for any single seam without touching the rest,
  *  which is the property Step 0's verify asserts. */
 export function wire(parts: Partial<Harness> = {}): Harness {
+  // The clock resolves FIRST and is handed to the engine stub — the comment
+  // above is now the code: one clock, shared, or the expiry scenarios rest on
+  // two components disagreeing about the time.
+  const clock = parts.clock ?? makeClock();
   return {
-    engine: parts.engine ?? makeEngine(),
+    engine: parts.engine ?? makeEngine(clock),
     model: parts.model ?? makeModel(),
     app: parts.app ?? makeApp(),
-    clock: parts.clock ?? makeClock(),
+    clock,
   };
 }

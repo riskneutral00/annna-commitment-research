@@ -1,4 +1,4 @@
-import type { ModelSeam, SourceTag } from "../seams.js";
+import type { Ambiguity, ModelSeam, NormalizeReturn, SourceTag } from "../seams.js";
 
 // ModelStub — INTERFACES.md §5, harness/BUILD.md Step 0.
 //
@@ -13,10 +13,13 @@ import type { ModelSeam, SourceTag } from "../seams.js";
 // names in its own words.
 
 export type ModelScript = {
-  normalize?: Record<string, { intent: string; fields: Record<string, unknown>; ambiguities: string[] }>;
+  normalize?: Record<string, NormalizeReturn>;
   narrate?: Record<string, string>;
   summarize?: Record<string, { summary: string; labels: string[] }>;
 };
+
+/** A convenience for scripts: an intent with no ambiguity. */
+export const plainIntent = (intent: string, fields: Record<string, unknown> = {}, ambiguities: Ambiguity[] = []): NormalizeReturn => ({ intent, fields, ambiguities });
 
 /** The reserved key. `summarize` on this input fails on every attempt including
  *  the fallback — the fixture L7 needs to have anything to fail against. */
@@ -29,7 +32,12 @@ export class ModelStub implements ModelSeam {
 
   async normalize(utterance: string, context: unknown) {
     this.calls.push({ call: "normalize", args: [utterance, context] });
-    return this.script.normalize?.[utterance] ?? { intent: "unknown", fields: {}, ambiguities: [] };
+    const scripted = this.script.normalize?.[utterance];
+    // Fail closed, like summarize: an unscripted utterance answered with a
+    // plausible `{intent: "unknown"}` is a stub inventing a normalization the
+    // suite then builds on believing it works.
+    if (!scripted) throw new Error(`normalize has no script for this utterance — fail closed rather than guess`);
+    return scripted;
   }
 
   async narrate(structure: unknown) {

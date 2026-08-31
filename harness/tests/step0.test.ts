@@ -65,14 +65,14 @@ describe("Step 0 — the injection point", () => {
     // satisfying the interface goes in, and the other two seams still default.
     const noopEngine = {
       calculate: async () => ({}) as never,
-      commit: async () => ({ ok: true as const, commitment: null }),
+      commit: async () => ({ ok: true as const, applied_ref: "ref0" }),
       check_consistency: async () => ({ conflicts: [], latent: [] }),
-      check_coverage: async () => ({ missing_required: [] }),
+      check_coverage: async () => ({ kind: "board-structural" as const, missing_required: [] }),
       resolve: async () => ({}) as never,
     } satisfies EngineSeam;
 
     const h = wire({ engine: noopEngine });
-    expect((await h.engine.commit({})).ok).toBe(true);
+    expect((await h.engine.commit({}, "w0")).ok).toBe(true);
     expect(h.model).toBeDefined();
     expect(h.app).toBeDefined();
   });
