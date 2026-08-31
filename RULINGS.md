@@ -524,6 +524,9 @@ Ruled through the wayfinder decision map (GitHub issues #1–#12 on this repo; e
 |---|---|---|---|
 | **FD-64 — the TypeScript major bump** | `^5.9` → `^6.0` in both suite-carrying layers | A dependency version bump is the canonical Tier-2 act: working discipline, reversible in one line, and the suites are the proof. Staying on 5.9 aged the build against two major versions | `engine/package.json` · `harness/package.json`, and FD-64's own row above |
 | **FD-89's FR37 exemption class** | The posture that *"per FR37 no founder ruling is owed"* on a drafted mechanism is ratified as a class rather than re-asked per instance | FR37 already put it in force — domain content is user-built proof, and the platform owes only the enabling mechanism. Recording it as an enactment makes the class strikeable in one place instead of invisible in many | the FR37 row above · the two `engine/SPEC.md` stamps it names, at *"template expansion"* and the clock-triggered rules |
+| **The status-report grammar amendment** | The 4b freeze-range exception and the Step-5 CUT-marker semantics join the printed status grammar | The parser enforces what the grammar permits, so widening the grammar is a process-rule change, enacted and logged | `deployment/README.md` (the grammar) + `deployment/scripts/status-report.mjs` (the parser, landing at the gate commit) |
+| **The §7a working-tree gate row** | A new row joins `deployment/SPEC.md` §7a naming the working-tree check | A new gate row is a new process check over how work is verified | `deployment/SPEC.md` §7a |
+| **The probe-coverage expected set and aboutness contracts** | The guard widens to the full obligation set with printed aboutness contracts | What the guard enforces widens, so the rule is enacted and logged, strikeable as one row | `deployment/SPEC.md` + `deployment/scripts/probe-coverage.mjs` (landing at the gate commit) |
 
 ## Provenance — which decisions were the founder's, and which were drafted
 

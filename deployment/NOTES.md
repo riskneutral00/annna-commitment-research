@@ -29,12 +29,12 @@ Four independent refuter sessions, each prompted to falsify, each on one lens: *
 | S9 | CI token scope unbounded; workflow edits off the floor | **Applied** — split: ruleset/bypass into E3's fix, `.github/workflows/**` onto the floor (S5) | SPEC §7, B3 |
 | S10 | Rotation is a free-text note | **Applied** — rotation drill | R10 |
 | E1 | R3's runtime env-grep unenforceable; transitive key access | **Applied** — static workflow lint + qualification-environment confinement | SPEC §3, R3 |
-| E2 | Q2 racy: required checks are snapshots | **Applied** — swap lockfile mutex (git-enforced) + waves ledger for order | SPEC §6, Q2 |
+| E2 | Q2 racy: check-runs are snapshots | **Applied** — swap lockfile mutex (git-enforced) + waves ledger for order | SPEC §6, Q2 |
 | E3 | B3: admins/apps bypass classic protection | **Applied** — ruleset with empty bypass list, asserted | B3 |
 | E4 | R1's attempt/refusal unrunnable; token scoping missing | **Applied, claim partially rejected** — attempting with *held* credentials is runnable; the stronger enumerate-and-diff + token-scope assertion adopted anyway | R1 |
 | E5 | W2 not repo-observable | **Applied** — downgraded to orchestrator-reconciliation `[DRILL]` | W2 |
 | E6 | W3 cross-host half has no substrate mechanism | **Applied** — merged with P8; same-host git refusal is the whole `[MUST]`; DR-4 | W3, DR-4 |
-| E7 | B4 names no parser or trigger | **Applied** — required check on review events reading the latest non-author review body | B4 |
+| E7 | B4 names no parser or trigger | **Applied** — always-run check on review events reading the latest non-author review body | B4 |
 | E8 | S1 needs the path-diff check named; label exemption spoofable | **Applied** — path-diff named; exemption is a human-cast floor approval | S1 |
 | E9 | S3 "no network route" unprovable on hosted runners | **Applied** — restated as static no-fetch | S3 |
 | E10 | Q1 cross-layer state has no source of truth | **Applied** — the waves ledger | SPEC §6, Q1 |
@@ -42,7 +42,7 @@ Four independent refuter sessions, each prompted to falsify, each on one lens: *
 | E12 | R4 is an unprovable universal | **Applied** — single seed entrypoint + import lint | R4 |
 | E13 | S2 conflates form and truth under hermetic CI | **Applied** — merged with S6 (content vs provenance split) | S2 |
 | E14 | R5's prod half needs a prod credential in CI — conflicts with R1 | **Applied** — prod half confined to the protected deploy environment | R5 |
-| E15 | Path-filtered required checks read skipped-as-success | **Applied** — no path filters; always-run aggregator | B1 |
+| E15 | Path-filtered check-runs read skipped-as-success | **Applied** — no path filters; always-run aggregator | B1 |
 | E16 | Scratch can't rehearse Q1/Q2, W-runtime, prod-rung checks | **Applied** — composed with P7; first real execution recorded as a drill | INTERFACES §6 |
 | C1 | Model Step 0's Verify needs a real model call the mock law bans | **Applied** — code in CI, live Verify in the qualification lane | SPEC §6 |
 | C2 | Secret-storage law contradicts security §7 | **Applied as composition, not a loser** — deployment stores (env store / the one untracked file per rung), security governs loading; reciprocal cite flagged to the security package, not edited from here | SPEC §3, INTERFACES §3 |

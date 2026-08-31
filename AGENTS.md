@@ -34,7 +34,7 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 - **`FD#` = founder decisions made inside a build phase** — same registry, its own section. The two series are independent and neither renumbers the other, so a citation must say which it means.
 - **`OR-##` = open rulings.** Three open — OR-28, OR-29, OR-42 (OR-39, OR-40, OR-41 closed) — each fully defined where it is used. The numbering is non-contiguous; missing numbers were never assigned.
 - **`RQ-##` = product requirements** (with `SM-#`, `UJ-`). Home: `PRD.md`. Deliberately not `FR#` — reusing that label would rebuild the collision the `R#` → `FR#` rename ended.
-- **Some spec sections were drafted by an agent and are marked as such.** Where a section carries a drafted-not-ratified marker, treat its reasoning as a proposal, not as settled law.
+- **Some spec sections were drafted by an agent and are marked as such.** A drafted-not-ratified section's `[MUST]` rows still gate the build until the founder rules (FD-91); reasoning stays proposal.
 
 ## Where to start
 

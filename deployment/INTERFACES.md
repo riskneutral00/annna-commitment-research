@@ -19,14 +19,14 @@
 ## §3. To the security package (across)
 
 - **Secret law composes** (`SPEC.md §3`): deployment owns *where each rung stores* (hosted rungs: host env store; local: the one untracked file); `../security/SPEC.md §7` owns *what code may load and how*. The security vault keys are ordinary env-manifest entries.
-- **Security's grep gates run as deployment CI jobs**: the X1-pattern checks (`../security/SPEC.md §7` — "grep-gated in CI from every layer's Step 0") are required checks in deployment's CI skeleton from `BUILD.md` Step 1, and R9 reuses the same pattern against deployed rungs.
+- **Security's grep gates run as deployment CI jobs**: the X1-pattern checks (`../security/SPEC.md §7` — "grep-gated in CI from every layer's Step 0") are always-run checks in deployment's CI skeleton from `BUILD.md` Step 1, and R9 reuses the same pattern against deployed rungs.
 - *Resolved 2026-08-06: `../security/SPEC.md §7` now cites the env manifest as the enumeration of record.*
 
 ## §4. To the substrate (downward — named here, per the app precedent)
 
 | Substrate | Role |
 |---|---|
-| **GitHub** | This repo · required checks (no path filters; the always-run `npm run check` aggregator) · **protected environments** (deploy, qualification — the human as required reviewer) · Actions · `gh` |
+| **GitHub** | This repo · check-runs (no path filters; the always-run `npm run check` aggregator) · **protected environments** (deploy, qualification — the human as required reviewer) · Actions · `gh` |
 | **Cloudflare** | Per-change preview rung (`SPEC.md §3`'s name for it) · production rung with **access protection** (R7) — production activates at app Step 0. Ruled under FD-11, replacing Vercel; the rung law in `SPEC.md §3` names no provider and did not change |
 | **Convex** | Per-rung deployments + the per-rung env store (enumerable for R1/R5) |
 | **TypeScript** | **The 6.x line (`^6.0`) corpus-wide, decided 2026-08-22 (FD-64, superseding the same-day `^5.9` pin)** — both suite-carrying layers' `package.json` hold `^6.0.0` and reversal is one line. TS 7 is a compiler reimplementation, a real decision not a point bump: it gets its own decision point when a layer needs it, never adoption-by-throwaway-rig. Every layer typechecks (`tsc --noEmit`) the way the harness does |
