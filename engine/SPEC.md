@@ -435,6 +435,8 @@ The `grants[]` edge (each entry a `ShareGrant`) is the only **authorization** st
 
 ## §8. `check_consistency` / `check_coverage`
 
+*(Scope, stated since FD-97 re-typed `check_coverage` into a request/result union: this section's four-way classification governs `check_consistency` and the coverage union's **`board-structural` kind only**. The `covering-grant` kind is §1.6's pure lookup and never enters this classification.)*
+
 - `check_consistency(rule | ruleset) → {conflicts, latent}` classifies **four** ways. The first three route by **authority**; the fourth routes by **satisfiability** and outranks them.
   1. **Governing conflict** — hard stop, the write is refused.
   2. **Own-rule conflict** — returned for the harness's override-with-reason path.
