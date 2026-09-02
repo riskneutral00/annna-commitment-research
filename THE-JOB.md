@@ -54,4 +54,4 @@ and `README.md` to the then-current tracked count, never to a number written her
 - Start harness Step 1 only after the go-word.
 - Build the specified application. Write neither a teacher-scheduling app nor a dive-center app.
 - Do not invent a personal-account send API, the hour-grid, a seat primitive, `held` / Stripe, OR-28 vetting, or an owner-API consumer.
-- Push is his act.
+- Push is unblocked — any agent may push; force-push stays blocked (FD-104).
