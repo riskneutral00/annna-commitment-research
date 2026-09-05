@@ -15,7 +15,7 @@ This is the product-level entry point for a fresh reader — any model, any runt
 | What exists today (current state) | no file | run `npm run check:status`, `npm run check` and `git rev-parse HEAD` in a checkout. A copied number is never authoritative; without a checkout, current state is unverified |
 | Which decisions are settled (rulings, provenance) | `RULINGS.md`, `AGENTS.md` §Rulings | `RULINGS.md` is the FR/FD registry and its provenance section; `AGENTS.md` §Rulings is the OR list |
 | Earlier conclusions and the evidence they rested on (findings register) | `buildpack/FINDINGS.md` | |
-| How a future model audits and upgrades (protocol) | `buildpack/UPGRADES.md` | pending (U4) |
+| How a future model audits and upgrades (protocol) | `buildpack/UPGRADES.md` | |
 | Where things live (index) | `INDEX.md`, `AGENTS.md` §Authority order, `THE-JOB.md` | |
 
 ## Location manifest
@@ -28,3 +28,5 @@ This is the product-level entry point for a fresh reader — any model, any runt
 | The Hermes product-strategy method references | installed skill files | not authority for this product | absent from clones | the Hermes skill tree on the founder's machine |
 | The prior build | `git@github.com:riskneutral00/annna.git` | inspiration only (FD-20) | do not clone to chase a citation (AGENTS.md rules those citations traceability) | the remote |
 | Working material (`docs/agents/`, `.hermes.md`, `CLAUDE.md`) | gitignored | never authority; absent from every clone | not resolvable from a clone | the founder's checkout |
+
+How to disagree with an earlier conclusion, and which questions belong to the founder, are stated once in `buildpack/UPGRADES.md`.
