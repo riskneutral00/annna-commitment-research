@@ -1,6 +1,6 @@
 # UPGRADES — the audit-and-upgrade procedure
 
-Tier `SPEC`, and its authority is limited to the review procedure it defines — the steps a later model follows to audit and upgrade this product. Where it names product law, it cites the home (`AGENTS.md` §Authority order, FR2, FR13, S2; `RULINGS.md` and its provenance section) and never restates it. Like every file in this corpus, it states readiness, never schedule (FR2): it names the conditions a review needs to be usable, never a cadence or a date.
+Tier `SPEC`, and its authority is limited to the review procedure it defines — the steps a later model follows to audit and upgrade this product. Where it names product law, it cites the home (`AGENTS.md` §Authority order, FR2, FR13; `deployment/SCENARIOS.md` S2; `RULINGS.md` and its provenance section) and never restates it. Like every file in this corpus, it states readiness, never schedule (FR2): it names the conditions a review needs to be usable, never a cadence or a date.
 
 ## Objective
 
@@ -54,7 +54,7 @@ At the next read, a changed or unavailable source invalidates only the claims th
 
 The dated audit note is working material under `docs/agents/` — absent from clones. Its rows are the tracked record in `buildpack/FINDINGS.md`.
 
-Every finding receives one classification from the objective's seven: Confirmed defect; Contradiction; Missing decision; Stale implementation; Improvement opportunity; New capability; Speculation. Every finding names:
+Every finding receives one classification: Confirmed defect; Contradiction; Missing decision; Stale implementation; Improvement opportunity; New capability; Speculation. Every finding names:
 
 - evidence;
 - affected requirements;
@@ -98,8 +98,6 @@ The candidate must run the same baseline checks, plus new checks for its propose
 
 Compare candidate and baseline explicitly: preserved behavior; intentionally changed behavior; newly supported behavior; regressions; unverified claims; migration/cutover risk.
 
-If a check itself looks wrong, a proposed correction to an acceptance criterion is recorded separately from the candidate — it is not smuggled in as part of the candidate's own conformance claim. A candidate does not get to pass by loosening what it is judged against: an unapproved weakening of a test is rejected.
-
 ## Step 6 — decision record
 
 The founder or authorized reviewer chooses one: keep baseline; merge a narrow patch; continue slice replacement; accept clean rebuild; reject proposal; return to discovery/research.
@@ -108,7 +106,7 @@ Record the decision, evidence, remaining risk, and canonical document updates. D
 
 ## Step 7 — update the foundation
 
-After acceptance only: update the affected `SPEC.md` homes only when the decision changes that layer; add or supersede a ruling by the `RULINGS.md` process; land the audit's rows in `buildpack/FINDINGS.md`; retain the audit note as working material; rerun the quality gates.
+After acceptance only: update the affected `SPEC.md` homes only when the decision changes that layer; add or supersede a ruling by the `RULINGS.md` process; land the audit's rows in `buildpack/FINDINGS.md` in the same spec-class commit as the spec changes they justify (S2, `deployment/SCENARIOS.md`); retain the audit note as working material; rerun the quality gates.
 
 ## Readiness
 
@@ -116,7 +114,7 @@ Report by named gates first — ready, blocked, unverified, or not applicable wi
 
 Distinguish three readiness kinds, never conflated: usable for reassessment; ready to build the selected slice; ready for production.
 
-Freeze a baseline for a particular comparison, never against questioning its correctness — a test can be wrong, and freezing it only fixes what the candidate is measured against for that one comparison. A passing test is not proof of user value.
+Freeze a baseline for a particular comparison, never against questioning its correctness — a test can be wrong, and freezing it only fixes what the candidate is measured against for that one comparison. A passing test is not proof of user value. If a check itself looks wrong, a proposed correction to an acceptance criterion is recorded separately from the candidate — it is not smuggled in as part of the candidate's own conformance claim. A candidate does not get to pass by loosening what it is judged against: an unapproved weakening of a test is rejected.
 
 ## Hard prohibitions
 

@@ -29,4 +29,4 @@ This is the product-level entry point for a fresh reader — any model, any runt
 | The prior build | `git@github.com:riskneutral00/annna.git` | inspiration only (FD-20) | do not clone to chase a citation (AGENTS.md rules those citations traceability) | the remote |
 | Working material (`docs/agents/`, `.hermes.md`, `CLAUDE.md`) | gitignored | never authority; absent from every clone | not resolvable from a clone | the founder's checkout |
 
-How to disagree with an earlier conclusion, and which questions belong to the founder, are stated once in `buildpack/UPGRADES.md`.
+How to disagree with an earlier conclusion is split across two homes: `buildpack/FINDINGS.md`'s header owns the verdict vocabulary and what overturns a row; `buildpack/UPGRADES.md` owns the review procedure that applies it. Which questions belong to the founder is stated once in `buildpack/UPGRADES.md`.
