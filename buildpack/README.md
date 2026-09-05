@@ -14,7 +14,7 @@ This is the product-level entry point for a fresh reader — any model, any runt
 | How we know it works (quality, gates) | `TDD.md`, `deployment/SPEC.md`, `deployment/scripts/status-report.mjs` | run as `npm run check:status` |
 | What exists today (current state) | no file | run `npm run check:status`, `npm run check` and `git rev-parse HEAD` in a checkout. A copied number is never authoritative; without a checkout, current state is unverified |
 | Which decisions are settled (rulings, provenance) | `RULINGS.md`, `AGENTS.md` §Rulings | `RULINGS.md` is the FR/FD registry and its provenance section; `AGENTS.md` §Rulings is the OR list |
-| Earlier conclusions and the evidence they rested on (findings register) | `buildpack/FINDINGS.md` | pending (U3) |
+| Earlier conclusions and the evidence they rested on (findings register) | `buildpack/FINDINGS.md` | |
 | How a future model audits and upgrades (protocol) | `buildpack/UPGRADES.md` | pending (U4) |
 | Where things live (index) | `INDEX.md`, `AGENTS.md` §Authority order, `THE-JOB.md` | |
 

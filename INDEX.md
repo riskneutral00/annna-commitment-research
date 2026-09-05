@@ -45,6 +45,7 @@
 | app/SCENARIOS.md | derived | The app's deterministic acceptance suite — payloads, mappings, wire contents, state transitions |
 | app/SPEC.md | SPEC | The human-facing layer: what it renders, what it collects, and that it holds zero harness logic, engine math, or model calls |
 | assets/README.md | derived | The shipped skin assets, where they came from, and how the pack pipeline builds them |
+| buildpack/FINDINGS.md | history | Register of earlier conclusions about the foundation with the evidence each rested on — hypotheses to re-verify, never authority |
 | buildpack/README.md | index | The product-level entry point and location manifest for a fresh reader — points at every home, states nothing of its own |
 | deployment/BUILD.md | derived | Deployment's ordered steps, and that Steps 0–1 close before any layer's build begins |
 | deployment/INTERFACES.md | derived | Deployment's four seams, and that it owns the space *between* layers and nothing inside one |
