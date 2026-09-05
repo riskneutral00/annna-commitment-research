@@ -2,7 +2,7 @@
 
 This is the product-level entry point for a fresh reader — any model, any runtime, any machine with a clone. Tier `index`: it says where things live and states no rule of its own. Where this file and a home disagree, the home wins.
 
-## The ten topics and where each lives
+## The topics and where each lives
 
 | Topic | Home in this repository | Note |
 |---|---|---|
@@ -29,4 +29,4 @@ This is the product-level entry point for a fresh reader — any model, any runt
 | The prior build | `git@github.com:riskneutral00/annna.git` | inspiration only (FD-20) | do not clone to chase a citation (AGENTS.md rules those citations traceability) | the remote |
 | Working material (`docs/agents/`, `.hermes.md`, `CLAUDE.md`) | gitignored | never authority; absent from every clone | not resolvable from a clone | the founder's checkout |
 
-How to disagree with an earlier conclusion, and which questions belong to the founder, are stated once in `buildpack/UPGRADES.md`.
+How to disagree with an earlier conclusion, and which questions belong to the founder, are stated once in `buildpack/UPGRADES.md` — pending (U4).
