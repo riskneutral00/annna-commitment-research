@@ -28,5 +28,3 @@ This is the product-level entry point for a fresh reader — any model, any runt
 | The Hermes product-strategy method references | installed skill files | not authority for this product | absent from clones | the Hermes skill tree on the founder's machine |
 | The prior build | `git@github.com:riskneutral00/annna.git` | inspiration only (FD-20) | do not clone to chase a citation (AGENTS.md rules those citations traceability) | the remote |
 | Working material (`docs/agents/`, `.hermes.md`, `CLAUDE.md`) | gitignored | never authority; absent from every clone | not resolvable from a clone | the founder's checkout |
-
-How to disagree with an earlier conclusion, and which questions belong to the founder, are stated once in `buildpack/UPGRADES.md` — pending (U4).
