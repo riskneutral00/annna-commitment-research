@@ -171,12 +171,13 @@ PendingDecision {
   id, commitment,
   raised_by,                          // the rule type or trigger that raised it (e.g. `min-occupancy`)
   choices: [ … ],                     // CLOSED set, ENGINE-NAMED — the whole menu, no free text
-  chosen { by, at }?                  // absent until a human answers; never written by the engine
+  chosen { choice, by, at }?          // absent until an authenticated human answers; human-authored, never engine- or llm-authored
 }
 ```
 
-- **Written only by the engine, chosen only by a human.** The engine names the choices because only it knows which are legal; it never picks one, and there is no default. `choices` is a **closed, engine-named set** — a stored choice outside it is refused at the boundary under §2's unknown-member rule, never coerced to the nearest member. `chosen.by` has no `engine` or `llm` member — the same shape that makes a park unclearable by the loop (§1.3).
+- **The engine names the choices and persists the answer; only an authenticated human authors the answer.** The engine names the choices because only it knows which are legal; it never authors or selects one, and there is no default. An authenticated human authors one legal `choice` through the existing stored-object `diff` carrier at `../harness/INTERFACES.md §1.2`; the engine validates its membership in `choices` and persists the human-authored `chosen { choice, by, at }` with the human attribution and answer time. `choices` is a **closed, engine-named set** — a stored choice outside it is refused at the boundary under §2's unknown-member rule, never coerced to the nearest member. `chosen.by` has no `engine` or `llm` member — the same shape that makes a park unclearable by the loop (§1.3). The storage-step wording in `BUILD.md` Step 1 is governed by this authorship distinction: no engine-originated selection, while persisting a valid human-authored answer is required.
 - **It co-occurs with the `needs_human` park** (§1.3) and is **cleared only by a stored human choice**. The stored choice is what clears the park; no retry, timeout, or later firing absorbs it.
+- **Choice identity is part of the stored record, not inferred.** Two legal answers with the same human and instant remain distinguishable by `choice` after a reader restart. No migration may guess a choice from `by` or `at`; if a legacy row lacks `choice`, it receives an explicit unknown/repair treatment rather than an invented answer.
 - **The harness routes it; the engine does not surface it.** Reading it is an ordinary `calculate` read — **no new seam verb** (§0 sole-client, `../harness/INTERFACES.md §1`). Whether acting on the chosen option crosses the customer-facing line is the harness floor's question, never the engine's (`../harness/SPEC.md §7`).
 - **`Proposal.freed[].decision` (§1.11) is the pre-existing instance of this shape and stays where it is.** It is a `pending | keep-blocked | reopen` field inside a stored Proposal, gated by a passing pinned scenario (X5), and this section does **not** refactor it. Two instances of one shape is a known, deliberate near-duplicate; unifying them would be a separate scoped change, not a side effect of giving the primitive a name.
 
@@ -212,7 +213,7 @@ TriggerRegistration {
 
 ### §1.17 Harness-owned objects — the storage notes (the §1.13/§1.16 pattern, compressed; 2026-08-31)
 
-*Each object below is shaped and ruled at its harness home; this section is only the engine's storage of it. The common law, stated once: persisted through the **existing** verbs (`commit`, under the ordinary write-id discipline of §6), read through `calculate`'s stored-object member (§5 item 7), **no object-specific entry point** — the same guard §1.13, §1.16 and the cross-owner share obey. §1.10's append-only law governs them all.*
+*Each object below is shaped and ruled at its harness home; this section is only the engine's storage of it. The common law, stated once: persisted through the **existing `commit` stored-object `diff` carrier** declared at `../harness/INTERFACES.md §1.2` (under the ordinary write-id discipline of §6), read through `calculate`'s stored-object member (§5 item 7), **no object-specific entry point** — the same guard §1.13, §1.16 and the cross-owner share obey. §1.10's append-only law governs them all.*
 
 - **`PatternDecline`** (`../harness/SPEC.md §3.10`) — owner-scoped, structural references and a hash only; no PII class attaches, no retention clock.
 - **`PartyContact`** (`../harness/SPEC.md §3.12`) — engine-resident contact PII: crypto-shreds with the party (`../security/SPEC.md §4`); never selectable by any display projection.
@@ -528,7 +529,7 @@ Latent {                              // a member of `latent[]`
 | Materialization never changes a capacity verdict; a blocked instance is a conflicted draft, never a double-book | §9 | `scenario-suite-only` | M7 |
 | A restore conflicts loudly and can never resurrect a latched state | §9, §6.2 (the latch law reaching across the version chain), `../security/SPEC.md §8` | `scenario-suite-only` | B7 |
 | A run under its minimum parks for a human; the engine never auto-cancels | §3 (`min-occupancy`) | `scenario-suite-only` | O2, O3 |
-| A PendingDecision is never chosen by the engine — `chosen` is a human write or absent | §1.14 | `type-level construction` — `chosen.by` has no `engine`/`llm` member | O2, P9 |
+| A PendingDecision is engine-authored; its `chosen` answer is human-authored and engine-persisted, or absent | §1.14 | `type-level construction` — `chosen.by` has no `engine`/`llm` member | O2, P9 |
 | Unknown travel and no-feasible-placement are distinguishable in every decline | §5, §9 | `scenario-suite-only` | V4, V5 |
 | Exactly one `FiringEvent` per firing id — at most one birth and one seal, neither mutated | §1.16 | `type-level construction` — the atomic (firing id, part) uniqueness makes a second part unrepresentable | B14 |
 | `owed` derives from the booking's bound terms and recorded marks; `paid` records beside it and never mutates it (FD-94) | §1.9 | `scenario-suite-only` — the derivation, unshipped | K1, K2 |
