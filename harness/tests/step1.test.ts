@@ -6,7 +6,7 @@ import { AppStub } from "../src/stubs/app.js";
 import { ModelStub } from "../src/stubs/model.js";
 import { compare, typed_value, isTvError } from "../src/typed-value.js";
 import { narrationTracesToFacets } from "./support/d7-oracle.js";
-import { FC_SEED, FC_RUNS, seededDoubles } from "./support/seed.js";
+import { FC_SEED, FC_RUNS, seededDoubles } from "./support/property-seed.js";
 
 // The Step-0/1 contract suite grown by the remediation (2026-08-31): the
 // envelope, the write id, the coverage union, the Event arms, the store's
@@ -322,8 +322,8 @@ describe("Q2-060 — the entry-point enumeration is complete against the seam", 
 });
 
 describe("typed_value under the pinned property seed (TDD §Harness; B9 replay)", () => {
-  // fast-check is D20's library and lands with Step 5; the seed and the replay
-  // discipline are pinned NOW, over a plain deterministic generator, so the
+  // The floor property is specified in harness/BUILD.md Step 3; the seed and
+  // replay discipline are pinned NOW, over a plain deterministic generator, so the
   // property lane exists before the dependency does.
   it("compare is consistent with number order across the seeded run", () => {
     const values = [...seededDoubles(FC_SEED, FC_RUNS * 2)];

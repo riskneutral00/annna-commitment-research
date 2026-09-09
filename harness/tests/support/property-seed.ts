@@ -1,5 +1,5 @@
-// The pinned property-run seed (TDD.md §Harness — D20's floor property runs on
-// `fast-check` when Step 5 lands it; B9's twice-run byte-compare demands the
+// The pinned property-run seed for harness/BUILD.md Step 3 (TDD.md §Harness —
+// D20's floor property runs on `fast-check`; B9's twice-run byte-compare demands the
 // generated cases be the SAME cases every run, so the seed is a constant here,
 // never wall-clock derived, and the generator below is a plain deterministic
 // LCG — no dependency lands before the step that needs the real library).

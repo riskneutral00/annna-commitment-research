@@ -120,8 +120,8 @@ describe("Step 0 — publish preserves infrastructure outcomes", () => {
 
 describe("Step 0 — ModelStub scripts four calls, not three", () => {
   it("scripts summarize, the §2.4 quarantine read", async () => {
-    const model = new ModelStub({ summarize: { "a guest note": { summary: "asks to move", labels: ["reschedule"] } } });
-    await expect(model.summarize("a guest note", "guest")).resolves.toEqual({ summary: "asks to move", labels: ["reschedule"] });
+    const model = new ModelStub({ summarize: { "a guest note": { summary: "asks to move", labels: ["request"] } } });
+    await expect(model.summarize("a guest note", "guest")).resolves.toEqual({ summary: "asks to move", labels: ["request"] });
   });
 
   it("carries a failure fixture that fails on every attempt including the fallback", async () => {
