@@ -93,6 +93,60 @@ const requiredNames = (src) => {
 // is how a shape law grows a sixth file nobody promised.
 const bothWays = (a, b) => [a.filter((x) => !b.includes(x)), b.filter((x) => !a.includes(x))];
 
+// The display-projection family is one closed enumeration in engine/INTERFACES
+// §2a. Read only that section's list and transport sentences: prose elsewhere
+// may explain a projection without becoming a second countable source.
+const PROJECTIONS = [
+  "guest Shared projection",
+  "owner's live board view",
+  "template-bundle projection",
+  "candidate-shape ghost",
+  "effective-policy projection",
+];
+
+const projectionMembers = (text) => PROJECTIONS.flatMap((name) => {
+  const count = text.split(name).length - 1;
+  return Array.from({ length: count }, () => name);
+});
+
+export function projectionClaims(src) {
+  const section = src.match(/## §2a\.[\s\S]*?(?=\n## §3\.)/);
+  if (!section) return { bad: ["engine/INTERFACES.md §2a no longer parses — fix this script's contract"], listed: [], subscription: [], readOnDemand: [] };
+  const body = section[0];
+  const enumeration = body.match(/The \*\*(\w+)\*\* projections `SPEC\.md §0` enumerates — ([\s\S]*?) — are this seam's whole surface;/);
+  if (!enumeration) return { bad: ["engine/INTERFACES.md §2a projection enumeration no longer parses — fix this script's contract"], listed: [], subscription: [], readOnDemand: [] };
+  // Require the first member of each actual list after its delimiter. This
+  // keeps a colon in the heading's explanatory parenthetical from becoming a
+  // false transport-list start.
+  const transport = body.match(/\*\*Two transports, one fenced family\*\*[\s\S]*?:\s*(the guest Shared projection[\s\S]*?) are \*\*subscription\*\* members/);
+  const readTransport = body.match(/\*\*subscription\*\* members[\s\S]*?;\s*(the template-bundle projection[\s\S]*?) are \*\*read-on-demand\*\* members/);
+  const totals = body.match(/([A-Za-z-]+) pushed, ([A-Za-z-]+) read on demand\./);
+  const listed = projectionMembers(enumeration[2]);
+  const subscription = transport ? projectionMembers(transport[1]) : [];
+  const readOnDemand = readTransport ? projectionMembers(readTransport[1]) : [];
+  const bad = [];
+  const declared = num(enumeration[1]);
+  if (declared === undefined) bad.push(`§2a declares an unparseable projection count: ${enumeration[1]}`);
+  else if (declared !== listed.length) bad.push(`§2a declares ${declared} projections but enumerates ${listed.length}`);
+  if (!transport) bad.push("§2a's subscription transport sentence no longer parses");
+  if (!readTransport) bad.push("§2a's read-on-demand transport sentence no longer parses");
+  if (subscription.some((name) => !listed.includes(name))) bad.push("§2a assigns a subscription transport to a projection outside its enumeration");
+  if (readOnDemand.some((name) => !listed.includes(name))) bad.push("§2a assigns a read-on-demand transport to a projection outside its enumeration");
+  const transported = [...subscription, ...readOnDemand];
+  if (new Set(transported).size !== transported.length) bad.push("§2a assigns one projection to both transports");
+  if (listed.some((name) => !transported.includes(name)) || transported.some((name) => !listed.includes(name)))
+    bad.push("§2a's subscription/read-on-demand members are not set-equal to its projection enumeration");
+  if (!totals) bad.push("§2a's pushed/read-on-demand count sentence no longer parses");
+  else {
+    const pushed = num(totals[1]);
+    const onDemand = num(totals[2]);
+    if (pushed !== subscription.length) bad.push(`§2a says ${totals[1]} pushed but names ${subscription.length} subscription members`);
+    if (onDemand !== readOnDemand.length) bad.push(`§2a says ${totals[2]} read on demand but names ${readOnDemand.length} members`);
+    if (pushed + onDemand !== listed.length) bad.push(`§2a transports ${pushed + onDemand} projections but enumerates ${listed.length}`);
+  }
+  return { bad, listed, subscription, readOnDemand };
+}
+
 const trackedMd = () =>
   execFileSync("git", ["ls-files", "-z", "*.md"], { cwd: ROOT, encoding: "utf8", maxBuffer: 1 << 28 })
     .split("\0")
@@ -218,6 +272,13 @@ const CHECKS = [
       ? { ok: false, label: "package shape set", detail: `AGENTS.md promises ${promised.join(", ") || "nothing"} that package-shape.mjs does not enforce; package-shape.mjs enforces ${enforced.join(", ") || "nothing"} that AGENTS.md does not promise` }
       : { ok: true, label: "package shape set", detail: `${claimed.length} files, promised and enforced sets equal both ways` };
   },
+
+  function projectionFamily() {
+    const result = projectionClaims(read("engine/INTERFACES.md"));
+    return result.bad.length
+      ? { ok: false, label: "engine §2a projection family", detail: result.bad.join("; ") }
+      : { ok: true, label: "engine §2a projection family", detail: `${result.listed.length} projections, ${result.subscription.length} pushed, ${result.readOnDemand.length} read on demand` };
+  },
 ];
 
 if (process.argv.includes("--selfcheck")) {
@@ -266,6 +327,38 @@ if (process.argv.includes("--selfcheck")) {
   assert.deepStrictEqual(bothWays(["a", "b"], ["a"]), [["b"], []], "prose promising a file the script does not enforce");
   assert.deepStrictEqual(bothWays(["a"], ["a", "b"]), [[], ["b"]], "and the script enforcing one the prose never promised");
   assert.strictEqual(shapeNames("no fenced block"), null, "an unparseable shape block is a failure, not an empty set");
+
+  // --- engine §2a projection family, with count/transport negatives ---
+  const projectionFixture = `## §2a. Sideways
+The **five** projections \`SPEC.md §0\` enumerates — the guest Shared projection, the owner's live board view, the FR38 template-bundle projection, the FD-34 candidate-shape ghost, and the effective-policy projection — are this seam's whole surface;
+**Two transports, one fenced family**: the guest Shared projection, the owner's live board view and the effective-policy projection are **subscription** members; the template-bundle projection and the candidate-shape ghost are **read-on-demand** members.
+Three pushed, two read on demand.
+
+## §3. What the engine OWNS`;
+  assert.deepStrictEqual(projectionClaims(projectionFixture).bad, [], "the matched projection family passes");
+  assert.ok(projectionClaims(projectionFixture.replace("**five**", "**six**")).bad.some((b) => b.includes("declares 6")), "a projection count mismatch is caught");
+  assert.ok(projectionClaims(projectionFixture.replace("Three pushed", "Four pushed")).bad.some((b) => b.includes("Four pushed")), "a transport count mismatch is caught");
+  assert.deepStrictEqual(projectionClaims(`${projectionFixture}\nUnrelated prose says **seven** projections.`).bad, [], "prose outside §2a's enumeration does not affect the check");
+  const actualProjectionSource = read("engine/INTERFACES.md");
+  const actualProjectionNeedle = "re-counted 2026-08-28 with §1.7c)";
+  const actualProjectionReplacement = "re-counted 2026-08-28 with §1.7c; the effective-policy projection explains that recount)";
+  assert.ok(actualProjectionSource.includes(actualProjectionNeedle), "the actual §2a prose mutation remains pinned");
+  assert.deepStrictEqual(
+    projectionClaims(actualProjectionSource).bad,
+    [],
+    "the actual §2a projection family passes",
+  );
+  assert.deepStrictEqual(
+    projectionClaims(actualProjectionSource.replace(actualProjectionNeedle, actualProjectionReplacement)).bad,
+    [],
+    "the actual explanatory §2a rewording does not alter membership or counts",
+  );
+  const actualColonReplacement = "re-counted 2026-08-28 with §1.7c: the effective-policy projection explains that recount)";
+  assert.deepStrictEqual(
+    projectionClaims(actualProjectionSource.replace(actualProjectionNeedle, actualColonReplacement)).bad,
+    [],
+    "the actual explanatory §2a rewording remains outside the transport list",
+  );
 
   // The Step-0 claims canaries (Q2-076/G3): the missing marker and the
   // untracked claimed path must each fail; `none` and a tracked path pass.

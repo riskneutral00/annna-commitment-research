@@ -176,18 +176,19 @@ export function checkpointLedger(buildText, defs = new Map(), required = []) {
       else if (!placed.includes(p[2])) bad.push(`Depends says ${p[1]} → (${p[2]}) but it sits in (${placed.join(",")})`);
     }
     if (!pairs) bad.push("the Depends line parses but names no ID → (n) pair");
-    // The required set (2026-08-31, Q2-077/H2): the four Given-needs-machinery
+    // The required set (2026-08-31, Q2-077/H2): the Given-needs-machinery
     // edges the corpus has ruled. A missing one fails — a scenario scheduled
     // ahead of its machinery must be caught at the gate, not the checkpoint.
     const named = new Set([...dep[1].matchAll(PAIR_RE)].map((x) => x[1]));
+    const requiredRoster = required.join(", ");
     for (const need of required) {
-      if (!named.has(need)) bad.push(`the Depends line is missing the required pair for ${need} (Q2-077's law: D4, A6, D26 and D5 each carry their Given-needs-machinery edge)`);
+      if (!named.has(need)) bad.push(`the Depends line is missing the required pair for ${need} (Q2-077's law: ${requiredRoster} each carry their Given-needs-machinery edge)`);
     }
   }
   return bad;
 }
 const PAIR_RE = /([A-Z]\d+[a-z]?)\s*→\s*\((\d+)\)/g;
-export const REQUIRED_PAIRS = ["D4", "A6", "D26", "D5"];
+export const REQUIRED_PAIRS = ["D4", "A6", "D26", "D5", "K5", "R3"];
 
 // --- the TDD-map span checker (2026-08-31, Q2-072(c); the H3 grammar) ---
 // A bold range that OPENS a family's parenthetical in a TDD family map is a
@@ -295,10 +296,27 @@ function selfcheck() {
   assert.ok(checkpointLedger("no checkpoint block here").length, "a non-parsing checkpoint block is a failure, not a skip");
 
   // The required-pairs canary (2026-08-31, Q2-077/H2): a Depends line missing a
-  // required Given-needs-machinery edge fails, and the full four-pair line passes.
+  // required Given-needs-machinery edge fails, and the complete line passes.
   const cpq = cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X1 → (1)");
   assert.ok(checkpointLedger(cpq, defs, ["X1", "X3"]).some((b) => b.includes("missing the required pair for X3")), "a missing required pair is caught");
   assert.deepStrictEqual(checkpointLedger(cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X1 → (1) · X3 → (2)"), defs, ["X1", "X3"]), [], "the complete required set passes");
+  const missingK5R3 = checkpointLedger(cp("**(1) a** `X1, X2` · **(2) b** `X3`", "X1 → (1)"), defs, REQUIRED_PAIRS);
+  const requiredRoster = REQUIRED_PAIRS.join(", ");
+  for (const need of ["K5", "R3"]) {
+    assert.ok(
+      missingK5R3.some((line) => line.includes(`missing the required pair for ${need}`) && line.includes(`Q2-077's law: ${requiredRoster}`)),
+      `${need} missing-pair output prints the actual required roster`,
+    );
+  }
+
+  // K5/R3 have precursor mechanics in checkpoint (1), but their full closure
+  // depends on checkpoint (2)'s context assembly and claim ordering. The
+  // in-memory fixtures keep that dependency red if the IDs move early, and
+  // green only when the printed pairs and checkpoint (2) agree.
+  const earlyK5R3 = cp("**(1) precursors** `K5, R3` · **(2) context** `X3`", "K5 → (2) · R3 → (2)");
+  assert.ok(checkpointLedger(earlyK5R3, defs, ["K5", "R3"]).some((b) => b.includes("K5") && b.includes("(2)")), "K5/R3 full closure ahead of context is caught");
+  const closedK5R3 = cp("**(1) precursors** `X1` · **(2) context** `K5, R3`", "K5 → (2) · R3 → (2)");
+  assert.deepStrictEqual(checkpointLedger(closedK5R3, defs, ["K5", "R3"]), [], "K5/R3 checkpoint-2 closure passes");
 
   // The TDD-map span grammar's canaries (2026-08-31, Q2-072(c)/H3): a bold
   // range opening a family's parenthetical is a complete span claim; an

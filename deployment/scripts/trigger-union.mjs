@@ -94,6 +94,81 @@ export function compareMember(engineMd, harnessMd) {
   return bad;
 }
 
+// The stored-object taxonomy grew a read-on-demand projection alongside the
+// firing log. Compare the actual §5 item, calculate(query) enumeration and
+// ReadSnapshot union blocks so a mention elsewhere in either document cannot
+// keep a deleted member green.
+function readGhostMember(engineMd) {
+  const item = engineMd.match(/^\s*7\.\s+\*\*Stored-object read\*\*([\s\S]*?)(?=\n\*\*The travel seam\.\*\*)/m);
+  return item && /\*\*candidate-shape ghost\*\*/.test(item[1]) ? "CandidateShapeGhost" : null;
+}
+
+function readSnapshotMembers(harnessMd) {
+  const block = harnessMd.match(/ReadSnapshot\s*=\s*([\s\S]*?)\n\s*```/);
+  return block ? [...block[1].matchAll(/shape:\s*"([A-Za-z]+)"/g)].map((m) => m[1]) : null;
+}
+
+function readQueryGhostMember(harnessMd) {
+  const query = harnessMd.match(/^- `query` is a typed read-only request:[\s\S]*?(?=^\s*- Computed queries return)/m);
+  return query && /\*\*candidate-shape ghost\*\*/.test(query[0]) ? "CandidateShapeGhost" : null;
+}
+
+export function compareGhostMember(engineMd, harnessMd) {
+  const engine = readGhostMember(engineMd);
+  const query = readQueryGhostMember(harnessMd);
+  const snapshot = readSnapshotMembers(harnessMd);
+  const harness = snapshot?.includes("CandidateShapeGhost") ? "CandidateShapeGhost" : null;
+  const bad = [];
+  if (!engine) bad.push("engine/SPEC.md §5 item 7 carries no candidate-shape ghost read member — the projection taxonomy lost it, or its entry no longer parses");
+  if (!query) bad.push("harness/INTERFACES.md §1.1 calculate(query) enumeration carries no candidate-shape ghost read member — the query taxonomy lost it, or its entry no longer parses");
+  if (!harness) bad.push("harness/INTERFACES.md §1.1 carries no CandidateShapeGhost ReadSnapshot member — the projection taxonomy lost it, or its entry no longer parses");
+  if (engine && query && engine !== query)
+    bad.push(`the candidate-shape ghost query member is \`${engine}\` in engine/SPEC.md and \`${query}\` in harness/INTERFACES.md — one canonical member, or the swap law is a lie`);
+  return bad;
+}
+
+// The tool roster is enumerated in SPEC §5 and routed in BUILD Step 2. Scope
+// each parser to the roster table/route line: purpose prose may discuss
+// "publish" without turning it into a tool, while a missing real row or a
+// phantom route remains visible in the two-way set comparison.
+function toolIdentifiersFromSpec(md) {
+  const section = md.match(/### 5\.1 Shared tools[\s\S]*?\n\nThere is intentionally \*\*no tool zoo\*\*/);
+  if (!section) return null;
+  const ids = new Set();
+  for (const line of section[0].split("\n")) {
+    const row = line.match(/^\| ([^|]+) \|/);
+    if (!row || row[1].trim() === "Tool" || row[1].trim() === "---" || row[1].includes("rule writes")) continue;
+    for (const match of row[1].matchAll(/`([^`]+)`/g)) {
+      for (const id of match[1].split(/\s*\/\s*/)) ids.add(id);
+    }
+    if (row[1].trim() === "generative-UI") ids.add("generative_ui");
+  }
+  return ids;
+}
+
+function toolIdentifiersFromBuild(md) {
+  const route = md.match(/^- Route the Step-2 identifiers[^\n]*$/m);
+  if (!route) return null;
+  const body = route[0].match(/`SPEC\.md §5`:\s*(.*?)\. `publish` is not/);
+  if (!body) return null;
+  const ids = new Set();
+  for (const group of body[1].split(";")) {
+    for (const match of group.split("→")[0].matchAll(/`([^`]+)`/g)) ids.add(match[1]);
+  }
+  return ids;
+}
+
+export function compareToolIdentifiers(specMd, buildMd) {
+  const spec = toolIdentifiersFromSpec(specMd);
+  const build = toolIdentifiersFromBuild(buildMd);
+  if (!spec) return ["harness/SPEC.md §5's tool roster no longer parses — fix this script's contract"];
+  if (!build) return ["harness/BUILD.md Step 2's routing line no longer parses — fix this script's contract"];
+  const bad = [];
+  for (const id of spec) if (!build.has(id)) bad.push(`SPEC §5 tool \`${id}\` has no BUILD Step-2 route`);
+  for (const id of build) if (!spec.has(id)) bad.push(`BUILD Step-2 route \`${id}\` has no SPEC §5 tool`);
+  return bad;
+}
+
 // ---------------------------------------------------------------------------
 // The third checked pair (2026-09-01, LWR-01 — OBS-1's gate): the Event union
 // is printed arm-by-arm in harness/INTERFACES.md §3.3 and carried as TS in
@@ -149,6 +224,29 @@ const SPEC_FIXTURE = `the loop may fire on a *sale*, a *hold expiry*, a *decline
 const CODE_FIXTURE = `export type TriggerEvent = { kind: "sale" | "hold-expiry" | "decline" | "returned-form" | "clock" | "delivery-report"; at: number };`;
 const ENGINE_MEMBER_FIXTURE = "the template-bundle projection (§1.7a), and a `FiringEvent` — the firing log's record by firing id, both parts (§1.16).";
 const HARNESS_MEMBER_FIXTURE = "the §2.1 relevant-slice assembly, and a `FiringEvent` — the firing log's record by firing id, both parts (`SPEC.md §3.14`).";
+const GHOST_ENGINE_FIXTURE = "7. **Stored-object read** — the **candidate-shape ghost** is read on demand.\n**The travel seam.**";
+const GHOST_HARNESS_FIXTURE = `- \`query\` is a typed read-only request: the **candidate-shape ghost** and other declared reads.
+  ReadSnapshot =
+  | { shape: "CandidateShapeGhost", value: CandidateShapeGhost }
+  | { shape: "FiringEvent", value: FiringEventRead }
+  - Computed queries return an opaque handle.
+  \`\`\`
+  `;
+const TOOL_SPEC_FIXTURE = `### 5.1 Shared tools (both harnesses)
+| Tool | Reversibility | Purpose |
+|---|---|---|
+| \`calculate\` | internal | read |
+| generative-UI | internal | emit |
+| \`import_fetch\` | internal | fetch |
+| \`grant.give\` / \`grant.revoke\` | authorization | grant |
+
+### 5.2 H2-dominant tools
+| Tool | Reversibility | Purpose |
+|---|---|---|
+| \`CRUD_Shared\` | outward | publish |
+
+There is intentionally **no tool zoo**`;
+const TOOL_BUILD_FIXTURE = "- Route the Step-2 identifiers set-equal to the actual roster in `SPEC.md §5`: `calculate`, `generative_ui`, `import_fetch`, `grant.give`, `grant.revoke`, and `CRUD_Shared`→App. `publish` is not an identifier: it remains `CRUD_Shared`'s outward annotation.";
 
 const IFACE_ARMS_FIXTURE = `### 3.3 x
 {kind: returned-form, at, token, reply}
@@ -175,6 +273,16 @@ if (process.argv.includes("--selfcheck")) {
   assert.ok(compareMember(ENGINE_MEMBER_FIXTURE, "no such member here").some((b) => b.includes("harness/INTERFACES.md")), "absence in the harness enumeration is caught");
   assert.ok(compareMember("no such member here", HARNESS_MEMBER_FIXTURE).some((b) => b.includes("engine/SPEC.md")), "absence in the engine enumeration is caught");
 
+  assert.deepStrictEqual(compareGhostMember(GHOST_ENGINE_FIXTURE, GHOST_HARNESS_FIXTURE), [], "the matched ghost read member passes");
+  assert.ok(compareGhostMember(GHOST_ENGINE_FIXTURE, GHOST_HARNESS_FIXTURE.replace("the **candidate-shape ghost**", "a different read")).some((b) => b.includes("calculate(query)")), "a deleted query member is caught independently of the return arm");
+  assert.ok(compareGhostMember(GHOST_ENGINE_FIXTURE, GHOST_HARNESS_FIXTURE.replace('| { shape: "CandidateShapeGhost", value: CandidateShapeGhost }', "")).some((b) => b.includes("ReadSnapshot")), "a deleted return arm is caught independently of the query member");
+  assert.ok(compareGhostMember(`${GHOST_ENGINE_FIXTURE.replace("the **candidate-shape ghost**", "a declared read")}\nUnrelated prose retains the **candidate-shape ghost** mention.`, GHOST_HARNESS_FIXTURE).some((b) => b.includes("engine/SPEC.md")), "a deleted ghost taxonomy member is caught despite an explanatory mention");
+
+  assert.deepStrictEqual(compareToolIdentifiers(TOOL_SPEC_FIXTURE, TOOL_BUILD_FIXTURE), [], "the matched SPEC/BUILD tool roster passes");
+  assert.ok(compareToolIdentifiers(TOOL_SPEC_FIXTURE.replace("| `import_fetch`", "| `missing_tool`"), TOOL_BUILD_FIXTURE).some((b) => b.includes("import_fetch")), "a missing SPEC tool is caught");
+  assert.ok(compareToolIdentifiers(TOOL_SPEC_FIXTURE, TOOL_BUILD_FIXTURE.replace("`CRUD_Shared`", "`publish`")).some((b) => b.includes("publish")), "a phantom BUILD tool is caught");
+  assert.deepStrictEqual(compareToolIdentifiers(`${TOOL_SPEC_FIXTURE}\nUnrelated prose mentions \`publish\`.`, TOOL_BUILD_FIXTURE), [], "unrelated tool prose does not affect the roster");
+
   assert.deepStrictEqual(compareArms(IFACE_ARMS_FIXTURE, CODE_ARMS_FIXTURE), [], "the matched arm pair passes");
   const renamed = IFACE_ARMS_FIXTURE.replace("returned-form", "form-return");
   assert.ok(compareArms(renamed, CODE_ARMS_FIXTURE).some((b) => b.includes("form-return")) &&
@@ -193,8 +301,9 @@ const spec = fs.readFileSync(path.join(ROOT, "harness/SPEC.md"), "utf8");
 const code = fs.readFileSync(path.join(ROOT, "harness/src/index.ts"), "utf8");
 const engineSpec = fs.readFileSync(path.join(ROOT, "engine/SPEC.md"), "utf8");
 const harnessIface = fs.readFileSync(path.join(ROOT, "harness/INTERFACES.md"), "utf8");
+const harnessBuild = fs.readFileSync(path.join(ROOT, "harness/BUILD.md"), "utf8");
 const seamsCode = fs.readFileSync(path.join(ROOT, "harness/src/seams.ts"), "utf8");
-const bad = [...compare(spec, code), ...compareMember(engineSpec, harnessIface), ...compareArms(harnessIface, seamsCode)];
+const bad = [...compare(spec, code), ...compareMember(engineSpec, harnessIface), ...compareGhostMember(engineSpec, harnessIface), ...compareToolIdentifiers(spec, harnessBuild), ...compareArms(harnessIface, seamsCode)];
 if (bad.length) {
   console.log(`\nTRIGGER-UNION FAIL:`);
   for (const b of bad) console.log(`  ${b}`);
@@ -204,6 +313,7 @@ const n = unionMembers(code).length;
 console.log(
   `TRIGGER-UNION OK — ${n} trigger sources, spec and union in agreement; ` +
     `the \`${readMemberToken(engineSpec)}\` read member is one canonical token in engine/SPEC.md §5 item 7 and harness/INTERFACES.md §1.1; ` +
+    `the CandidateShapeGhost read member and the SPEC/BUILD tool roster agree in both directions; ` +
     `the §3.3 printed Event arms and seams.ts's union agree on ${ifaceArms(harnessIface).size} arms' kinds and field sets, both directions. ` +
     `NOT CHECKED: other closed enums stated twice — each gets this treatment when its second copy exists.`,
 );
