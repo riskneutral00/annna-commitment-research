@@ -1,5 +1,30 @@
 import type { Clock, CommitResult, CommitmentRef, CoverageQuery, CoverageResult, EngineSeam, Envelope, Handle, WriteId } from "../seams.js";
 
+type CoveringGrantQuery = Extract<CoverageQuery, { kind: "covering-grant" }>;
+type GrantFixtureResponse = { at: number; covering: CommitmentRef | null };
+type GrantCoverageScript = {
+  before: GrantFixtureResponse;
+  at: GrantFixtureResponse;
+  after: GrantFixtureResponse;
+  after_revocation: GrantFixtureResponse;
+};
+
+function grantReferenceKey(parent: object, name: string): unknown {
+  if (!Object.prototype.hasOwnProperty.call(parent, name)) return { state: "missing" };
+  const value = (parent as Record<string, unknown>)[name];
+  if (value === undefined) return { state: "undefined" };
+  if (value === null) return { state: "null" };
+  return { state: "value", value };
+}
+
+function grantQueryKey(query: CoveringGrantQuery): string {
+  return JSON.stringify([
+    query.act.action_class,
+    grantReferenceKey(query.act, "scope_ref"),
+    grantReferenceKey(query, "principal_ref"),
+  ]);
+}
+
 // EngineStub — INTERFACES.md §5: an in-memory store with real WRITES, an
 // idempotency ledger keyed on the caller's write id, and canned handles.
 //
@@ -17,9 +42,19 @@ import type { Clock, CommitResult, CommitmentRef, CoverageQuery, CoverageResult,
 export class EngineStub implements EngineSeam {
   readonly calls: Array<{ call: string; args: unknown[] }> = [];
   readonly store = new Map<CommitmentRef, unknown>();
-  /** Scripted stored grants for the covering-grant lookup (§1.3, FD-97):
-   *  a pure lookup over stored grants only — the decision stays the floor's. */
-  readonly grants = new Map<string, CommitmentRef>();
+  /** Full-request covering-grant fixtures (§1.3, FD-97). The fake consumes
+   *  explicit lifecycle responses; it does not implement grant matching. */
+  readonly #grantScripts = new Map<string, GrantCoverageScript>();
+
+  /** Install one complete-request fixture without adding a seam verb. */
+  readonly scriptCoveringGrant = (query: CoveringGrantQuery, script: GrantCoverageScript): void => {
+    const responses = [script.before, script.at, script.after, script.after_revocation];
+    const times = responses.map((response) => response.at);
+    if (new Set(times).size !== times.length || times.some((at, index) => index > 0 && at <= times[index - 1]!)) {
+      throw new Error("grant fixture clock states must be ordered and distinct");
+    }
+    this.#grantScripts.set(grantQueryKey(query), script);
+  };
 
   // Injected so the stub and the harness can never disagree about the time —
   // the same point that wires the seams wires the clock (make.ts).
@@ -66,9 +101,12 @@ export class EngineStub implements EngineSeam {
     this.calls.push({ call: "check_coverage", args: [query] });
     if (query.kind === "board-structural") return { kind: "board-structural", missing_required: [] };
     if (query.kind === "covering-grant") {
-      // FD-97's pure lookup: stored grants only, `covering: grant_ref | null`.
-      const key = `${query.act.action_class}`;
-      return { kind: "covering-grant", covering: this.grants.get(key) ?? null };
+      const script = this.#grantScripts.get(grantQueryKey(query));
+      if (!script) throw new Error("unscripted covering-grant request");
+      if (!this.clock) throw new Error("covering-grant request requires an injected clock");
+      const response = [script.before, script.at, script.after, script.after_revocation].find(({ at }) => at === this.clock!.now());
+      if (!response) throw new Error("unprepared clock state for covering-grant fixture");
+      return { kind: "covering-grant", covering: response.covering };
     }
     return { kind: "invalid", reason: "malformed", detail: "unknown coverage query kind" };
   }

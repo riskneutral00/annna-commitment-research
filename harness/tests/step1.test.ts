@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { wire, isEnvelope, ROUTING_TABLES, ROUTING_TABLE_AUTHOR } from "../src/index.js";
+import { wire, isEnvelope, ROUTING_TABLES, ROUTING_TABLE_AUTHOR, makeClock } from "../src/index.js";
 import type { Event } from "../src/index.js";
 import { EngineStub } from "../src/stubs/engine.js";
 import { AppStub } from "../src/stubs/app.js";
@@ -50,13 +50,82 @@ describe("commit — the write id and the store (§1.2)", () => {
 });
 
 describe("check_coverage — FD-97's request/result union (§1.3)", () => {
-  it("answers the covering-grant kind from stored grants only, null when none", async () => {
-    const engine = new EngineStub();
-    const miss = await engine.check_coverage({ kind: "covering-grant", act: { action_class: "send", scope_ref: "b1" }, principal_ref: "p1" });
-    expect(miss).toEqual({ kind: "covering-grant", covering: null });
-    engine.grants.set("send", "grant-1");
-    const hit = await engine.check_coverage({ kind: "covering-grant", act: { action_class: "send", scope_ref: "b1" }, principal_ref: "p1" });
-    expect(hit).toEqual({ kind: "covering-grant", covering: "grant-1" });
+  it("scripts the full request: matching principal/scope covers, mismatches return null, and omissions fail visibly", async () => {
+    const clock = makeClock();
+    const engine = new EngineStub(clock);
+    const matching = { kind: "covering-grant" as const, act: { action_class: "send", scope_ref: "b1" }, principal_ref: "p1" };
+    const otherScope = { ...matching, act: { ...matching.act, scope_ref: "b2" } };
+    const otherPrincipal = { ...matching, principal_ref: "p2" };
+    const fixture = (covering: string | null) => ({
+      before: { at: 0, covering },
+      at: { at: 1_000, covering },
+      after: { at: 1_001, covering: null },
+      after_revocation: { at: 2_000, covering: null },
+    });
+
+    engine.scriptCoveringGrant(matching, fixture("grant-1"));
+    engine.scriptCoveringGrant(otherScope, fixture(null));
+    engine.scriptCoveringGrant(otherPrincipal, fixture(null));
+
+    await expect(engine.check_coverage(matching)).resolves.toEqual({ kind: "covering-grant", covering: "grant-1" });
+    await expect(engine.check_coverage(otherScope)).resolves.toEqual({ kind: "covering-grant", covering: null });
+    await expect(engine.check_coverage(otherPrincipal)).resolves.toEqual({ kind: "covering-grant", covering: null });
+    await expect(engine.check_coverage({ ...matching, principal_ref: "p3" })).rejects.toThrow(/unscripted covering-grant request/);
+
+    clock.step(1_000);
+    await expect(engine.check_coverage(matching)).resolves.toEqual({ kind: "covering-grant", covering: "grant-1" });
+    clock.step(1);
+    await expect(engine.check_coverage(matching)).resolves.toEqual({ kind: "covering-grant", covering: null });
+    clock.step(999);
+    await expect(engine.check_coverage(matching)).resolves.toEqual({ kind: "covering-grant", covering: null });
+  });
+
+  it("rejects a prepared fixture when the injected clock reaches an unprepared state", async () => {
+    const clock = makeClock();
+    const engine = new EngineStub(clock);
+    const query = { kind: "covering-grant" as const, act: { action_class: "send", scope_ref: "b1" }, principal_ref: "p1" };
+    engine.scriptCoveringGrant(query, {
+      before: { at: 0, covering: "grant-1" },
+      at: { at: 1_000, covering: "grant-1" },
+      after: { at: 1_001, covering: null },
+      after_revocation: { at: 2_000, covering: null },
+    });
+
+    clock.step(10);
+    await expect(engine.check_coverage(query)).rejects.toThrow(/unprepared clock state/);
+  });
+
+  it("does not conflate undefined or missing scope refs with an explicit null ref", async () => {
+    const clock = makeClock();
+    const engine = new EngineStub(clock);
+    const fixture = {
+      before: { at: 0, covering: "grant-undefined" },
+      at: { at: 1_000, covering: "grant-undefined" },
+      after: { at: 1_001, covering: null },
+      after_revocation: { at: 2_000, covering: null },
+    };
+    const scriptedUndefined = {
+      kind: "covering-grant" as const,
+      act: { action_class: "send", scope_ref: undefined },
+      principal_ref: "p1",
+    };
+    engine.scriptCoveringGrant(scriptedUndefined, fixture);
+    await expect(engine.check_coverage({
+      ...scriptedUndefined,
+      act: { ...scriptedUndefined.act, scope_ref: null },
+    })).rejects.toThrow(/unscripted covering-grant request/);
+
+    const scriptedMissing = {
+      kind: "covering-grant" as const,
+      act: { action_class: "send", scope_ref: "placeholder" },
+      principal_ref: "p1",
+    };
+    Reflect.deleteProperty(scriptedMissing.act, "scope_ref");
+    engine.scriptCoveringGrant(scriptedMissing, fixture);
+    await expect(engine.check_coverage({
+      ...scriptedMissing,
+      act: { ...scriptedMissing.act, scope_ref: null },
+    })).rejects.toThrow(/unscripted covering-grant request/);
   });
 
   it("keeps the board-structural promise", async () => {
