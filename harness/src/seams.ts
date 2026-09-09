@@ -35,6 +35,156 @@ export const isEnvelope = (v: unknown): v is Envelope =>
  *  re-enters as a write (D7's oracle asserts exactly this). */
 export type Handle = { readonly __handle: unique symbol; readonly display: string };
 
+/** Stored-read payloads follow INTERFACES.md §1.1 and their named homes.
+ * Required fields are required here too; there is no arbitrary-record arm. */
+
+/** Compile-time opacity only, not a new stored field. These members need their
+ * owning BUILD adapter/schema before they can be constructed or inspected;
+ * the scaffold neither guesses their layout nor validates unknown data. */
+declare const readPayload: unique symbol;
+type OpaqueRead<Name extends string> = { readonly [readPayload]: Name };
+
+/** The engine supplies the closed menu; no free-text choice or non-human
+ * attribution is constructable here. Membership in a particular decision's
+ * menu remains the engine boundary's validation (engine/SPEC.md §1.14). */
+export type DecisionChoiceRead = OpaqueRead<"engine-named decision choice">;
+export type HumanPrincipalRead = CommitmentRef & OpaqueRead<"human principal">;
+export type PendingDecisionRead = {
+  owner_org: CommitmentRef;
+  id: CommitmentRef;
+  commitment: CommitmentRef;
+  raised_by: string;
+  choices: readonly DecisionChoiceRead[];
+  chosen?: { choice: DecisionChoiceRead; by: HumanPrincipalRead; at: number };
+};
+
+/** SPEC.md §3.9; this stored reason is not an Envelope failure reason. */
+export type EscalationReasonRead = "missing_basis";
+/** Collection wrappers are read results, not stored fields. */
+export type EscalationRead = {
+  owner_org: CommitmentRef;
+  id: CommitmentRef;
+  commitment: CommitmentRef;
+  reason: EscalationReasonRead;
+  raised_at: number;
+  ladder_state: { rung: number; notified_at: number };
+  status: "open" | "answered" | "timed_out_parked";
+  answered_by?: HumanPrincipalRead;
+};
+export type OpenEscalationsRead = { escalations: Array<EscalationRead & { status: "open" }> };
+export type OnCallRead = {
+  owner_org: CommitmentRef;
+  owner: CommitmentRef;
+  ranked: Array<{ principal: CommitmentRef; channels: Array<"in-app" | "email">; quiet_hours?: OpaqueRead<"quiet hours"> }>;
+  step_timeout: number;
+  total_timeout: number;
+};
+
+/** SPEC.md §§3.10–3.13; tenant custody is engine/SPEC.md §1.1's common field.
+ * Proposal values and canonicalized arguments retain their home's variable
+ * content; that extension does not open the enclosing record's field set. */
+export type PartyContactRead = {
+  owner_org: CommitmentRef;
+  party_ref: CommitmentRef;
+  addresses: Array<{ channel: string; address: string; verified_at?: number }>;
+  preferred_channel: string;
+  updated: { who: CommitmentRef; basis: unknown; when: number };
+};
+export type DeliveryEventRead = {
+  owner_org: CommitmentRef;
+  kind: "sent" | "delivered-failed" | "handed-to-owner" | "complaint";
+  party_ref: CommitmentRef;
+  channel: string;
+  act_ref: CommitmentRef;
+  at: number;
+};
+export type PatternDeclineRead = {
+  owner_org: CommitmentRef;
+  owner: CommitmentRef;
+  pattern_key: { field_ref: CommitmentRef; scope_ref: CommitmentRef };
+  proposed_value_hash: string;
+  permanent: boolean;
+  declined_at: { by: HumanPrincipalRead; at: number };
+  revoked_at?: { by: HumanPrincipalRead; at: number };
+};
+export type PendingAskRead = {
+  owner_org: CommitmentRef;
+  id: CommitmentRef;
+  owner: CommitmentRef;
+  raised_in: WriteId;
+  question_ref: CommitmentRef;
+  proposed?: { field_ref: CommitmentRef; scope_ref: CommitmentRef; value: unknown };
+  choices?: readonly OpaqueRead<"offered ask choice">[];
+  pending_act?: { tool: string; canonicalized_args: unknown; action_class: string };
+  expires_at: number;
+  answered?: { by: HumanPrincipalRead; at: number };
+};
+
+/** The projection selects only the five authored shape families, before the
+ * save/publish envelope (marketplace/SPEC.md §1.2). Their nested closed grammars
+ * remain opaque until their adapters exist: no board refs, owner custody,
+ * contact addresses, vault bytes or token digests become selectable here. */
+export type TemplateBundleProjection = {
+  domain: OpaqueRead<"template domain meta-schema">;
+  rule_shapes: OpaqueRead<"template rule shape">[];
+  shared_shapes: OpaqueRead<"template shared shape">[];
+  resource_shapes: OpaqueRead<"template resource shape">[];
+  kind_templates: OpaqueRead<"role-only kind template">[];
+};
+export type CandidateShapeGhost = OpaqueRead<"owner-scoped candidate shape ghost">;
+
+/** The remaining stored selection schemas are not implemented by this
+ * scaffold. Opacity is a boundary, not a claim of a closed field contract.
+ * FiringEvent's exact layout is expressly deferred by SPEC.md §3.14 (including
+ * birth/seal decoding; interrupted is derived, never stored). TurnState's
+ * layout/query are SPEC.md §5.3 / BUILD.md Step 8 work. Parks (engine §1.3),
+ * inbox loss records (SPEC.md §4a), and slice records (INTERFACES.md §2.1) keep
+ * their existing selections; no queue, commitment or context layout is added. */
+export type ParkReasonRead = "no_basis" | "unreachable" | "unverified" | "budget_exhausted" | "slice_unfittable" | "quarantine_failed" | "engine_unavailable";
+export type UnclearedParkRead = {
+  reason: ParkReasonRead;
+  cause?:
+    | { kind: "covering-rule"; rule_ref: CommitmentRef }
+    | { kind: "budget-ceiling"; ceiling: unknown; spent: unknown }
+    | { kind: "failing-layer"; layer: string }
+    | { kind: "ladder-exhausted"; escalation_ref: CommitmentRef }
+    | { kind: "engine-unavailable"; call: string };
+  since: number;
+  trigger_ref: CommitmentRef;
+  cleared_by?: never;
+};
+export type UnclearedParksRead = {
+  parks: Array<OpaqueRead<"stored commitment"> & { needs_human: UnclearedParkRead }>;
+};
+export type InboxLossRecordsRead = { records: OpaqueRead<"attributed inbox loss record">[] };
+export type RelevantSliceRead = {
+  rules: OpaqueRead<"stored rule">[];
+  stored_answers: OpaqueRead<"stored answer">[];
+  commitments: OpaqueRead<"stored commitment">[];
+  pending_asks: PendingAskRead[];
+};
+export type FiringEventRead = OpaqueRead<"firing event awaiting required-on-read decoding">;
+export type TurnStateRead = OpaqueRead<"principal-scoped turn state">;
+
+export type ReadSnapshot =
+  | { shape: "UnclearedParks"; value: UnclearedParksRead }
+  | { shape: "PendingDecision"; value: PendingDecisionRead }
+  | { shape: "OpenEscalations"; value: OpenEscalationsRead }
+  | { shape: "OnCall"; value: OnCallRead }
+  | { shape: "PartyContact"; value: PartyContactRead }
+  | { shape: "DeliveryEvent"; value: DeliveryEventRead }
+  | { shape: "PatternDecline"; value: PatternDeclineRead }
+  | { shape: "TemplateBundle"; value: TemplateBundleProjection }
+  | { shape: "CandidateShapeGhost"; value: CandidateShapeGhost }
+  | { shape: "RelevantSlice"; value: RelevantSliceRead }
+  | { shape: "FiringEvent"; value: FiringEventRead }
+  | { shape: "PendingAsk"; value: PendingAskRead }
+  | { shape: "InboxLossRecords"; value: InboxLossRecordsRead }
+  | { shape: "TurnState"; value: TurnStateRead };
+
+export type CalculateInvalid = Envelope<"invalid"> & { reason: "schema-mismatch" };
+export type CalculateResult = ReadSnapshot | Handle | CalculateInvalid | Envelope<"unavailable" | "timeout">;
+
 /** An engine-issued object reference. A plain string on the wire; the harness
  *  stores and passes it, never parses it (m-40: `bound_to` is nullable —
  *  an entry-class digest binds to no commitment). */
@@ -97,7 +247,7 @@ export type Event =
   | { kind: "delivery-report"; at: number; party_ref: CommitmentRef; outcome: "complaint" | "delivered-failed" };
 
 export interface EngineSeam {
-  calculate(query: unknown): Promise<Handle | Envelope<"unavailable" | "timeout">>;
+  calculate(query: unknown): Promise<CalculateResult>;
   /** The write id is commit's second parameter — the printed seam position
    *  (INTERFACES.md §1.2). */
   commit(input: unknown, write_id: WriteId): Promise<CommitResult>;

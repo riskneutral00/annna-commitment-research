@@ -1,4 +1,4 @@
-import type { Clock, CommitResult, CommitmentRef, CoverageQuery, CoverageResult, EngineSeam, Envelope, Handle, WriteId } from "../seams.js";
+import type { CalculateResult, Clock, CommitResult, CommitmentRef, CoverageQuery, CoverageResult, EngineSeam, Envelope, Handle, WriteId } from "../seams.js";
 
 type CoveringGrantQuery = Extract<CoverageQuery, { kind: "covering-grant" }>;
 type GrantFixtureResponse = { at: number; covering: CommitmentRef | null };
@@ -71,7 +71,8 @@ function valueIdentity(value: unknown): string {
 }
 
 // EngineStub — INTERFACES.md §5: an in-memory store with real WRITES, an
-// idempotency ledger keyed on the caller's write id, and canned handles.
+// idempotency ledger keyed on the caller's write id, and scriptable calculate
+// results with a canned-handle fallback.
 //
 // Step 0 builds the seam and the determinism, not the engine's behaviour: the
 // capacity and latch rules arrive with the scenarios that need them (Steps 1–5).
@@ -87,6 +88,10 @@ function valueIdentity(value: unknown): string {
 export class EngineStub implements EngineSeam {
   readonly calls: Array<{ call: string; args: unknown[] }> = [];
   readonly store = new Map<CommitmentRef, unknown>();
+  /** Scripted calculate fixtures are keyed by the complete caller query. The
+   * generic Step-0 stub does not parse unknown query members; real refusal and
+   * schema validation remain BUILD obligations. */
+  readonly #calculateScripts = new Map<string, CalculateResult>();
   /** Full-request covering-grant fixtures (§1.3, FD-97). The fake consumes
    *  explicit lifecycle responses; it does not implement grant matching. */
   readonly #grantScripts = new Map<string, GrantCoverageScript>();
@@ -121,8 +126,14 @@ export class EngineStub implements EngineSeam {
    *  original result, returned verbatim on an identical re-commit. */
   readonly #ledger = new Map<WriteId, { payload: string; result: CommitResult }>();
 
-  async calculate(query: unknown): Promise<Handle | Envelope<"unavailable" | "timeout">> {
+  readonly scriptCalculate = (query: unknown, result: CalculateResult): void => {
+    this.#calculateScripts.set(valueIdentity(query), snapshot(result));
+  };
+
+  async calculate(query: unknown): Promise<CalculateResult> {
     this.calls.push({ call: "calculate", args: [query] });
+    const scripted = this.#calculateScripts.get(valueIdentity(query));
+    if (scripted !== undefined) return snapshot(scripted);
     return this.#handle();
   }
 

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { wire, isEnvelope, ROUTING_TABLES, ROUTING_TABLE_AUTHOR, makeClock } from "../src/index.js";
 import type { Event } from "../src/index.js";
+import type { CalculateResult, ReadSnapshot } from "../src/seams.js";
 import { EngineStub } from "../src/stubs/engine.js";
 import { AppStub } from "../src/stubs/app.js";
 import { ModelStub } from "../src/stubs/model.js";
@@ -270,9 +271,31 @@ describe("the D7 spy oracle — narration traces to the display facet", () => {
   it("reads the facet from the handle, never the internals", async () => {
     const h = wire();
     const handle = await h.engine.calculate({ q: 1 });
-    if (isEnvelope(handle)) throw new Error("unexpected envelope");
+    if (isEnvelope(handle) || "shape" in handle) throw new Error("unexpected calculate result");
     expect(typeof handle.display).toBe("string");
     expect(narrationTracesToFacets(handle.display, [handle.display])).toEqual({ ok: true });
+  });
+
+  it("keeps stored reads discriminated while computed results stay handles", async () => {
+    const engine = new EngineStub();
+    const h = wire({ engine });
+    const snapshot: ReadSnapshot = {
+      shape: "DeliveryEvent",
+      value: { owner_org: "tenant-1", kind: "complaint", party_ref: "party-1", channel: "email", act_ref: "act-1", at: 1 },
+    };
+    const invalid: CalculateResult = { kind: "invalid", reason: "schema-mismatch" };
+    engine.scriptCalculate({ kind: "read", shape: "DeliveryEvent" }, snapshot);
+    engine.scriptCalculate({ kind: "read", shape: "bad" }, invalid);
+
+    const read = await h.engine.calculate({ kind: "read", shape: "DeliveryEvent" });
+    if (!("shape" in read)) throw new Error("expected a declared read snapshot");
+    expect(read.shape).toBe("DeliveryEvent");
+    expect(read.value).toEqual(snapshot.value);
+
+    const computed = await h.engine.calculate({ kind: "computed", query: "availability" });
+    if (isEnvelope(computed) || "shape" in computed) throw new Error("expected an opaque computed handle");
+    expect(computed.display).toBe("display of h1");
+    await expect(h.engine.calculate({ kind: "read", shape: "bad" })).resolves.toEqual(invalid);
   });
 });
 
