@@ -223,6 +223,13 @@ export type Tagged = { text: string; source: SourceTag };
  *  harness-written one MUST carry it). */
 export type RegistrationKind = "reminder" | "offer-hold" | "ask-age-out";
 
+/** Human answer carrier (INTERFACES.md §3.3). Choice values come from template
+ * configuration, not the failure vocabulary. Attribution is on the enclosing
+ * Event; guest notes use the canonical source tag and require §2.4 quarantine. */
+export type HumanDeclineData =
+  | { kind: "choice"; value: string }
+  | { kind: "free-note"; note: Tagged & { source: "guest" } };
+
 /** The six trigger sources (SPEC.md §4), with the kind-routed bridge's two
  *  discriminator-carrying arms (engine/INTERFACES.md §2.2, 2026-08-31):
  *  `offer-hold` registrations surface as `hold-expiry`; `reminder` and
@@ -232,9 +239,8 @@ export type RegistrationKind = "reminder" | "offer-hold" | "ask-age-out";
  *  Field-for-field the printed contract of INTERFACES.md §3.3 (normalized
  *  2026-09-01, OBS-1; the trigger-union gate compares the two both ways):
  *  every arm carries the common `at`, and no arm hides behind an anonymous
- *  `ref`/`event` member. `structured_reason` is the closed decline envelope
- *  (engine/SPEC.md §7's structured decline crosses the seam in the failure
- *  envelope, reasons from INTERFACES.md §7.1). `channel` and `act_ref`
+ *  `ref`/`event` member. `structured_reason` is human decline data from
+ *  engine/SPEC.md §7.1 item 5, not the closed failure envelope. `channel` and `act_ref`
  *  preserve the stable outbound correlation required by `DeliveryEvent`.
  *  `outcome` is the out-of-band pair §3.3's delivery-report prose names: a
  *  complaint, or a late delivered-failed — the immediate `sent | delivered-failed
@@ -243,7 +249,7 @@ export type RegistrationKind = "reminder" | "offer-hold" | "ask-age-out";
 export type Event =
   | { kind: "sale"; at: number; offering_ref: CommitmentRef; buyer_party_ref: CommitmentRef; terms_ref: CommitmentRef }
   | { kind: "hold-expiry"; at: number; hold_ref: CommitmentRef; registration_ref: CommitmentRef; registration_kind: RegistrationKind }
-  | { kind: "decline"; at: number; offer_ref: CommitmentRef; party_ref: CommitmentRef; structured_reason: Envelope<"decline"> }
+  | { kind: "decline"; at: number; offer_ref: CommitmentRef; party_ref: CommitmentRef; structured_reason: HumanDeclineData }
   | { kind: "returned-form"; at: number; token: string; reply: unknown }
   | { kind: "clock"; at: number; registration_ref: CommitmentRef; registration_kind?: RegistrationKind }
   | { kind: "delivery-report"; at: number; party_ref: CommitmentRef; channel: string; act_ref: CommitmentRef; outcome: "complaint" | "delivered-failed" };

@@ -1,7 +1,8 @@
 import type { AppSeam, Envelope, Event, PublishResult, SendOutcome } from "../seams.js";
 
 // AppStub — INTERFACES.md §5: record-and-return spies. Assert the payload and
-// its reversibility class; simulate `on_form_return`. Async per the seam's law
+// its reversibility class; simulate `on_form_return` and the guest decline
+// event. Async per the seam's law
 // (INTERFACES.md §1) — the spies record synchronously and resolve immediately.
 //
 // The escalation ladder's per-rung notifications ride this same spy, which is
@@ -32,6 +33,7 @@ export class AppStub implements AppSeam {
    *  trigger entry here, then drives `simulateFormReturn` / the delivery-event
    *  fixture below. The stub owns no routing — it hands the event over. */
   onFormReturn?: (reply: unknown) => void;
+  onDecline?: (event: Extract<Event, { kind: "decline" }>) => void;
   onDeliveryReport?: (event: Extract<Event, { kind: "delivery-report" }>) => void;
 
   private mintCounter = 0;
@@ -82,6 +84,12 @@ export class AppStub implements AppSeam {
   /** Simulated form return — the trigger source the guest flow rides. */
   simulateFormReturn(reply: unknown) {
     this.onFormReturn?.(reply);
+  }
+
+  /** Simulated guest-flow decline — the app hands the attributed human data
+   * to the harness unchanged. Carrier only: no routing or quarantine runs here. */
+  simulateDecline(event: Extract<Event, { kind: "decline" }>) {
+    this.onDecline?.(event);
   }
 
   /** The delivery-event fixture: a fully correlated out-of-band `complaint`
