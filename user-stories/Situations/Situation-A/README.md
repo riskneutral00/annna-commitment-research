@@ -12,6 +12,12 @@
 
 *(Sofia's board is mostly her own life — meals, runs, yoga, cycle. Only the **teaching slice** faces outward, and that's the only part a "customer" ever touches.)*
 
+## Matt’s English teaching — a separate authored run
+
+[story-matt.md](story-matt.md) preserves Matt’s 29-scene first-person journey: invite onboarding, personal commitments, console-led English setup, student contacts, individual and shared bookings, two races, a real quota refusal/recovery and reported lesson/payment outcomes. It is **scripted and end-state**, under the narrow [FD-68 amendment](../../../RULINGS.md#fd-68-matt-english), with its own cast, rates and confirmed user choices. Sofia’s story above is unchanged; the two worked configurations are not interchangeable.
+
+Read [story-matt-verification.md](story-matt-verification.md#layer-debt) for the 90 cases, 26 CRUD rows, 33 harness cues, LEGAL-01 research, review dispositions and corrected October ledger. The companion is **derived** and identifies current layer conflicts and work owed. These files claim neither implemented capabilities nor legal clearance; the broader freelance/dive material and held-out ER probe retain their boundaries.
+
 ---
 
 ## The two kinds of stakeholder (collapsed)

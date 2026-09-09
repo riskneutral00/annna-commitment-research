@@ -94,6 +94,8 @@
 | user-stories/Situations/Situation-A/situation-3.md | SPEC | Situation A's edges — what must work, and what must be refused |
 | user-stories/Situations/Situation-A/situation-4.md | SPEC | The correction run: a wrong normalization caught at read-back, a rule edit's blast radius shown first, a draft abandoned harmlessly (scripted) |
 | user-stories/Situations/Situation-A/situation-5.md | SPEC | Months later: the ledger's month rolls over, a series reaches week twenty, and a dense board finally tests the peace promise (scripted) |
+| user-stories/Situations/Situation-A/story-matt-verification.md | derived | Matt English source transfer, 90 cases, 26 CRUD rows, 33 cues, legal research, review dispositions, corrected ledger and owed layer contracts |
+| user-stories/Situations/Situation-A/story-matt.md | SPEC | Matt’s scripted end-state English-teaching story under the narrow FD-68 exception; authored behavior with explicit implementation debt |
 | user-stories/Situations/Situation-A/story-sofia.md | SPEC | Sofia's own first-person telling — the whole-life requirement stated as lived experience |
 | user-stories/Situations/Situation-B/README.md | SPEC | The self-service rental probe: interchangeable units, and a customer who pulls rather than books |
 | user-stories/Situations/Situation-B/customer.md | SPEC | What the off-app traveller does — drives the booking themselves, against a hold with a clock |

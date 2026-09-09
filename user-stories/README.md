@@ -9,7 +9,7 @@ This folder holds the **real, end-to-end stories of how people actually use annn
 **What these files are NOT:**
 - **Not tests.** We describe the *situations* a test would need to cover; the executable tests are not written here. What kind of test each criterion becomes is decided in [`TDD.md`](../TDD.md).
 - **Not decomposed here.** The per-layer decomposition of these stories lives in each layer's own `SCENARIOS.md`, not in this folder.
-- **Not v1-scoped.** The stories tell the **end-state product**. **Five named gaps** *(1–2 founder-ruled 2026-08-06; 3–4 added 2026-08-22, the epics-audit residue sitting; 5 added the same day, the fork sitting FD-60 — both preambles in `../RULINGS.md`)*:
+- **Not v1-scoped.** The stories tell the **end-state product**. **Six named gaps** *(1–2 founder-ruled 2026-08-06; 3–4 added 2026-08-22, the epics-audit residue sitting; 5 added the same day, the fork sitting FD-60 — both preambles in `../RULINGS.md`)*:
   1. Wherever a story shows annnä itself sending over WeChat / Messenger / SMS or buzzing a phone (Situations A, C, D), v1 delivers that same moment as **email, LINE or WhatsApp sent by the app (FD-61/FD-74 — the live roster and each closed door's recorded state are `../app/SPEC.md §6`'s, read there, not here)**, or the owner tapping Generate Link and pasting into a closed-door channel themselves (`../app/SPEC.md §6/§9`) *(gap re-cut 2026-08-31 — it predated FD-61/74 and understated v1 at email-only)*. The depicted auto-sends are later additions behind the same seam — only the *who presses send* differs in v1.
   2. Wherever a story shows annnä **referring a customer out to a center it holds no prior relationship with** — the agent handing a stranger a customer and passing their data (Situation C's German / Drysuit hand-offs through the agent) — that **referral flow is deferred post-v1** (`../engine/SPEC.md §7.1`). What v1 *does* reach is every supplier **already on annnä**, across account lines, through the **share seam** (one creator-owned commitment reaching boards annnä already holds an availability grant from — `../engine/SPEC.md §7.1`) — so v1 is **not single-tenant**; only the reach to *strangers* is deferred.
 
@@ -18,7 +18,9 @@ This folder holds the **real, end-to-end stories of how people actually use annn
 
   5. Wherever a story shows **the whole week placed in one pass against a live view of the whole market** (Situation C's situation-1 and its README ceiling paragraph), that omniscient single pass is the **demonstration's ceiling, not the shipped mechanism** (FD-60, 2026-08-22): the engine places per goal — chained per-day greedy first-fit with honest structured declines (`../engine/SPEC.md §7`) — and the honest v1 run narrates declines and asks the owner at each dead end. A global multi-goal optimization pass has no ruling and no mechanism: a named gap, not an implied feature.
 
-  As with all five gaps, the stories stay true as written; only the *reach*, the *who presses send*, the chrome language, the import span, and the placement's omniscience differ in v1.
+  6. **Matt’s authored English story has unresolved mechanism contracts**, not a newly ruled v1 deferral. Its [scripted end-state narrative](Situations/Situation-A/story-matt.md) depicts a restricted guest console where the current app/harness homes still say no guest agent; it also needs explicit group/coordinator authority, verified account linking/sharing, bound-quote replacement, form/console and onboarding contracts. The [per-layer debt map](Situations/Situation-A/story-matt-verification.md#layer-debt) retains the exact homes, tests and remaining CRUD/legal scope. Publication does not implement these mechanisms, establish app readiness or silently override those layer SPECs. The narrow authoring exception is [FD-68’s amendment](../RULINGS.md#fd-68-matt-english).
+
+  The first five gaps retain their existing release distinctions. Gap 6 marks unresolved current-story contracts; it supplies no release schedule or deferral.
 
 ## How to read
 **Every use case is a `Situations/Situation-<slug>/` folder** — read that folder's README first, like a storybook. The folder shape is the same whether the use case is a **single protagonist** (Situation-A, Sofia) or a **market of many stakeholders** (Situation-C, the dive): a `README.md` storybook, the **setup stories** (how each actor sets up — `resource-*.md` / `operator-*.md` / a protagonist's own telling, plus `customer.md`), and the numbered **situation runs** (`situation-1.md …`, each a floor / ceiling / probe with a stated purpose). `_briefs/` holds the probe-elicitation briefs — the input a Situation folder is built from, kept for provenance, **never authoritative once the Situation lands.** Two kinds live there and `_briefs/README.md` explains the difference: one was written *after* its sitting as the record of one, and the rest were written *before* any sitting, from the coverage debt, so their lists are questions to ask rather than answers. A brief that answers its own questions has become a script, which the provenance vocabulary below already names as the thing that cannot count as coverage.
@@ -75,7 +77,7 @@ Six checks. Each is already law somewhere in the corpus and is collected here on
 3. **Provenance declared.** Every new or extended run states its register in-file, from the four in "Provenance" below: *elicited-blind* · *elicited-to-design* · *scripted* · *held-out*. Scripted material says so, and by that section's own words it "cannot refute" the list it was written from — so it is never cited as coverage evidence.
 4. **Both directions.** Must-work **and** must-be-refused, the pairing this file opens with. A probe run with no refusal is incomplete, and a refusal carries a structured reason — **FR34** (`../harness/SPEC.md §3.4`, the clocked-offer law; `../RULINGS.md` carries the row).
 5. **Derivation reachable.** Every beat either names a covering scenario or is recorded as owed, in the form `../PRD.md` §4.6 already uses for its requirements — *"owed — "* followed by what the covering probe must show. Owed is a debt kept visible, never an exemption.
-6. **v1 versus end-state marked.** Where a beat depicts something one of the **five named gaps** above defers, the story stays true as written and that gap list covers it. A beat deferred by nothing gets a sixth gap entry, or it is not written.
+6. **v1 versus end-state marked.** Where a beat depicts something one of the first **five named gaps** above defers, the story stays true as written and that gap list covers it. A beat without an existing release disposition must name its mechanism gap and authority limit, as entry 6 does; a story cannot invent a deferral.
 
 ## Provenance (how each probe was made — the vocabulary, added 2026-08-22)
 
@@ -88,13 +90,13 @@ A story is only as strong as where it came from, and the 2026-08-22 coverage rev
 
 | Probe | Provenance |
 |---|---|
-| `Situation-A/` | **elicited-blind** *(runs 4–5, added 2026-08-22 from the coverage review's checklist, are **scripted** and say so in-file)* |
+| `Situation-A/` | **elicited-blind** *(runs 4–5, added 2026-08-22 from the coverage review’s checklist, are **scripted**; [Matt’s English story](Situations/Situation-A/story-matt.md) is also **scripted / end-state**, with [derived verification](Situations/Situation-A/story-matt-verification.md#layer-debt), under the narrow [FD-68 amendment](../RULINGS.md#fd-68-matt-english))* |
 | `Situation-B/` | **elicited-blind** *(the suppressed-guest and manage-link beats added 2026-08-22 are **scripted**)* |
 | `Situation-C/` | **elicited-blind** *(situation-6 and the second-seat setup, added 2026-08-22, are **scripted**)* |
 | `Situation-D/` | **elicited-to-design** — its own brief opens with the engine design it was requested to pressure-test |
 | `Situation-E/` | **held-out** — the only one, and it stays out of v1 |
 | `Situation-A-prime/` · `Situation-C-prime/` | **scripted** — each README carries the checklist it was built from |
-| Situation-F *(no folder)* | **never written — FD-68**: the founder's own freelance life is held out as the product's first live test; eliciting it, or drafting a fictional stand-in, is forbidden (`../RULINGS.md`) |
+| Situation-F *(no folder)* | **never written — FD-68**: the unelicited freelance/dive material stays held out; neither eliciting it nor inventing a stand-in is authorized. The narrow approved Matt English script is inside Situation A, under [FD-68’s amendment](../RULINGS.md#fd-68-matt-english); it does not close the remaining live-test gap. |
 
 **The invented-and-justified register** — mechanisms designed *without* a probe, each kept for a stated reason and owing a named beat (the honesty rule: an unnamed exception reads as coverage):
 
