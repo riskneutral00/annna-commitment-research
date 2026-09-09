@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import { handleTurn, makeClock, wire, SUMMARIZE_ALWAYS_FAILS } from "../src/index.js";
 import { ModelStub } from "../src/stubs/model.js";
 import { EngineStub } from "../src/stubs/engine.js";
-import type { AppSeam, EngineSeam } from "../src/seams.js";
+import { AppStub } from "../src/stubs/app.js";
+import type { AppSeam, EngineSeam, Envelope } from "../src/seams.js";
 
 // harness/BUILD.md Step 0 — Verify: the test runner runs; a trivial "echo" test
 // passes; swapping a stub for a no-op adapter through the injection point needs
@@ -93,6 +94,27 @@ describe("Step 0 — the injection point", () => {
     const app = h.app as AppSeam & { countOf(c: string): number };
     await h.app.render("board", {});
     expect(app.countOf("render")).toBe(1);
+  });
+});
+
+describe("Step 0 — publish preserves infrastructure outcomes", () => {
+  it("returns refused, unavailable, and timeout without minting, then keeps the success path", async () => {
+    const app = new AppStub();
+    const failures = [
+      { kind: "refused", reason: "no-basis" },
+      { kind: "unavailable", reason: "provider" },
+      { kind: "timeout", reason: "provider" },
+    ] satisfies Array<Envelope<"refused" | "unavailable" | "timeout">>;
+
+    for (const failure of failures) {
+      app.nextPublishResult = failure;
+      await expect(app.publish({ template: "personal" }, ["recipient-1"])).resolves.toEqual(failure);
+    }
+
+    await expect(app.publish({ template: "personal" }, ["recipient-1"])).resolves.toEqual({
+      artifact: { template: "personal" },
+      minted: [{ digest: "digest-1", bound_to: "recipient-1" }],
+    });
   });
 });
 

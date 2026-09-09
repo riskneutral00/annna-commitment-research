@@ -135,6 +135,10 @@ export type SendOutcome =
   | { outcome: "sent" | "delivered-failed" | "handed-to-owner" }
   | Envelope<"unavailable" | "timeout">;
 
+export type PublishResult =
+  | { artifact: unknown; minted: Array<{ digest: string; bound_to: CommitmentRef | null }> }
+  | Envelope<"refused" | "unavailable" | "timeout">;
+
 export interface AppSeam {
   render(surface: "board" | "commitment-page" | "console", payload: unknown): Promise<void | Envelope<"invalid">>;
   /** §3.2 — the generative-UI leg: the harness hands a schema, the app returns
@@ -149,7 +153,7 @@ export interface AppSeam {
   publish(
     payload: unknown,
     recipients?: unknown,
-  ): Promise<{ artifact: unknown; minted: Array<{ digest: string; bound_to: CommitmentRef | null }> } | Envelope<"refused">>;
+  ): Promise<PublishResult>;
   /** Renamed from `notify_and_await` (INTERFACES.md §3.3, 2026-08-22). The
    *  recipient is REQUIRED — §3.3's printed signature `send(form_payload,
    *  recipient)`: an outward act with nobody named is not an act the floor can

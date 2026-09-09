@@ -1,4 +1,4 @@
-import type { AppSeam, Envelope, SendOutcome } from "../seams.js";
+import type { AppSeam, Envelope, PublishResult, SendOutcome } from "../seams.js";
 
 // AppStub — INTERFACES.md §5: record-and-return spies. Assert the payload and
 // its reversibility class; simulate `on_form_return`. Async per the seam's law
@@ -17,6 +17,10 @@ export class AppStub implements AppSeam {
   readonly calls: Array<{ call: string; payload: unknown }> = [];
 
   /** Scripted next outcomes, settable per test; defaults are the happy path. */
+  /** `nextPublishResult` is consumed by the next publish call only; later calls
+   * use default minting unless another result is scripted.
+   */
+  nextPublishResult?: PublishResult;
   nextSendOutcome: SendOutcome = { outcome: "sent" };
   nextImportFetch:
     | { items: unknown[]; provider_status: string }
@@ -43,6 +47,10 @@ export class AppStub implements AppSeam {
 
   async publish(payload: unknown, recipients?: unknown) {
     this.calls.push({ call: "publish", payload: { payload, recipients } });
+    const scripted = this.nextPublishResult;
+    this.nextPublishResult = undefined;
+    if (scripted) return scripted;
+
     const list = Array.isArray(recipients) ? recipients : [];
     // m-40: `bound_to` is the engine's nullable shape — a recipient that is a
     // commitment ref binds; an entry-class digest (no recipient ref) is null,
