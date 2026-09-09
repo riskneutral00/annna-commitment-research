@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 import { wire, isEnvelope, ROUTING_TABLES, ROUTING_TABLE_AUTHOR, makeClock } from "../src/index.js";
-import type { Event, HumanDeclineData } from "../src/index.js";
+import type { Event, HumanDeclineData, TriggerEvent } from "../src/index.js";
 import type { CalculateResult, EngineSeam, Envelope, ReadSnapshot, Tagged } from "../src/seams.js";
 import { EngineStub } from "../src/stubs/engine.js";
 import { AppStub } from "../src/stubs/app.js";
@@ -219,7 +219,7 @@ describe("check_coverage — FD-97's request/result union (§1.3)", () => {
   });
 });
 
-describe("the Event union — six sources, kind-routed discriminators (SPEC §4)", () => {
+describe("the Event union — seven sources, kind-routed discriminators (SPEC §4)", () => {
   it("carries the registration kind on hold-expiry, optionally on clock", () => {
     const holdExpiry: Event = { kind: "hold-expiry", at: 1, hold_ref: "h1", registration_ref: "r1", registration_kind: "offer-hold" };
     const reminder: Event = { kind: "clock", at: 2, registration_ref: "r2", registration_kind: "reminder" };
@@ -228,21 +228,45 @@ describe("the Event union — six sources, kind-routed discriminators (SPEC §4)
     expect("registration_kind" in internal).toBe(false);
   });
 
-  it("constructs all six arms with their discriminator-specific required fields (LWR-01)", () => {
-    // `satisfies` makes each arm's field roster a compile-time assertion: a
-    // dropped required field or an invented one is a red build, not a green run.
-    const sale = { kind: "sale", at: 1, offering_ref: "off-1", buyer_party_ref: "buyer-1", terms_ref: "terms-1" } satisfies Event;
-    const decline = {
-      kind: "decline", at: 2, offer_ref: "offer-1", party_ref: "party-1",
-      structured_reason: { kind: "choice", value: "rate" },
-    } satisfies Event;
-    const returned = { kind: "returned-form", at: 3, token: "tok-1", reply: { signed: true } } satisfies Event;
-    const report = {
-      kind: "delivery-report", at: 4, party_ref: "party-2", channel: "email", act_ref: "act-2", outcome: "complaint",
-    } satisfies Event;
-    expect([sale.offering_ref, sale.buyer_party_ref, sale.terms_ref]).toEqual(["off-1", "buyer-1", "terms-1"]);
-    expect([decline.offer_ref, decline.party_ref, decline.structured_reason.value]).toEqual(["offer-1", "party-1", "rate"]);
-    expect([returned.token, report.party_ref, report.channel, report.act_ref, report.outcome]).toEqual(["tok-1", "party-2", "email", "act-2", "complaint"]);
+  it("constructs a complete source roster including an attributed initial offer", () => {
+    const fixtures = {
+      sale: { kind: "sale", at: 1, offering_ref: "off-1", buyer_party_ref: "buyer-1", terms_ref: "terms-1" },
+      "hold-expiry": { kind: "hold-expiry", at: 2, hold_ref: "h1", registration_ref: "r1", registration_kind: "offer-hold" },
+      decline: { kind: "decline", at: 3, offer_ref: "offer-1", party_ref: "party-1", structured_reason: { kind: "choice", value: "rate" } },
+      "returned-form": { kind: "returned-form", at: 4, token: "tok-1", reply: { signed: true } },
+      clock: { kind: "clock", at: 5, registration_ref: "r2" },
+      "delivery-report": { kind: "delivery-report", at: 6, party_ref: "party-2", channel: "email", act_ref: "act-2", outcome: "complaint" },
+      offered: { kind: "offered", at: 7, offer_ref: "offer-2", recipient_owner_ref: "owner-2", who: "initiator-1", basis: "creation-basis-1", when: 7 },
+    } satisfies { [K in Event["kind"]]: Extract<Event, { kind: K }> };
+    expectTypeOf<keyof typeof fixtures>().toEqualTypeOf<Event["kind"]>();
+    expectTypeOf<keyof typeof fixtures>().toEqualTypeOf<TriggerEvent["kind"]>();
+    expect(Object.values(fixtures).map((event) => event.kind).sort()).toEqual([
+      "clock", "decline", "delivery-report", "hold-expiry", "offered", "returned-form", "sale",
+    ]);
+    expect(fixtures.offered).toEqual({
+      kind: "offered", at: 7, offer_ref: "offer-2", recipient_owner_ref: "owner-2",
+      who: "initiator-1", basis: "creation-basis-1", when: 7,
+    });
+    // This is a carrier fixture, not an engine producer or recipient executor.
+  });
+
+  it("requires the offered recipient and creation attribution without implying a human answer", () => {
+    type Offered = Extract<Event, { kind: "offered" }>;
+    expectTypeOf<Offered>().toEqualTypeOf<{
+      kind: "offered"; at: number; offer_ref: string; recipient_owner_ref: string;
+      who: string; basis: string; when: number;
+    }>();
+    expectTypeOf<Omit<Offered, "offer_ref">>().not.toExtend<Offered>();
+    expectTypeOf<Omit<Offered, "recipient_owner_ref">>().not.toExtend<Offered>();
+    expectTypeOf<Omit<Offered, "at">>().not.toExtend<Offered>();
+    expectTypeOf<Omit<Offered, "who">>().not.toExtend<Offered>();
+    expectTypeOf<Omit<Offered, "basis">>().not.toExtend<Offered>();
+    expectTypeOf<Omit<Offered, "when">>().not.toExtend<Offered>();
+    expectTypeOf<Offered>().not.toExtend<Extract<Event, { kind: "sale" }>>();
+    expectTypeOf<Offered>().not.toExtend<Extract<Event, { kind: "returned-form" }>>();
+    expectTypeOf<Offered>().not.toExtend<Extract<Event, { kind: "decline" }>>();
+    expectTypeOf<Extract<Event, { kind: "sale" | "returned-form" | "decline" }>>().not.toExtend<Offered>();
+    expectTypeOf<Event["kind"]>().toEqualTypeOf<TriggerEvent["kind"]>();
   });
 
   it("keeps human decline data distinct from engine failure reasons", () => {

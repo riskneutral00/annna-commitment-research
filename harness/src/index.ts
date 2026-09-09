@@ -5,21 +5,20 @@ import type { Event } from "./seams.js";
 // point"). The loop itself is Step 5 — handleTurn is console utterance →
 // normalize → plan → tool calls under the floor → check-work → narrate, and
 // handleTrigger is sale / hold-expiry / decline / returned-form / clock /
-// delivery-report — SIX sources (SPEC.md §4; the delivery report joined
-// 2026-08-21 and this union lagged at five until 2026-08-22, which is the
-// drift deployment/scripts/trigger-union.mjs now refuses).
+// delivery-report / offered — seven sources (SPEC.md §4; the proposed
+// offered-source amendment is recorded at INTERFACES.md §7.2).
 //
 // They throw rather than returning a plausible empty value. A Step-0 entry
 // point that silently returns nothing is one a later step can build on top of
 // while believing it works; one that throws cannot be mistaken for done.
 
 export type TurnInput = { utterance: string; owner: string };
-// The six-source union, in the exact literal form deployment/scripts/trigger-union.mjs
+// The seven-source union, in the exact literal form deployment/scripts/trigger-union.mjs
 // parses against SPEC.md §4 (set equality up to naming). The full payload arms live
 // in seams.ts as `Event` (the kind-routed bridge's discriminator arms, 2026-08-31);
 // the compile-time weld below makes drift a type error, so the gate's parse target
 // and Event cannot diverge into a third copy.
-export type TriggerEvent = { kind: "sale" | "hold-expiry" | "decline" | "returned-form" | "clock" | "delivery-report"; at: number };
+export type TriggerEvent = { kind: "sale" | "hold-expiry" | "decline" | "returned-form" | "clock" | "delivery-report" | "offered"; at: number };
 type _EventCoversTrigger = Event["kind"] extends TriggerEvent["kind"] ? true : never;
 type _TriggerCoversEvent = TriggerEvent["kind"] extends Event["kind"] ? true : never;
 const _weld: [_EventCoversTrigger, _TriggerCoversEvent] = [true, true];

@@ -230,7 +230,7 @@ export type HumanDeclineData =
   | { kind: "choice"; value: string }
   | { kind: "free-note"; note: Tagged & { source: "guest" } };
 
-/** The six trigger sources (SPEC.md §4), with the kind-routed bridge's two
+/** The seven trigger sources (SPEC.md §4), with the kind-routed bridge's two
  *  discriminator-carrying arms (engine/INTERFACES.md §2.2, 2026-08-31):
  *  `offer-hold` registrations surface as `hold-expiry`; `reminder` and
  *  `ask-age-out` registrations — and every engine-internal registration,
@@ -247,6 +247,7 @@ export type HumanDeclineData =
  *  | handed-to-owner` union returns on the `send` call itself (SendOutcome),
  *  never as an event. */
 export type Event =
+  | { kind: "offered"; at: number; offer_ref: CommitmentRef; recipient_owner_ref: CommitmentRef; who: CommitmentRef; basis: CommitmentRef; when: number }
   | { kind: "sale"; at: number; offering_ref: CommitmentRef; buyer_party_ref: CommitmentRef; terms_ref: CommitmentRef }
   | { kind: "hold-expiry"; at: number; hold_ref: CommitmentRef; registration_ref: CommitmentRef; registration_kind: RegistrationKind }
   | { kind: "decline"; at: number; offer_ref: CommitmentRef; party_ref: CommitmentRef; structured_reason: HumanDeclineData }
