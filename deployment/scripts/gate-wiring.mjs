@@ -26,8 +26,11 @@
 // layer set is imported from `b9-twice-run.mjs`, which discovers it; restating
 // it here would be the second registry this file exists to refuse.
 //
-// WHAT IS NOT CHECKED: whether a wired script runs inside `check` specifically.
-// `b4-verdict-check.mjs` (`npm run verdicts`) and `cite-check.mjs`
+// WHAT IS NOT CHECKED: general YAML semantics, workflow constructs outside the
+// supported jobs/steps shape, or shell composition we cannot prove preserves the
+// aggregator's exit status. Those forms are refused when they occur on a run
+// key. Whether a wired script runs inside `check` specifically is also outside
+// this gate: `b4-verdict-check.mjs` (`npm run verdicts`) and `cite-check.mjs`
 // (`npm run cites`) report rather than refuse and live under their own scripts
 // by design, so "named in some script value" is the honest bound. Tightening it
 // to the `check` chain would either redden those two or need an exemption list,
@@ -82,21 +85,110 @@ export const wiredIn = (pkgJson) => new Set([...pkgJson.matchAll(WIRED)].map((m)
 // Assertion C's matcher. `layers` is what carries a suite on disk; the workflow
 // must install each of them, because `npm run check` runs each of them and a
 // missing install reads as a red gate rather than as a missing install.
+//
+// This is deliberately a small parser for the repository's supported workflow
+// shape (jobs at two spaces, steps at six, and step keys at eight), not a YAML
+// interpreter. Reading only run-step values keeps names, comments, and shell
+// prose from standing in for an executed command.
 export function workflowFaults(yaml, layers) {
-  // Comment lines are dropped first, and that is not tidiness. This workflow's
-  // own prose explains why it installs each layer, in the words `npm run check`
-  // — so the first version of this gate was satisfied by a sentence describing
-  // the step rather than by the step, and stayed green with the real `run:`
-  // line gutted. Found by planting the negative, which is the only way that
-  // class of error is ever found.
-  const steps = yaml.split("\n").filter((l) => !/^\s*#/.test(l)).join("\n");
+  const lines = yaml.split(/\r?\n/);
+  const active = lines.filter((l) => !/^\s*#/.test(l));
   const faults = [];
-  if (/^\s*continue-on-error\s*:/m.test(steps))
+  if (/^\s*continue-on-error\s*:/m.test(active.join("\n")))
     faults.push("carries `continue-on-error:` — a step allowed to fail is a job that reports success over a red gate");
-  if (!/\bnpm run check\b/.test(steps))
-    faults.push("never runs the aggregator `npm run check` — the repo's one green command (SPEC.md §4)");
+
+  const indent = (line) => line.match(/^\s*/)[0].length;
+  const meaningful = (i) => !/^\s*(?:#|$)/.test(lines[i]);
+  const jobsLine = lines.findIndex((line) => indent(line) === 0 && line.trim() === "jobs:");
+  const jobs = [];
+  if (jobsLine !== -1) {
+    for (let i = jobsLine + 1; i < lines.length; i++) {
+      if (!meaningful(i)) continue;
+      if (indent(lines[i]) === 2 && /^[A-Za-z0-9_-]+:\s*$/.test(lines[i].trim())) {
+        jobs.push({ start: i, end: lines.length });
+      }
+    }
+    for (let i = 0; i < jobs.length - 1; i++) jobs[i].end = jobs[i + 1].start;
+  }
+
+  const runSteps = [];
+  for (const job of jobs) {
+    for (let i = job.start; i < job.end; i++) {
+      if (!meaningful(i) || indent(lines[i]) !== 4) continue;
+      if (/^if\s*:/.test(lines[i].trim()))
+        faults.push("has a job-level `if:` skip condition — the aggregator job must always run");
+    }
+
+    for (let i = job.start; i < job.end; i++) {
+      if (!meaningful(i) || indent(lines[i]) !== 6 || !/^[-]\s+/.test(lines[i].trim())) continue;
+      const stepStart = i;
+      let stepEnd = job.end;
+      for (let j = i + 1; j < job.end; j++) {
+        if (meaningful(j) && indent(lines[j]) <= 6) {
+          stepEnd = j;
+          break;
+        }
+      }
+
+      const stepIndent = indent(lines[stepStart]);
+      const entries = [];
+      const inline = lines[stepStart].match(/^\s*-\s+([A-Za-z0-9_-]+)\s*:(.*)$/);
+      if (inline) entries.push({ key: inline[1], value: inline[2], line: stepStart, keyIndent: stepIndent + 2 });
+      for (let j = stepStart + 1; j < stepEnd; j++) {
+        if (!meaningful(j) || indent(lines[j]) !== stepIndent + 2) continue;
+        const entry = lines[j].match(/^\s*([A-Za-z0-9_-]+)\s*:(.*)$/);
+        if (entry) entries.push({ key: entry[1], value: entry[2], line: j, keyIndent: stepIndent + 2 });
+      }
+      const runEntries = entries.filter(({ key }) => key === "run");
+      if (!runEntries.length) {
+        i = stepEnd - 1;
+        continue;
+      }
+
+      for (const run of runEntries) {
+        const runValue = run.value.trim();
+        let command = runValue;
+        if (/^[|>]/.test(runValue)) {
+          if (!/^[|>]$/.test(runValue)) {
+            faults.push("uses an unsupported `run:` block-scalar indicator — the workflow command cannot be proven");
+            command = "";
+          } else {
+            const contentIndent = run.keyIndent + 2;
+            const content = [];
+            for (let j = run.line + 1; j < stepEnd; j++) {
+              if (/^\s*$/.test(lines[j])) {
+                content.push("");
+                continue;
+              }
+              if (indent(lines[j]) < contentIndent) break;
+              content.push(lines[j].slice(contentIndent));
+            }
+            const style = runValue[0];
+            command = content.reduce((result, line, index) => {
+              if (index === 0) return line;
+              const previous = content[index - 1];
+              return result + (style === ">" && previous !== "" && line !== "" ? " " : "\n") + line;
+            }, "");
+          }
+        }
+        runSteps.push({ command });
+      }
+      if (entries.some(({ key }) => key === "if"))
+        faults.push("has a step-level `if:` skip condition — the workflow must not skip a gate step");
+      i = stepEnd - 1;
+    }
+  }
+
+  const normalizeCommand = (command) => command.replace(/\s+/g, " ").trim();
+  const aggregator = runSteps.find(({ command }) => /^npm run check(?:\s|$)/.test(normalizeCommand(command)));
+  if (!aggregator) {
+    faults.push("never executes a `run:` step beginning with `npm run check` — the repo's one green command (SPEC.md §4)");
+  } else if (/(?:\|\||&&|[;&|])/.test(normalizeCommand(aggregator.command).slice("npm run check".length))) {
+    faults.push("masks the aggregator's exit status or uses unsupported shell composition — a failing `npm run check` must fail the workflow");
+  }
+
   for (const layer of layers) {
-    if (!new RegExp(`npm ci\\b[^\\n]*--prefix ${layer}\\b`).test(steps))
+    if (!runSteps.some(({ command }) => new RegExp(`npm ci\\b.*--prefix ${layer}\\b`).test(normalizeCommand(command))))
       faults.push(`never installs the \`${layer}\` layer (\`npm ci --prefix ${layer}\`), whose suite \`npm run check\` runs`);
   }
   return faults;
@@ -125,22 +217,43 @@ if (process.argv.includes("--selfcheck")) {
   // Negative: naming the identifier with neither a declaration nor an import.
   assert.ok(!IMPORTS.test('const gates = files.filter((f) => !(f in NOT_A_GATE));'), "a use without an import is not one");
 
-  // Assertion C, over an inline workflow and each of its three negatives.
+  // Assertion C, over an inline workflow and each of its negative controls.
   const good = "jobs:\n  check:\n    steps:\n      - run: npm ci --prefix engine\n      - run: npm ci --prefix harness\n      - run: npm run check\n";
   assert.deepStrictEqual(workflowFaults(good, ["engine", "harness"]), [], "a workflow installing every suite and running the aggregator is clean");
-  assert.strictEqual(workflowFaults(good.replace("- run: npm run check", "- run: echo skipped"), ["engine"]).length, 1,
-    "a workflow that never runs the aggregator is caught");
+  assert.ok(workflowFaults(good.replace("- run: npm run check", "- run: echo skipped"), ["engine"])
+    .some((fault) => fault.includes("never executes")), "a workflow that never runs the aggregator is caught");
   assert.strictEqual(workflowFaults(good, ["engine", "harness", "app"]).length, 1,
     "a layer that gains a suite the workflow does not install is caught");
   assert.strictEqual(workflowFaults(`${good}        continue-on-error: true\n`, ["engine", "harness"]).length, 1,
     "continue-on-error is caught wherever it sits");
-  assert.ok(workflowFaults("continue-on-error: true\nnpm run check\n", []).length === 1, "and at column zero");
-  assert.deepStrictEqual(workflowFaults("# continue-on-error is what this comment mentions\n- run: npm run check", []), [],
+  assert.ok(workflowFaults("continue-on-error: true\njobs:\n  check:\n    steps:\n      - run: npm run check\n", [])
+    .some((fault) => fault.includes("carries `continue-on-error:`")), "and at column zero");
+  assert.deepStrictEqual(workflowFaults("# continue-on-error is what this comment mentions\njobs:\n  check:\n    steps:\n      - run: npm run check", []), [],
     "a mention that is not a key is not one");
   // The negative that this gate first failed: prose about a step is not a step.
-  assert.strictEqual(workflowFaults("# Every layer, because `npm run check` runs them all\n- run: echo nope\n", []).length, 1,
-    "a comment naming the aggregator does not stand in for running it");
-  assert.strictEqual(workflowFaults("# npm ci --prefix engine happens somewhere\n- run: npm run check\n", ["engine"]).length, 1,
+  assert.ok(workflowFaults("# Every layer, because `npm run check` runs them all\njobs:\n  check:\n    steps:\n      - run: echo nope\n", [])
+    .some((fault) => fault.includes("never executes")), "a comment or echo naming the aggregator does not stand in for running it");
+  assert.ok(workflowFaults(good.replace("- run: npm run check", "- run: echo npm run check"), ["engine", "harness"])
+    .some((fault) => fault.includes("never executes")), "an echo of the aggregator is not an executed aggregator");
+  assert.ok(workflowFaults(good.replace("- run: npm run check", "- name: npm run check\n        run: echo skipped"), ["engine", "harness"])
+    .some((fault) => fault.includes("never executes")), "a step name is not an executed aggregator");
+  assert.ok(workflowFaults(good.replace("- run: npm run check", "- name: |\n          run: npm run check\n        run: echo skipped"), ["engine", "harness"])
+    .some((fault) => fault.includes("never executes")), "run-looking text inside a multiline step name is not an executed aggregator");
+  assert.ok(workflowFaults(good.replace("- run: npm run check", "- run: npm run check\n        if: false"), ["engine", "harness"])
+    .some((fault) => fault.includes("step-level `if:`")), "a skipped aggregator step is caught");
+  assert.ok(workflowFaults(good.replace("  check:\n", "  check:\n    if: false\n"), ["engine", "harness"])
+    .some((fault) => fault.includes("job-level `if:`")), "a skipped aggregator job is caught");
+  assert.ok(workflowFaults(good.replace("- run: npm run check", "- run: npm run check || true"), ["engine", "harness"])
+    .some((fault) => fault.includes("masks the aggregator")), "an exit mask on the aggregator is caught");
+  assert.ok(workflowFaults(good.replace("- run: npm run check", "- run: >\n          npm run check\n          || true"), ["engine", "harness"])
+    .some((fault) => fault.includes("masks the aggregator")), "a folded aggregator command cannot hide a failure on a later line");
+  assert.ok(workflowFaults(good.replace("- run: npm run check", "- run: |\n          npm run check\n          || true"), ["engine", "harness"])
+    .some((fault) => fault.includes("masks the aggregator")), "a literal aggregator command cannot hide a failure on a later line");
+  for (const tail of ["|| :", "||:", "|| echo failed", "&"]) {
+    assert.ok(workflowFaults(good.replace("- run: npm run check", `- run: npm run check ${tail}`), ["engine", "harness"])
+      .some((fault) => fault.includes("masks the aggregator")), `an aggregator shell continuation is rejected: ${tail}`);
+  }
+  assert.strictEqual(workflowFaults("# npm ci --prefix engine happens somewhere\njobs:\n  check:\n    steps:\n      - run: npm run check\n", ["engine"]).length, 1,
     "nor for installing a layer");
   assert.ok(suiteLayers(ROOT).length > 0, "the suite-carrying layer set is discovered, not empty");
 
@@ -217,7 +330,8 @@ if (fail.length) {
 const exempt = onDisk.filter((f) => f in NOT_A_GATE).length;
 console.log(
   `\nGATE-WIRING OK — ${onDisk.length - exempt} gate(s) reachable from an npm script, ${exempt} declared not-a-gate,` +
-    ` one definition of that set; ${WORKFLOWS}/${CI} runs the aggregator, installs all ${layers.length} suite-carrying` +
-    ` layer(s) (${layers.join(", ")}), and allows no step to fail. NOT CHECKED: whether a wired script runs inside` +
+    ` one definition of that set; ${WORKFLOWS}/${CI} has an executable \`run:\` step beginning with \`npm run check\`,` +
+    ` installs all ${layers.length} suite-carrying layer(s) (${layers.join(", ")}), and has no checked job/step skip` +
+    ` condition or aggregator exit mask. NOT CHECKED: general YAML semantics or whether a wired script runs inside` +
     ` \`check\` specifically — two gates report rather than refuse and run under their own scripts by design.`,
 );
