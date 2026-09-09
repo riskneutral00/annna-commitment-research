@@ -2,14 +2,14 @@
 
 annnä is four layers — **Model / Harness / Engine / App** (the full map: [`../README.md`](../README.md)) — and this folder is the Engine: **the only layer where truth lives**. It is the persistent store (commitments, boards, rules, grants, latches, shared artifacts, orders) plus the deterministic math on it (availability, gaps, travel, quotas, placement). It is **built**, not imported; its only client is the **Harness**, which calls it through a seam pinned before this design existed (`../harness/INTERFACES.md §1`). The engine never talks to the model, a user, or a third party.
 
-If you deleted the AI entirely, this layer is what would remain: the calendar-and-calculator underneath. Everything the model is forbidden to do — state a number, a time, an availability — is answered here instead, deterministically: same store, same query, same answer, always.
+If you deleted the AI entirely, this layer is what would remain: the calendar-and-calculator underneath. Everything the model is forbidden to do — derive a correctness-critical value such as a number, a time, or an availability — is answered here instead, deterministically: same store, same query, same answer, always.
 
-**This folder's purpose:** it is the complete design for **building** that layer — what to store, what math to answer, the seams to honor, and the suite that proves the build correct. An agent handed this folder implements the engine from it: read the four files in order, then execute `BUILD.md` Step 0 → 9. You should never need to invent a behavior — if a decision seems missing, it's either in `SPEC.md`, pinned by a scenario, or deliberately out of scope (§11 / the NOT list below).
+**This folder's purpose:** it defines the scope and read order for **building** that layer — what to store, what math to answer, the seams to honor, and the suite that proves the build correct. An agent handed this folder reads the four files in order, then executes `BUILD.md` Step 0 → 9; tracked debt and an unanswered decision remain debt at their named home until resolved, rather than an invitation to invent behavior.
 
 Read in this order:
 
 1. **`SPEC.md`** — the store and math of record: the object model (including recurrence-as-materialized-instances and the Proposal object), the M3 type-value system, the **closed rule-type menu**, handles, `calculate` (with the travel seam), `commit`, `resolve` (place-only + reshuffle-as-proposal), consistency/coverage, the invariants ledger.
-2. **`INTERFACES.md`** — upward: the harness seam satisfied verbatim (zero new verbs); downward: the external travel source and the storage substrate requirements; and the sideways display-projection seam (the four §0 projections — two subscribed, two read on demand; the app renders verbatim, never computing).
+2. **`INTERFACES.md`** — upward: the harness seam satisfied verbatim (zero new verbs); downward: the external travel source and the storage substrate requirements; and the sideways display-projection seam (the five §0 projections — three pushed, two read on demand (INTERFACES §2a); the app renders verbatim, never computing).
 3. **`SCENARIOS.md`** — the deterministic acceptance suite (unlike the model's graded EVALS — this layer either holds or fails), ending in the stub-parity set.
 4. **`BUILD.md`** — the ordered plan, Step 0 (substrate) through Step 9 (**the stub-swap**). Storage-tech candidates live there only.
 
