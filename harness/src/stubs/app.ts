@@ -1,4 +1,4 @@
-import type { AppSeam, Envelope, PublishResult, SendOutcome } from "../seams.js";
+import type { AppSeam, Envelope, Event, PublishResult, SendOutcome } from "../seams.js";
 
 // AppStub — INTERFACES.md §5: record-and-return spies. Assert the payload and
 // its reversibility class; simulate `on_form_return`. Async per the seam's law
@@ -32,7 +32,7 @@ export class AppStub implements AppSeam {
    *  trigger entry here, then drives `simulateFormReturn` / the delivery-event
    *  fixture below. The stub owns no routing — it hands the event over. */
   onFormReturn?: (reply: unknown) => void;
-  onDeliveryReport?: (event: unknown) => void;
+  onDeliveryReport?: (event: Extract<Event, { kind: "delivery-report" }>) => void;
 
   private mintCounter = 0;
 
@@ -84,10 +84,10 @@ export class AppStub implements AppSeam {
     this.onFormReturn?.(reply);
   }
 
-  /** The delivery-event fixture: an out-of-band `complaint` or late
-   *  `delivered-failed` arriving AFTER a send resolved — the sixth trigger
-   *  source (SPEC.md §4), previously unsimulatable from this stub. */
-  simulateDeliveryReport(event: { kind: "complaint" | "delivered-failed"; ref: unknown }) {
+  /** The delivery-event fixture: a fully correlated out-of-band `complaint`
+   *  or late `delivered-failed` arriving AFTER a send resolved — the sixth
+   *  trigger source (SPEC.md §4), previously unsimulatable from this stub. */
+  simulateDeliveryReport(event: Extract<Event, { kind: "delivery-report" }>) {
     this.onDeliveryReport?.(event);
   }
 

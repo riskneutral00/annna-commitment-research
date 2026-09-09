@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, expectTypeOf, it } from "vitest";
 import { wire, isEnvelope, ROUTING_TABLES, ROUTING_TABLE_AUTHOR, makeClock } from "../src/index.js";
 import type { Event } from "../src/index.js";
 import type { CalculateResult, ReadSnapshot } from "../src/seams.js";
@@ -237,10 +237,48 @@ describe("the Event union — six sources, kind-routed discriminators (SPEC §4)
       structured_reason: { kind: "decline", reason: "no-feasible-placement" },
     } satisfies Event;
     const returned = { kind: "returned-form", at: 3, token: "tok-1", reply: { signed: true } } satisfies Event;
-    const report = { kind: "delivery-report", at: 4, party_ref: "party-2", outcome: "complaint" } satisfies Event;
+    const report = {
+      kind: "delivery-report", at: 4, party_ref: "party-2", channel: "email", act_ref: "act-2", outcome: "complaint",
+    } satisfies Event;
     expect([sale.offering_ref, sale.buyer_party_ref, sale.terms_ref]).toEqual(["off-1", "buyer-1", "terms-1"]);
     expect([decline.offer_ref, decline.party_ref, decline.structured_reason.kind]).toEqual(["offer-1", "party-1", "decline"]);
-    expect([returned.token, report.party_ref, report.outcome]).toEqual(["tok-1", "party-2", "complaint"]);
+    expect([returned.token, report.party_ref, report.channel, report.act_ref, report.outcome]).toEqual(["tok-1", "party-2", "email", "act-2", "complaint"]);
+  });
+
+  it("preserves full same-party reports across equal times, duplicates and out-of-order injection", () => {
+    const app = new AppStub();
+    const clock = makeClock();
+    const received: Extract<Event, { kind: "delivery-report" }>[] = [];
+    app.onDeliveryReport = (event) => received.push(event);
+    const reportFor = (channel: string) => ({
+      kind: "delivery-report",
+      at: clock.now(),
+      party_ref: "shared-party",
+      channel,
+      act_ref: `act-${channel}`,
+      outcome: "delivered-failed",
+    } satisfies Extract<Event, { kind: "delivery-report" }>);
+    const email = reportFor("email");
+    const line = reportFor("LINE");
+    clock.step(1);
+    const complaint = {
+      ...email, at: clock.now(), outcome: "complaint",
+    } satisfies Extract<Event, { kind: "delivery-report" }>;
+    // Injection is a carrier probe: duplicate payloads must reach the callback
+    // unchanged. Deduplication, correlation validation and suppression are not
+    // implemented by this stub (INTERFACES.md §3.3; BUILD.md Steps 5 and 8).
+    const injected = [complaint, line, email, { ...complaint }, { ...line }];
+    const expected = structuredClone(injected);
+    for (const report of injected) app.simulateDeliveryReport(report);
+
+    expect(received).toEqual(expected);
+  });
+
+  it("pins both delivery-report fixture signatures to the complete Event arm", () => {
+    expectTypeOf<Parameters<NonNullable<AppStub["onDeliveryReport"]>>[0]>()
+      .toEqualTypeOf<Extract<Event, { kind: "delivery-report" }>>();
+    expectTypeOf<Parameters<AppStub["simulateDeliveryReport"]>[0]>()
+      .toEqualTypeOf<Extract<Event, { kind: "delivery-report" }>>();
   });
 });
 
