@@ -9,12 +9,12 @@ type GrantCoverageScript = {
   after_revocation: GrantFixtureResponse;
 };
 
-function grantReferenceKey(parent: object, name: string): unknown {
-  if (!Object.prototype.hasOwnProperty.call(parent, name)) return { state: "missing" };
+function grantReferenceKey(parent: object, name: string): string {
+  if (!Object.prototype.hasOwnProperty.call(parent, name)) return "\u0000missing";
   const value = (parent as Record<string, unknown>)[name];
-  if (value === undefined) return { state: "undefined" };
-  if (value === null) return { state: "null" };
-  return { state: "value", value };
+  if (value === undefined) return "\u0000undefined";
+  if (value === null) return "\u0000null";
+  return `\u0000value:${JSON.stringify(value)}`;
 }
 
 function grantQueryKey(query: CoveringGrantQuery): string {

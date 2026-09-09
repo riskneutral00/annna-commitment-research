@@ -126,6 +126,29 @@ describe("check_coverage — FD-97's request/result union (§1.3)", () => {
       ...scriptedMissing,
       act: { ...scriptedMissing.act, scope_ref: null },
     })).rejects.toThrow(/unscripted covering-grant request/);
+
+    const scriptedPrincipal = {
+      kind: "covering-grant" as const,
+      act: { action_class: "send", scope_ref: "b1" },
+      principal_ref: undefined,
+    };
+    engine.scriptCoveringGrant(scriptedPrincipal, fixture);
+    await expect(engine.check_coverage({
+      ...scriptedPrincipal,
+      principal_ref: null,
+    })).rejects.toThrow(/unscripted covering-grant request/);
+
+    const scriptedMissingPrincipal = {
+      kind: "covering-grant" as const,
+      act: { action_class: "send", scope_ref: "b1" },
+      principal_ref: "placeholder",
+    };
+    Reflect.deleteProperty(scriptedMissingPrincipal, "principal_ref");
+    engine.scriptCoveringGrant(scriptedMissingPrincipal, fixture);
+    await expect(engine.check_coverage({
+      ...scriptedMissingPrincipal,
+      principal_ref: null,
+    })).rejects.toThrow(/unscripted covering-grant request/);
   });
 
   it("keeps the board-structural promise", async () => {
