@@ -60,6 +60,30 @@ describe("commit — the write id and the store (§1.2)", () => {
     expect(engine.store.get("ref1")).toEqual({ nested: { a: 1, b: 2 } });
   });
 
+  it("uses total key order for Unicode-equivalent and collation-ignorable keys", async () => {
+    const engine = new EngineStub();
+    const first = await engine.commit({ "é": 1, "e\u0301": 2, "a\u00ADb": 3, ab: 4 }, "w1");
+    const identical = await engine.commit({ ab: 4, "a\u00ADb": 3, "e\u0301": 2, "é": 1 }, "w1");
+
+    expect(identical).toBe(first);
+  });
+
+  it("includes structured values in write identity", async () => {
+    const cases = [
+      { before: new Date("2020-01-01T00:00:00Z"), identical: new Date("2020-01-01T00:00:00Z"), changed: new Date("2030-01-01T00:00:00Z") },
+      { before: new Map([["a", 1], ["b", 2]]), identical: new Map([["b", 2], ["a", 1]]), changed: new Map([["a", 1], ["b", 3]]) },
+      { before: new Set(["a", "b"]), identical: new Set(["b", "a"]), changed: new Set(["a", "c"]) },
+      { before: /before/, identical: /before/, changed: /after/ },
+    ];
+
+    for (const { before, identical, changed } of cases) {
+      const engine = new EngineStub();
+      const first = await engine.commit({ value: before }, "w1");
+      expect(await engine.commit({ value: identical }, "w1")).toBe(first);
+      expect(await engine.commit({ value: changed }, "w1")).toEqual({ ok: false, kind: "conflict", reason: "write-id-reuse" });
+    }
+  });
+
   it("snapshots caller input, call evidence, and replay identity independently", async () => {
     const engine = new EngineStub();
     const input = { nested: { value: "before", count: 1 } };

@@ -41,10 +41,31 @@ function valueIdentity(value: unknown): string {
   if (typeof value === "bigint") return `bigint:${value}`;
   if (Array.isArray(value)) return `array:[${value.map(valueIdentity).join(",")}]`;
   if (typeof value === "object") {
+    const tag = Object.prototype.toString.call(value);
+    if (tag === "[object Date]") return `date:${(value as Date).getTime()}`;
+    if (tag === "[object Map]") {
+      const entries = Array.from((value as Map<unknown, unknown>).entries(), ([key, entry]) => [valueIdentity(key), valueIdentity(entry)] as const)
+        .sort(([leftKey, leftValue], [rightKey, rightValue]) => {
+          const left = `${leftKey}\u0000${leftValue}`;
+          const right = `${rightKey}\u0000${rightValue}`;
+          return left < right ? -1 : left > right ? 1 : 0;
+        });
+      return `map:${JSON.stringify(entries)}`;
+    }
+    if (tag === "[object Set]") {
+      const members = Array.from((value as Set<unknown>).values(), valueIdentity)
+        .sort((left, right) => (left < right ? -1 : left > right ? 1 : 0));
+      return `set:${JSON.stringify(members)}`;
+    }
     const entries = Object.entries(value as Record<string, unknown>)
-      .sort(([left], [right]) => left.localeCompare(right))
+      .sort(([left], [right]) => (left < right ? -1 : left > right ? 1 : 0))
       .map(([key, entry]) => `${JSON.stringify(key)}:${valueIdentity(entry)}`);
-    return `object:{${entries.join(",")}}`;
+    const prototype = Object.getPrototypeOf(value);
+    if (tag === "[object Object]" && (prototype === Object.prototype || prototype === null)) {
+      return `object:{${entries.join(",")}}`;
+    }
+    const constructor = prototype && "constructor" in prototype ? String((prototype as { constructor: unknown }).constructor) : "null";
+    return `exotic:${tag}:${constructor}:${String(value)}:{${entries.join(",")}}`;
   }
   return `${typeof value}:${String(value)}`;
 }
