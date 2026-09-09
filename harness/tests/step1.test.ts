@@ -47,6 +47,43 @@ describe("commit — the write id and the store (§1.2)", () => {
     expect(again).toBe(first);
     expect(engine.store.size).toBe(1);
   });
+
+  it("refuses changed payloads while accepting equal values from distinct objects", async () => {
+    const engine = new EngineStub();
+    const first = await engine.commit({ nested: { a: 1, b: 2 } }, "w1");
+    const identical = await engine.commit({ nested: { b: 2, a: 1 } }, "w1");
+    const changed = await engine.commit({ nested: { a: 1, b: 3 } }, "w1");
+
+    expect(identical).toBe(first);
+    expect(changed).toEqual({ ok: false, kind: "conflict", reason: "write-id-reuse" });
+    expect(engine.store.size).toBe(1);
+    expect(engine.store.get("ref1")).toEqual({ nested: { a: 1, b: 2 } });
+  });
+
+  it("snapshots caller input, call evidence, and replay identity independently", async () => {
+    const engine = new EngineStub();
+    const input = { nested: { value: "before", count: 1 } };
+    const first = await engine.commit(input, "w1");
+    input.nested.value = "after";
+    input.nested.count = 9;
+
+    expect(engine.store.get("ref1")).toEqual({ nested: { value: "before", count: 1 } });
+    expect(engine.calls[0]?.args[0]).toEqual({ nested: { value: "before", count: 1 } });
+
+    const stored = engine.store.get("ref1") as { nested: { value: string; count: number } };
+    stored.nested.value = "store-mutated";
+    stored.nested.count = 7;
+    const callInput = engine.calls[0]?.args[0] as { nested: { value: string; count: number } };
+    callInput.nested.value = "call-mutated";
+    callInput.nested.count = 8;
+
+    expect(await engine.commit({ nested: { value: "before", count: 1 } }, "w1")).toBe(first);
+    expect(await engine.commit({ nested: { value: "after", count: 9 } }, "w1")).toEqual({
+      ok: false,
+      kind: "conflict",
+      reason: "write-id-reuse",
+    });
+  });
 });
 
 describe("check_coverage — FD-97's request/result union (§1.3)", () => {

@@ -25,6 +25,30 @@ function grantQueryKey(query: CoveringGrantQuery): string {
   ]);
 }
 
+function snapshot<T>(value: T): T {
+  return structuredClone(value);
+}
+
+function valueIdentity(value: unknown): string {
+  if (value === null) return "null";
+  if (typeof value === "string") return `string:${JSON.stringify(value)}`;
+  if (typeof value === "boolean") return `boolean:${value}`;
+  if (typeof value === "number") {
+    if (Number.isNaN(value)) return "number:NaN";
+    if (Object.is(value, -0)) return "number:-0";
+    return `number:${value}`;
+  }
+  if (typeof value === "bigint") return `bigint:${value}`;
+  if (Array.isArray(value)) return `array:[${value.map(valueIdentity).join(",")}]`;
+  if (typeof value === "object") {
+    const entries = Object.entries(value as Record<string, unknown>)
+      .sort(([left], [right]) => left.localeCompare(right))
+      .map(([key, entry]) => `${JSON.stringify(key)}:${valueIdentity(entry)}`);
+    return `object:{${entries.join(",")}}`;
+  }
+  return `${typeof value}:${String(value)}`;
+}
+
 // EngineStub — INTERFACES.md §5: an in-memory store with real WRITES, an
 // idempotency ledger keyed on the caller's write id, and canned handles.
 //
@@ -72,9 +96,9 @@ export class EngineStub implements EngineSeam {
     return { __handle: `h${n}`, display: `display of h${n}` } as unknown as Handle;
   }
 
-  /** The §1.2 idempotency ledger: write id → the original result, returned
-   *  verbatim on a re-commit. */
-  readonly #ledger = new Map<WriteId, CommitResult>();
+  /** The §1.2 idempotency ledger: write id → the accepted payload identity and
+   *  original result, returned verbatim on an identical re-commit. */
+  readonly #ledger = new Map<WriteId, { payload: string; result: CommitResult }>();
 
   async calculate(query: unknown): Promise<Handle | Envelope<"unavailable" | "timeout">> {
     this.calls.push({ call: "calculate", args: [query] });
@@ -82,13 +106,18 @@ export class EngineStub implements EngineSeam {
   }
 
   async commit(input: unknown, write_id: WriteId): Promise<CommitResult> {
-    this.calls.push({ call: "commit", args: [input, write_id] });
+    const callInput = snapshot(input);
+    const payload = valueIdentity(input);
+    this.calls.push({ call: "commit", args: [callInput, write_id] });
     const prior = this.#ledger.get(write_id);
-    if (prior) return prior; // idempotent per id: the ORIGINAL result, not a re-apply
+    if (prior) {
+      if (prior.payload === payload) return prior.result;
+      return { ok: false, kind: "conflict", reason: "write-id-reuse" };
+    }
     const applied_ref: CommitmentRef = `ref${this.#ledger.size + 1}`;
-    this.store.set(applied_ref, input); // a real write — the anti-vacuity the suite reads back
+    this.store.set(applied_ref, snapshot(input)); // a real write — the anti-vacuity the suite reads back
     const result: CommitResult = { ok: true, applied_ref };
-    this.#ledger.set(write_id, result);
+    this.#ledger.set(write_id, { payload, result });
     return result;
   }
 
