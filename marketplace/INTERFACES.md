@@ -34,6 +34,7 @@ The store's infrastructure — catalog, curation, payments, entitlements, licens
 
 - An installed template writes **only constructs the engine already accepts**: kinds, rules from the closed menu, Shared shapes, boards — with fork provenance recorded in history. An off-menu rule shape was already refused at the install door (`SPEC.md §3`), upstream of the engine's own refusal; the door is a courtesy, the engine is the law.
 - **The engine is not marketplace-aware** — deliberately. No marketplace field, flag, or table exists in engine truth — the one ruled exception is a projection, not a field: the **candidate-shape ghost**, the engine's fourth display projection (FD-34, `../RULINGS.md` — the deliberate exception to the zero-new-seam-shapes posture), display-only and minting nothing, consumed by `SPEC.md §6`/D3. Note recorded in `SPEC.md §7`: the no-export ruling holds because a bundle is **authored as a data-free §1.2 shape, not extracted from a populated board** (FD-82 closed user supply; P4 is the extract refusal).
+- The marketplace adapter requests the candidate-shape ghost through the existing harness `calculate` contract and consumes its declared projection snapshot. It adds no marketplace tool, direct engine read, or new projection; the ghost is computed on demand against the owner's allowed availability and creates no Shared row or token digest (`../engine/SPEC.md §0`/`§5`; transport at `../engine/INTERFACES.md §2a`, return contract at `../harness/INTERFACES.md §1.1`; engine S6 / marketplace D3).
 
 ## §5. Stub strategy
 

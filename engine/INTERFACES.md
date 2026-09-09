@@ -10,7 +10,7 @@ Every obligation of `../harness/INTERFACES.md §1`, mapped to where this package
 
 | Harness obligation (§1.x) | Engine answer |
 |---|---|
-| §1.1 `calculate(query) → Handle` — opaque, never outward | `SPEC.md §5` (closed query taxonomy) + `§4` (handle mechanics, display facet, staleness) |
+| §1.1 `calculate(query) → Handle or declared read snapshot or Envelope` — opaque handles and declared snapshots, never outward | `SPEC.md §5` (closed query taxonomy, unknown query member → `invalid` (`schema-mismatch`)) + `§4` (handle mechanics, display facet, staleness) |
 | §1.2 `commit` — no-double-book by construction, atomic, latch invariant, diff-only, never wipes governing rules, idempotent per caller write id | `SPEC.md §6` (§6.6 the write id) |
 | §1.3 `check_consistency` / `check_coverage` — governing vs own vs **unsatisfiable**; coverage is a request/result union (FD-97) | board-structural kind → `SPEC.md §8` (four classes; unsatisfiable outranks authority); covering-grant kind → `SPEC.md §1.6`'s pure lookup (stored grants only; the decision to act stays the harness floor's) |
 | §1.4 `typed_value` / `compare` — the M3 value vocabulary + quota math; for `instant`/`interval` rows the `type_spec` carries the resolution context `{zone, reference_instant, locale}` (FD-27, 2026-08-21 — the two-argument pin holds) | `SPEC.md §2` (vocabulary + operators + the resolution-context rule), `§3` (`quota` entry); the implementation is the **shared library** — one implementation, `../harness/INTERFACES.md §1.4` (in `harness/src/typed-value.ts` now), consumed here when `BUILD.md` Step 2 builds *(clause added 2026-08-22 — the re-cut lived only at the harness home)* |
