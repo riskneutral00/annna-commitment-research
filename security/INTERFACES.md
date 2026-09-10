@@ -43,8 +43,10 @@ Encryption law, inline: artifacts encrypted at rest (**AES-256-GCM**, random IV 
 
 ## §4. Stub strategy
 
+The entry-point inventory and admission split are `SPEC.md §2`'s. Keep authenticated admin fixtures separate from server-established internal scheduler/ops fixtures: product credentials, absent admin MFA, mixed credentials and client-set trusted flags are negative controls, not shortcuts for creating trusted context. Clock fixtures select due records by stored policy; ops fixtures require a verified requester/basis. Assert logged admin vault reads and least-privilege target limits. M5 runs each arm only when its named BUILD host exists.
+
 - **Vault:** in-memory implementation with a virtual clock (the engine's virtual-clock discipline) — clocks advance by test control, shreds are observable, tombstones real.
 - **Rate limits:** scripted clock; limits declared exactly as in production, windows advanced by the test.
-- **Identities:** canned owner/guest/admin identities plus a canned `external-client` credential; the **three**-credential-models law (M5, FD-18) asserted against the canned set *(updated 2026-08-21 — "two" survived FD-18 here)*.
-- **Injection:** fixtures as scripted `normalize` inputs with source tags — the Q-family runs against the real assembly policy, stubbed model.
+- **Identities:** canned owner-session, guest-token and `external-client` product models, separately authenticated admin identity with hardware-key MFA, and internal scheduler/ops contexts; assert the disjoint entry-point contract above (M3–M5), never count admin or internal context as a fourth product model.
+- **Injection:** raw guest input reaches only the tool-less `summarize` stub; normalize spies receive its tagged structured return and fenced guest context (`../harness/INTERFACES.md §2.1`). Q1/Q2 pair preserved legitimate requests with hostile instructions; failure admits no raw fallback. R1/R3 use bounded admission and charged-attempt doubles for `SPEC.md §10`, not paid calls.
 - **CI grep gate:** no stub — it is a grep, real from the first commit of any layer.

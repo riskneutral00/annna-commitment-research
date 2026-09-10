@@ -18,6 +18,8 @@
 - **The WhatsApp delivery channel** (`../app/SPEC.md §6`; FD-74, 2026-08-23): when the automated-WhatsApp send module exists, the WhatsApp Business (Meta Graph) API path joins the Allowed table as its own floor act — the same discipline as the LINE row. WeChat and Instagram get **no reserved row**: their §6 hard-point records are the reason, and a row appears only if a record is lifted.
 - **The Resend mail send path** (`../app/BUILD.md` Step 6; added 2026-08-22): when the delivery module exists, the Resend API path joins the Allowed table as its own floor act — the same discipline as the importer rows, for the same reason.
 
+- **Guest-interactive model calls** (`../model/SPEC.md §7`; model BUILD Steps 2–4): the harness uses the existing qualified app-supplied model adapter. When its consumer exists, register that concrete adapter path through the ordinary floor process. No browser-to-provider path, extra provider selection or Allowed row is authorized by this reservation; ordinary guest rendering has no model egress.
+
 ## Not on the list, deliberately
 
 - **`engine/convex/**`** — Convex functions run *inside* the deployment; they make no outbound call today and needing one would be a design change, not a lint exception.

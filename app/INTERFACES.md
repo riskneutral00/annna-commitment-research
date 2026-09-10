@@ -6,6 +6,8 @@
 
 ## §1. Upward — the harness seam, satisfied
 
+The guest-interactive refinement rides `../harness/INTERFACES.md §§2.1/3.1/3.3`: server-derived capability context, shared current draft and fenced render payload, qualified model calls only behind the harness. Keep interactive input distinct from structured `on_form_return`; loading or refreshing stored guest copy calls no model. App G1/G3/G7/G9/G10/G12 cover this route against scoped doubles, preserving refusal fields, fresh terms/confirmation and the existing token lifecycle (`SPEC.md §5`).
+
 Every obligation of `../harness/INTERFACES.md §3`, mapped to where this package answers it:
 
 | Harness obligation (§3.x) | App answer |

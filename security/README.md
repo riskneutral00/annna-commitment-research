@@ -12,9 +12,9 @@ annnä schedules people's lives and their customers' bookings — which means it
 
 - **annnä is a processor for guest data.** The business using annnä (the dive shop, the teacher) is the controller of what its customers submit; annnä handles that data on the business's behalf and gives it the tools to meet its duties — consent capture, retention control, a real deletion path. annnä is a controller only for its own user accounts and store purchases.
 - **Built to GDPR as the ceiling**, with Thailand PDPA named (the anchor businesses are Thai) and Taiwan PDPA covered by the same design. Medical data takes explicit consent and dedicated encryption; minors take guardian consent.
-- **Guests never get accounts or agents.** A guest touches one tokenized page and one form — the attack surface of a guest is one link, by construction.
+- **Guests use scoped links without accounts.** The same page offers a form, availability and template-bound console (`../harness/SPEC.md §2`; `../app/SPEC.md §5`). Credential-derived data and executor limits (`SPEC.md §3`), source quarantine (§5) and finite conversation bounds (§10) keep it within the authorized request; it is no unrestricted guest assistant. Saved contacts confer neither access nor send authority.
 - **Sensitive documents live in an encrypted vault with destruction clocks, never in the permanent record.** The permanent record keeps only the attestation — "passport verified, this date." Keep the receipt, shred the document.
-- **Every string entering the AI carries its source, and raw non-owner text never reaches the model that can act.** A guest's note is something the owner reads, not something the agent obeys: the raw text is read only by a quarantined, tool-less model, and what remains — a hostile document can still shape the summary — is bounded by the floor, because even a successful injection could only *propose*: every irreversible act requires the owner's explicit basis. *(Reworded 2026-08-21 to §5's own terms — isolation removes the raw-text path, not the summary path, and no restatement may claim otherwise.)*
+- **Every string entering the AI carries its source, and raw non-owner text never reaches the model that can act.** A guest's note is something the owner reads, not something the agent obeys: the raw text is read only by a quarantined, tool-less model, and what remains — a hostile document can still shape the summary — is bounded by the floor, because even a successful injection could only *propose*: every irreversible act requires the acting party's valid explicit basis (`../harness/SPEC.md §7`); guest permission stays within `SPEC.md §3`. *(Reworded 2026-08-21 to §5's own terms — isolation removes the raw-text path, not the summary path, and no restatement may claim otherwise.)*
 - **The AI cannot author correctness values, move money, or delete records — structurally.** Deterministic code answers times, prices, and availability; no tool transfers value; no model/tool performs general domain deletion. Security §3's engine-owned cleanup is the narrow exception for expired, unused single-visitor records, with activity, holds, bookings, history and management access fenced from it. You can persuade a concierge; you cannot persuade the book.
 - **The store sells data, never code.** Marketplace items are validated documents; the worst installed item is a bad one, never a program.
 
@@ -24,7 +24,7 @@ annnä schedules people's lives and their customers' bookings — which means it
 |---|---|
 | Processor frame + owner compliance tooling | `SPEC.md §12` |
 | GDPR ceiling; named jurisdictions; legal-review gate | `SPEC.md §12`, `BUILD.md` Step 8 |
-| Guest surface = one token, one form | `SPEC.md §2–§3`; `../app/SPEC.md §5` |
+| Guest surface = credential-scoped form, availability and template-bound console | `SPEC.md §2–§3`; `../app/SPEC.md §5` |
 | Unused visitor passes expire after 24 hours; narrow cleanup only | `SPEC.md §3`; `SCENARIOS.md` T7; `../app/SCENARIOS.md` G5/G8/G9 |
 | Vault, clocks, attestations | `SPEC.md §4`; `INTERFACES.md §2` |
 | Injection quarantine | `SPEC.md §5`; harness context assembly |
@@ -38,10 +38,10 @@ The honest attack surface, enumerated in advance — each with the scenario fami
 | Surface | Family |
 |---|---|
 | Guest token routes (enumeration, reuse, races, caching) | T |
-| The guest form — uploads and free text | V, Q, S |
+| The guest form and scoped console — admitted fields, free text, model-context isolation and limits | V, Q, S, R |
 | The email channel (volume, bounce, content) | R |
 | The owner session | §2 posture; floor-bounded |
-| The admin identity & publish pipeline | M |
+| The separately authenticated admin identity, publish pipeline and non-forgeable internal ops/clock authority | M |
 | The model's context (injection) | Q |
 | The external-client surface (the fifth token class) | T9, harness X-family |
 | The shared store's tenant line | N |

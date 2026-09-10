@@ -39,6 +39,10 @@ A protected GitHub environment, manually fired, whose required reviewer is the h
 
 The vault's encryption keys live **with the runtime secrets, never in the store they encrypt** (`../security/SPEC.md §7`, "Provider keys are server-side only"). No rows yet — the vault is built at `../security/BUILD.md` Step 3. They are manifest-bearing when they exist; naming them here in advance would be naming secrets that do not exist, which is the same defect in the other direction.
 
+## Guest conversation consumer
+
+`../model/SPEC.md §7` routes guest-interactive calls through qualified app supply, never an owner BYO key. No guest-specific secret is selected or added before the concrete consumer/rung exists. Its runtime secret is inventoried at that BUILD gate under the existing server-only and qualification/preview isolation rules; the current spike key row is not authorization for a product route. Input/turn/request-cost limits are configuration under `../security/SPEC.md §10`, not secret values. Ordinary guest page rendering consumes no model key.
+
 ## Standing bound
 
 This manifest is enforced by **diff against a live env store**, and there is no live store below the local rung. Until Step 2 stands the preview rung up, R1/R5/R11 are **declarations, not implementations** — recorded in `SPEC.md §8` DR-8 rather than left to be read as working. *(DR-8's ordering half became conformant 2026-08-08 when the build order was re-scoped to "builds alongside, Steps 0–1 first" — `SPEC.md §0`. That changes nothing here: the gates below still wait on a store that does not exist, and the re-scope kept every one of them.)*
