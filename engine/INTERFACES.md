@@ -44,11 +44,14 @@ The round-trip is **pinned on the harness side by `../harness/SCENARIOS.md` P1**
 
 ### §2.1 The travel source (external compute)
 ```
-travel(place_a, place_b, at) -> duration | unavailable
+travel({origin, destination, mode, timing: {kind: arrive-by | depart-at, instant, zone},
+        reference_instant}) -> estimate | unavailable
+estimate = {request_identity, duration, departure, arrival,
+            source: {provider, adapter_revision, obtained_at, valid_until}, freshness}
 ```
-- Lives **behind the engine's own interface** — no other layer ever calls it or carries its numbers. Results are cached as stored facts (`author: engine`), making replay deterministic.
+- Derived from `SPEC.md §5`: origin/destination are ordered typed places with selected revisions; duration and dated instants are engine-typed. Only the engine calls the provider and validates its result. Harness/app consume its Handle and display facet, never provider numbers as write literals. Unavailable remains an explicit result under the existing envelope, with no fabricated duration/departure.
 - Precedence and fail-closed behavior: `SPEC.md §5`. Provider identity is config (BUILD), like a model binding — swappable without spec change.
-- **Stub:** a scripted table `{(place_a, place_b, at-bucket) → duration}` keyed by scenario; `unavailable` on misses. Every SCENARIOS run uses the stub.
+- **Stub:** script the full request identity and source/freshness fields from `SPEC.md §5`, plus explicit unavailable/unsupported responses; count both distinct identities and batched calls. Inject the reference clock, different modes, same-bucket different instants, arrive-by/depart-at, different dates/zones, changed place/provider revisions and expiry boundaries. Every SCENARIOS run uses the stub. These controls prove adapter/cache behavior only; serving capability is owed at BUILD Step 4.
 
 ### §2.2 The storage substrate
 Tech-neutral requirements (candidates named in `BUILD.md` only):
