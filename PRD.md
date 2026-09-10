@@ -91,7 +91,7 @@ The first cohort is a working freelancer who sells bookable time and also has a 
 
 ### 2.2 Non-Users (v1)
 
-- **Guests are never users.** A student, a renter, a diver or a patient gets one tokenized link and one form — and, once a booking completes, a booking-bound manage link for that booking alone (FD-43). No account, no password, no chatbot. This is a security guarantee (`security/SPEC.md`), not a scope cut.
+- **Guests are never users.** A student, a renter, a diver or a patient gets one tokenized link and one form — and, once a booking completes, a booking-bound manage link for that booking alone (FD-43). No account, no password, no owner session or general assistant. The approved template-bound guest console stays within `harness/SPEC.md §2` and the credential, field and operation scope at `security/SPEC.md §3`. This is a security guarantee (`security/SPEC.md`), not a scope cut.
 - **Other people's agents.** v2, behind FR1's legal review — see §1.2.
 - **Institutions running an autonomy envelope.** Situation E is held out by FR10 and stays a set of predictions to verify, not a target.
 - **Not a non-user, and worth separating:** dive centers and rental operators are in v1 product scope (FR10 puts Situations A, B, C and D in v1). They are simply not in the first two rings of adoption — see §2.3.
@@ -378,7 +378,7 @@ What annnä is not, and will not become. These prevent the "let me also add this
 - **Not open to other people's agents in v1.** §1.2, refusal two.
 - **Not agent-only.** Agents are first-class *alongside* humans, never instead of them. A capability reachable only by an agent violates RQ-2 exactly as one reachable only by the console does.
 - **Not a two-way calendar.** Inbound import is in scope; outbound sync and write-back are banned and the UI for them is a standing rejection.
-- **Not a guest-facing product.** Guests get links and forms, never an account — no password, no sign-in, no agent. A booking-bound manage token (FD-43) gives a guest cancel/move over **their own booking only**; that is the ceiling, and nothing is built past it.
+- **Not a guest-facing product.** Guests get links and forms, never an account — no password, no sign-in. The approved template-bound guest console may fill the published template's fields, answer scoped bookability questions and invoke permitted own-booking operations (`harness/SPEC.md §2`; `security/SPEC.md §3`). It grants no owner session, unrestricted assistant, private owner-board access or cross-owner authority. A booking-bound manage token (FD-43) can permit cancel/move over **their own booking only**, subject to its allowed operations and current binding; that is the guest-facing ceiling, and nothing is built past it.
 - **Not a dive product.** The Situations are falsification probes; a fix that special-cases a story is the wrong fix. The held-out domain exists to keep that honest.
 - **Not a claim to have invented multi-resource scheduling.** `PR/BRIEF.md` establishes that vertical booking software already schedules people and equipment together, and that no outward surface may imply otherwise. The claim is the unoccupied combination, and it is a narrowing.
 
