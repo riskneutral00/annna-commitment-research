@@ -15,6 +15,8 @@ The contract is **owned and defined by `../harness/INTERFACES.md §2`** — not 
 | judgment | bounded per §5 |
 | `summarize(raw_text, source_tag)` | structured return only; no instruction survives into `summary`; material facts preserved; not judgment (SPEC §1, §5) |
 
+For owner draft interactions, consume the validated current draft/view context from `../harness/INTERFACES.md §3.1` and §2.1: selected object/use, revision, field, scope, ask and submitted source span. Normalize the submitted instruction against that context, preserving raw values and source tags; an example that was not sent is no instruction. Narrate pending questions and accepted proposals from stored structure (`../harness/SPEC.md §3.13`), distinguishing draft acceptance from applied results. The model cannot mint draft/committed revisions, transfer an old OK to changed content, infer persistence from an echo, compute travel or widen authority. Trigger processing remains deterministic and never calls normalize. Qualification controls are `EVALS.md` N-15/N-16, A-11/A-12 and R-11/R-12 at existing BUILD Steps 1–3.
+
 Two properties of that seam this layer must preserve, never weaken:
 - **Per-call selectable** — nothing here may assume a single model across calls.
 - **Untrusted output** — the harness schema-validates at the seam (SPEC §8); this layer never bypasses that by "guaranteeing" its own output.
