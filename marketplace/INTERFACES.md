@@ -21,13 +21,13 @@ The store's infrastructure — catalog, curation, payments, entitlements, licens
 ## §2. To the app (upward)
 
 - The app renders the storefront surfaces — the gallery riser's store shelf, the browse riser, the template preview — **from catalog documents**, as `../app/SPEC.md §7`-class app-only views. It runs the preview projections and nothing else: no purchase logic, no entitlement math, no price rendering beyond what the document states.
-- **Zero new harness render verbs.** Storefront surfaces are app-only views; nothing about the store passes through `render(surface, payload)`.
+- **Zero new harness render verbs.** Storefront surfaces are app-only views; nothing about the store passes through `render(surface, payload)`. Private documents are produced by the existing app account-document adapter on the app’s backend (`SPEC.md §3`), with the private definition/use law at §2. Its authenticated internal save/read/revise/remove path serves console/form and headless owner inputs alike; results use the current context/draft/readback carriers. Rendering never initiates persistence, and document writes are neither `display_settings` nor a new inward seam verb.
 - **What the app stubs when this package is absent: nothing.** The app's shipped-four default *is* the absent state (`../app/SCENARIOS.md` S6) — the marketplace is an addition to a complete app, never a dependency of it.
 
 ## §3. To the harness (the install crossing)
 
 - A template install reaches the harness as **ordinary elicitation input**: the bundle's shapes become a sequence of proposals through the existing propose→confirm flow. The harness's B1 scope discipline applies per proposal; B2 ask-once applies to repeated parameters across the walk.
-- **Zero new tools, zero new verbs; the floor is untouched.** Installing is *authoring* — nothing outward fires without its own basis, exactly as if the owner had spoken each shape to the console.
+- **Zero new tools, zero new verbs; the floor is untouched.** Installing is *authoring* — nothing outward fires without its own basis, exactly as if the owner had spoken each shape to the console. The same applies to opening a use of a saved private definition: its owner/id/revision and fresh request identity remain explicit under `SPEC.md §2`; only validated configuration enters ordinary proposals, never incidental participants or copied live authority.
 - What the harness stubs here: **nothing** — this package builds after the harness is real (`BUILD.md`). The marketplace's own suite scripts the harness where a scenario needs one.
 
 ## §4. To the engine
@@ -42,4 +42,4 @@ The store's infrastructure — catalog, curation, payments, entitlements, licens
 - **The entitlement-withdrawal control** *(named 2026-08-29 — E5, E6 and E9 each need a withdrawal to happen partway through a run, and no control existed for a suite to cause one)*: the mock's **entitlement map is suite-mutable** — a test grants and withdraws an entitlement between calls, and the withdrawal carries no reason across the seam, because there is no field for one (`SPEC.md §5`). That mutability is the whole mechanism those three assert against.
 - **The store-skin fixture, pinned** *(2026-08-29 — §1 requires "one store-skin fixture" and never said what it is made of; a fixture cut from a licensed master would put licensed IP in a public repo, which E4 treats as an incident rather than a bug)*: it is an `../assets/make-pack.mjs` run over a **non-licensed test master** — a throwaway fixture under FR38, mock content and never a shipped default.
 - **Harness:** scripted transcripts for install walks (the I-family) — real harness once built; scripted seam calls before that.
-- **App:** the record-and-return spies of `../app/INTERFACES.md §4`, unchanged.
+- **App:** the record-and-return spies of `../app/INTERFACES.md §4`, unchanged. Add the internal document-store double specified by `../app/INTERFACES.md §4`: account selection, revision compare, lost acknowledgement, retirement/reference races and durable readback across controller instances. This is separate from the closed-service catalog mock; both can be empty or unavailable independently. P3/P6/I1/I5 require stateful persistence controls, not a render spy’s asserted text.
