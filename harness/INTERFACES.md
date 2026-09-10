@@ -55,6 +55,8 @@ calculate(query) -> Handle | ReadSnapshot | Envelope<"invalid" | "unavailable" |
 
 ### 1.2 Write / commit
 
+Field/rule diffs and declared stored reads retain the enclosing target, stable field/rule identity, expected revision, complete typed operand, value/default scope and reviewed dependency bindings from `SPEC.md §3.3`. The existing field-path/reference identifies the slot, never its label or array index. Commit rechecks current engine references and authority under engine §6; a stale Handle uses `invalid`/`expired-handle`, a malformed schema uses `invalid`/`schema-mismatch`, incompatible typed values use `invalid`/`type-mismatch`, and a governing-rule refusal retains its existing arm. Required-input or unresolved-reference failure is a schema validation refusal, with authorized concrete dependencies and valid resolutions in the existing detail/next payload; it is not a new Conflict class or free-form rule predicate. Current dependency decisions ride the existing PendingDecision/ask path. App-owned definition/use revisions remain on §3.1’s document context and authenticated adapter, never an engine document identity or new query/verb.
+
 Routine uses the existing Pattern/Commitment diff path (`../engine/SPEC.md §1.4`), with the Pattern ref, occurrence id/generation, original local date/time and zone, interval/anchor and accepted scope retained through stored reads and write targeting. The relevant-slice read and existing context `stored_answers[]`/`commitments[]` carry these authorized inputs for `SPEC.md §6`'s ask-once behavior; the UI/model cannot author identity or bypass version checks. Stop-from-date carries the checked scope and each required authorized resolution, not a bulk cancellation disguised as a Pattern edit. No new success arm, temporal type or permission follows. Travel edits keep engine §5’s request identity, estimate Handle, draft revision and accepted usual/datetime scope through this diff path. Saved-place entry creation/edit/retirement is a principal-attribute diff under `../app/SPEC.md §8`, independently accepted and idempotent, never a new stored-object class. Current reference revisions and every reviewed future resolution are rechecked atomically; no partial retarget on failure.
 
 ```
@@ -164,6 +166,8 @@ render(surface: board | commitment-page | console, payload)
 - **board** (H1) — the calendar view; commitments shown placed in time.
 - **commitment-page** (H2) — the per-commitment support surface (one per commitment).
 - **console** — the chat surface for the owner's agent.
+
+Field editing uses §3.1’s existing draft diffs, computed Handles and PendingAsk references for `SPEC.md §3.3`: row actions echo stable slot binding, expected field/definition revision, exact operation and value/default/use scope. Dependency explanations carry current authorized refs and individually valid choices; a stale message cannot target a renamed or replaced row. Required/optional, explicit blank, default and calculated readback remain distinct. No new catalog node or prop is inferred from this carrier; `../app/SPEC.md §4.1` validates the existing node id/bind against the bound schema.
 
 ### 3.2 Generative UI
 ```
