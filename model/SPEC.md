@@ -43,7 +43,7 @@ The enumerated intents `normalize` may return — **derived from the harness's s
 | `grant.give` | action_class, scope, expiry | Grant object |
 | `grant.revoke` | grant ref | Grant revoke (impact surface) |
 | `exception.record` | reason | M2 exception field |
-| `sop.author` | content / upload ref | `CRUD_SOP` |
+| `sop.author` | admitted authored/named content or existing authorized content reference (`../harness/SPEC.md §3.6`; `../security/SPEC.md §4`); no owner/guest upload reference | `CRUD_SOP` |
 | `shared.author` | nearest-template base, field add/removes | generative-UI + `CRUD_Shared` (Lego authoring) |
 | `shared.publish` | shared ref, audience/recipients | `CRUD_Shared` publish (**outward**) |
 | `notify.request` | recipient, payload ref | `send` (**outward**) |
