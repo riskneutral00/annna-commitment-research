@@ -11,6 +11,8 @@
 Everything through Sunbird's **public link**, on his phone, no account:
 
 - **He pulls a bike.** He opens the link, sees the live fleet with photos and prices, and taps a **Honda Click 125i**. That tap is not a rental — it puts the unit into a **hold**: it's now off the link for everyone else, and a **1-hour clock** starts, shown to him on the screen.
+> **V1 supersession (security §4)** — The original upload/authentication beat is preserved below as source narrative and deferred under `../../../security/SPEC.md §4`. In v1, structured passport/license answers and an attributed operator report of a satisfied precondition remain possible under the owner's rules; no file is uploaded and annnä authenticates neither the person nor license class. The checklist, license-refusal and confirmation passages here carry no automatic verification guarantee; consent and hold checks still apply.
+
 - **He works the checklist** the pull opened, against the clock:
   - **Passport** — photographs and uploads it (the image is stored; the physical book stays in his pocket — Sunbird never takes it).
   - **License** — uploads his license + IDP. For the Click, car-and-scooter class is enough; annnä accepts it.

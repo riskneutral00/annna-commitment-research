@@ -10,7 +10,7 @@
 |---|---|---|---|
 | Capability tokens — mint, binding, scope, hash, serve, headers (§3) | **App** (guest routes) | `publish` / `on_form_return` (`../harness/INTERFACES.md §3.3`); attribution contract stays harness H6; the engine stores **digests** (`../engine/SPEC.md §1.7`) | canned individual/reader/coordinator bindings, revoked/reissued and wrong-request controls + a scripted clock |
 | Unused `single-visitor` custody and cleanup (§3) | **Security law; App admission; Engine storage transaction** | existing token admission and write/idempotency path; cleanup is an internal narrow operation, not a new harness/engine/app seam verb | injected clock, delayed/repeated cleanup, and concurrent first-use/hold/booking fixtures |
-| The vault (§4) | **New downward substrate** — of the app (guest upload/serve) and of ops (clock jobs) | attestations ride precondition **evidence** (`../harness/SPEC.md §3.4`) into ordinary engine writes; artifact bytes ride no seam at all | in-memory vault, virtual clock (§4) |
+| The vault (§4) | **New downward substrate** — of the app (admitted sensitive-data custody) and of ops (clock jobs); no upload door (`SPEC.md §4`) | attestations ride precondition **evidence** (`../harness/SPEC.md §3.4`) into ordinary engine writes; artifact bytes ride no seam at all | in-memory vault, virtual clock (§4) |
 | Provenance quarantine (§5) | **Harness** (context assembly, `../harness/SPEC.md §8`) | the existing `normalize` context contract — tags travel inside the assembled context, no new call | injection fixtures as scripted `normalize` inputs |
 | Consent & evidence bundles (§6) | **App** captures (G6); shape is the harness's `satisfied_by {principal, at, evidence}` | `on_form_return` | canned form returns with/without evidence |
 | Secrets (§7) | **BUILD/ops + CI**, per layer | none — a file-and-pipeline discipline | none needed: the grep gate is real from day one |
@@ -27,10 +27,10 @@
 
 Named by shape, like the marketplace service (`../marketplace/INTERFACES.md §1`):
 
-- `vault.put(artifact, class, subject) → attestation` — encrypts, stores, and records the class (**the retention clock arms on the purpose-served registration, not on put** — `SPEC.md §4`'s F-19 sentence; put narrowed 2026-08-31); returns `{class, verified_by, at, vault_ref}` for the engine's precondition evidence.
+- `vault.put(artifact, class, subject) → attestation` — encrypts, stores, and records the class for already-admitted material only; the existing authenticated custody context supplies the recorded owner/class/purpose policy, attribution, observed start and finite deadline required by `SPEC.md §4`. Persistence without that intake coverage refuses; later purpose events follow the same home rather than a universal put-versus-purpose start. Returns `{class, verified_by, at, vault_ref}` for the existing precondition-evidence shape with §4's storage-receipt semantics: no automatic precondition satisfaction or participant verification, and no owner/guest upload route.
 - `vault.get(vault_ref, basis) → artifact | tombstone` — **every get is logged with its basis** to the audit surface, admin included (SPEC §11). After destruction, an honest tombstone: what class existed, when destroyed, under which clock.
 - `vault.shred(subject | vault_ref, basis) → completion attestation` — destruction by clock or by lawful request; for engine-resident contact PII, shredding the **per-subject key** is the erasure (SPEC §4).
-- **The clock job** — internal, deterministic, idempotent (the engine's horizon-job pattern): scans clocks, shreds what's due, writes completion attestations.
+- **The clock job** — internal, deterministic, idempotent (the engine's horizon-job pattern): scans the recorded policy-bound deadlines, including intake limits for unfinished flows, shreds what's due, writes completion attestations (`SPEC.md §4`).
 
 Encryption law, inline: artifacts encrypted at rest (**AES-256-GCM**, random IV per artifact, version-prefixed ciphertext); `medical`-class under its own dedicated key so keys rotate without re-encrypting history; keys live with runtime secrets (SPEC §7), never in the vault they unlock.
 

@@ -17,6 +17,8 @@ Each customer walks into Hug Ocean and TingTing enters them into annnä and clic
 
 ## The medical gate
 
+> **V1 supersession (security §4)** — The original upload/authentication beat is preserved below as source narrative and deferred under `../../../security/SPEC.md §4`. V1 retains the structured medical answer and consent, and can record the operator's attributed report that the configured precondition is satisfied. It does not authenticate a note, verify physical handover or process/release payment; the source account of the clinic, photo, Glacier upload and payment gate is not an active v1 obligation.
+
 That answer trips a hard block in the app. Jun Wang can't move on to payment until he uploads a doctor's note — annnä says so on the screen and won't let him past it. He goes to a clinic, has the form signed, photographs it, and uploads the photo; annnä stores it in the cold vault — a Glacier-class store (`../../../security/SPEC.md §4`). He still has to bring the physical paper in, so he carries it to Hug Ocean and hands it to TingTing for the file. With the note uploaded, the block lifts and he continues to payment. *(This is the one piece the app handles end-to-end even here — because it's a rule inside Hug's own setup, not something that depends on an outside supplier picking up the phone.)*
 
 ## It assembles — then it cancels

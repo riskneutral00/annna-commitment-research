@@ -4,6 +4,8 @@
 
 ## Must work
 
+> **V1 supersession (security §4)** — The original upload/authentication beat is preserved below as source narrative and deferred under `../../../security/SPEC.md §4`. The unfinished-checklist case instead exercises admitted structured inputs against the existing hold clock; no incomplete upload is retained. The recorded policy/start/deadline governs personal data even when the hold expires.
+
 **A hold expires and releases.** A traveller taps a **Click**; the unit drops into a hold, 1-hour clock running. He uploads his passport, then gets distracted and never signs the T&C or places the deposit. At **60 minutes** the hold **expires on its own**: the checklist is incomplete, so the pull confers nothing, and the Click **returns to the link** for anyone to pull. The half-finished uploads don't hold the unit hostage.
 
 **An early return frees from the actual time.** A NMAX due Sunday is dropped back **Saturday 21:00**. Its **6-hour buffer** runs from **Saturday 21:00**, not from the Sunday on the paper; at ~03:00 it re-enters the link. Availability tracks reality, not the schedule.
@@ -12,6 +14,8 @@
 
 **A rule change applies only forward.** Ploy tightens the buffer from **6 hours to 4**. Units already cooling down finish the six they entered with; every return from now on cools for four. The same holds for the hold window and the prices — a live hold keeps its hour, a confirmed rental keeps its rate. Changing the shop's rules re-publishes the link; it never rewrites a rental already made.
 
+> **V1 supersession (security §4)** — The passport/license clearance and big-bike eligibility passages retain their original source wording. Under `../../../security/SPEC.md §4`, upload/authentication-dependent clearance is deferred; only permitted structured answers or an attributed operator record can satisfy configured preconditions. Auto confirmation still checks those recorded preconditions and never proves identity, license authenticity or physical outcome.
+
 **A completed checklist confirms with no human.** A traveller clears passport + license + signed T&C + deposit inside the clock; the hold **confirms itself** (Auto). Ploy approves nothing.
 
 **A walk-up guest manages his own rental** *(scripted beat, added 2026-08-22)*. Tom arrived off the public link — nobody at Sunbird ever typed his name — yet his confirmation handed him a **manage link of his own**. From it he can move the rental's dates (offered only against genuinely free time for that unit) or cancel it outright, his own act, with Ploy **informed, never asked**. Change his mind twice and it's still two taps, not two phone calls; the walk-up guest and the named guest hold the same power over their own booking.
@@ -19,6 +23,8 @@
 **The big bike, when it's free and the license fits.** A traveller with a **motorcycle-class** IDP taps a **CBR**; the extra license precondition is satisfied, the rest of the checklist clears, and the CBR confirms. Scarcity working *with* the grain when a qualified rider meets a free license-gated unit.
 
 ## Must be refused / handled
+
+> **V1 supersession (security §4)** — The original upload/authentication beat is preserved below as source narrative and deferred under `../../../security/SPEC.md §4`. The active v1 protection is that a late admitted answer or attributed report cannot revive an expired hold; its data follows the recorded lifecycle policy. Neither the deposit record nor consent evidence proves a value transfer.
 
 **A late document must not revive a dead hold.** The distracted traveller from above uploads his deposit **at 65 minutes** — five minutes after his hold expired and, by now, after that Click has been pulled and confirmed by someone else. The late document **does not un-expire** his hold or hand him a bike that's gone. The lapsed hold **stays lapsed**; he's told the unit is no longer his and shown the live fleet to start over.
 
