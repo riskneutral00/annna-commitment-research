@@ -292,7 +292,7 @@ Every failure return on every seam is one of the six kinds (§1), and every kind
 |---|---|---|
 | `conflict` | `capacity` | no-double-book by construction; two commits racing for the same capacity (§1.2) |
 | `conflict` | `buffer` | the buffer/travel-gap commit-time check — "capacity, buffers (including travel)" (`../engine/SPEC.md §7.1` item 3, the §6.1 check list) |
-| `conflict` | `latch` | the latch invariant — a lapsed hold or set latch refuses the write (§1.2; `SPEC.md §3.4`) |
+| `conflict` | `latch` | the latch invariant — invalid clears/rewrites, attempted revival of a terminal record (including late confirmation or renewed consumption), or competing terminal transitions refuse the write; retained confirmation history alone does not (§1.2; `SPEC.md §3.4`) |
 | `conflict` | `precondition` | commit-time precondition check (`../engine/SPEC.md §7.1` item 3) |
 | `conflict` | `governing-rule` | a governing-authority rule refusing the write (`../engine/SPEC.md §7.1` item 3; hard stop, `SPEC.md §6`) |
 | `conflict` | `write-id-reuse` | a reused write id whose payload differs from the recorded one (`../engine/SPEC.md §6` item 6) *(row added 2026-08-22 — collects law older than this table, not a §7.2 widening: the engine ruled the shape before the table was authored and the table missed it)* |
