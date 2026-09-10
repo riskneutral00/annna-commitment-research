@@ -56,7 +56,7 @@ Board {
   id
   owner            -> principal
   capacity | balance                 // occupancy is a NUMBER, not a boolean:
-                                      //   capacity = max concurrent consumption ≤ N at any instant
+                                      //   capacity = recorded admission/expansion accounting (engine/SPEC.md §1.2)
                                       //   balance  = cumulative draw-down over a period (class-pack)
                                       //   (real boards may need both — engine/M3 concern)
   attributes { … }                   // authored facts: has-ventilator, language, depth, unit-class…
