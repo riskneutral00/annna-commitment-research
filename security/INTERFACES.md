@@ -9,6 +9,7 @@
 | Control (SPEC §) | Owned by | Rides which existing seam | Stubbed how (§4) |
 |---|---|---|---|
 | Capability tokens — mint, hash, serve, headers (§3) | **App** (guest routes) | `publish` / `on_form_return` (`../harness/INTERFACES.md §3.3`); attribution contract stays harness H6; the engine stores **digests** (`../engine/SPEC.md §1.7`) | canned token fixtures + a scripted clock |
+| Unused `single-visitor` custody and cleanup (§3) | **Security law; App admission; Engine storage transaction** | existing token admission and write/idempotency path; cleanup is an internal narrow operation, not a new harness/engine/app seam verb | injected clock, delayed/repeated cleanup, and concurrent first-use/hold/booking fixtures |
 | The vault (§4) | **New downward substrate** — of the app (guest upload/serve) and of ops (clock jobs) | attestations ride precondition **evidence** (`../harness/SPEC.md §3.4`) into ordinary engine writes; artifact bytes ride no seam at all | in-memory vault, virtual clock (§4) |
 | Provenance quarantine (§5) | **Harness** (context assembly, `../harness/SPEC.md §8`) | the existing `normalize` context contract — tags travel inside the assembled context, no new call | injection fixtures as scripted `normalize` inputs |
 | Consent & evidence bundles (§6) | **App** captures (G6); shape is the harness's `satisfied_by {principal, at, evidence}` | `on_form_return` | canned form returns with/without evidence |
@@ -33,7 +34,7 @@ Named by shape, like the marketplace service (`../marketplace/INTERFACES.md §1`
 
 Encryption law, inline: artifacts encrypted at rest (**AES-256-GCM**, random IV per artifact, version-prefixed ciphertext); `medical`-class under its own dedicated key so keys rotate without re-encrypting history; keys live with runtime secrets (SPEC §7), never in the vault they unlock.
 
-**The contrast invariant, stated so no builder blurs it:** the engine has no delete (`../engine/SPEC.md §1.10`); **the vault is THE place deletion exists — that is its job.** And the vault is a *substrate*, not a harness tool: no tool in the harness contract gains the `destruction` reversibility class (`../harness/SPEC.md §5` — the class stays intentionally unoccupied). Clock-end destruction executes stored owner policy; request-driven erasure is an ops runbook act (SPEC §12). **The agent never shreds.**
+**The contrast invariant, stated so no builder blurs it:** the engine has no **general domain-record delete** (`../engine/SPEC.md §1.10`); the approved exception is security §3's internal cleanup of a stored, expired-and-unused `single-visitor` record, atomically fenced from activity, holds, bookings and continuations. **The vault is the place deletion exists for artifacts — that is its job.** And the vault is a *substrate*, not a harness tool: no tool in the harness contract gains the `destruction` reversibility class (`../harness/SPEC.md §5` — the class stays intentionally unoccupied). Clock-end destruction executes stored owner policy; request-driven erasure is an ops runbook act (SPEC §12). **The agent never shreds, and no model/tool gains general record deletion.**
 
 ## §3. What this package OWNS — and never absorbs
 
