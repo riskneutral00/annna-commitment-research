@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
 import { wire, isEnvelope, ROUTING_TABLES, ROUTING_TABLE_AUTHOR, makeClock } from "../src/index.js";
 import type { Event, HumanDeclineData, TriggerEvent } from "../src/index.js";
-import type { CalculateResult, EngineSeam, Envelope, ReadSnapshot, Tagged } from "../src/seams.js";
+import type { CalculateResult, EngineSeam, Envelope, ReadSnapshot, RegistrationKind, Tagged } from "../src/seams.js";
 import { EngineStub } from "../src/stubs/engine.js";
 import { AppStub } from "../src/stubs/app.js";
 import { ModelStub } from "../src/stubs/model.js";
@@ -226,6 +226,30 @@ describe("the Event union — seven sources, kind-routed discriminators (SPEC §
     const internal: Event = { kind: "clock", at: 3, registration_ref: "r3" }; // engine-internal: no kind, constructable
     expect([holdExpiry.kind, reminder.kind, internal.kind]).toEqual(["hold-expiry", "clock", "clock"]);
     expect("registration_kind" in internal).toBe(false);
+  });
+
+  it("carries escalation deadlines through the ordinary clock arm (typed fixture only)", () => {
+    const clock = makeClock();
+    clock.step(10);
+    const deadline = {
+      kind: "clock", at: clock.now(), registration_ref: "escalation-registration-1",
+      registration_kind: "escalation-deadline",
+    } satisfies Extract<Event, { kind: "clock" }>;
+    expectTypeOf<typeof deadline>().toExtend<Event>();
+    expectTypeOf<typeof deadline>().toExtend<TriggerEvent>();
+    expectTypeOf<RegistrationKind>().toEqualTypeOf<"reminder" | "offer-hold" | "ask-age-out" | "escalation-deadline">();
+    expect(deadline).toEqual({
+      kind: "clock", at: 10, registration_ref: "escalation-registration-1",
+      registration_kind: "escalation-deadline",
+    });
+    // The registration ref is the carrier for stored deadline identity. This
+    // fixture does not schedule, route, persist or advance an escalation.
+    expectTypeOf<Omit<typeof deadline, "at">>().not.toExtend<Event>();
+    expectTypeOf<Omit<typeof deadline, "registration_ref">>().not.toExtend<Event>();
+    expectTypeOf<{ kind: "clock"; at: number; registration_ref: number; registration_kind: "escalation-deadline" }>().not.toExtend<Event>();
+    expectTypeOf<{ kind: "clock"; at: number; registration_ref: string; registration_kind: "unknown-deadline" }>().not.toExtend<Event>();
+    expectTypeOf<{ kind: "escalation-deadline"; at: number; registration_ref: string }>().not.toExtend<Event>();
+    expectTypeOf<{ kind: "escalation-deadline"; at: number }>().not.toExtend<TriggerEvent>();
   });
 
   it("constructs a complete source roster including an attributed initial offer", () => {

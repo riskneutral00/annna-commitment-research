@@ -220,8 +220,10 @@ export type Tagged = { text: string; source: SourceTag };
 
 /** The closed harness-written registration kinds (engine/SPEC.md §1.15's
  *  optional member — an engine-internal registration omits it; a
- *  harness-written one MUST carry it). */
-export type RegistrationKind = "reminder" | "offer-hold" | "ask-age-out";
+ *  harness-written one MUST carry it). The escalation-deadline widening is
+ *  drafted, not founder-ratified (INTERFACES.md §7.2); its stored identity
+ *  and lifecycle are SPEC.md §3.13, not implemented by this carrier. */
+export type RegistrationKind = "reminder" | "offer-hold" | "ask-age-out" | "escalation-deadline";
 
 /** Human answer carrier (INTERFACES.md §3.3). Choice values come from template
  * configuration, not the failure vocabulary. Attribution is on the enclosing
@@ -232,8 +234,9 @@ export type HumanDeclineData =
 
 /** The seven trigger sources (SPEC.md §4), with the kind-routed bridge's two
  *  discriminator-carrying arms (engine/INTERFACES.md §2.2, 2026-08-31):
- *  `offer-hold` registrations surface as `hold-expiry`; `reminder` and
- *  `ask-age-out` registrations — and every engine-internal registration,
+ *  `offer-hold` registrations surface as `hold-expiry`; `reminder`,
+ *  `ask-age-out` and `escalation-deadline` registrations — and every
+ *  engine-internal registration,
  *  which carries no kind — surface as the ordinary `clock` source.
  *
  *  Field-for-field the printed contract of INTERFACES.md §3.3 (normalized
