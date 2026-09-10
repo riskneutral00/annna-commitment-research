@@ -104,7 +104,7 @@ Commitment {
   actual_end                              // actual done/returned — FREE (no ≥ constraint)
   temporal_type = derived from ROLES (event if it has an occupying interval; else task)
                                            //   `role` is contract/engine-classified, never an LLM literal
-  completed     = derived (event: actual_end ?? (end passed); task: ticked)
+  completed     = derived from recorded completion / permitted clock completion below
   completable   = derived from kind        // the kind's schema declares whether completion requires an
                                            //   explicit act (a tick / recorded return); BARE => false (FD-98)
 
@@ -118,18 +118,20 @@ Commitment {
                                            //   with, pinned at creation. Optional because a BARE
                                            //   commitment has no form. See the note below.
 
-  // STATUS = latched acts (stored, attributed) OVER derived conditions:
-  confirmed_at { by, at }?               // \
-  cancelled_at { by, at }?               //  \  latched DECISIONS — stored + attributed;
-  declined_at  { by, at }?               //  /  a set latch WINS over the derivation
-  expired_at   { at }?                   // /   (once expired, stays expired — no un-expire)
-  status = latch?.label ?? derive(unmet_conditions)
-           //   derived layer: draft[not yet committed — the persistent form's state] /
-           //                   offered[an offer is out and its hold has not lapsed] /
-           //                   pending[own preconditions unmet] / blocked[deps unmet] /
-           //                   active[start reached, not done] /
-           //                   completed[tick, or end passed for non-completables] /
-           //                   review[completable past its end, no tick — awaiting the owner's word]
+  // STATUS = lifecycle precedence below; stored facts are never cleared to change status:
+  confirmed_at { by, at }?               // write-once confirmation HISTORY, not a terminal outcome
+  cancelled_at { by, at }?               // terminal decision, stored + attributed
+  declined_at  { by, at }?               // terminal decision, stored + attributed
+  expired_at   { at }?                   // terminal clock latch; no un-expire
+  status = lifecycle_status(stored_facts, unmet_conditions, clock)
+           //   terminal outcomes: cancelled / declined / expired / completed
+           //   otherwise: draft[not yet committed — persistent form state] /
+           //              offered[live unanswered offer and hold] /
+           //              blocked[deps unmet, including pending+blocked] /
+           //              pending[own preconditions unmet] /
+           //              review[completable past end, no recorded completion] /
+           //              active[start reached, not done] /
+           //              confirmed[confirmed future booking]
 
   // THE PARK — the loop stopped and a HUMAN must look. Neither a latch nor a status:
   needs_human { reason: no_basis | unreachable | unverified
@@ -165,13 +167,26 @@ Commitment {
 
 **`owner` vs `customer` in `author`.** `customer` throughout this corpus means the *counterparty* — the person who books (`Order.customers[]`, the `per-customer` quota scope, the `customer` rung of the scope ladder). `owner` is the account holder who runs the board. The two were previously collapsed, which made "the owner hand-set this field" unexpressible and left §6's repetition predicate with no referent. This is the vocabulary's **single normative home**; `../engine/SPEC.md §1.3` asserts the `engine` member for override precedence and remains true unchanged, because that precedence ranks travel-value sources, not author tags. The author list `../engine/SPEC.md §1.3` names inline — "customer-, template-, and model-authored" — is **illustrative of the vocabulary, not the normative statement of it**: the vocabulary lives here (§3.4), and the `model`-vs-`llm` wording in that inline list is the engine spec's prose, not a second definition. A reader (or `/contradiction-sweep`) should treat that list as a pointer to §3.4, not as a diverging restatement.
 
-**Why the status shape matters:** `cancelled` / `declined` / `expired` / `confirmed` are **decisions made at a time**, not conditions going unmet — so they are **stored, attributed latches**, and a set latch overrides the derived layer. This is the ONLY shape where a cancelled-but-otherwise-complete course reports `cancelled` (not `completed`), and a lapsed hold that later receives a signature stays `expired` instead of un-expiring and double-booking the unit.
+**Status transitions and precedence — one home.** `confirmed_at` is a write-once history fact: confirmation ends an offer, not the commitment's lifecycle. An authorized later cancellation or valid recorded completion determines current status without clearing or rewriting that confirmation. `cancelled_at`, `declined_at` and `expired_at` are terminal latches. `completed` remains derived from the kind's completion facts, never a caller-written status or a new latch.
+
+| Stored state / later input | Current status and permitted transition |
+|---|---|
+| No terminal outcome; unmet own preconditions and dependencies | `blocked`; retain both `pending` and `blocked` conditions. Own preconditions alone yield `pending`. |
+| No terminal outcome; preconditions and dependencies met; authorized confirmation before start | `confirmed`; retain `confirmed_at` unchanged through every later transition. Confirmation alone grants no authority for a later act (§7). |
+| Confirmed, no terminal outcome; start reached / completable past end without recorded completion | `active` / `review`, respectively, with confirmation history intact; completion and capacity follow the per-kind paragraph below. |
+| Confirmed, no terminal outcome; authorized cancellation | `cancelled`, with both confirmation and cancellation facts retained. The owner-crossing and bound-counterparty paths keep §7's respective authority requirements. |
+| No terminal outcome, with or without confirmation; valid completion under the kind and existing precondition checks (`../engine/SPEC.md` §3 precondition, §6) | `completed`: a completable needs its explicit tick/recorded return; a non-completable event may complete when its end passes. A task needs its tick. An early recorded return is valid; a completable never completes from elapsed end alone (FD-98 below). |
+| Expired hold; later signature, accept or purported completion | `expired`; record admissible evidence, but refuse confirmation, renewed consumption or any competing terminal transition. No un-expire. |
+| Cancelled or declined; later confirmation, completion claim or elapsed dates | Keep `cancelled` or `declined`; refuse revival or a competing terminal transition. Later admissible facts remain history, not authority to resume. |
+| Completed; later competing cancellation, decline or expiry attempt | Keep `completed`; refuse the conflicting transition. The completion facts and any earlier confirmation remain recorded. |
+
+**Only genuinely competing terminal outcomes use earliest-terminal precedence.** The first effective terminal outcome in the valid lifecycle governs; the engine rejects a later conflicting transition in its atomic write path (`../engine/SPEC.md §6` items 1–2). Confirmation is never a competitor against later cancellation or completion. Neither a backdated input nor a later-arriving fact manufactures an earlier authorized transition: recorded attribution/history distinguishes when evidence says something happened from when a lawful act applied. Existing terminal facts are not replaced, and no write may clear or rewrite a set latch (`../engine/SPEC.md §1.3`). Ordinary corrections to `actual_end` retain the existing interval-widening checks (`../engine/SPEC.md §6` item 7); they neither clear a terminal latch nor manufacture a different terminal outcome. Receipt, firing termination and budget state are separate objects, unaffected by this commitment-status rule.
 
 **`expired_at`'s one shape is `{at}` — the normative shape, stated 2026-08-31.** It is the one latch without `{by}`: lapse is the clock's consequence, not a principal's decision, so there is no author member to store. Its attribution is the ordinary per-field provenance entry — `author: engine` (`../engine/SPEC.md §1.3`'s member), written when the clock latches it. `../engine/SPEC.md §1`'s "each `{by, at}`" phrasing reads over the three decision latches; this block is the home and this shape governs (FR13). The latch invariant is untouched.
 
-**The condition layer is a set, and the precedence is printed (2026-08-31).** `pending` and `blocked` are conditions, not exclusive states: a commitment can hold unmet own-preconditions and unmet dependencies at once, and a reader of the condition set sees both (`../app/SCENARIOS.md` C4 renders both). The derived scalar reports **`blocked` when both hold** — the dependency is the outer gate: clearing own preconditions cannot make a dep-blocked commitment actionable, and reporting `pending` would invite exactly that read. Among latches, **the earliest-set latch governs**: latches are decisions at a time, the earliest decision ended the story, and the engine refuses the later conflicting write (`../engine/SPEC.md §6`, the latch invariant) — no-un-expire, stated at status grain.
+**The condition layer is a set.** `pending` and `blocked` can coexist; the table selects `blocked` when both hold. Readers retain both conditions even when a terminal outcome determines the scalar status. The app consumes this computed status and condition set without deriving its own precedence (`../app/SCENARIOS.md` C1/C2).
 
-**`completable`, defined — and a completable's capacity is consumed until `actual_end` (FD-98, 2026-08-31).** `completable` is a per-kind declaration: the commitment-kind's schema says whether completion requires an explicit act (an owner tick or a recorded return); a BARE commitment is non-completable. Two consequences, previously implied and now law: `review` derives exactly for a completable past its `end` with no tick, and **a completable's `consumes` draw stays consumed past `end` until `actual_end` is recorded** — a late return keeps the unit consumed, the engine's availability math counts it as still drawing, and nothing auto-completes it at `end`. The engine capacity row and the COVERAGE late-return row consume this definition as they land.
+**`completable`, defined — and a completable's capacity is consumed until `actual_end` (FD-98, 2026-08-31).** `completable` is a per-kind declaration: the commitment-kind's schema says whether completion requires an explicit act (an owner tick or a recorded return); a BARE commitment is non-completable. These completion/capacity rules apply to a live commitment; a cancelled or expired record is not revived by a later return. Completion facts retain ordinary per-field attribution; a recorded return is an attributed report, not verification of a physical return. Two consequences, previously implied and now law: `review` derives exactly for a completable past its `end` with no tick, and **a completable's `consumes` draw stays consumed past `end` until `actual_end` is recorded** — a late return keeps the unit consumed, the engine's availability math counts it as still drawing, and nothing auto-completes it at `end`. The engine capacity row and the COVERAGE late-return row consume this definition as they land.
 
 **The park union's engine-raised member, and the closed `cause` (2026-08-31).** `engine_unavailable` joins the reason union: an unattended firing whose engine seam stays `unavailable | timeout` past the loop's one bounded retry **parks** rather than spinning or dying silently, and the engine-side restatement of a park round-trips with its `cause` intact — the restatement carries the cause, never drops it. And `cause` is now a **closed union**, one member per mandated park detail — the covering rule, the spent ceiling, the failing layer, the exhausted ladder (§3.9's full-exhaustion park now names its ladder), the unreachable seam call — so D17's legibility is typed rather than promised.
 
@@ -383,7 +398,7 @@ PendingAsk {
 
 *(2026-08-28 — the sixth instance of the instruction-with-no-object pattern §3.9 named. `../security/SPEC.md §14` owes "execution-level observability — the record of what a firing was shown, which spans ran, what the slice dropped, which rung was notified" before the first real model is bound; `SCENARIOS.md` L2 asserts a firing's assembled context is identical on replay, and nothing stored what any firing was actually shown, so the assertion could only ever be made against a live re-run. This is that object. **Drafted 2026-08-28, not ratified — pending FD-84.**)*
 
-**The invariant, stated first because the two-part shape makes it easy to lose.** There is **exactly one `FiringEvent` per firing id**, written in **at most two write-once parts — birth and seal** — each identified by its **(firing id, part)** part identity under sub-step 2(f), with **at most one of each per firing id** representable by the atomic (firing id, part) uniqueness constraint. Neither part is ever mutated and neither is ever duplicated. **An unsealed record past its firing reads as `interrupted` — derived from the seal's absence, never stored.** This is §3.4's latch pattern one level up: `status = latch ?? derive` is exactly the shape for a decision known later than the record it belongs to, which is what a termination is.
+**The invariant, stated first because the two-part shape makes it easy to lose.** There is **exactly one `FiringEvent` per firing id**, written in **at most two write-once parts — birth and seal** — each identified by its **(firing id, part)** part identity under sub-step 2(f), with **at most one of each per firing id** representable by the atomic (firing id, part) uniqueness constraint. Neither part is ever mutated and neither is ever duplicated. **An unsealed record past its firing reads as `interrupted` — derived from the seal's absence, never stored.** A seal records the firing's termination when known; until then its absence supplies the derived reading. This firing record follows its own write-once birth/seal rules, independently of the commitment lifecycle at §3.4.
 
 **Persisted through the existing `commit` verb** — the `OnCall`/`Escalation`/`PendingAsk` precedent (`INTERFACES.md §4`, the I2 discipline). **No sixth seam verb, no additional trigger source, no new event constructor**, and the writes land under sub-step 2's latched-record law.
 
