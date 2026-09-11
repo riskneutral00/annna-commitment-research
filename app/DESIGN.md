@@ -248,7 +248,7 @@ Every figure the product renders is `tabular-nums` — no exceptions and no per-
 
 **Self-hosted and subset, always.** Not a preference and not a performance argument:
 
-- **Guest pages make annnä a processor** (`../security/SPEC.md §12`), and they are served to third parties who never agreed to anything. A font fetched from an outside host transmits **each guest's IP address to that host** on every page load, from a page annnä serves on its owner's behalf. GDPR is this corpus's stated ceiling; that request is not defensible under it and there is nothing to gain by making it.
+- **Guest pages never fetch fonts from an outside host.** They are outward surfaces served to third parties, and a font fetched from an outside host transmits **each guest's IP address to that host** on every page load. Self-hosting keeps that request within annnä's delivery boundary and preserves the privacy rationale; applicability and legal treatment remain subject to the reviewed matrix (`../security/SPEC.md §12`).
 - **The same discipline the appearance model already states:** *the app never paints a guessed skin and then corrects*. Type is the same failure — a flash of fallback text is a guess, corrected in front of the reader.
 
 **How that resolves, and the two surfaces differ deliberately:**

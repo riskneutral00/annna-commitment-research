@@ -452,7 +452,7 @@ The corpus has strong versioning discipline in two places: kind schemas are pinn
 | Concern | Home | What the external client changes |
 |---|---|---|
 | Threat model, tokens, PII vault, injection quarantine | `security/SPEC.md` | A second non-owner-shaped surface; the token table's closure (RQ-1, FD-17) and the quarantine's reach (RQ-8) |
-| Compliance posture — GDPR as ceiling, PDPA named, processor not controller | `security/SPEC.md` | Nothing directly. An external client acts *as* the owner, so no new controller relationship is created in v1 |
+| Compliance posture and applicability — roles and jurisdictions follow the reviewed operating-entity matrix; formal legal review remains a gate | `security/SPEC.md §12` | Nothing directly. An external client acts *as* the owner for the owner's authorized operations; that authority remains owner-only and does not itself determine the applicable controller/processor relationship in v1 |
 | The legal gate | FR1; `security/README.md` | Unchanged for v1's own-agent scope. It is the blocker on the v2 scope, and the reason v1 stops where it does |
 | Determinism and the model's confinement | FD-16; `engine/SPEC.md`, `model/SPEC.md` | Nothing. The external client is another caller of the same floor, not a new authority |
 | Reliability of the model layer | `model/EVALS.md` | The exam grades capability and — since the P-set landed 2026-08-21 — reliability under repetition (`pass^k` over engine state); the P-set first becomes runnable at built-harness Step 3, a build condition rather than an open question |
