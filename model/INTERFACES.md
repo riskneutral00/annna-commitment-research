@@ -21,6 +21,8 @@ For `guest-interactive`, consume only `../harness/INTERFACES.md §2.1`'s guest r
 
 `sop.author` consumes `SPEC.md §2`'s admitted content/reference path under `../harness/SPEC.md §3.6`, never an owner/guest upload reference or a participant verification result. `summarize` receives administrator-approved source content as `document`-tagged text under `../security/SPEC.md §§4–5`; approval cannot elevate `source_tag`, bypass quarantine or authorize an ingestion route. Preserve the policy-shaped imperative coverage in S-03 at the existing model BUILD Steps 1/3. The form-return/evidence refinement is noticed at `../harness/INTERFACES.md §7.2`; typed form triggers remain deterministic, with consent governed by its §3.3 and harness SPEC §3.4.
 
+Ordinary translation drafting for owner-facing and guest-facing copy (`../app/SPEC.md §5`, `../marketplace/SPEC.md §6`) is an **owner authoring-time draft interaction** over the §3.1 context above and adds no call to this table: the return is an unapproved candidate the owner reviews, never published copy, and this layer neither stores it nor decides its approval. No call on this seam exists on the path that loads a guest page, renders its schema or renders a catalog or preview card; a request that renders approved stored copy reaches this layer not at all.
+
 Two properties of that seam this layer must preserve, never weaken:
 - **Per-call selectable** — nothing here may assume a single model across calls.
 - **Untrusted output** — the harness schema-validates at the seam (SPEC §8); this layer never bypasses that by "guaranteeing" its own output.
