@@ -6,17 +6,17 @@ This is the product-level entry point for a fresh reader — any model, any runt
 
 | Topic | Home in this repository | Note |
 |---|---|---|
-| What is this product for / who is it for | `PRD.md`, `PR/IDENTITY.md`, `PR/BRIEF.md` | |
-| What must it do (requirements, acceptance) | `PRD.md`, `TDD.md`, `user-stories/` | |
-| Concepts and rules that must stay coherent (domain) | `engine/SPEC.md`, `harness/SPEC.md`, `PRD.md` | |
-| Structure (architecture, seams) | `app/SPEC.md`, `engine/SPEC.md`, `harness/SPEC.md`, `model/SPEC.md`, `security/SPEC.md`, `marketplace/SPEC.md`, `deployment/SPEC.md` | |
-| What people experience (design) | `app/DESIGN.md`, `PR/BRIEF.md` | |
-| How we know it works (quality, gates) | `TDD.md`, `deployment/SPEC.md`, `deployment/scripts/status-report.mjs` | run as `npm run check:status` |
+| What is this product for / who is it for | [`PRD.md`](../PRD.md), [`PR/IDENTITY.md`](../PR/IDENTITY.md), [`PR/BRIEF.md`](../PR/BRIEF.md) | |
+| What must it do (requirements, acceptance) | [`PRD.md`](../PRD.md), [`TDD.md`](../TDD.md), [`user-stories/`](../user-stories/) | |
+| Concepts and rules that must stay coherent (domain) | [`engine/SPEC.md`](../engine/SPEC.md), [`harness/SPEC.md`](../harness/SPEC.md), [`PRD.md`](../PRD.md) | |
+| Structure (architecture, seams) | [`app/SPEC.md`](../app/SPEC.md), [`engine/SPEC.md`](../engine/SPEC.md), [`harness/SPEC.md`](../harness/SPEC.md), [`model/SPEC.md`](../model/SPEC.md), [`security/SPEC.md`](../security/SPEC.md), [`marketplace/SPEC.md`](../marketplace/SPEC.md), [`deployment/SPEC.md`](../deployment/SPEC.md) | |
+| What people experience (design) | [`app/DESIGN.md`](../app/DESIGN.md), [`PR/BRIEF.md`](../PR/BRIEF.md) | |
+| How we know it works (quality, gates) | [`TDD.md`](../TDD.md), [`deployment/SPEC.md`](../deployment/SPEC.md), [`deployment/scripts/status-report.mjs`](../deployment/scripts/status-report.mjs) | run as `npm run check:status` |
 | What exists today (current state) | no file | run `npm run check:status`, `npm run check` and `git rev-parse HEAD` in a checkout. A copied number is never authoritative; without a checkout, current state is unverified |
-| Which decisions are settled (rulings, provenance) | `RULINGS.md`, `AGENTS.md` §Rulings | `RULINGS.md` is the FR/FD registry and its provenance section; `AGENTS.md` §Rulings is the OR list |
-| Earlier conclusions and the evidence they rested on (findings register) | `buildpack/FINDINGS.md` | |
-| How a future model audits and upgrades (protocol) | `buildpack/UPGRADES.md` | |
-| Where things live (index) | `INDEX.md`, `AGENTS.md` §Authority order, `THE-JOB.md` | |
+| Which decisions are settled (rulings, provenance) | [`RULINGS.md`](../RULINGS.md), [`AGENTS.md`](../AGENTS.md) §Rulings | `RULINGS.md` is the FR/FD registry and its provenance section; `AGENTS.md` §Rulings is the OR list |
+| Earlier conclusions and the evidence they rested on (findings register) | [`buildpack/FINDINGS.md`](FINDINGS.md) | |
+| How a future model audits and upgrades (protocol) | [`buildpack/UPGRADES.md`](UPGRADES.md) | |
+| Where things live (index) | [`INDEX.md`](../INDEX.md), [`AGENTS.md`](../AGENTS.md) §Authority order, [`THE-JOB.md`](../THE-JOB.md) | |
 
 ## Location manifest
 

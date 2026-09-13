@@ -1,120 +1,75 @@
 # annnä
 
-Your schedule lives in your head — every promise, every pickup, every "don't forget," carried all day by you. And behind each one sits the coordination it takes to keep it.
+**annnä is an agent-first commitment harness.** You talk; it holds what you promised and does the work the promise implies. The aim is a schedule that feels like there is nothing on it, because the coordination no longer lives in your head.
 
-**annnä is an agent-first commitment harness.** You talk; it holds what you promised and does the work the promise implies. The aim is peace — a schedule that feels like there is nothing on it, because the coordination leaves, and then your head no longer has to be where the schedule is kept.
+> **This repository contains specifications and early code, not a working application.** The engine and harness have Step-0 scaffolds and test suites. Product behavior described below remains to be implemented and verified.
 
-> ### 📋 This repository is a design specification, not a working application.
-> **134 markdown files** — the research, the architecture, the user stories, the test strategy, the public identity. The build has begun and is early: `engine/` and `harness/` each hold a Step-0 scaffold with its test suite, and small Node scripts run the process gates and the asset pipeline. The point of this package is that it is complete enough to build *from*.
-> A fresh reader starts at [`buildpack/README.md`](buildpack/README.md) — the entry point and location manifest; it points at the homes above and states nothing of its own.
+## The product
 
----
+A commitment holds a promise and its conditions. Personal appointments, lessons, routines and shared plans belong on one board, where the people and resources they need can be checked together.
 
-## The three words
+The approved v1 direction includes:
 
-**Commitment.** The one thing on the board. Not an appointment — something you promised, to someone, under conditions. When a promise needs people and equipment, the commitment carries them too — optional axes, never the definition: a title is the only thing every commitment requires. "Event" and "task" are presets derived from it, and nobody ever picks a type. That result came from four research streams — philosophy, contract law, calendar data models, task data models — run blind to each other, and it is what everything else stands on.
+- **Native iPhone and web** for owners to enter commitments, choose skins and author reusable templates through conversation.
+- **Template discovery and authoring:** look for a suitable template, adapt one when available, or create one from scratch when the catalog is empty. Owners can publish a reusable shape without publishing their personal data.
+- **Scoped guest access:** account-free booking and consent pages, with a template-bound console for completing a request and asking about availability. Guests see the published slice, never the owner's private board.
+- **An owner's own agents** using the same permitted tools, within the authorization boundaries in the [requirements](PRD.md).
 
-**Agent-first.** Agents are first-class users, alongside people, in two senses at once.
+Calendar import is manual, at the owner's request, with no write-back. V1 excludes owner and guest file uploads and participant-document verification. The [app specification](app/SPEC.md) and [security specification](security/SPEC.md) are the implementation homes and now carry that exclusion and the scoped guest door; what they describe is specified behavior, still owed at the build gates that name it.
 
-- You state intent and an agent does the work. There is no settings screen to hunt for: connecting a calendar is a conversation, and a template is authored by talking.
-- Your own agent can call annnä directly, through the same tools the app calls, under the same permissions. Nothing the app can do is out of reach of software acting for you — with the exclusions the spec itself rules: guest surfaces, appearance, service administration, and the authorization-and-recovery acts that stay console-only, because a credential must never control who may act as the owner ([`PRD.md`](PRD.md) RQ-2). The surface opens when there is a cohort to open it for.
+## Start reading
 
-**Harness.** What you put on something powerful so it can be steered, and what a person clips into so they cannot fall. Both are meant.
+1. [Matt schedules English lessons](user-stories/Situations/Situation-A/story-matt.md) — the detailed first-use story, from personal commitments to template authoring and student booking. It is scripted end-state behavior; the [verification companion](user-stories/Situations/Situation-A/story-matt-verification.md#layer-debt) records the contracts and tests still owed.
+2. [Product requirements](PRD.md) — the general capabilities the stories test.
+3. [Build pack](buildpack/README.md) — the topic map and source locations. [INDEX.md](INDEX.md) lists the **134 markdown files** tracked in this repository and their authority tiers.
 
-- **The agent is harnessed.** It can say a number. Nothing correctness-critical will accept one — times, availability and capacity come from deterministic code, and those fields take engine-issued handles only.
-- **You are harnessed.** Nothing that reaches another person — a message, a move, a cancellation — happens without your explicit yes. Permission is never inferred.
-
-## What it does
-
-It holds everything you schedule — meetings, meals, workouts, rentals, courses, shifts — as one primitive on one board. That completeness is the bet: it is what lets the system reason correctly about your time.
-
-Three things follow that a calendar cannot do.
-
-**It runs to a standard.** A certifying body's course rules, a shop's own procedures — enforced by deterministic code, not by an AI's judgment.
-
-**It does the multi-party work.** After a sale it assembles what the commitment needs: chasing availability, collecting documents, confirming with everyone. You state intent; it arranges.
-
-**The AI is owner-side only.** The people you transact with — a student booking a lesson, a renter uploading a passport — get ordinary web forms your agent produces. They never see your board, never make an account, never meet a chatbot.
+Agents start with [AGENTS.md](AGENTS.md), then INDEX.md. Builders start with [harness/BUILD.md](harness/BUILD.md), against stubs, following the existing [build dependencies](deployment/SPEC.md).
 
 ## One week, run twice
 
-The proof is one busy week at a small Phuket dive center, run the way the industry runs it today and the way annnä runs it. Same week, same four customers, same shortages, same suppliers falling through.
+The established proof script follows one busy week at a small Phuket dive center: the same four customer parties, shared equipment, boat clashes and suppliers falling through.
 
-**Today:** close to two dozen phone calls, a second boat chartered the morning of, a fifth day booked and re-booked, manifests rewritten three times, a mask chased across town.
+**Today:** close to two dozen phone calls, a second boat arranged on the morning it is needed, rewritten manifests and equipment chased across town.
 
-**With annnä, once everyone in the week is on it:** the whole week placed in one pass against every instructor, boat, pool, tank and gear set at once — and placed weeks ahead, because the clashes that surfaced at 07:00 on the morning of were visible the day the booking was taken. Not one phone call between any of them.
+**The end-state script:** with everyone connected, the week is placed against instructors, boats, pools, tanks and gear together. This is the ceiling the story explores, not a demonstrated v1 capability.
 
-This week **tests** the general app — the commitment harness and the template builder — not a dive-center product (FD-80). **The middle case is the honest proof when not everyone in the week is on it yet:** annnä places everything its network can reach, and for every edge it cannot it *prepares the call*, records the answer, and offers an invite. Two dozen calls become a handful of prepared ones. Handing a customer to a business annnä has no relationship with waits longer — that is a legal question before it is an engineering one.
+**The minimal-network script:** annnä checks what it can reach, prepares the calls it cannot make and records the answers. Two dozen calls become a handful of prepared ones. V1 placement remains per goal, with honest refusals; the [story scope notes](user-stories/README.md) distinguish that from the ceiling.
 
-> Read it: [the clean run](user-stories/Situations/Situation-C/situation-1.md) · [current reality](user-stories/Situations/Situation-C/situation-2.md) · [the middle case](user-stories/Situations/Situation-C/situation-5.md)
+Read [the clean run](user-stories/Situations/Situation-C/situation-1.md), [current reality](user-stories/Situations/Situation-C/situation-2.md) and [the middle case](user-stories/Situations/Situation-C/situation-5.md). These are authored accounts, not results from a running app.
 
-## The probes
+Five end-to-end situations in [user-stories](user-stories/README.md), plus two marketplace install probes, test the general commitment model. The ER situation remains held out and outside v1.
 
-Five end-to-end situations in [`user-stories/`](user-stories/) — plus two marketplace install probes (A′, C′) the folder also holds — are the product's falsification probes: if a story breaks the model, the finding is a missing *general* primitive, and the fix is never to special-case the story. (The requirements register is [`PRD.md`](PRD.md)'s RQ series — FD-35; the probes are what every requirement is tested against.)
+## Architecture
 
-| | Who | What it tests |
-|---|---|---|
-| **A** | Sofia, freelance teacher | A whole life on one board, and one outward slice published to students |
-| **B** | Ploy, motorbike rental | Self-serve booking, holds with a clock, gated on passport and deposit |
-| **C** | Hug Ocean, dive center | A week fanning out across instructors, boats, pools, gear and air |
-| **D** | Debra, physical therapist | A schedule that moves through space, where the gap between two commitments is a drive |
-| **E** | An ER scheduler | **Held out.** annnä was deliberately not designed for this, so every claim is a prediction |
+The model handles language and judgment. The engine supplies correctness-critical times, availability and capacity; the harness controls what may act on them.
 
-## How it's built
-
-| Layer | What it holds | Where it comes from |
-|---|---|---|
-| **Model** | Language and judgment. Never authors correctness or permission | Imported — models are qualified, not written |
-| **Harness** | What the agent may do and how it decides: the loop, the tools, the permission floor | Written from scratch |
-| **Engine** | Truth and math: no-double-book, validity, the type system, reconciliation | Written from scratch |
-| **App** | What a person sees and touches, plus the forms off-app parties fill in | Written from scratch |
-
-The load-bearing split is Model and Engine. Delete the AI entirely and the Engine remains: the calendar-and-calculator underneath. Everything the model is forbidden to author is answered by the Engine instead. Same store, same query, same answer, always.
-
-**Why the split is drawn there is arithmetic, not tidiness.** Agent success compounds over steps: 95% per step is about 60% over ten and 28% over twenty-five. A placed week is that many steps, so placement in the model is a coin flip and placement in the engine is deterministic (FD-16).
-
-**Build order:** the harness against stubs and the app against its own spies run concurrently from the start; the engine builds to the harness's seams once its suite is green; real models qualify last. [`marketplace/`](marketplace/) builds last of all; [`deployment/`](deployment/) builds alongside. (The dependency order's normative home is [`deployment/SPEC.md`](deployment/SPEC.md) §6's wave table — this line matches it since 2026-08-21; its older strictly-linear phrasing was the one thing that SPEC names as wrong.)
-
-## The locks
-
-A product that asks for your whole life, and holds your customers' passports and medical notes, owes an answer on how it protects them. [`security/`](security/) is written to be handed to an outside reviewer whole.
-
-Your customers' data is legally yours, not annnä's — the business is the controller, annnä the processor, built to GDPR as the ceiling. Passports and doctors' notes live in an encrypted vault with a destruction clock; the permanent record keeps only the harmless receipt. A guest's entire attack surface is one tokenized link. Every string entering the AI carries its source, and stranger text is read first by a model with no tools at all, so raw text never reaches the model that can act. A formal legal review before launch is a hard gate that green tests cannot argue past.
-
-## Status
-
-**Specification is the surface the application is built from. Implementation is at Step 0.**
-
-The founding research, the five situations, all four layer specs with their acceptance suites, the security law, the build discipline and the testing strategy are written. Application code is Step-0 scaffolds in [`engine/`](engine/) and [`harness/`](harness/), the process gates in [`deployment/scripts/`](deployment/scripts/), and the asset pipeline in [`assets/`](assets/). The folder is being prepared so the next act is building that application. The session job is [`THE-JOB.md`](THE-JOB.md). The remaining leftover research is **three items, each at its live home** *(aligned 2026-08-31 — this paragraph previously named one of the three)*: the personal-first messaging investigation (`app/NOTES.md`, owed at `app/SPEC.md` §6), the hour-grid residue (`app/NOTES.md` + the FD-81 row), and the OR-42 proposal (scoped out at `security/SPEC.md` §2); the Situation × layer map was promoted to [`user-stories/COVERAGE.md`](user-stories/COVERAGE.md). The sittings file that carried them, the now-retired `CLARIFY.md`, is deleted.
-
-The design was attacked three times before being called done — structured adversarial reviews by fleets of independent AI reviewers with no stake in it, not external human audits. 93 findings across the first two rounds, 30 killed as unfounded; a third round on the newer material raised 46 raw findings — **30 distinct after dedup** — all 30 killed on first review, and then an audit of the refuters overturned four of those kills and surfaced five fresh gaps *(numbers restated 2026-08-21; the round's working tally had been quoted pre-dedup, which inflated the killed count by sixteen)*. The lesson held all three times: most attacks die, and the survivors are the ones worth having found. A fourth, whole-corpus pass ran 2026-08-21 and its findings are landed throughout, dated in place.
-
-**Next step:** the founder’s go-word, then the harness against stubs, per [`harness/BUILD.md`](harness/BUILD.md).
-
-## The principles
-
-- **Thin agent, rich engine.** The AI never authors a correctness-critical value. It asks the engine and reports the answer.
-- **The reversibility floor.** Nothing crosses into the real world without an explicit basis from the owner.
-- **Poka-yoke.** Make illegal states impossible to construct, rather than validating against them afterward.
-- **Changing the rules never rewrites the past.** Commitments keep the terms they were made under.
-- **Design the general capability, not the use case.**
-- **Emptiness is worth defending.** Time you win back is yours, not inventory. A freed hour is never re-listed behind your back.
-
-## The map
-
-| | |
+| Package | Responsibility |
 |---|---|
-| [`AGENTS.md`](AGENTS.md) | **Start here if you are an agent** — authority order, package shape, and the citation conventions that trip automated readers |
-| [`THE-JOB.md`](THE-JOB.md) | **The session job** — prepare this folder so the next act is building the application |
-| [`INDEX.md`](INDEX.md) | Every tracked file, one line each: its authority tier and what it decides |
-| [`PRD.md`](PRD.md) | What agent-first means here, and what it requires |
-| [`RULINGS.md`](RULINGS.md) | The founder-ruling registry |
-| [`user-stories/`](user-stories/) | The falsification probes — five situations + two marketplace probes (the requirements register is `PRD.md`, FD-35) |
-| [`harness/`](harness/) · [`engine/`](engine/) · [`app/`](app/) · [`model/`](model/) | The four layers |
-| [`marketplace/`](marketplace/) · [`security/`](security/) · [`deployment/`](deployment/) | The store's open half · the cross-cutting security law · the discipline of the build |
-| [`TDD.md`](TDD.md) · [`assets/`](assets/) · [`.specs/`](.specs/) | Test strategy · shipped skins · interview records |
+| [Harness](harness/README.md) | Agent loop, tools, clarification and permission boundaries |
+| [Engine](engine/README.md) | Persistent record and deterministic scheduling calculations |
+| [App](app/README.md) | Owner surfaces, guest pages and delivery |
+| [Model](model/README.md) | Model contracts and qualification exams |
+| [Marketplace](marketplace/README.md) | Reusable template and skin formats, publishing and installation contracts |
+| [Security](security/README.md) | Privacy, scoped access, hostile-input handling and security acceptance |
+| [Deployment](deployment/README.md) | Build discipline, verification and environment boundaries |
 
-**Reading suggestion:** this page, then [`user-stories/`](user-stories/) for what it actually does. A security reviewer can start, and mostly stay, at [`security/README.md`](security/README.md).
+The specifications require an explicit permission basis for acts affecting other people. Saving a contact grants no sending or access authority. Private commitments constrain availability without exposing their contents; changed rules preserve the terms of existing commitments. These are requirements to prove, not claims of completed enforcement. See the [harness law](harness/SPEC.md), [engine law](engine/SPEC.md) and [security build gates](security/BUILD.md).
+
+## Check the repository
+
+Use Node.js 22, as in [CI](.github/workflows/check.yml). From the repository root on macOS or Linux:
+
+```sh
+npm ci --prefix engine
+npm ci --prefix harness
+git config core.hooksPath .githooks
+env -u CONVEX_URL npm run check
+npm run check:status
+```
+
+The check runs the process gates and scaffold suites. The command above excludes the live reactive-push probe; its explicit skip is not evidence that reactive delivery works. A green check does not establish a working app or launch readiness. See [the gate reference](deployment/README.md) and [test strategy](TDD.md).
+
+For decisions and prior review evidence, use [RULINGS.md](RULINGS.md), the [findings register](buildpack/FINDINGS.md) and the [upgrade procedure](buildpack/UPGRADES.md).
 
 ## License
 
