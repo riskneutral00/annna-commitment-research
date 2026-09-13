@@ -94,7 +94,19 @@ judge: { model_id, provider, prompt_hash, languages_qualified[] }
 //   call_type: the exam's judge is never dispatched by the harness and has no seam. What it is
 //   is a real model with real obligations (EVALS.md §1), so it needs a recordable identity —
 //   model_id, provider, the content hash of its frozen prompt (§3), and the languages whose
-//   Z-N mirrors it has passed, which is what licenses it to grade that language's Z-R items.
+//   Z-N mirrors it has passed, which is what licenses it to grade that language's rubric items.
+// languages_qualified[] entries are the EVALS Z sub-set identifiers and nothing else (2026-09-13):
+//   currently `th`, `zh-TW`, `en` — the list is EVALS.md §2's, read from there and never a second
+//   copy here, and it moves when SPEC §6's market-driven set moves. An entry outside that list
+//   REFUSES AT LOAD, the same poka-yoke as the refusals above, because the failure it prevents is
+//   silent: a token nothing matches reads as a judge qualified in no language, which is exactly a
+//   judge nobody checked. In particular `zh` is NOT an entry: it is the abbreviation the Z row ids
+//   Z-zh-01..08 carry, and the language is `zh-TW`. Nor is a display name ("Thai", "Traditional
+//   Chinese", "Mandarin") — a name is not an identifier, and matching one would let a spelling
+//   mint a qualification no Z sub-set ever granted. This spells the field's own vocabulary; it adds
+//   NO per-language routing. `routing` has no language dimension, and SPEC §6 is the home of what
+//   that costs: a binding that fails a required language's Z sub-set is disqualified for that call
+//   type outright, in every slot.
 // call_type = normalize | narrate | summarize
 //   Judgment is NOT a config key (2026-08-29): it rides inside normalize/narrate's calls and is
 //   never separately dispatched, so a `routing.judgment` block would load a binding nothing ever
