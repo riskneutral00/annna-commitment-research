@@ -30,7 +30,7 @@
 
 ## Z — End-to-end drills
 - **Z1 [the ladder walk] `[DRILL]`** At **app Step 0** — the first moment production has content — the full ladder runs green once on a trivial change: change → the aggregator green → preview rung up → the human's verdict → land on main → production deploy behind R7. The deploy is the exam. Before app Step 0, main's terminal rung is CI-green and this drill is deliberately pending (`SPEC.md §0/§4`).
-- **Z2 [revert deploys clean] `[DRILL]`** A merge is reverted; the revert deploys production clean — the reversibility the process floor leans on is real. Runs with Z1.
+- **Z2 [revert deploys clean] `[DRILL]`** An identified landed commit is reverted; the revert deploys production clean — the reversibility the process floor leans on is real. **The object is a landed commit, not a merge** *(2026-09-13 — `SPEC.md §4` rules landing "Trunk-based, direct to main" with no mandatory PR, so a merge need not exist for a change to land and the drill as written would otherwise have to manufacture one; an identified landed commit is the object a direct landing and a merge both revert, so the drill loses nothing and stops assuming a shape the landing law does not require)*. Runs with Z1.
 
 ---
 

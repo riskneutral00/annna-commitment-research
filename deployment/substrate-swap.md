@@ -32,7 +32,7 @@ If a future substrate edit lands in any `SPEC.md`, stop. Either the spec grew a 
 | `../app/INTERFACES.md` | **Cloudflare** (Workers) — hosting, still labelled a pure BUILD concern |
 | `INTERFACES.md` | The **Cloudflare** rung row — per-change preview, protected production (R7) |
 
-The requirement each row encodes did not move: one codebase serving an authenticated canvas and unauthenticated token routes; a per-change preview rung; a production rung that refuses anonymous access. **The provider is the current answer to the requirement, never the requirement itself** — which is why these rows now name what they replaced, so the next reader can see that a substitution happened rather than assuming the corpus was always this way.
+The requirement each row encodes did not move: one codebase serving an authenticated canvas and unauthenticated token routes; a per-change preview rung; a production rung that refuses anonymous access **to the owner and admin surfaces**, the guest token routes and the public entry link standing outside that refusal from **app Step 5** onward under R7's stated scope (the law's home is `SPEC.md §3`). **The provider is the current answer to the requirement, never the requirement itself** — which is why these rows now name what they replaced, so the next reader can see that a substitution happened rather than assuming the corpus was always this way.
 
 ### 2.2 The build instructions — where a substrate is *used*
 
