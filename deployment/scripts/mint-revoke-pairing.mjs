@@ -44,11 +44,21 @@ export function mintClasses(specMd) {
   const start = specMd.search(/\*\*Mint proves revoke\.\*\*/);
   if (start < 0) return null;
   const block = specMd.slice(start).split(/\n\s*\n\s*(?![-*])/)[0];
+  // Every printed class is returned, pair fields null when the row carries no
+  // well-formed pair — so deleting a revoke side reddens the gate instead of
+  // shrinking the checked set (SPEC.md §4, "never a silent drop").
   const out = [];
-  const LINE = /^\s*-\s*\*\*(.+?)\*\*(.*?)`([^`]+SCENARIOS\.md)`\s*\*\*([A-Z]\d+[a-z]?)\*\*\s*↔\s*`([^`]+SCENARIOS\.md)`\s*\*\*([A-Z]\d+[a-z]?)\*\*/;
+  const CLASS = /^\s*-\s*\*\*(.+?)\*\*\s*(.*)$/;
+  const PAIR = /`([^`]+SCENARIOS\.md)`\s*\*\*([A-Z]\d+[a-z]?)\*\*\s*↔\s*`([^`]+SCENARIOS\.md)`\s*\*\*([A-Z]\d+[a-z]?)\*\*/;
   for (const line of block.split("\n")) {
-    const m = line.match(LINE);
-    if (m) out.push({ cls: m[1], mintFile: m[3], mintId: m[4], revokeFile: m[5], revokeId: m[6] });
+    const c = line.match(CLASS);
+    if (!c) continue;
+    const p = c[2].match(PAIR);
+    out.push(
+      p
+        ? { cls: c[1], mintFile: p[1], mintId: p[2], revokeFile: p[3], revokeId: p[4] }
+        : { cls: c[1], mintFile: null, mintId: null, revokeFile: null, revokeId: null },
+    );
   }
   return out;
 }
@@ -80,6 +90,10 @@ export function check(specMd, readFile) {
     return cache.get(file);
   };
   for (const c of classes) {
+    if (c.mintId === null) {
+      bad.push(`"${c.cls}" is printed with no well-formed \`mint ↔ revoke\` pair — a class with no pair is a finding, never a silent drop`);
+      continue;
+    }
     for (const [role, file, id] of [
       ["mint", c.mintFile, c.mintId],
       ["revoke", c.revokeFile, c.revokeId],
@@ -124,7 +138,27 @@ if (process.argv.includes("--selfcheck")) {
     "    - **Pack install** — `../marketplace/SCENARIOS.md` **I1** ↔ `../marketplace/SCENARIOS.md` **I5**\n",
     "    - **Pack install** — `../marketplace/SCENARIOS.md` **I1**, revoke owed\n",
   );
-  assert.strictEqual(mintClasses(unpaired).length, 1, "a class printed with no pair drops out of the list rather than passing");
+  assert.strictEqual(mintClasses(unpaired).length, 2, "an unpaired class stays in the list rather than shrinking it");
+  assert.ok(
+    check(unpaired, readFixture).some((b) => b.includes('"Pack install"') && b.includes("no pair")),
+    "a class printed with no pair is a finding naming that class",
+  );
+
+  // A broken row among valid ones: the gate names exactly the broken class, so
+  // a mixed list can neither hide a defect nor manufacture one.
+  const mixed = SPEC_FIXTURE.replace(
+    "    - **Pack install** — `../marketplace/SCENARIOS.md` **I1** ↔ `../marketplace/SCENARIOS.md` **I5**\n",
+    "    - **Pack install** — `../marketplace/SCENARIOS.md` **I1** ↔ `../marketplace/SCENARIOS.md` **I5**\n" +
+      "    - **Skin install** — `../marketplace/SCENARIOS.md` **I7** ↔ revoke owed\n",
+  );
+  assert.deepStrictEqual(
+    mintClasses(mixed).map((c) => c.cls),
+    ["Grant mint", "Pack install", "Skin install"],
+    "every printed class is parsed, broken row included",
+  );
+  const mixedBad = check(mixed, readFixture);
+  assert.strictEqual(mixedBad.length, 1, "two valid classes and one malformed pair yield exactly one finding");
+  assert.ok(mixedBad[0].includes('"Skin install"'), "and that finding names the malformed class");
 
   assert.ok(check("no bullet here", readFixture)[0].includes("no longer parses"), "a missing bullet fails closed");
   assert.ok(check("**Mint proves revoke.** and nothing else", readFixture)[0].includes("empty"), "an empty class list fails closed");
@@ -141,7 +175,9 @@ if (bad.length) {
 }
 const classes = mintClasses(spec);
 console.log(
-  `MINT-REVOKE OK — ${classes.length} mint class(es), each carrying a revoke pair whose two scenario IDs both resolve. ` +
+  `MINT-REVOKE OK — ${classes.length} mint class(es) printed, each carrying a revoke pair whose two scenario IDs both resolve. ` +
     `NOT CHECKED: whether a paired scenario's assertions exercise the revoke, or cover every holder form of the thing minted — ` +
-    `checkable as the Step 1-5 suites land; the bound is SPEC.md §7a item 15.`,
+    `checkable as the Step 1-5 suites land. NOT A CLASS: entitlement withdrawal (marketplace E5 for a skin, E9 for a template) ` +
+    `is the pairing's stated bound — it leaves the device copy and the installed fork in place, so it discharges no row. ` +
+    `The bound is SPEC.md §7a item 15.`,
 );
