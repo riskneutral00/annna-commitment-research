@@ -71,7 +71,11 @@ judge: { model_id, provider, prompt_hash, languages_qualified[] }
 //   dimension too. Load-refusals, all poka-yoke (BUILD Step 4): `fallback_provider` must be
 //   APP-SUPPLIED (`openrouter` or `app-direct` — FD-67, 2026-08-22: the vendor name was a single
 //   point of failure written into law; the property was always "app-supplied", and `app-direct`
-//   is an app-held direct provider key, vault-custodied like any §3.1 credential) · any `byo-*`
+//   is an app-held direct provider key, custodied as a DEPLOYMENT RUNTIME SECRET — SPEC §7, whose
+//   clause FD-100 repointed 2026-08-31 by counter-ruling FD-67's "vault-custodied like any §3.1
+//   credential"; the comment kept the counter-ruled wording until 2026-09-13. An owner's OWN
+//   `byo-*` credential is still vault-resident under ../security/SPEC.md §3.1 — only the app-held
+//   key moved, and which variable holds it is SPEC §7's, landing with BUILD Step 4) · any `byo-*`
 //   in an `unattended` binding refuses · any `byo-*` anywhere on `summarize` refuses (FD-3) ·
 //   any unknown `call_type` key refuses — `judgment` included, per the note below.
 // provider = openrouter | app-direct | byo-key

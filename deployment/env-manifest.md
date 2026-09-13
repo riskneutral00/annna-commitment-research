@@ -14,18 +14,20 @@ The one untracked secrets file (`../security/SPEC.md §7`) plus the separate hum
 |---|---|---|---|
 | `CONVEX_URL` | founder | on deployment change | Names the engine's dev deployment. Passed to `engine/scripts/reactive-push-check.mjs` as an argument by its npm script — the script reads `process.argv[2]`, never the environment (m-27); `npm run check` skips that gate explicitly when it is unset. **Not secret-bearing** — enumerated because the manifest is the record of what exists, not only of what is sensitive. |
 | `CONVEX_DEPLOY_KEY` | founder | on suspicion; drilled once (R10) | Writes to the engine's dev deployment. Never present in any lane that runs agent-authored code (R6). |
-| `MODEL` | founder | n/a — not secret-bearing | The OpenRouter model slug `model/spike/run-nset.mjs` reads (DR-7). **Not secret-bearing** — enumerated on `CONVEX_URL`'s reasoning; its absence from this table until 2026-08-21, while the file's own law says an unmanifested variable is a defect, is exactly what `SPEC.md §7a` item 8's grep gate exists to catch. Dies with the spike (`../model/BUILD.md` Step 0's subsumption). |
+| `MODEL` | founder | n/a — not secret-bearing | The OpenRouter model slug `model/spike/run-nset.mjs` reads (DR-7). **Not secret-bearing** — enumerated on `CONVEX_URL`'s reasoning; its absence from this table until 2026-08-21, while the file's own law says an unmanifested variable is a defect, is exactly what `SPEC.md §7a` item 8's grep gate exists to catch. Dies with the spike (`../model/BUILD.md` Step 0's subsumption). **A model slug, never a credential** *(2026-09-13 — `../model/SPEC.md §7` and FD-100 both named this row as the `app-direct` provider key's custody location, which would put a production credential in a local non-secret variable that is already scheduled for deletion)*: the `app-direct` key is a different variable, it does not exist yet, and its contract is the production rung's below. |
 | `OPENROUTER_API_KEY` | founder | on suspicion | The spike's provider key when it is ever run locally (`../model/spike/README.md` — fails closed without one). In CI this key exists **only** in the protected qualification environment (R3); a local run is the founder's own act, out-of-band from the wave order (DR-7). |
 
 ## Per-change preview rung
 
 **No rows yet — the rung does not exist.** It stands up at `BUILD.md` Step 2 (Cloudflare Workers preview + Convex preview deployment + Clerk dev instance). Its rows arrive with it, and R1's token-scope assertion applies from the first one: *the preview-creation credential cannot read the production deployment.*
 
-Structurally forbidden here, so no row may ever appear (`SPEC.md §3`, the mock law): any production-tagged secret (R1) · any closed-marketplace-service credential or real base URL (R2) · the model-provider key (R3) · any production mail credential (R11).
+Structurally forbidden here, so no row may ever appear (`SPEC.md §3`, the mock law): any production-tagged secret (R1) · any closed-marketplace-service credential or real base URL (R2) · the qualification model-provider key (R3) · any production mail credential (R11).
 
 ## Production rung
 
 **No rows yet — the rung is provisioned dark and activates at app Step 0** (`SPEC.md §3`). The production half of R5's diff runs only inside the protected deploy environment, which is the one place a production-scoped read credential is sanctioned.
+
+**The `app-direct` provider key is a production-rung runtime secret, and it has no row here yet.** `../model/SPEC.md §7` (FD-100) custodies it as infrastructure rather than as a `../security/SPEC.md §3.1` vault credential; what it does not yet have is a name, an owner or a rotation note, because nothing reads one. **Proposed identifier: `APP_DIRECT_PROVIDER_KEY`** — named in prose so the custody clause resolves to a production-rung identifier distinct from the local `MODEL` slug, and deliberately **not a table row**, because a row here asserts that the secret exists (the vault-keys section below refuses the same temptation for the same reason, and `SPEC.md §7a` item 8's grep gate reads rows, not prose). Its real row lands **in the same change as the environment read that needs it** — `../model/BUILD.md` Step 4's runtime binding of each app-supplied `provider` value — with its rung, owner and rotation note written then. It is confined by this rung's own law, not by R3: R3 governs the qualification credential below, and nothing here is an exemption from it.
 
 ## Qualification environment (not a rung)
 
@@ -33,7 +35,7 @@ A protected GitHub environment, manually fired, whose required reviewer is the h
 
 | Name | Owner | Rotation | Note |
 |---|---|---|---|
-| `OPENROUTER_API_KEY` | founder | on suspicion | **The only place the model-provider key may be referenced** (R3, lint-enforced today). Carries a provider-side hard spend cap (R8). Not yet supplied: the model spike is built and deliberately unrun (FD-5). |
+| `OPENROUTER_API_KEY` | founder | on suspicion | **The only place the *qualification* model-provider key may be referenced** (R3, lint-enforced today) *(narrowed 2026-09-13 — written unqualified, this sentence forbade the production runtime provider key `../model/SPEC.md §7` requires, and R3's lint reads workflow files for named model-secret patterns; it establishes confinement of this credential, never custody of a runtime one)*. Carries a provider-side hard spend cap (R8). Not yet supplied: the model spike is built and deliberately unrun (FD-5). |
 
 ## Vault keys (`../security/SPEC.md §4`)
 
