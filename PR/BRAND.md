@@ -1,6 +1,6 @@
 # BRAND — the visible identity
 
-*The visual half of the facade. Everything here derives from what the product already ships: the koi skin's approved palette and the design law in [`../app/DESIGN.md`](../app/DESIGN.md). No new color system exists; the brand wears the product's own defaults.*
+*The visual half of the facade. The koi skin's approved palette is the historical provenance of the first palette snapshot; it is not the brand's source. Current authority runs from this brand to the fixture, as the Color section states. No new color system exists; the brand's current colors coincide with the product's current default.*
 
 ---
 
@@ -32,9 +32,9 @@
 
 ## Color — the koi system
 
-Canonical source: [`../assets/packs/koi/palette.json`](../assets/packs/koi/palette.json). Koi is the product's permanent default skin, so the brand's first impression and the product's first impression are the same colors. **No hex may appear in brand material that is not in that file.**
+Koi is the product's **current** default skin — no skin is special (`../app/DESIGN.md` §Appearance), and the dependency runs **brand → fixture, never the reverse** (`../app/DESIGN.md` §Colour) — so today the brand's first impression and the product's first impression are the same colors. The hexes in the table below are the brand's own constants; [`../assets/packs/koi/palette.json`](../assets/packs/koi/palette.json) is the snapshot where they currently coincide, not their source. **No hex may appear in brand material that is not in that file.**
 
-*(Corrected 2026-08-22 — `app/DESIGN.md` §Appearance now rules that no skin is special: koi is the **current** default, not a permanent one, and the dependency runs brand → fixture, never the reverse. The hexes in the table below are the brand's own constants; the koi palette file is the snapshot where they currently coincide, not their source. A restatement, not new outward material, so the `README.md` freeze is not engaged.)*
+*(Provenance of the sentence above — corrected 2026-08-22, when `app/DESIGN.md` §Appearance ruled that no skin is special; the prose it replaced called koi the permanent default and the palette file the canonical source. Carried into that sentence 2026-09-13 so the live statement and the ruling no longer disagree. A restatement of a ruled home, not new outward material, so the `README.md` freeze is not engaged.)*
 
 | Role | Value | From palette |
 |---|---|---|
