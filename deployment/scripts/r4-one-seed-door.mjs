@@ -18,9 +18,9 @@
 // rather than as a snippet on purpose: the egress lint reads this folder, and a
 // worked example of a store-client import in a gate source is a call site to
 // it.) The allowlist is the node builtins
-// that carry no network, taken from node:module rather than typed out: a
-// hand-written package list is a registry that rots, and the corpus has been
-// bitten by every one of those it has written.
+// that carry no network and start no process, taken from node:module rather
+// than typed out: a hand-written package list is a registry that rots, and the
+// corpus has been bitten by every one of those it has written.
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { builtinModules } from "node:module";
@@ -28,12 +28,17 @@ import { builtinModules } from "node:module";
 const DOOR = /(^|\/)seed\.(ts|tsx|js|mjs|cjs)$/;
 const IMPORT = /(?:^|\s)(?:import\s[^;]*?from\s*|import\s*|require\s*\(\s*)["']([^"']+)["']/g;
 const FIXTURES = /(^|\/)fixtures(\/|$)/;
-// The network-capable builtins, which a seed door may not reach either — the
-// same set the egress lint refuses, named once per script because these two
-// gates run in different folders and neither may import the other's law.
-const NETWORK_BUILTIN = /^(node:)?(http|https|http2|net|dgram|tls|dns|cluster|inspector)$/;
+// The builtins a seed door may not reach either: the network-capable ones, and
+// `child_process`, because a spawn reaches the network through a path no import
+// statement names (SCENARIOS.md R4, *a subprocess is a reach*). Named once per
+// script because these two gates run in different folders and neither may
+// import the other's law — and it is no longer the same set the egress lint
+// refuses: that lint matches text, so it still waves a subprocess through.
+// Keeping the two apart, rather than reading this refusal as the lint's, is
+// egress-allowlist.md §Bound's subject.
+const REFUSED_BUILTIN = /^(node:)?(http|https|http2|net|dgram|tls|dns|cluster|inspector|child_process)$/;
 const ALLOWED_BARE = new Set(
-  builtinModules.filter((m) => !NETWORK_BUILTIN.test(m)).flatMap((m) => [m, `node:${m}`]),
+  builtinModules.filter((m) => !REFUSED_BUILTIN.test(m)).flatMap((m) => [m, `node:${m}`]),
 );
 
 function badImports(source) {
@@ -61,6 +66,8 @@ if (process.argv.includes("--selfcheck")) {
     ["a non-network builtin is allowed", badImports(imp("node:fs")).length === 0],
     ["its bare spelling too", badImports(imp("path")).length === 0],
     ["a network builtin is not", badImports(imp("node:https")).length === 1],
+    ["a subprocess builtin is not", badImports(imp("node:child_process")).length === 1],
+    ["its bare spelling is not either", badImports(imp("child_process")).length === 1],
     ["require form reads the same", badImports(`const c = require(${JSON.stringify("pg")});`).length === 1],
   ];
   const failed = cases.filter(([, ok]) => !ok);
