@@ -20,7 +20,7 @@
     "check:gates": "node deployment/scripts/gate-coverage.mjs --selfcheck && node deployment/scripts/gate-coverage.mjs",
     "check:paths": "node deployment/scripts/s2-path-class.mjs",
     "check:hermetic": "node deployment/scripts/s3-no-outside-spec.mjs",
-    "check:modelkey": "node deployment/scripts/r3-workflow-lint.mjs",
+    "check:modelkey": "node deployment/scripts/r3-workflow-lint.mjs --selfcheck && node deployment/scripts/r3-workflow-lint.mjs",
     "check:rungs": "node deployment/scripts/r9-noindex-nodebug.mjs --selfcheck && node deployment/scripts/r9-noindex-nodebug.mjs",
     "check:closed": "node deployment/scripts/r2-closed-service.mjs --selfcheck && node deployment/scripts/r2-closed-service.mjs",
     "check:seed": "node deployment/scripts/r4-one-seed-door.mjs --selfcheck && node deployment/scripts/r4-one-seed-door.mjs",
