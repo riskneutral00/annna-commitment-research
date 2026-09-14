@@ -44,5 +44,10 @@
     "derive": "node deployment/scripts/doc-count-check.mjs --write && node deployment/scripts/index-complete.mjs --write",
     "cites": "node deployment/scripts/cite-check.mjs --selfcheck && node deployment/scripts/cite-check.mjs",
     "verdicts": "node deployment/scripts/b4-verdict-check.mjs --selfcheck && node deployment/scripts/b4-verdict-check.mjs"
+  },
+  "devDependencies": {
+    "culori": "^4.0.2",
+    "node-vibrant": "^4.0.4",
+    "sharp": "^0.35.3"
   }
 }

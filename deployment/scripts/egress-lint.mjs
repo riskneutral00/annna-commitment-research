@@ -8,6 +8,7 @@
 // Markdown is out of scope (the corpus writes these words in prose), and this
 // file is excluded for the same reason X1 excludes itself: a gate that reddens
 // on its own source is a gate nobody keeps.
+// npm lockfiles are skipped by name (2026-09-15): manifests, not call sites (egress-allowlist.md §Bound).
 // Matching is done in JS, not `git grep -E`. That is deliberate and it cost a
 // canary to learn: git grep -E is POSIX ERE, where \b is not a word boundary, so
 // every pattern below silently matched nothing while --selfcheck (JS RegExp)
@@ -17,7 +18,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 const ALLOWLIST = "deployment/egress-allowlist.md";
-const SKIP = /\.(md|jpg|jpeg|png|gif|webp|ico|pdf|zip|lock)$/i;
+const SKIP = /(\.(md|jpg|jpeg|png|gif|webp|ico|pdf|zip|lock)|(^|\/)(package-lock|npm-shrinkwrap)\.json)$/i;
 const CALLS = new RegExp(
   [
     "\\bfetch\\s*\\(",
@@ -51,7 +52,7 @@ const allowed = new Set(
 // The one matcher, used by both the real pass and --selfcheck.
 function scan(files, read) {
   const findings = [];
-  for (const f of files) {
+  for (const f of files.filter((f) => !SKIP.test(f))) {
     read(f)
       .split("\n")
       .forEach((line, i) => {
@@ -76,6 +77,9 @@ if (process.argv.includes("--selfcheck")) {
     ["the same word outside import position is not", !CALLS.test("const pg = pageCount(doc); const ws = ws + 1;")],
     // The bug this file's canary caught: the two paths must share an engine.
     ["the real pass and the selfcheck use the same matcher", scan(["x"], () => "await fetch(u)").length === 1],
+    // 2026-09-15: a dependency name in an npm lockfile is a manifest entry, not a call.
+    ["a package-lock.json line naming node-fetch is skipped", scan(["package-lock.json"], () => '"node-fetch": "^2.6.1",').length === 0],
+    ["the same line in a .mjs still fires", scan(["x.mjs"], () => '"node-fetch": "^2.6.1",').length === 1],
   ];
   const failed = cases.filter(([, ok]) => !ok);
   if (failed.length) {
@@ -90,7 +94,6 @@ if (process.argv.includes("--selfcheck")) {
 const files = execFileSync("git", ["ls-files", "-z"], { encoding: "utf8" })
   .split("\0")
   .filter(Boolean)
-  .filter((f) => !SKIP.test(f))
   .filter((f) => f !== "deployment/scripts/egress-lint.mjs")
   .filter((f) => !f.includes("/_generated/"))
   .filter((f) => !allowed.has(f));
