@@ -42,7 +42,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import assert from "node:assert";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -57,7 +57,7 @@ const LAYERS = [
 
 // Scenario definitions: id -> { tag, engine }. A def line starts a list item
 // whose first bold token is the scenario ID.
-function scenarioDefs(text) {
+export function scenarioDefs(text) {
   const defs = new Map();
   for (const line of text.split("\n")) {
     const m = line.match(/^\s*-\s*\*\*([A-Z]\d+[a-z]?)\b(.*)$/);
@@ -92,7 +92,7 @@ export function duplicateDefs(text) {
 // is dropped rather than read as its own ID. `defs` is the layer's scenario set:
 // `X-family` can only be expanded against it, since the text alone does not say
 // which X IDs exist.
-function buildIds(text, defs = new Map()) {
+export function buildIds(text, defs = new Map()) {
   const ids = new Set();
   const TOKEN = /\b([A-Z])(\d+)([a-z]?)\b/g;
   let m;
@@ -119,7 +119,7 @@ function buildIds(text, defs = new Map()) {
 // Lines that declare a gate. Phantoms are only meaningful here (a broken ref in
 // a Verify:/Gate: list); step-body prose carries cross-layer references
 // ("app scenario Z3") that are not this layer's phantoms.
-function gateLines(text) {
+export function gateLines(text) {
   return text
     .split("\n")
     .filter((l) => /\bVerify:|\bGate:/.test(l))
@@ -332,49 +332,54 @@ function selfcheck() {
   console.log("selfcheck OK");
 }
 
-if (process.argv.includes("--selfcheck")) {
-  selfcheck();
-  process.exit(0);
-}
+// probe-coverage.mjs and t-six-before-link.mjs import the parsers above; the
+// run below is this file's CLI only, so an import never runs the full check.
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) {
+  if (process.argv.includes("--selfcheck")) {
+    selfcheck();
+    process.exit(0);
+  }
 
-let bad = 0;
-const rangesBySuite = {};
-for (const layer of LAYERS) {
-  const { defs, dups, orphans, phantoms, ledger } = checkLayer(layer);
-  rangesBySuite[layer.name] = famRanges(defs);
-  const status = dups.length || orphans.length || phantoms.length || ledger.length ? "FAIL" : "ok";
-  console.log(`\n[${layer.name}] ${defs.size} scenarios — ${status}`);
-  if (dups.length) {
-    bad++;
-    for (const d of dups)
-      console.log(`  DUPLICATE ID: [${layer.name}] ${layer.scenarios} defines ${d.id} ${d.n} times — one ID, one scenario`);
+  let bad = 0;
+  const rangesBySuite = {};
+  for (const layer of LAYERS) {
+    const { defs, dups, orphans, phantoms, ledger } = checkLayer(layer);
+    rangesBySuite[layer.name] = famRanges(defs);
+    const status = dups.length || orphans.length || phantoms.length || ledger.length ? "FAIL" : "ok";
+    console.log(`\n[${layer.name}] ${defs.size} scenarios — ${status}`);
+    if (dups.length) {
+      bad++;
+      for (const d of dups)
+        console.log(`  DUPLICATE ID: [${layer.name}] ${layer.scenarios} defines ${d.id} ${d.n} times — one ID, one scenario`);
+    }
+    if (orphans.length) {
+      bad++;
+      const tagged = orphans.map((id) => `${id}(${defs.get(id).tag})`);
+      console.log(`  ORPHANS (no BUILD home): ${tagged.join(", ")}`);
+    }
+    if (phantoms.length) {
+      bad++;
+      console.log(`  PHANTOMS (gated, undefined): ${phantoms.join(", ")}`);
+    }
+    if (ledger.length) {
+      bad++;
+      for (const b of ledger) console.log(`  CHECKPOINT LEDGER: ${b}`);
+    }
   }
-  if (orphans.length) {
-    bad++;
-    const tagged = orphans.map((id) => `${id}(${defs.get(id).tag})`);
-    console.log(`  ORPHANS (no BUILD home): ${tagged.join(", ")}`);
-  }
-  if (phantoms.length) {
-    bad++;
-    console.log(`  PHANTOMS (gated, undefined): ${phantoms.join(", ")}`);
-  }
-  if (ledger.length) {
-    bad++;
-    for (const b of ledger) console.log(`  CHECKPOINT LEDGER: ${b}`);
-  }
-}
-console.log(`\nmodel: N/A — graded EVALS, not a per-item gated suite`);
+  console.log(`\nmodel: N/A — graded EVALS, not a per-item gated suite`);
 
-// The TDD family maps against the suites (Q2-072(c), the H3 span-claim grammar).
-const tdd = fs.readFileSync(path.join(ROOT, "TDD.md"), "utf8");
-const spans = tddSpanClaims(tdd, rangesBySuite);
-if (spans.bad.length) {
-  bad++;
-  for (const b of spans.bad) console.log(`  TDD MAP: ${b}`);
+  // The TDD family maps against the suites (Q2-072(c), the H3 span-claim grammar).
+  const tdd = fs.readFileSync(path.join(ROOT, "TDD.md"), "utf8");
+  const spans = tddSpanClaims(tdd, rangesBySuite);
+  if (spans.bad.length) {
+    bad++;
+    for (const b of spans.bad) console.log(`  TDD MAP: ${b}`);
+  }
+  console.log(
+    `TDD maps: ${spans.claims} complete span claim(s) checked against the suites' own min–max. ` +
+      `NOT A SPAN CLAIM: an \`incl.\`-prefixed range — an explicitly bounded subset mention, unchecked by design.`,
+  );
+  console.log(bad ? `\nGATE-COVERAGE FAIL (${bad} issue group(s))` : `\nGATE-COVERAGE OK`);
+  process.exit(bad ? 1 : 0);
 }
-console.log(
-  `TDD maps: ${spans.claims} complete span claim(s) checked against the suites' own min–max. ` +
-    `NOT A SPAN CLAIM: an \`incl.\`-prefixed range — an explicitly bounded subset mention, unchecked by design.`,
-);
-console.log(bad ? `\nGATE-COVERAGE FAIL (${bad} issue group(s))` : `\nGATE-COVERAGE OK`);
-process.exit(bad ? 1 : 0);

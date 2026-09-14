@@ -26,6 +26,7 @@ import path from "node:path";
 import assert from "node:assert";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { buildIds, gateLines, scenarioDefs } from "./gate-coverage.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -134,6 +135,305 @@ export function registerTags(text) {
   return [...text.matchAll(/\*\*Provenance: ([a-z-]+)\*\*/g)].map((m) => m[1]);
 }
 
+// --- the story-ID trace arm (2026-09-14; user-stories/README.md §The bar a story passes, item 5) ---
+//
+// The Matt English companion keeps its scene, MT, CRUD and HR IDs as the story
+// defines them, and each carries one trace: the layer rows whose text cites it,
+// each with the BUILD step that closes that row, or the missing link named as
+// owed. deployment/SCENARIOS.md B8 recorded this arm as owed — no gate read a
+// story ID, so a dropped case, a duplicated scene, a trace at a phantom scenario
+// or a trace with its BUILD link removed all stayed green.
+//
+// What it checks, with no second copy of any ID list: the census counts are read
+// from item 5's own sentence, the IDs from the story (scene anchors) and the
+// companion (MT and CRUD rows, HR headings). Every ID is defined once, MT/CRUD/HR
+// run 01..N, and every ID carries exactly one trace; a trace on anything else is
+// a phantom, which also keeps provenance and supplemental rows from being
+// promoted into acceptance. A traced layer row must be defined in its suite and
+// never [HELD-OUT] (held-out E/ER material is never acceptance), and its listed
+// steps must equal the steps whose Verify or Gate names it (any step naming it
+// where none does) — the reading the companion's layer-debt table states. A model
+// item must be defined in EVALS.md and closes only at the Qualification step:
+// set-level qualification, never a per-item BUILD home (gate-coverage's model
+// exclusion). Each CRUD action cell states Shown, with its scene, or Required;
+// every scene link resolves; the supplemental cases item 5 names still stand.
+//
+// What it cannot check, printed: whether a cited row asserts the ID's claim.
+// A trace is a pointer, never a pass — scripted prose, a Shown cell and a
+// resolving row are not results.
+export const STORY = "user-stories/Situations/Situation-A/story-matt.md";
+export const COMPANION = "user-stories/Situations/Situation-A/story-matt-verification.md";
+export const TRACE_LAYERS = ["harness", "engine", "app", "marketplace", "security"];
+const TRACE_LINKS = {
+  harness: { spec: "harness/SPEC.md", seam: "harness/INTERFACES.md", acceptance: "harness/SCENARIOS.md", build: "harness/BUILD.md" },
+  engine: { spec: "engine/SPEC.md", seam: "engine/INTERFACES.md", acceptance: "engine/SCENARIOS.md", build: "engine/BUILD.md" },
+  app: { spec: "app/SPEC.md", seam: "app/INTERFACES.md", acceptance: "app/SCENARIOS.md", build: "app/BUILD.md" },
+  marketplace: { spec: "marketplace/SPEC.md", seam: "marketplace/INTERFACES.md", acceptance: "marketplace/SCENARIOS.md", build: "marketplace/BUILD.md" },
+  security: { spec: "security/SPEC.md", seam: "security/INTERFACES.md", acceptance: "security/SCENARIOS.md", build: "security/BUILD.md" },
+  model: { spec: "model/SPEC.md", seam: "model/INTERFACES.md", acceptance: "model/EVALS.md", build: "model/BUILD.md" },
+};
+const LINK = /^\[([a-z]+)\]\(#trace-\1\)$/;
+
+// The companion's one current documentary debt is deliberately not promoted to
+// an outcome: the spec writer still owes the CRUD-02 removal cell an explicit
+// Required or Shown label. Keep the exact prose marker so a later negated or
+// empty replacement cannot inherit this exception silently.
+const OUTCOME_DEBT = new Map([
+  ["CRUD-02 delete/removal", "A required timezone cannot become an unexplained null/default."],
+]);
+
+export function census(readme) {
+  const m = readme.match(/keeps its (\d+) scene, (\d+) MT, (\d+) CRUD and (\d+) HR IDs/);
+  const s = readme.match(/((?:[A-Z]+-\d+(?:–\d+)?(?:, | and )?)+) stay supplemental obligations/);
+  if (!m || !s) return null;
+  const supplemental = [];
+  for (const [, fam, a, b] of s[1].matchAll(/([A-Z]+)-(\d+)(?:–(\d+))?/g))
+    for (let n = +a; n <= +(b ?? a); n++) supplemental.push(`${fam}-${String(n).padStart(a.length, "0")}`);
+  return { counts: { S: +m[1], MT: +m[2], CRUD: +m[3], HR: +m[4] }, supplemental };
+}
+
+export function storyIds(story, companion) {
+  const rowsOf = (fam) => [...companion.matchAll(new RegExp(`^\\| (${fam}-\\d+) \\|`, "gm"))].map((m) => m[1]);
+  return {
+    S: [...story.matchAll(/<a id="s(\d+[a-z]?)"><\/a>/g)].map((m) => `S${m[1]}`),
+    MT: rowsOf("MT"),
+    CRUD: rowsOf("CRUD"),
+    HR: [...companion.matchAll(/^## (HR-\d+) —/gm)].map((m) => m[1]),
+  };
+}
+
+// Every trace in the companion, attributed to the row or HR section it sits in.
+export function storyTraces(companion) {
+  const out = [];
+  let hr = null;
+  for (const line of companion.split("\n")) {
+    if (line.startsWith("## ")) hr = line.match(/^## (HR-\d+) —/)?.[1] ?? null;
+    const scene = line.match(/^\| \[(S\d+[a-z]?)\]\(story-matt\.md#s\d+[a-z]?\) \| (.+) \|$/);
+    if (scene) {
+      out.push({ id: scene[1], body: scene[2] });
+      continue;
+    }
+    const at = line.indexOf("**Trace:** ");
+    if (at < 0) continue;
+    const row = line.match(/^\| ([A-Z][A-Z0-9]*(?:-[A-Z]?\d+)?) \|/);
+    const id = row ? row[1] : line.startsWith("**Trace:**") ? hr : null;
+    out.push({ id: id ?? `an unattributed trace ("${line.slice(0, 40)}")`, body: line.slice(at + 11).replace(/ \|$/, "") });
+  }
+  return out;
+}
+
+// `[layer](#trace-layer) B1, B2 → Steps 4, 5 · E1 → Step 3 · … ; owed at [layer](#trace-layer).`
+// or `no layer row cites <ID> yet — acceptance owed at [layer](#trace-layer), ….`
+export function parseTrace(id, body) {
+  const bad = [];
+  const links = (s) => s.split(", ").map((l) => l.match(LINK)?.[1] ?? null);
+  let text = body.trim().replace(/\.$/, "");
+  const none = text.match(/^no layer row cites (\S+) yet — acceptance owed at (.+)$/);
+  if (none) {
+    if (none[1] !== id) bad.push(`${id}'s trace says no row cites ${none[1]} — a trace names its own ID`);
+    const owed = links(none[2]);
+    if (owed.includes(null)) bad.push(`${id}'s owed layers do not parse as [layer](#trace-layer) links`);
+    return { groups: [], owed, bad };
+  }
+  let owed = [];
+  const semi = text.indexOf("; owed at ");
+  if (semi >= 0) {
+    owed = links(text.slice(semi + 10));
+    if (owed.includes(null)) bad.push(`${id}'s owed layers do not parse as [layer](#trace-layer) links`);
+    text = text.slice(0, semi);
+  }
+  const groups = [];
+  let layer = null;
+  for (const part of text.split(" · ")) {
+    const g = part.match(/^(?:\[([a-z]+)\]\(#trace-\1\) )?(.+?)(?: → Steps? (\d+[a-z]?(?:, \d+[a-z]?)*))?$/);
+    if (!g) {
+      bad.push(`${id}'s trace has an empty group`);
+      continue;
+    }
+    layer = g[1] ?? layer;
+    if (!layer) bad.push(`${id}'s trace group "${part}" names no layer`);
+    else if (!g[3]) bad.push(`${id}'s trace cites ${layer} ${g[2]} with no BUILD step — a traced row names the step that closes it`);
+    else groups.push({ layer, rows: g[2].split(", "), steps: g[3].split(", ") });
+  }
+  return { groups, owed, bad };
+}
+
+export function traceLayerLinks(companion) {
+  const bad = [];
+  const referenced = new Set([...companion.matchAll(/\]\(#trace-([a-z]+)\)/g)].map((m) => m[1]));
+  const lines = companion.split("\n");
+  const companionDir = path.dirname(path.join(ROOT, COMPANION));
+  for (const layer of referenced) {
+    const expected = TRACE_LINKS[layer];
+    if (!expected) {
+      bad.push(`the companion references trace layer "${layer}", which has no rule-home contract`);
+      continue;
+    }
+    const line = lines.find((l) => l.includes(`<a id="trace-${layer}"></a>`));
+    if (!line) {
+      bad.push(`trace-${layer} has no layer-debt row with its rule home, seam, acceptance and BUILD links`);
+      continue;
+    }
+    const links = [...line.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)].map((m) => m[1]);
+    for (const link of links) {
+      const target = link.split("#", 1)[0];
+      if (target.startsWith(".") && !fs.existsSync(path.resolve(companionDir, target)))
+        bad.push(`trace-${layer} link target ${link} is missing`);
+    }
+    for (const [kind, target] of Object.entries(expected)) {
+      const relative = path.relative(companionDir, path.join(ROOT, target)).replaceAll(path.sep, "/");
+      if (!links.includes(relative)) bad.push(`trace-${layer} omits its ${kind} link to ${target}`);
+      if (!fs.existsSync(path.join(ROOT, target))) bad.push(`trace-${layer} points its ${kind} link at missing ${target}`);
+    }
+  }
+  return bad;
+}
+
+export function stepSections(build) {
+  return build
+    .split(/^(?=## )/m)
+    .map((text) => ({ step: text.match(/^## Step (\d+[a-z]?)\b/)?.[1], text }))
+    .filter((s) => s.step);
+}
+
+// The steps whose Verify/Gate line names the row; any step naming it where none does.
+export function closingSteps(id, sections, defs) {
+  const gated = sections.filter((s) => buildIds(gateLines(s.text), defs).has(id)).map((s) => s.step);
+  return gated.length ? gated : sections.filter((s) => buildIds(s.text, defs).has(id)).map((s) => s.step);
+}
+
+// texts: { readme, story, companion, layers: { name: { scen, build } }, model: { evals, build } }
+export function checkStory({ readme, story, companion, layers, model }) {
+  const bad = [];
+  const decl = census(readme);
+  if (!decl)
+    return {
+      bad: [`user-stories/README.md item 5 no longer states its story census ("keeps its N scene, N MT, N CRUD and N HR IDs") and supplemental cases in a parseable form — fix this script's contract`],
+    };
+  bad.push(...traceLayerLinks(companion));
+  const ids = storyIds(story, companion);
+  for (const [fam, list] of Object.entries(ids)) {
+    const want = decl.counts[fam];
+    const seen = new Map();
+    for (const x of list) seen.set(x, (seen.get(x) || 0) + 1);
+    for (const [x, n] of seen) if (n > 1) bad.push(`${x} is defined ${n} times — one ID, one definition`);
+    if (seen.size !== want) bad.push(`user-stories/README.md item 5 declares ${want} ${fam} IDs and ${fam === "S" ? STORY : COMPANION} defines ${seen.size}`);
+    if (fam !== "S")
+      for (let n = 1; n <= want; n++) {
+        const x = `${fam}-${String(n).padStart(2, "0")}`;
+        if (!seen.has(x)) bad.push(`${x} is not defined — the ${fam} IDs run 01–${want}, never renumbered or dropped`);
+      }
+  }
+
+  const defined = new Set(Object.values(ids).flat());
+  const traced = new Map();
+  for (const t of storyTraces(companion)) {
+    if (!defined.has(t.id)) bad.push(`a trace for ${t.id}, which the story census does not define (phantom)`);
+    else if (traced.has(t.id)) bad.push(`${t.id} carries two traces — one ID, one trace`);
+    else traced.set(t.id, t.body);
+  }
+  for (const x of defined) if (!traced.has(x)) bad.push(`${x} carries no trace — name its covering rows or the missing link as owed`);
+
+  const defsOf = {};
+  const stepsOf = {};
+  for (const [name, t] of Object.entries(layers)) {
+    defsOf[name] = scenarioDefs(t.scen);
+    stepsOf[name] = stepSections(t.build);
+  }
+  const items = new Set([...model.evals.matchAll(/^\| ([A-Z]-\d+) \|/gm)].map((m) => m[1]));
+  const qualification = stepSections(model.build).find((s) => /^## Step \S+ — Qualification/.test(s.text))?.step;
+  if (!qualification) bad.push("model/BUILD.md has no Qualification step for a model item to close at — fix this script's contract");
+  let cited = 0;
+  let owedOnly = 0;
+  for (const [id, body] of traced) {
+    const p = parseTrace(id, body);
+    bad.push(...p.bad);
+    for (const l of p.owed) if (l && l !== "model" && !defsOf[l]) bad.push(`${id} owes acceptance at "${l}", which is not a traced layer`);
+    if (!p.groups.length) owedOnly++;
+    for (const g of p.groups) {
+      cited += g.rows.length;
+      if (g.layer === "model") {
+        for (const r of g.rows) if (!items.has(r)) bad.push(`${id} cites model item ${r}, which model/EVALS.md does not define (phantom)`);
+        if (qualification && g.steps.join() !== qualification)
+          bad.push(`${id} closes model items ${g.rows.join(", ")} at Step ${g.steps.join(", ")} — a model item closes only at Step ${qualification}'s set-level qualification`);
+        continue;
+      }
+      const defs = defsOf[g.layer];
+      if (!defs) {
+        bad.push(`${id} traces to "${g.layer}", which is not a traced layer`);
+        continue;
+      }
+      // Every listed step must name a row of the group, and every row must close at
+      // a listed step. Not equality: a gate line's cross-layer mention (app Step 5
+      // names security's V1) reads exactly like a citation of this layer's V1.
+      const closes = new Set();
+      for (const r of g.rows) {
+        const def = defs.get(r);
+        if (!def) bad.push(`${id} cites ${g.layer} ${r}, which ${g.layer}/SCENARIOS.md does not define (phantom)`);
+        else if (def.tag === "HELD-OUT") bad.push(`${id} cites ${g.layer} ${r}, a [HELD-OUT] row — held-out material is never a story's acceptance`);
+        else {
+          const steps = closingSteps(r, stepsOf[g.layer], defs);
+          if (!steps.length) bad.push(`${id} cites ${g.layer} ${r}, which no ${g.layer}/BUILD.md step names (absent BUILD closure)`);
+          else if (!steps.some((s) => g.steps.includes(s)))
+            bad.push(`${id} lists no step that closes ${g.layer} ${r} — ${g.layer}/BUILD.md names it at Step(s) ${steps.join(", ")}`);
+          steps.forEach((s) => closes.add(s));
+        }
+      }
+      const extra = [...new Set(g.steps)].filter((s) => !closes.has(s));
+      if (closes.size && extra.length)
+        bad.push(`${id} closes ${g.layer} ${g.rows.join(", ")} at Step ${extra.join(", ")}, which names none of them — ${g.layer}/BUILD.md names them at Step(s) ${[...closes].sort().join(", ")}`);
+    }
+  }
+
+  const scenes = new Set(ids.S);
+  for (const m of companion.matchAll(/\[([^\]]+)\]\(([^)]*)\)/g)) {
+    if (!m[2].startsWith("story-matt.md#")) continue;
+    const id = m[1];
+    const target = m[2].slice("story-matt.md#".length);
+    if (!/^S\d+[a-z]?$/.test(id) || target !== id.toLowerCase() || !scenes.has(id))
+      bad.push(`the companion links scene ${id} at #${target}, which ${STORY} does not define (phantom or malformed destination)`);
+  }
+  let cells = 0;
+  const owedCells = [];
+  for (const line of companion.split("\n")) {
+    const row = line.match(/^\| (CRUD-\d+) \|/);
+    if (!row) continue;
+    const actions = line.split(" | ").slice(2, 5);
+    ["create/read", "edit", "delete/removal"].forEach((what, i) => {
+      const c = actions[i] ?? "";
+      const key = `${row[1]} ${what}`;
+      const shown = [...c.matchAll(/\bShown\s+\[([^\]]+)\]\(([^)]*)\)/g)];
+      const malformedShown = shown.filter((m) => {
+        const id = m[1];
+        const target = m[2].match(/^story-matt\.md#(s\d+[a-z]?)$/);
+        return !/^S\d+[a-z]?$/.test(id) || !target || target[1] !== id.toLowerCase() || !scenes.has(id);
+      });
+      for (const m of malformedShown)
+        bad.push(`${key} has a malformed Shown destination: [${m[1]}](${m[2]})`);
+      const hasShown = shown.length > 0 && malformedShown.length === 0;
+      const negatedRequired = /\b(?:not|never|no)\s+Required\b/i.test(c);
+      const explicitRequired = !negatedRequired &&
+        (/(?:^|[.;])\s*Required\b\s*(?::\s*[A-Za-z0-9]|\s+[A-Za-z0-9])/.test(c) ||
+          /\b(?:is|remain|remains|stays)\s+Required\b/.test(c));
+      if (hasShown || explicitRequired) {
+        cells++;
+        return;
+      }
+      const debtMarker = OUTCOME_DEBT.get(key);
+      if (debtMarker && c.includes(debtMarker)) {
+        owedCells.push(key);
+        return;
+      }
+      if (!hasShown && !explicitRequired)
+        bad.push(`${row[1]}'s ${what} outcome states neither Shown (with its scene) nor Required — an action not shown stays Required`);
+    });
+  }
+  for (const x of decl.supplemental)
+    if (!companion.includes(`<a id="${x.toLowerCase()}"></a>`)) bad.push(`${x}, a supplemental obligation item 5 names, no longer stands in ${COMPANION}`);
+
+  return { bad, counts: decl.counts, total: defined.size, cited, owedOnly, cells, owedCells, supplemental: decl.supplemental };
+}
+
 function definedRQs(prd) {
   return [...prd.matchAll(/^#### (RQ-\d+):/gm)].map((m) => m[1]);
 }
@@ -227,6 +527,75 @@ if (process.argv.includes("--selfcheck")) {
   assert.ok(!reg.names.includes(registerTags("**Provenance: vibes-based**")[0]), "a register nobody declared is not in the set");
   assert.strictEqual(registerNames("no such declaration"), null, "an unparseable register list is a failure, not an empty set");
 
+  // --- the story-ID trace arm, with its negatives ---
+  const sx = {
+    readme: "Matt keeps its 2 scene, 2 MT, 1 CRUD and 1 HR IDs as they are defined. XR-01–02 and LEGAL-01 stay supplemental obligations beside those IDs.",
+    story: '<a id="s01"></a>\nscene one\n<a id="s01a"></a>\nscene one-a',
+    companion: [
+      '<a id="trace-harness"></a> [Harness SPEC](../../../harness/SPEC.md), [interfaces](../../../harness/INTERFACES.md), [scenarios](../../../harness/SCENARIOS.md), [BUILD](../../../harness/BUILD.md)',
+      '<a id="trace-model"></a> [Model SPEC](../../../model/SPEC.md), [interfaces](../../../model/INTERFACES.md), [evals](../../../model/EVALS.md), [BUILD](../../../model/BUILD.md)',
+      "| [S01](story-matt.md#s01) | [harness](#trace-harness) B1 → Step 4. |",
+      "| [S01a](story-matt.md#s01a) | no layer row cites S01a yet — acceptance owed at [harness](#trace-harness). |",
+      "| MT-01 | a | b | c **Trace:** [harness](#trace-harness) B1, B2 → Steps 4, 5 · [model](#trace-model) N-01 → Step 3. |",
+      "| MT-02 | a | b | c **Trace:** no layer row cites MT-02 yet — acceptance owed at [harness](#trace-harness), [model](#trace-model). |",
+      "| CRUD-01 | obj | Shown [S01](story-matt.md#s01): create. | Required: edit. | Removal remains Required. **Trace:** [harness](#trace-harness) B2 → Step 5. |",
+      "## HR-01 — a cue",
+      "**Trace:** [harness](#trace-harness) B1 → Step 4; owed at [harness](#trace-harness).",
+      "## Supplemental",
+      '| XR-01 | <a id="xr-01"></a> a | b | c |',
+      '| XR-02 | <a id="xr-02"></a> a | b | c |',
+      '<a id="legal-01"></a>',
+      "| E01 | provenance | untraced |",
+    ].join("\n"),
+    layers: {
+      harness: {
+        scen: "- **B1 [MUST]** a\n- **B2 [MUST]** b\n- **J1 [HELD-OUT]** c",
+        build: "## Step 4 — elicitation\n- **Verify:** B1\n## Step 5 — loop\n- **Verify:** B2\n## Step 6 — held-out\n- **Verify:** J1\n## Guardrails\nB1 B2",
+      },
+    },
+    model: { evals: "| N-01 | an item |\n| A-01 | another |", build: "## Step 2 — Prompt authoring\n## Step 3 — Qualification runs\n" },
+  };
+  const story = (patch) => checkStory({ ...sx, ...patch }).bad;
+  const comp = (from, to) => {
+    assert.ok(sx.companion.includes(from), `fixture anchor: ${from}`);
+    return story({ companion: sx.companion.replace(from, to) });
+  };
+  const fails = (bad, needle, why) => assert.ok(bad.some((b) => b.includes(needle)), `${why} — findings: ${JSON.stringify(bad)}`);
+  const clean = checkStory(sx);
+  assert.deepStrictEqual(clean.bad, [], "a complete map passes");
+  assert.strictEqual(clean.total, 6, "and counts every census ID");
+  assert.strictEqual(clean.owedOnly, 2, "a no-row trace is counted as owed, never as covered");
+  assert.ok(story({ companion: sx.companion.replace(/^<a id="trace-harness">.*\n/m, "") }).some((b) => b.includes("trace-harness") && b.includes("no layer-debt row")), "a deleted layer row fails");
+  assert.ok(story({ companion: sx.companion.replace("../../../harness/SPEC.md", "../../../harness/PHANTOM.md") }).some((b) => b.includes("link target") && b.includes("PHANTOM.md")), "a phantom rule-home target fails");
+  fails(comp("| MT-02 | a | b | c **Trace:** no layer row cites MT-02 yet — acceptance owed at [harness](#trace-harness), [model](#trace-model). |\n", ""), "MT-02 is not defined", "a dropped MT case fails");
+  fails(comp("| [S01](story-matt.md#s01) | [harness](#trace-harness) B1 → Step 4. |", "| [S01](story-matt.md#s01) | [harness](#trace-harness) B1 → Step 4. |\n| [S01](story-matt.md#s01) | [harness](#trace-harness) B1 → Step 4. |"), "S01 carries two traces", "a duplicated scene fails");
+  fails(comp("| [S01a](story-matt.md#s01a) |", "| [S02](story-matt.md#s02) | [harness](#trace-harness) B1 → Step 4. |\n| [S01a](story-matt.md#s01a) |"), "a trace for S02", "a phantom scene row fails");
+  fails(comp("B2 → Step 5. |", "B9 → Step 5. |"), "does not define (phantom)", "a CRUD row pointed at a phantom scenario fails");
+  fails(comp("Shown [S01](story-matt.md#s01): create.", "Shown [S09](story-matt.md#s09): create."), "links scene S09", "a Shown cell at a phantom scene fails");
+  fails(comp("B2 → Step 5. |", "B2. |"), "with no BUILD step", "a removed BUILD link fails");
+  fails(comp("B2 → Step 5. |", "B2 → Step 4. |"), "at Step 4, which names none of them", "a trace closing at the wrong step fails");
+  fails(comp("B1, B2 → Steps 4, 5", "B1, B2 → Step 4"), "lists no step that closes harness B2", "a group dropping a row's only closing step fails");
+  assert.deepStrictEqual(
+    story({ layers: { harness: { ...sx.layers.harness, build: sx.layers.harness.build.replace("- **Verify:** B2", "- **Verify:** B2\n- **Gate:** B1 (a cross-layer mention)") } } }),
+    [],
+    "a further gate-line mention of a row does not force its step into the trace — the printed bound",
+  );
+  fails(story({ layers: { harness: { ...sx.layers.harness, build: sx.layers.harness.build.replace("- **Verify:** B2\n", "").replace("B1 B2", "B1") } } }), "absent BUILD closure", "a row no BUILD step names fails");
+  fails(comp("| Required: edit. |", "| Edit. |"), "edit outcome states neither", "a CRUD cell stripped of its Required outcome fails");
+  fails(comp("| Required: edit. |", "| Required |"), "edit outcome states neither", "an empty Required label fails");
+  fails(comp("| Required: edit. |", "| Not Required: edit. |"), "edit outcome states neither", "a negated Required outcome fails");
+  fails(comp("Shown [S01](story-matt.md#s01): create.", "Shown [S01](story-matt.md#missing): create."), "malformed Shown destination", "a Shown link to a missing scene anchor fails");
+  fails(comp("\n**Trace:** [harness](#trace-harness) B1 → Step 4; owed at [harness](#trace-harness).", ""), "HR-01 carries no trace", "a missing trace fails");
+  fails(comp("\n**Trace:** [harness](#trace-harness) B1 → Step 4; owed at [harness](#trace-harness).", "\n**Trace:** [harness](#trace-harness) B1 → Step 4.\n**Trace:** [harness](#trace-harness) B1 → Step 4."), "HR-01 carries two traces", "a second trace on one cue fails");
+  fails(comp("| E01 | provenance | untraced |", "| E01 | provenance | **Trace:** [harness](#trace-harness) B1 → Step 4. |"), "a trace for E01", "a provenance row promoted into acceptance fails");
+  fails(comp('<a id="xr-02"></a>', ""), "XR-02, a supplemental obligation", "a dropped supplemental case fails");
+  fails(comp("MT-01 | a | b | c **Trace:** [harness](#trace-harness) B1, B2", "MT-01 | a | b | c **Trace:** [harness](#trace-harness) J1, B2"), "[HELD-OUT] row", "a held-out row cited as acceptance fails");
+  fails(comp("N-01 → Step 3. |", "N-01 → Step 2. |"), "closes only at Step 3", "a model item closed anywhere but qualification fails");
+  fails(comp("N-01 → Step 3. |", "N-09 → Step 3. |"), "model item N-09", "a phantom model item fails");
+  fails(comp("no layer row cites MT-02 yet", "no layer row cites MT-01 yet"), "a trace names its own ID", "an owed trace naming another ID fails");
+  fails(story({ readme: "no census here" }), "fix this script's contract", "an unparseable census is a failure, not an empty census");
+  fails(story({ readme: sx.readme.replace("2 MT", "3 MT") }), "declares 3 MT IDs", "the declared count and the defined rows cannot drift apart");
+
   console.log("selfcheck OK");
   process.exit(0);
 }
@@ -280,6 +649,19 @@ if (!reg) {
   }
 }
 
+// Check 3 — the story-ID trace arm over the Matt English companion.
+const layerTexts = Object.fromEntries(
+  TRACE_LAYERS.map((l) => [l, { scen: readOne(SUITE_FILES[l]), build: readOne(`${l}/BUILD.md`) }]),
+);
+const storyResult = checkStory({
+  readme: readOne("user-stories/README.md"),
+  story: readOne(STORY),
+  companion: readOne(COMPANION),
+  layers: layerTexts,
+  model: { evals: readOne("model/EVALS.md"), build: readOne("model/BUILD.md") },
+});
+bad.push(...storyResult.bad);
+
 if (bad.length) {
   console.log(`\nPROBE-COVERAGE FAIL:`);
   for (const b of bad) console.log(`  ${b}`);
@@ -291,6 +673,12 @@ console.log(
   `PROBE-COVERAGE OK — ${rqRows.length} requirement(s): ${rqRows.length - owed} anchored to a Situation, ${owed} declared owed (a debt kept visible, not an exemption); ` +
     `obligation scope per suite (parsed/guarded): ${perSuite.join(", ")} — summing ${totalParsed}/${totalGuarded}, ${totalExempt} declared exempt; ` +
     `no gating row cites held-out E without FD-59's re-provenance marker; ` +
-    `${tagCount} recorded provenance tag(s), every one among the ${reg.names.length} user-stories/README.md declares. ` +
-    `NOT CHECKED: whether an anchored beat actually exercises its requirement, or whether a register tag is TRUE — existence is mechanical, aboutness is a reading job.`,
+    `${tagCount} recorded provenance tag(s), every one among the ${reg.names.length} user-stories/README.md declares; ` +
+    `story traces: ${storyResult.total} Matt English IDs (${Object.entries(storyResult.counts).map(([f, n]) => `${n} ${f}`).join(", ")}) each defined once with one trace, ` +
+      `${storyResult.cited} cited layer row/item reference(s) resolving in their suites and closing at a step that names them (model items at qualification only), ` +
+      `${storyResult.owedOnly} ID(s) with no citing row, owed; ${storyResult.cells} CRUD outcome cell(s) stating Shown or Required; ` +
+      `${storyResult.owedCells.length} CRUD outcome debt(s) explicitly owed and not counted as outcomes (${storyResult.owedCells.join(", ")}); supplemental ${storyResult.supplemental.join(", ")} standing. ` +
+    `A TRACE IS NOT A PASS: scripted prose, a Shown cell and a resolving row are pointers, not results. ` +
+    `NOT CHECKED: whether an anchored beat actually exercises its requirement, whether a register tag is TRUE, or whether a cited row asserts its story ID's claim — existence is mechanical, aboutness is a reading job; ` +
+    `nor that a trace lists every step naming a row, since a gate line's cross-layer mention reads like a citation.`,
 );
