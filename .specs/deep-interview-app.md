@@ -41,7 +41,7 @@ Produce the **full app spec package** — `app/README.md · SPEC.md · INTERFACE
 
 ## Non-goals (v1 spec)
 
-- Native mobile apps (wrapper possible later).
+- Native mobile apps (wrapper possible later). *(annotation 2026-09-14: superseded for v1 — U43 (`cfefd5e`) put an installable native iPhone owner app in the first release beside the web app, founder-approved 2026-09-12; live home `../app/SPEC.md` §9. This interview line is kept as written, as provenance.)*
 - Automated SMS / LINE / WhatsApp sending (v1 = email + forwarded links).
 - The `annna.dev` marketing site (separate artifact).
 - Multi-model UI or BYO-key surfaces (supply is app-provided; see memory/model docs). **Superseded by founder ruling FR5** — the BYO-key ban is reversed; BYO API keys are in scope (positive spec home: `../model/SPEC.md`).
