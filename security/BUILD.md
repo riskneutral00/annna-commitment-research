@@ -76,3 +76,4 @@ Last, and named: the DPA in the terms of service; the records-of-processing (fro
 - Never a write-once storage class for PII (V5).
 - The agent never gains a shred tool — the `destruction` class stays unoccupied (`INTERFACES.md §2`).
 - The legal gate is not negotiable from inside the repo.
+- A story ID a security row cites closes only at the step whose Gate names that row; a companion trace or a cited MT, CRUD or HR ID clears no gate, and LEGAL-01 keeps Step 8's needs-research condition (`../user-stories/README.md` §The bar a story passes, item 5).

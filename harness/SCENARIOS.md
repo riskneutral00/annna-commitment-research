@@ -2,7 +2,7 @@
 
 *Every decision in `SPEC.md`, turned into a pass/fail scenario. These are the harness's acceptance criteria: the harness is "done" when all **[MUST]** scenarios pass against the stubs in `INTERFACES.md`. Format: **Given / When / Then**, with the expected outcome. `[MUST]` = build-gating; `[SHOULD]` = built and tested — still in its BUILD step's Verify set — but not release- or derivation-gating (FD-59's demotion class); `[HELD-OUT]` = deliberately not designed-to, run as an out-of-sample generality check (record result, don't fix the atom to make it pass); `[ENGINE]` = the harness's part is only "hands the engine a representable state," the enforcement is verified later.*
 
-*Write these as executable tests during `BUILD.md`; each build step names the scenarios it must turn green.*
+*Write these as executable tests during `BUILD.md`; each build step names the scenarios it must turn green. A story ID a row cites (Matt English's scene, MT, CRUD and HR IDs) names the obligation the row derives from and is never itself a result: the row closes only when its own assertion runs green at the `BUILD.md` step that names it, and a `[HELD-OUT]` result is recorded, never tuned toward (`../user-stories/README.md` §The bar a story passes, item 5).*
 
 ---
 
