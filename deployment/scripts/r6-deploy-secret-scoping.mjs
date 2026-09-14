@@ -49,7 +49,9 @@ const WORKFLOW_LEVEL = "everything above `jobs:`";
 // blind spot, the same class as R3's named-pattern bound (SPEC.md §7a item 18).
 const REPOSITORY_EXECUTION = [
   [
-    /\b(?:npm|pnpm|yarn)\s+(?:(?:--[A-Za-z0-9][\w-]*(?:=[^\s]+|\s+(?!-)\S+)?|-{1,2}[A-Za-z][\w-]*)\s+)*(?:ci|install|i|test|t|run)\b/,
+    // An option, long or short, may carry a value: `--prefix engine`,
+    // `--prefix=engine`, `-w engine`.
+    /\b(?:npm|pnpm|yarn)\s+(?:-{1,2}[A-Za-z0-9][\w-]*(?:=[^\s]+|\s+(?!-)\S+)?\s+)*(?:ci|install|i|test|t|run)\b/,
     "a package-manager lifecycle or repository script",
   ],
   [/\b(?:vitest|jest|mocha)\b/, "a test runner over this tree"],
@@ -231,6 +233,20 @@ if (process.argv.includes("--selfcheck")) {
       unprotectedJobsWithDeploySecrets(
         "\njobs:\n  test:\n    environment: production\n    steps:\n      - run: npm --prefix engine ci\n        env:\n          T: ${{ secrets.CLOUDFLARE_API_TOKEN }}\n",
       ).length === 1,
+    ],
+    // The short option with a separate value (U68 round-2 residue): `-w engine`
+    // between the package manager and the verb reached the verb unmatched.
+    [
+      "a recognized environment does not clear npm -w engine test",
+      unprotectedJobsWithDeploySecrets(
+        "\njobs:\n  test:\n    environment: production\n    steps:\n      - run: npm -w engine test\n        env:\n          T: ${{ secrets.CLOUDFLARE_API_TOKEN }}\n",
+      ).length === 1,
+    ],
+    [
+      "a -w outside a package-manager line is not repository execution",
+      unprotectedJobsWithDeploySecrets(
+        "\njobs:\n  deploy:\n    environment: production\n    steps:\n      - run: grep -w engine test\n        env:\n          T: ${{ secrets.CLOUDFLARE_API_TOKEN }}\n",
+      ).length === 0,
     ],
     [
       "the finding says the name is not isolation",

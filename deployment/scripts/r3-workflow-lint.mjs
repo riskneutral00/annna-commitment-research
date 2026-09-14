@@ -28,6 +28,9 @@ const WORKFLOWS = ".github/workflows";
 const MODEL_SECRET = /OPENROUTER|MODEL_API_KEY|MODEL_KEY/;
 // The site of a finding when it sits above `jobs:` rather than inside one job.
 const WORKFLOW_LEVEL = "everything above `jobs:`";
+// ...and when it sits in a root-level key written after the `jobs:` block.
+const BELOW_JOBS =
+  "a root-level `env:` or other key below `jobs:` (inherited by every job — no job-level environment protects it)";
 const QUALIFICATION = "qualification";
 
 const secretLines = (text) =>
@@ -143,7 +146,7 @@ function modelKeyOutsideQualification(yaml) {
   }
 
   const trailingHits = secretLines(trailingWorkflow.join("\n"));
-  if (trailingHits.length) findings.push([WORKFLOW_LEVEL, trailingHits]);
+  if (trailingHits.length) findings.push([BELOW_JOBS, trailingHits]);
   return findings;
 }
 
@@ -218,6 +221,10 @@ if (process.argv.includes("--selfcheck")) {
       modelKeyOutsideQualification(
         qualified + "\nenv:\n  TOKEN: ${{ secrets.MODEL_KEY }}\n",
       ).length === 1,
+    ],
+    [
+      "and it is reported as below `jobs:`, not above it",
+      modelKeyOutsideQualification(qualified + "\nenv:\n  TOKEN: ${{ secrets.MODEL_KEY }}\n")[0][0] === BELOW_JOBS,
     ],
     [
       "another environment name is a finding that says which",
