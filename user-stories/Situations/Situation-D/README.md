@@ -2,7 +2,7 @@
 
 *A set of user stories that stress-test **annnä** against a schedule that moves through space, not just time: **Debra**, a cash-only physical therapist who treats patients at two office locations she works out of on different days, and at patients' homes when they ask her to come. Every commitment on her board carries an **address**, the gap between two commitments is a **drive**, and the thing she wants most from a cancellation is not sympathy but a tighter day — *"pull everyone closer together so the afternoon is mine."* There is no market here: like Sofia, Debra is her own resource **and** her own operator, and her patients are off-app customers who only ever get a link. Read this folder like a **storybook**. By the end, an LLM designing annnä should see, concretely, what location does to the product: slots that are only real if she can physically reach them, reshuffles that are **proposals** patients confirm, and constraints that belong to a *patient* ("he will never move") that the optimizer must honor absolutely. **annnä is the name of both the app and the agent inside it.***
 
-***Why this probe exists:** it was added (2026-08) specifically to pressure-test the **engine** — location as a commitment attribute, computed travel time, and reshuffle-as-proposal (see `../../../.specs/deep-interview-engine.md`). It remains a falsification probe, never a design target: if a run below breaks annnä's primitives, that reveals a missing **general** primitive, and it is flagged as such in the NOTES of `story-debra.md` — nothing here licenses a "physical-therapy feature."*
+***Why this probe exists:** it was added (2026-08) specifically to pressure-test the **engine** — location as a commitment attribute, computed travel time, and reshuffle-as-proposal (see `../../../.specs/deep-interview-engine.md`). It remains a falsification probe, never a design target: if a run below breaks annnä's primitives, that reveals a missing **general** primitive, and it is flagged as such in the NOTES of `story-debra.md` — nothing here licenses a "physical-therapy feature." **Runs 4–5 are scripted re-homes (FD-106, `../../../RULINGS.md`), not elicited:** four beats moved here from the retired Situation A files and A′ — calendar import, the store install, a prepaid credit, an abandoned draft — and each says so in-file, so the elicited-to-design register stays honest.*
 
 ---
 
@@ -10,7 +10,7 @@
 
 1. **Meet the protagonist.** `story-debra.md` is Debra's own **first-person** telling — the immersive file, doubling as the setup story: in a solo world the resource and the operator are the same person.
 2. **Then the customer.** Her patients are off-app; they only ever get a link: `customer.md`.
-3. **Then the situations** — three runs of the same week (`situation-1.md … situation-3.md`), each with a stated purpose, in the standard third-person Situation voice.
+3. **Then the situations** — three runs of the same week (`situation-1.md … situation-3.md`), each with a stated purpose, in the standard third-person Situation voice. Two scripted runs follow them (`situation-4.md`, `situation-5.md`, FD-106).
 
 ---
 
@@ -73,7 +73,15 @@ The **same week by paper book and phone**: booking by memory of where she'll be,
 The pointed cases: a slot she **can't physically reach is never offered**; a compaction proposal **never touches Harold** (will-never-move) or breaks Mrs. Ito's Tuesday-mornings-only rule — the agent doesn't even suggest it; a home-visit request from **outside her service area** gets an honest no at submit; a **race** for the last Friday slot yields one winner; a moved appointment is only ever a **proposal until the patient says yes**; and the agent won't message a patient — about a move, a cancellation, or overdue cash — **without Debra's yes**.
 **Purpose:** show **the boundaries** — feasibility enforced at the point of booking, patient-owned constraints honored absolutely, and every outward act gated on consent.
 
-**How the three relate:** 1 ↔ 2 are the same week with-annnä vs. by-hand (the axis is *a board that knows the map vs. a book that doesn't*). 3 stress-tests the seams from the outside (the axis is *honest boundaries*). Together they bound annnä's job here: hold a schedule that moves through space, offer only what's physically true, optimize only by proposal, and never overstep — toward a patient or past a constraint — on Debra's behalf.
+### Situation 4 — the fresh start → `situation-4.md` *(scripted, FD-106)*
+**Where the board comes from.** On the empty account, the agent offers to bring in what she already keeps; she connects the phone calendar she kept for office days (her paper book stays paper) and her existing sessions land as real commitments — nothing non-calendar comes in. Then, on need, the agent suggests a store template; its ghost preview renders from her real availability and writes nothing; install walks session length, buffer, price and site-days as confirmed proposals; a first booking lands; months later the uninstall leaves every booked session standing; she publishes a shape of her own for other therapists, and "publish my setup" meaning her populated board is refused with the authored-bundle path named. `../../../marketplace/SPEC.md §1.2`'s closed grammar governs any bundle the prose sketches.
+**Purpose:** show the **way in** — a fresh account that starts from her own weeks, and the store's whole open-half contract (suggest, preview, install, uninstall, publish, refuse extract) exercised by one practitioner.
+
+### Situation 5 — the paid-ahead visit and the half-built session → `situation-5.md` *(scripted, FD-106)*
+A patient who paid for a block of visits ahead cancels one: the amount stays on his thread as a credit in his favour and rides onto the next visit he books, with no refund because no money moved through the app. And a second session type Debra starts authoring and walks away from stays a disabled draft — on no link, holding no slot — until she resumes it, decides against it, and discards it without a trace.
+**Purpose:** show **quiet correction** — the record fixes itself around a cancelled prepaid visit, and a half-made thought never becomes a live surprise.
+
+**How the five relate:** 1 ↔ 2 are the same week with-annnä vs. by-hand (the axis is *a board that knows the map vs. a book that doesn't*). 3 stress-tests the seams from the outside (the axis is *honest boundaries*). 4 is the way in before that week (the axis is *starting from what she already has*), and 5 is the board weeks on, correcting itself (the axis is *nothing half-done or already-paid goes wrong quietly*); both are scripted, so they illustrate rather than falsify. Together they bound annnä's job here: hold a schedule that moves through space, offer only what's physically true, optimize only by proposal, and never overstep — toward a patient or past a constraint — on Debra's behalf.
 
 ---
 
@@ -84,6 +92,8 @@ The pointed cases: a slot she **can't physically reach is never offered**; a com
 | `story-debra.md` | Debra's own first-person telling — setup + sites + home visits + the compaction (immersive) |
 | `customer.md` | the off-app patient — Tom (and Mrs. Ito, Harold, Mrs. Gable, Priya, Nathan) |
 | `situation-1.md … situation-3.md` | the three runs |
+| `situation-4.md` | the fresh start — calendar import and the store install run (scripted, FD-106) |
+| `situation-5.md` | the paid-ahead visit's credit and the abandoned draft (scripted, FD-106) |
 
 ---
 

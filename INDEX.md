@@ -128,6 +128,8 @@
 | user-stories/Situations/Situation-D/situation-1.md | SPEC | The clean run, centered on the compaction: a cancellation becomes a checked proposal and a reclaimed afternoon |
 | user-stories/Situations/Situation-D/situation-2.md | SPEC | The same week on a paper book, a phone, and a head that holds the map |
 | user-stories/Situations/Situation-D/situation-3.md | SPEC | Situation D's edges — predictions to verify that the general primitives absorb location |
+| user-stories/Situations/Situation-D/situation-4.md | SPEC | The fresh start, scripted: calendar import and the store install, re-homed from Situation A and A′ under FD-106 |
+| user-stories/Situations/Situation-D/situation-5.md | SPEC | The paid-ahead visit and the half-built session, scripted: a credit rides onto a rebooking and an abandoned draft stays harmless, re-homed under FD-106 |
 | user-stories/Situations/Situation-D/story-debra.md | SPEC | Debra's own first-person telling — "a schedule that knows where I am" |
 | user-stories/Situations/Situation-E/README.md | SPEC | The held-out ER probe: annnä was deliberately not designed to this domain, so every claim is a prediction |
 | user-stories/Situations/Situation-E/customer.md | SPEC | The ER case as it arrives — a prediction to verify, not a met requirement |
