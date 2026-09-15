@@ -2,6 +2,8 @@
 
 **Readiness.** Ready when the founder opens a sitting on what the owner sees about money on their own board.
 
+**2026-09-15.** Matt's own S15 telling of this beat — *"Who owes me what for October?"* — was parked on the founder's direction along with the rest of his story's money beyond the two package prices; see [`../Situations/Situation-A/parked-beats.md`](../Situations/Situation-A/parked-beats.md). This brief's debt and question stand unchanged — a later sitting still owes the owner-facing aggregate — but S15 is no longer where that beat is told.
+
 **The debt this closes.** Two owed beats in `../COVERAGE.md` — the **owner's own ledger surface** (1) and the month-boundary quota reset from the **windows, edits and rollovers** cluster (1). They sit together because both are about the owner looking at an aggregate rather than at one commitment.
 
 **Why nothing covers it.** Matt's `Situation-A/story-matt.md` S15 asks *"Who owes me what for October?"* (scripted, FD-106). The corpus asserts the engine's derived `owed` value (`../../engine/SCENARIOS.md K1`) and the **guest-side** money render on a manage token (`../../app/SCENARIOS.md G10`). Nothing asserts the **owner-facing** aggregate. Likewise `../../engine/SCENARIOS.md Q1` and `Q4` assert cap enforcement and cancel-restoration *inside* a window; S20's *"monthly limits stand full again"* when the month turns is the boundary event, and it is asserted nowhere.

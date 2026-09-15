@@ -22,15 +22,15 @@ I select **Use my invitation**. The next screen shows the trial invitation and t
 
 Before the invitation, my week lives in four messaging apps, one calendar and my head.
 
-Mark has had Thursday mornings, 09:00 to 11:00, for ⟦how long Mark has had his standing Thursday⟧. We agreed it in Messenger once and never wrote it anywhere else. Georgina has Monday and Thursday evenings at 19:00, also agreed in Messenger. Both pay me by the month, and both lessons happen on a Messenger video call, so the link I use to talk to them is the link I use to teach them.
+Mark has had Thursday mornings, 09:00 to 11:00, for a long time. We agreed it in Messenger once and never wrote it anywhere else. Georgina has Monday and Thursday evenings at 19:00, also agreed in Messenger. Both pay me NT$4,000 a month for their standing lessons, and both lessons happen on a Messenger video call, so the link I use to talk to them is the link I use to teach them.
 
 Kai writes to me on LINE and Jasmine on Instagram. Neither has a standing time. When Kai asks whether I have time on Friday, I scroll back through LINE to see what I told him last time, open my calendar, and try to remember whether Jasmine asked about Friday too. She did, an hour earlier, in Instagram. I only notice when I go to type the second lesson into the same afternoon.
 
-That Thursday I forget Georgina's 19:00 lesson until she writes in Messenger: *"Are you ready?"* ⟦which lesson Matt really forgot that week⟧
+That Thursday I forget Georgina's 19:00 lesson until she writes in Messenger: *"Are you ready?"* — a lesson I had forgotten.
 
 The gym is supposed to be twice on Monday, Wednesday and Friday, once before noon and once in the afternoon. I have no idea how many of those I skipped this week. I eat when I'm hungry, sometimes at 2 am, and the apps I've tried want me to eat on a schedule.
 
-The money is in my head too. I can't say whether Georgina has paid for September without searching my bank app ⟦the real payment Matt couldn't place⟧. For Kai and Jasmine I count lessons back through LINE and Instagram and hope I haven't missed one.
+The money is in my head too. I can't say who has paid me this month without searching my bank app — a payment I could not place. For Kai and Jasmine I count lessons back through LINE and Instagram and hope I haven't missed one.
 
 <a id="s02"></a>
 
@@ -299,7 +299,7 @@ Saturday's Run card leaves the active board. The console shows the dated occurre
 
 ## S06 — I ask annnä to help me set up English scheduling
 
-> **Matt:** I teach English one-on-one. Some students have a standing weekly time and pay me a monthly package; others book one lesson at a time and pay per lesson. I want to enter lessons I've already agreed with students, and give students a link where they can choose a time themselves. Help me set up the scheduling rules.
+> **Matt:** I teach English one-on-one. Some students have a standing weekly time and pay me a monthly package; others book one lesson at a time through a link and pay a monthly package too. I want to enter lessons I've already agreed with students, and give students a link where they can choose a time themselves. Help me set up the scheduling rules.
 
 I click **Send**. annnä checks the catalog—the collection of reusable templates available to start from—for a suitable template. In this run the lookup succeeds with no suitable template available.
 
@@ -387,55 +387,34 @@ The **Meeting link** row stays in the form with an empty value and its **Edit** 
 
 The reply box suggests **English**. I keep it and click **Send**. The form shows **Guest-page language: English**.
 
-### I add a field through the conversation
+### Packages, not by the lesson
 
-I want to include the price, so I type:
+I want to include what my students pay, so I type:
 
-> **Matt:** Lesson price is 1,500.
+> **Matt:** My students don't pay per lesson. Two pay a monthly package for a standing weekly slot. The others book through a link and pay a monthly package too, for up to a few hours.
 
-I click **Send**.
+> **annnä:** Add a Packages row? What does each package cost, and what does it cover?
 
-> **annnä:** Do you mean **NT$1,500 per hour**?
+I send the two packages I use. The form gains a **Packages** row with **Edit** and **Delete** beside it:
+
+| Package | Price | Covers |
+|---|---|---|
+| Standing lessons | NT$4,000 a month | A weekly standing slot |
+| Link students | NT$2,000 a month | Up to 4 lessons and 4 hours a month |
+
+> **annnä:** NT$4,000 a month per standing slot?
 >
 > **OK** · **Edit**
 
-I click **OK** to answer yes.
+I click **OK** to confirm the basis.
 
-The form gains a **Lesson price** row with **Edit** and **Delete** beside it. It shows:
-
-- **Rate:** NT$1,500 per hour.
-- **Allowed duration:** 30 minutes–2 hours.
-- **Lesson price range:** NT$750–3,000.
-
-> **annnä:** At NT$1,500 an hour, a thirty-minute lesson is NT$750 and a two-hour lesson is NT$3,000. The price follows the duration selected.
-
-### Monthly packages for my regular students
-
-> **Matt:** That's the per-lesson price. My regular students pay a monthly package instead: 1, 2, 3 or 4 hours a month, or 10 hours a year.
-
-> **annnä:** Add a package price list beside the per-lesson rate? A package student pays the package price for its period instead of paying lesson by lesson. What does each package cost?
-
-I send the prices from my list. The form gains a **Packages** row with **Edit** and **Delete** beside it:
-
-| Package | Price |
-|---|---|
-| 1 hour a month | ⟦price list⟧ |
-| 2 hours a month | ⟦price list⟧ |
-| 3 hours a month | ⟦price list⟧ |
-| 4 hours a month | ⟦price list⟧ |
-| 10 hours a year | ⟦price list⟧ |
-
-annnä asks about two things a package has to settle:
+annnä asks about the one thing a package has to settle:
 
 > **annnä:** If a package student misses a lesson, does that month's package bill change?
 >
-> **Matt:** No. The package is the package. Attendance never changes the bill.
+> **Matt:** No. The package is the package. Attendance never changes a package bill.
 
-> **annnä:** Some months have one more lesson day than usual — October 2026 has five Thursdays. What should happen to a standing lesson on that extra day?
->
-> **Matt:** Skip it by default. If the student wants it, they pay the package rate for the extra day.
-
-The Packages row now reads **Attendance does not change a package bill · A fifth lesson day in a month is skipped; on the student's request it is added and charged at the package's hourly rate**.
+The Packages row now reads **Attendance never changes a package bill**.
 
 ### A standing weekly slot
 
@@ -449,37 +428,37 @@ I click **On**. The form shows **Standing slot: on**. A lesson I enter for a stu
 
 I tell the console:
 
-> **Matt:** Add a Preparation note field. Put “Bring an article” in it.
+> **Matt:** Add a Preparation note field. Put "Bring an article" in it.
 
 The new row shows **Preparation note: Bring an article**. I select its **Edit** action; the console puts that value into the reply box. I change it to **Bring an article you want to discuss** and send it. The row updates.
 
 I decide this instruction belongs to individual lessons rather than every use of the template. I select **Delete** on the Preparation note row. The row and its draft value disappear. I review the remaining form and continue with the scheduling rules.
 
-### I add limits on how often a per-lesson student can book
+### I set the limits inside a link student's package
 
-I add another rule through the console:
+I add the count rule through the console:
 
-> **Matt:** Add a field called Monthly occurrences, with a value from one to four.
+> **Matt:** Add a field called Monthly occurrences, with a value up to four.
 
 I click **Send**.
 
-> **annnä:** Do you mean a maximum of four English lessons taking place per student in each calendar month on your board, for students who pay per lesson? Package students have their package hours instead.
+> **annnä:** Do you mean a maximum of four English lessons taking place per student in each calendar month on your board, for students on the Link students package? Standing students have their weekly slot instead.
 >
 > **OK** · **Edit**
 
-I click **OK**. The form adds **Monthly occurrences: up to 4 per student per calendar month · per-lesson students**.
+I click **OK**. The form adds **Monthly occurrences: up to 4 per student per calendar month · link students**.
 
 I then type:
 
-> **Matt:** Add Maximum time: five hours.
+> **Matt:** Add Maximum time: four hours.
 
-> **annnä:** Is that a maximum of five booked English lesson hours per per-lesson student, for lessons taking place in that same calendar month?
+> **annnä:** Is that a maximum of four booked English lesson hours per link student, for lessons taking place in that same calendar month?
 >
 > **OK** · **Edit**
 
-I click **OK**. The form adds **Maximum time: 5 hours per student per calendar month · per-lesson students**.
+I click **OK**. The form adds **Maximum time: 4 hours per student per calendar month · link students**.
 
-I can see the two limits separately: how many lessons a student books and how much lesson time those bookings add up to. In this example I keep both. They apply to a per-lesson student across all of that student's English bookings, including bookings made through different uses of **English lesson scheduling**. The month is determined by the lesson’s date on my Asia/Taipei calendar. A different offering or a saved copy needs its scope confirmed before use; creating a copy does not itself grant a fresh allowance.
+I can see the two limits separately: how many lessons a student books and how much lesson time those bookings add up to. In this example I keep both. They apply to a link student across all of that student's English bookings, including bookings made through different uses of **English lesson scheduling**. The month is determined by the lesson's date on my Asia/Taipei calendar. A different offering or a saved copy needs its scope confirmed before use; creating a copy does not itself grant a fresh allowance.
 
 annnä asks how these two limits should treat a cancellation:
 
@@ -507,7 +486,7 @@ I keep that text and click **Send**.
 
 I can see the destination email beside the proposal. I click **OK**. The form gains **My lesson reminder: email · 15 minutes before**, with Edit and Delete beside it. The recipient is **Matt**, so I can tell whose reminder I have just configured.
 
-I can now read the scheduling rules we have built together: the duration range and increments, teaching window, buffers, per-lesson hourly rate, package price list with its attendance and fifth-lesson rules, the standing slot, the per-lesson monthly booking/time limits and my reminder choice.
+I can now read the scheduling rules we have built together: the duration range and increments, teaching window, buffers, the two packages with their attendance rule, the standing slot, the link-package monthly booking/time limits and my reminder choice.
 
 <a id="s08"></a>
 
@@ -521,11 +500,11 @@ I tell the console:
 
 > **Matt:** The student for this use is Mark.
 
-I click **Send**. **Mark** appears in the Student row. When the console asks for his contact, I paste the Facebook Messenger link I use to reach him and send it. The row reads **Mark · Facebook Messenger · m.me/⟦Mark's Messenger name⟧**.
+I click **Send**. **Mark** appears in the Student row. When the console asks for his contact, I paste the Facebook Messenger link I use to reach him and send it. The row reads **Mark · Facebook Messenger · m.me/his Messenger name**.
 
-> **Matt:** Mark has a standing lesson every Thursday from 9 to 11, online, starting in October. He's on two Red Eye packages (4 hours each) — 8 hours a month.
+> **Matt:** Mark has a standing lesson every Thursday from 9 to 11, online, starting in October. He's on the standing package.
 
-> **annnä:** Mark's standing lesson: every Thursday, **09:00–11:00** (2 hours), online, starting **Thursday, 1 October**. Package: two Red Eye packages (4 hours each), **8 hours a month**, **⟦NT$4,000⟧ a month** — NT$500 an hour. Four Thursdays make his 8 hours. October has five, so **Thursday, 29 October** is skipped unless he asks for it.
+> **annnä:** Mark's standing lesson: every Thursday, **09:00–11:00** (2 hours), online, starting **Thursday, 1 October**. Package: **Standing lessons · NT$4,000 a month**.
 >
 > **OK** · **Edit**
 
@@ -539,12 +518,12 @@ The form now shows the same address twice, on purpose:
 
 | Row | Value |
 |---|---|
-| Student contact | Facebook Messenger · m.me/⟦Mark's Messenger name⟧ |
-| Meeting link | m.me/⟦Mark's Messenger name⟧ |
+| Student contact | Facebook Messenger · m.me/his Messenger name |
+| Meeting link | m.me/his Messenger name |
 
 One row is how I reach Mark; the other is where his lesson happens. They hold the same address because I said so. The reusable template's **Meeting link** stays blank; this value belongs to Mark's lessons.
 
-I review the use and select **Save**. **Mark · English · 09:00** appears in the Thursday columns of 1, 8, 15 and 22 October, each reserving **08:55–11:05** with the lesson buffers. His series lists **29 October skipped · fifth Thursday**. Each card opens to the student, the **09:00–11:00** interval, Online, the Messenger meeting link and **Package: 8 hours a month**. The lessons identify me as the person who recorded our agreement.
+I review the use and select **Save**. **Mark · English · 09:00** appears in the Thursday columns of 1, 8, 15, 22 and 29 October, each reserving **08:55–11:05** with the lesson buffers. Each card opens to the student, the **09:00–11:00** interval, Online, the Messenger meeting link and **Standing lessons · NT$4,000 a month**. The lessons identify me as the person who recorded our agreement.
 
 Mark is saved in Contacts with the **Student** relationship, ready to select for another lesson. The reusable definition keeps its student fields ready to fill each time it is used. I can continue editing from here through the console and the rows' **Edit** actions.
 
@@ -612,19 +591,19 @@ The proposal shows **Notes: empty → Have my documents ready** on this Thursday
 
 ## S09 — I put Georgina's standing lessons on my board
 
-Georgina and I agreed in Messenger a long time ago: Monday and Thursday evenings, 19:00–20:00, online. She is on the same packages as Mark. I want that agreement on the same board as my own commitments.
+Georgina and I agreed in Messenger a long time ago: Monday and Thursday evenings, 19:00–20:00, online. She is on the same package as Mark. I want that agreement on the same board as my own commitments.
 
 I open a new use of **English lesson scheduling**, paste Georgina's Messenger link as her contact and tell the console:
 
-> **Matt:** Georgina has standing lessons every Monday and Thursday, 19:00 to 20:00, online, starting in October. She's on two Red Eye packages (4 hours each) too. Her Messenger link is her contact and our meeting link.
+> **Matt:** Georgina has standing lessons every Monday and Thursday, 19:00 to 20:00, online, starting in October. She's on the standing package too. Her Messenger link is her contact and our meeting link.
 
 I click **Send**.
 
-> **annnä:** Georgina's standing lessons: every **Monday and Thursday, 19:00–20:00**, online, starting **Thursday, 1 October**. Package: two Red Eye packages (4 hours each), **8 hours a month**, **⟦NT$4,000⟧ a month**. In October her lessons on 1, 5, 8, 12, 15, 19, 22 and 26 October make her 8 hours; **Thursday, 29 October** is the fifth Thursday and is skipped unless she asks for it. Contact and meeting link: **m.me/⟦Georgina's Messenger name⟧**.
+> **annnä:** Georgina's standing lessons: every **Monday and Thursday, 19:00–20:00**, online, starting **Thursday, 1 October**. Package: **Standing lessons · NT$4,000 a month**. Contact and meeting link: **m.me/her Messenger name**.
 >
 > **OK** · **Edit**
 
-The result names Georgina, both weekdays, the interval, Online, the package and the skipped fifth Thursday. It identifies me as the person recording the agreement. I click **OK** and save the lessons through the normal scheduling action. Georgina is saved in Contacts with the **Student** relationship.
+The result names Georgina, both weekdays, the interval, Online and the package. It identifies me as the person recording the agreement. I click **OK** and save the lessons through the normal scheduling action. Georgina is saved in Contacts with the **Student** relationship.
 
 **Georgina · English · 19:00** blocks appear in the Monday and Thursday columns. On Thursday, 15 October, the morning Run sits at the top, Mark's 09:00 lesson and my 15:00 personal appointment follow, and Georgina's 19:00 lesson closes the day. The blocks pack together in start-time order, with their time labels showing when they actually happen.
 
@@ -634,17 +613,17 @@ Selecting one of her lessons opens Georgina's booking details. I have captured t
 
 ## S10 — I send Kai his link
 
-Kai writes to me on LINE and wants to book lessons one at a time. I open a new use of **English lesson scheduling** and tell the console that the student for this use is **Kai**, with his LINE contact. The use shows **Kai · LINE · per lesson · NT$1,500 per hour**, with the monthly limits of 4 lessons and 5 hours. Kai is saved in Contacts as a Student.
+Kai writes to me on LINE and wants to book lessons one at a time. I open a new use of **English lesson scheduling** and tell the console that the student for this use is **Kai**, with his LINE contact. The use shows **Kai · LINE · Link package · NT$2,000 a month · 4 hours**, with the monthly limits of 4 lessons and 4 hours. Kai is saved in Contacts as a Student.
 
 I create Kai's individual link and select **Copy link**. The button changes to **Copied**. I open the LINE conversation associated with his contact and paste the link with a message asking him to choose a time.
 
-The link opens the website's student booking surface: my available calendar and a console for filling this lesson request. Its access is tied to Kai’s individual request. He can fill and confirm that request, then read, move or cancel its resulting booking through the same authorized page. It gives no access to another lesson request, my rules or other students’ records. His LINE contact helps me find our conversation; the link’s permission comes from its issued scope.
+The link opens the website's student booking surface: my available calendar and a console for filling this lesson request. Its access is tied to Kai's individual request. He can fill and confirm that request, then read, move or cancel its resulting booking through the same authorized page. It gives no access to another lesson request, my rules or other students' records. His LINE contact helps me find our conversation; the link's permission comes from its issued scope.
 
-Jasmine writes to me on Instagram and also wants lessons one at a time. I do the same for her: a use with **Jasmine · Instagram · per lesson**, her own individual link, copied and pasted into our Instagram conversation. Neither link knows about the other.
+Jasmine writes to me on Instagram and also wants lessons one at a time. I do the same for her: a use with **Jasmine · Instagram · Link package · NT$2,000 a month · 4 hours**, her own individual link, copied and pasted into our Instagram conversation. Neither link knows about the other.
 
-Georgina sometimes writes to me from ⟦Georgina's second messaging app⟧ instead of Messenger. I open the Georgina entry associated with the standing lessons I already recorded and tell the console:
+Georgina sometimes writes to me from her second messaging app instead of Messenger. I open the Georgina entry associated with the standing lessons I already recorded and tell the console:
 
-> **Matt:** This ⟦Georgina's second messaging app⟧ contact is also Georgina. Add it to this student.
+> **Matt:** This contact is also Georgina. Add it to this student.
 
 I supply that contact. The console shows **Georgina** and the existing Messenger contact beside the proposed additional contact. I check the selected person and click **OK**.
 
@@ -656,7 +635,7 @@ Georgina's student entry now shows both contacts and the same standing lessons. 
 
 I'm Kai. Matt sends me a link in LINE, and I tap it to open the page in my browser.
 
-I see **English lesson with Matt**, **NT$1,500 per hour**, and **30 minutes–2 hours in 15-minute increments**. The calendar shows dates and a time scale labelled **Asia/Taipei**, the timezone for the times I enter in this conversation. Unavailable periods are blocked out, while the open periods indicate where a valid lesson may fit.
+I see **English lesson with Matt**, **Link package · NT$2,000 a month · 4 hours**, and **30 minutes–2 hours in 15-minute increments**. The calendar shows dates and a time scale labelled **Asia/Taipei**, the timezone for the times I enter in this conversation. Unavailable periods are blocked out, while the open periods indicate where a valid lesson may fit.
 
 Beside the console I can open the booking terms and data-use notice for this request. I review the notice and any required choices before sending my first message.
 
@@ -704,7 +683,7 @@ The request form and console show the same selection:
 
 > **Kai · Thursday, 15 October · 16:05–16:50 · Online**
 >
-> **Duration: 45 minutes · Rate: NT$1,500 per hour · Total: NT$1,125**
+> **Duration: 45 minutes · Link package · NT$2,000 a month · 4 hours**
 
 The calendar marks this as my selected interval. The request is ready for confirmation.
 
@@ -730,19 +709,19 @@ I click **16:30**. The form and console update together:
 
 > **Kai · Thursday, 15 October · 16:30–17:15 · Online**
 >
-> **Duration: 45 minutes · Rate: NT$1,500 per hour · Total: NT$1,125**
+> **Duration: 45 minutes · Link package · NT$2,000 a month · 4 hours**
 
 ### I confirm the updated request
 
-The monthly-limit summary shows **October 2026: 0 of 4 lessons · 0 of 5 hours**, counted by when each lesson takes place on Matt’s Asia/Taipei calendar. Confirming this lesson would make that **1 of 4 lessons · 45 minutes of 5 hours**.
+The monthly-limit summary shows **October 2026: 0 of 4 lessons · 0 of 4 hours**, counted by when each lesson takes place on Matt's Asia/Taipei calendar. Confirming this lesson would make that **1 of 4 lessons · 45 minutes of 4 hours**.
 
-I review the new interval, total and applicable booking terms, then choose **Confirm booking** in the console. The request is checked against the current availability, rules and monthly totals again.
+I review the new interval and applicable booking terms, then choose **Confirm booking** in the console. The request is checked against the current availability, rules and monthly totals again.
 
-I see **Booking confirmed** with **Thursday, 15 October, 16:30–17:15**, the forty-five-minute duration and **NT$1,125** total. The monthly summary now shows the one booked lesson and forty-five minutes. I can keep this lesson's link to return to its details. The meeting-link field is still blank.
+I see **Booking confirmed** with **Thursday, 15 October, 16:30–17:15** and the forty-five-minute duration. The monthly summary now shows the one booked lesson and forty-five minutes. I can keep this lesson's link to return to its details. The meeting-link field is still blank.
 
 ### I check the time in another timezone
 
-For my travel plans, I tell this page’s console, **“Show this lesson in Tokyo time.”** The page’s display changes to **Asia/Tokyo**. The same confirmed lesson reads **Thursday, 15 October · 17:30–18:15 Asia/Tokyo**, with **16:30–17:15 Asia/Taipei** beside it. Its forty-five-minute duration and NT$1,125 total are unchanged. Matt’s board and reminder still use Asia/Taipei; this display choice has not moved the lesson.
+For my travel plans, I tell this page's console, "Show this lesson in Tokyo time." The page's display changes to **Asia/Tokyo**. The same confirmed lesson reads **Thursday, 15 October · 17:30–18:15 Asia/Tokyo**, with **16:30–17:15 Asia/Taipei** beside it. Its forty-five-minute duration is unchanged. Matt's board and reminder still use Asia/Taipei; this display choice has not moved the lesson.
 
 I return the page to **Asia/Taipei** before continuing. All my later requests in this story use that displayed zone.
 
@@ -756,9 +735,9 @@ The help and answers on this surface concern the template's fields, rules and bo
 
 Back as Matt, I see **Kai · English · 16:30** in Thursday's column. The morning Run sits at the top, then Mark's 09:00 lesson, my personal appointment at **15:00–16:15**, Kai's lesson and Georgina's 19:00 lesson. The blocks pack together in start-time order.
 
-Jasmine has used her Instagram link too. **Jasmine · English · 13:00** sits in Monday, 12 October's column, beneath the Run from Sarah's house and above Georgina's 19:00 lesson. Her booking reads **13:00–14:00 · NT$1,500**, and her October summary shows **1 of 4 lessons · 1 hour of 5 hours**.
+Jasmine has used her Instagram link too. **Jasmine · English · 13:00** sits in Monday, 12 October's column, beneath the Run from Sarah's house and above Georgina's 19:00 lesson. Her booking reads **13:00–14:00**, and her October summary shows **1 of 4 lessons · 1 hour of 4 hours**.
 
-I can select any lesson and see the student, date, full time range, online format and price. Kai's details show **16:30–17:15** and **NT$1,125**; Jasmine's one-hour lesson shows **NT$1,500**. Mark's and Georgina's lessons name their package, **8 hours a month · ⟦NT$4,000⟧**, instead of a per-lesson price.
+I can select any lesson and see the student, date, full time range and online format. Kai's and Jasmine's lessons name their package, **Link package · NT$2,000 a month · 4 hours**. Mark's and Georgina's lessons name theirs, **Standing lessons · NT$4,000 a month**.
 
 Mark's and Georgina's lessons were entered by me from agreements we had already made. Kai's and Jasmine's came through their booking pages. All of them are ordinary lessons on the board I use to organize my time, with their origins visible in their details.
 
@@ -816,7 +795,7 @@ While I wait for her reply, Jasmine's saved lesson remains at 13:00. Once Jasmin
 
 > **Matt:** Jasmine agreed in Instagram to move this lesson to Monday, 12 October, from 15:30 to 16:30.
 
-The console presents **Monday, 12 October · 13:00–14:00 → 15:30–16:30 · 1 hour · NT$1,500**, with **OK** and **Edit**. It also shows that my fifteen-minute reminder will follow the new start: **15:15**.
+The console presents **Monday, 12 October · 13:00–14:00 → 15:30–16:30 · 1 hour**, with **OK** and **Edit**. It also shows that my fifteen-minute reminder will follow the new start: **15:15**.
 
 I click **OK**. The move is validated and recorded. Monday's Jasmine card changes from **13:00** to **15:30**, and the booking's details show my recorded agreement as its source. Her October summary still counts this as one one-hour lesson.
 
@@ -886,7 +865,7 @@ I test the equipment now and decide I no longer need this future task. With it s
 
 ### I ask for a taxi
 
-Jasmine tells me in Instagram that she has to get across town as soon as her Monday lesson ends ⟦why Jasmine needs a taxi after her lesson⟧. With her Monday, 12 October lesson open, I say:
+Jasmine asks in Instagram whether annnä can book her a taxi for when her Monday lesson ends. With her Monday, 12 October lesson open, I say:
 
 > **Matt:** Book a taxi for Jasmine for when this lesson ends.
 
@@ -910,17 +889,17 @@ I ask when payment collection will become available.
 
 > **annnä:** I don't have a confirmed release version for accepting payments.
 
-I leave the lesson's **NT$1,500** price in place. Payment will happen through the method I arrange with Jasmine; the lesson can carry my record of what I receive.
+Payment will happen through the method I arrange with Jasmine; the lesson can carry my record of what I receive.
 
 ### A student asks to change my rule
 
 **As Kai**, on the page for my Thursday lesson, I ask:
 
-> **Kai:** Change the hourly price to NT$1,000.
+> **Kai:** Can my package be cheaper?
 
-> **annnä:** Matt controls this lesson's pricing rules. Your rate is NT$1,500 per hour. I can help you choose a permitted duration or time for your booking.
+> **annnä:** Matt controls this template's rules. Your package is NT$2,000 a month for 4 hours. I can help you choose a permitted duration or time for your booking.
 
-My confirmed lesson still shows its agreed time and price. The response explains who can change that rule and the choices available to me on this page.
+My confirmed lesson still shows its agreed time. The response explains who can change that rule and the choices available to me on this page.
 
 <a id="s13g"></a>
 
@@ -928,9 +907,9 @@ My confirmed lesson still shows its agreed time and price. The response explains
 
 Kai and Jasmine each ask for another lesson that week. I prepare a new one-on-one request for each, select their existing student entries, and paste each link into the conversation I already use with that student: LINE for Kai, Instagram for Jasmine.
 
-**On Kai's page**, **Friday, 16 October, 14:00–15:00** is available when he selects it. His summary shows **Online · 1 hour · NT$1,500**.
+**On Kai's page**, **Friday, 16 October, 14:00–15:00** is available when he selects it. His summary shows **Online · 1 hour**.
 
-**On Jasmine's page**, that same interval is available when she selects it. Her summary shows the same terms: **Online · 1 hour · NT$1,500**.
+**On Jasmine's page**, that same interval is available when she selects it. Her summary shows the same terms: **Online · 1 hour**.
 
 Jasmine confirms first. Her page shows the lesson as confirmed. When Kai presses **Confirm booking** on his selection, his console responds:
 
@@ -938,7 +917,7 @@ Jasmine confirms first. Her page shows the lesson as confirmed. When Kai presses
 >
 > **16:00** · **Choose another time**
 
-His name, online format and one-hour duration remain in the request. He selects **16:00**, reviews **16:00–17:00 · NT$1,500**, and confirms the refreshed choice. Neither page showed the other student's name.
+His name, online format and one-hour duration remain in the request. He selects **16:00**, reviews **16:00–17:00**, and confirms the refreshed choice. Neither page showed the other student's name.
 
 **Back as Matt**, Friday shows one **Jasmine · English · 14:00** card and one **Kai · English · 16:00** card. Jasmine's lesson reserves **13:55–15:05**. Kai's lesson reserves **15:55–17:05**. Friday's two gym task cards are still there; they held no time, so neither booking had to get past them.
 
@@ -962,7 +941,7 @@ My English setup also shows my email reminder choice. Kai's lesson has its joini
 
 On **Thursday, 15 October**, the reminder I requested arrives in my account email at **16:15**. It names **Kai · English lesson · 16:30–17:15 · Asia/Taipei** and includes **Open lesson**.
 
-I open it. The app takes me to Kai's confirmed booking, where I see the forty-five-minute duration, **NT$1,125** total and the saved **Join lesson** link. I have the student, time and joining details together before the lesson starts.
+I open it. The app takes me to Kai's confirmed booking, where I see the forty-five-minute duration and the saved **Join lesson** link. I have the student, time and joining details together before the lesson starts.
 
 At **16:30**, I follow the joining link and teach Kai in the video-call service. We finish at **17:15**. With his lesson selected in annnä, I tell the console:
 
@@ -974,7 +953,7 @@ The console shows the booking it understood and the proposed recorded end:
 >
 > **OK** · **Edit**
 
-I click **OK**. Opening the lesson shows **Recorded end: 17:15 · Reported by Matt**, alongside its original booked interval and **NT$1,125** price. Kai's October summary includes this lesson and his upcoming Friday lesson: **2 of 4 lessons · 1 hour 45 minutes of 5 hours**.
+I click **OK**. Opening the lesson shows **Recorded end: 17:15 · Reported by Matt**, alongside its original booked interval. Kai's October summary includes this lesson and his upcoming Friday lesson: **2 of 4 lessons · 1 hour 45 minutes of 4 hours**.
 
 I can follow the whole record: Kai chose the time, the booking was confirmed, I supplied the meeting link, my reminder arrived, and I recorded when the lesson ended.
 
@@ -984,13 +963,13 @@ I can follow the whole record: Kai chose the time, the booking was confirmed, I 
 
 After her Friday lesson, Jasmine asks for another one on **Saturday, 17 October**. I open a new use of my English scheduling template, select the existing Jasmine student entry, and paste that request's new link into Instagram.
 
-**As Jasmine**, I use its console to request **Saturday, 17 October, 10:00, for forty-five minutes**. I review **10:00–10:45 · NT$1,125** and confirm. My October summary shows **3 of 4 lessons · 2 hours 45 minutes of 5 hours**, including Monday's and Friday's lessons.
+**As Jasmine**, I use its console to request **Saturday, 17 October, 10:00, for forty-five minutes**. I review **10:00–10:45** and confirm. My October summary shows **3 of 4 lessons · 2 hours 45 minutes of 4 hours**, including Monday's and Friday's lessons.
 
 Later, I open this Saturday booking from its own link and say:
 
 > **Jasmine:** Move this lesson fifteen minutes later.
 
-> **annnä:** Move your Saturday, 17 October lesson from **10:00–10:45** to **10:15–11:00**? It is available for your forty-five-minute lesson. The total remains **NT$1,125**.
+> **annnä:** Move your Saturday, 17 October lesson from **10:00–10:45** to **10:15–11:00**? It is available for your forty-five-minute lesson.
 >
 > **OK** · **Edit**
 
@@ -998,19 +977,19 @@ I click **OK**. Reopening the booking shows **10:15–11:00**. The monthly count
 
 ### My fourth request succeeds; a fifth reaches the count limit
 
-**Back as Matt**, I prepare a separate one-on-one request for Jasmine for **Sunday, 18 October**, and another for **Wednesday, 21 October**. I select the existing Jasmine contact for each and send each its own individual link. Saturday’s booking link still manages Saturday alone.
+**Back as Matt**, I prepare a separate one-on-one request for Jasmine for **Sunday, 18 October**, and another for **Wednesday, 21 October**. I select the existing Jasmine contact for each and send each its own individual link. Saturday's booking link still manages Saturday alone.
 
-**As Jasmine**, I use the Sunday request to ask for **10:00–11:00**. The page shows **NT$1,500**, and confirming would bring my October usage from **3 lessons / 165 minutes** to **4 lessons / 225 minutes**. I confirm, and the fourth lesson is booked.
+**As Jasmine**, I use the Sunday request to ask for **10:00–11:00**. Confirming would bring my October usage from **3 lessons / 165 minutes** to **4 lessons / 225 minutes**. I confirm, and the fourth lesson is booked.
 
-I open the separate Wednesday request and ask for **21 October, 10:00–11:00**. The interval fits Matt’s teaching window and buffers, but my confirmation is refused:
+I open the separate Wednesday request and ask for **21 October, 10:00–11:00**. The interval fits Matt's teaching window and buffers, but my confirmation is refused:
 
-> **annnä:** That would be your fifth English lesson in October. The limit is four, so this request has not been booked. You still have 75 minutes below the five-hour limit, but no lesson count remaining. Your usage stays **4 of 4 lessons · 225 of 300 minutes**. You can change an existing booking under its terms, or choose a lesson in another month, where availability and that month’s allowance will be checked.
+> **annnä:** That would be your fifth English lesson in October. The limit is four, so this request has not been booked. Your usage stays **4 of 4 lessons · 225 of 240 minutes**, with fifteen minutes left — not enough for another lesson either way. You can change an existing booking under its terms, or choose a lesson in another month, where availability and that month's allowance will be checked.
 
-The request remains unconfirmed with my Wednesday choice available to retry. It would have used **5 lessons / 285 minutes**; the count limit, not the time limit or a private appointment, stopped it.
+The request remains unconfirmed with my Wednesday choice available to retry. It would have used **5 lessons / 285 minutes**; the count limit stopped it, with barely any time left besides.
 
 ### Cancelling Saturday makes room to retry
 
-Then Jasmine’s plans change. **As Jasmine**, I return to the Saturday booking’s own console:
+Then Jasmine's plans change. **As Jasmine**, I return to the Saturday booking's own console:
 
 > **Jasmine:** Delete my Saturday lesson.
 
@@ -1020,13 +999,13 @@ Then Jasmine’s plans change. **As Jasmine**, I return to the Saturday booking�
 
 I choose **Keep booking** while I check my plans. The page still shows the confirmed Saturday lesson. Once I am sure, I ask again and choose **Confirm cancellation**.
 
-The page shows **Cancelled · Saturday, 17 October, 10:15–11:00**, with me identified as the person who cancelled it. My October summary falls to **3 of 4 lessons · 180 of 300 minutes**. Monday’s and Friday’s lessons remain in my history; Sunday’s one-hour lesson remains booked.
+The page shows **Cancelled · Saturday, 17 October, 10:15–11:00**, with me identified as the person who cancelled it. My October summary falls to **3 of 4 lessons · 180 of 240 minutes**. Monday's and Friday's lessons remain in my history; Sunday's one-hour lesson remains booked.
 
 **Back as Matt**, the console reports Jasmine's cancellation. The Saturday lesson leaves the active schedule, its **10:10–11:05** reservation is released, and its pending reminder is removed. I can open the cancelled booking from the report and read what happened.
 
-**As Jasmine**, I return to the separate Wednesday request and retry **21 October, 10:00–11:00 · NT$1,500**. The fresh check now permits it. I confirm, and my October usage becomes **4 lessons / 240 minutes**. Saturday remains cancelled; this is a new booking from the Wednesday request, not a restoration of Saturday.
+**As Jasmine**, I return to the separate Wednesday request and retry **21 October, 10:00–11:00**. The fresh check now permits it. I confirm, and my October usage becomes **4 lessons / 240 minutes**. Saturday remains cancelled; this is a new booking from the Wednesday request, not a restoration of Saturday.
 
-**On Matt’s board**, Sunday’s and Wednesday’s lessons each reserve **09:55–11:05**, with my reminder at **09:45** on their respective dates. Both fit the every-day 09:00–23:00 window, away from the existing commitments in this fixture. Wednesday's lesson sits across my before-noon gym window; the gym task holds no time, so nothing stopped it. The Monday-only window change does not affect either date.
+**On Matt's board**, Sunday's and Wednesday's lessons each reserve **09:55–11:05**, with my reminder at **09:45** on their respective dates. Both fit the every-day 09:00–23:00 window, away from the existing commitments in this fixture. Wednesday's lesson sits across my before-noon gym window; the gym task holds no time, so nothing stopped it. The Monday-only window change does not affect either date.
 
 <a id="s14e"></a>
 
@@ -1048,44 +1027,22 @@ This later account-sharing path is a capability to build and verify. The earlier
 
 <a id="s15"></a>
 
-## S15 — The packages, and a fifth Thursday
+## S15 — The packages
 
-### Who owes me what
+On **Wednesday, 21 October**, I ask the console:
 
-On **Wednesday, 21 October**, I ask the console the question I used to answer from memory:
-
-> **Matt:** Who owes me what for October?
+> **Matt:** Show me the packages.
 
 annnä opens one tab per student:
 
-| Student | Terms | October so far |
-|---|---|---|
-| Mark | Two Red Eye packages · 8 hours a month | **⟦NT$4,000⟧** · Thursdays 1, 8, 15, 22 · 29 October skipped |
-| Georgina | Two Red Eye packages · 8 hours a month | **⟦NT$4,000⟧** · 8 lessons · 29 October skipped |
-| Kai | Per lesson · NT$1,500 an hour | **NT$5,625** · 4 lessons · 225 minutes |
-| Jasmine | Per lesson · NT$1,500 an hour | **NT$6,000** · 4 lessons · 240 minutes |
+| Student | Package | Price | Lessons it covers |
+|---|---|---|---|
+| Mark | Standing lessons | NT$4,000 a month | Thursdays 1, 8, 15, 22, 29 |
+| Georgina | Standing lessons | NT$4,000 a month | Mondays and Thursdays, 1–26 |
+| Kai | Link students | NT$2,000 a month | 15 and 16 October so far |
+| Jasmine | Link students | NT$2,000 a month | 12, 16, 18, 21 October |
 
-The package tabs read differently from the per-lesson ones. Mark's and Georgina's show the package and the lessons it covers, with no price beside each lesson: whatever happens in a lesson, the month's bill is the package. Kai's adds up lesson by lesson: **15 October, 45 minutes, NT$1,125**, then **16, 22 and 29 October, one hour each, NT$1,500**. He booked the two later Thursdays, **17:00–18:00**, from requests I sent him in LINE after his Friday lesson. Jasmine's lists **12, 16, 18 and 21 October at NT$1,500 each**, with **17 October cancelled · no charge**.
-
-### Mark asks for the fifth Thursday
-
-That afternoon Mark writes in Messenger to ask whether we can still have a lesson on the 29th. I tell the console:
-
-> **Matt:** Mark wants his lesson on Thursday, 29 October, too.
-
-> **annnä:** Thursday, 29 October is October's fifth Thursday, so Mark's standing lesson is skipped by default. Add **09:00–11:00** for Mark at his package rate — 2 hours at NT$500 an hour, **⟦NT$1,000⟧** — on top of his **⟦NT$4,000⟧** October package? Georgina's lesson that evening stays skipped.
->
-> **OK** · **Edit**
-
-I click **OK**. **Mark · English · 09:00** appears on Thursday, 29 October, and his series reads **29 October added on request**. Mark's tab now shows **⟦NT$5,000⟧** for October. annnä writes a two-line confirmation for Mark; I copy it and paste it into Messenger myself.
-
-### I record Mark's transfer
-
-On ⟦the day Mark's October transfer arrives⟧, I see Mark's transfer in my bank app and tell the console:
-
-> **Matt:** Mark paid ⟦NT$5,000⟧ for October by bank transfer.
-
-The proposal shows **Mark · October 2026 · ⟦NT$5,000⟧ received — package ⟦NT$4,000⟧ and 29 October ⟦NT$1,000⟧ · Reported by Matt**. I click **OK**. Mark's tab reads paid. annnä recorded what I told it; no money passed through annnä.
+Each tab shows the package and the lessons it covers, with no lesson-by-lesson amount and no total. Whatever happens in a lesson, the month's bill is the package.
 
 <a id="s16"></a>
 
@@ -1093,7 +1050,7 @@ The proposal shows **Mark · October 2026 · ⟦NT$5,000⟧ received — package
 
 ### This one, or the series?
 
-I can't teach on the evening of **Monday, 19 October** ⟦why Matt cancels Georgina's Monday⟧. With the week open, I tell the console:
+I have to cancel on the evening of **Monday, 19 October**. With the week open, I tell the console:
 
 > **Matt:** Cancel Georgina's Monday lesson.
 
@@ -1101,7 +1058,7 @@ I can't teach on the evening of **Monday, 19 October** ⟦why Matt cancels Georg
 >
 > **This occurrence** · **The series**
 
-I choose **This occurrence**. The proposal names **Georgina · Monday, 19 October · 19:00–20:00**, the **18:55–20:05** reservation it releases and the **18:45** reminder it removes. It also shows **October package: ⟦NT$4,000⟧ · unchanged**. I click **OK**.
+I choose **This occurrence**. The proposal names **Georgina · Monday, 19 October · 19:00–20:00**, the **18:55–20:05** reservation it releases and the **18:45** reminder it removes. It also shows **October package · unchanged**. I click **OK**.
 
 Monday's Georgina card leaves the active board. Her standing lessons read **19 October cancelled by Matt**; Thursday, 22 October and Monday, 26 October are still scheduled.
 
@@ -1119,35 +1076,13 @@ I select **Copy message**, open our Messenger conversation and paste it myself. 
 
 **As Georgina**, I open the link from Messenger. It shows Matt's bookable times for the rest of October and one lesson to place: **1 hour · Online · Included in your October package**. I choose **Tuesday, 20 October, 19:00–20:00** and confirm.
 
-**Back as Matt**, a note tells me Georgina rebooked. **Georgina · English · 19:00** sits in Tuesday's column, and its details show the rebook link as its source. Her October still reads **8 lessons · 8 hours · ⟦NT$4,000⟧**.
-
-### A late transfer
-
-October's packages are due by ⟦the day package payments are due⟧. When that day has passed, I ask:
-
-> **Matt:** Has Georgina paid for October?
-
-> **annnä:** Not as far as your record shows. Georgina's October package, **⟦NT$4,000⟧**, has no payment recorded. Would you like me to write her a reminder?
->
-> **OK** · **No thanks**
-
-I click **OK**:
-
-> *Hi Georgina, a quick reminder that your October package, ⟦NT$4,000⟧, is still open on my side. If you've already sent it, please ignore this. Thank you!*
-
-I copy it and paste it into Messenger. On ⟦the day Georgina's transfer arrives⟧, her transfer shows in my bank app, and I tell the console:
-
-> **Matt:** Georgina paid ⟦NT$4,000⟧ for October by bank transfer.
-
-The proposal shows **Georgina · October 2026 package · ⟦NT$4,000⟧ received · Reported by Matt**. I click **OK**. Her October tab reads paid, with the date I recorded.
+**Back as Matt**, a note tells me Georgina rebooked. **Georgina · English · 19:00** sits in Tuesday's column, and its details show the rebook link as its source. Her October package stays unchanged.
 
 <a id="s17"></a>
 
 ## S17 — A student doesn't turn up
 
-### Mark, on a package
-
-On **Thursday, 22 October**, I open our Messenger call at 09:00. Mark doesn't join and doesn't answer. After ⟦how long Matt waits before calling a no-show⟧, I tell the console:
+On **Thursday, 22 October**, I open our Messenger call at 09:00. Mark doesn't join and doesn't answer. After a while, I tell the console:
 
 > **Matt:** Mark didn't turn up this morning.
 
@@ -1155,59 +1090,7 @@ On **Thursday, 22 October**, I open our Messenger call at 09:00. Mark doesn't jo
 >
 > **OK** · **Edit**
 
-I click **OK**. The lesson reads **No-show · Reported by Matt**, with the interval it held. Mark's October tab is unchanged. No question was asked; the rule was already mine.
-
-### Kai, per lesson
-
-That evening Kai has **17:00–18:00** booked at **NT$1,500**. He doesn't join the meeting link. I tell the console:
-
-> **Matt:** Kai didn't show up for today's lesson.
-
-This time annnä has no rule to follow:
-
-> **annnä:** You haven't decided what a no-show costs a student who pays per lesson. Kai's lesson on Thursday, 22 October, 17:00–18:00 was held for him. Should a no-show keep the **NT$1,500** charge and count the lesson and its hour against his monthly limits, or release both? I'll keep your answer for later no-shows by per-lesson students.
->
-> **Keep the charge and the count** · **Release both**
-
-> **Matt:** ⟦keep the charge and the count, or release both⟧
-
-The template's pricing now shows **Per-lesson no-show: ⟦Matt's answer⟧ · decided 22 October**. The lesson reads **No-show · Reported by Matt**. Under that answer ⟦this draft's counts assume keep⟧, Kai's October summary stays **4 of 4 lessons · 225 of 300 minutes**, and the lesson's **NT$1,500** stays on his tab. Nothing has been said to Kai.
-
-### The next one follows the answer
-
-On **Thursday, 29 October**, Kai misses his 17:00 lesson again. I report it the same way. This time there is no question: the lesson reads **No-show · Reported by Matt**, and the console names the rule it followed, **Per-lesson no-show, decided 22 October**. Kai's October summary stays **4 of 4 lessons · 225 of 300 minutes · NT$5,625** ⟦under keep⟧.
-
-<a id="s18"></a>
-
-## S18 — I raise my rate
-
-On **Friday, 30 October**, I decide my prices go up.
-
-> **Matt:** From today, my per-lesson rate is ⟦NT$1,600⟧ an hour.
-
-> **annnä:** Would you like to replace the existing English lesson scheduling template, or save this as an additional new template?
->
-> **Replace existing** · **Save as new**
-
-I choose **Replace existing**.
-
-> **annnä:** Change the per-lesson rate from **NT$1,500** to **⟦NT$1,600⟧** an hour for bookings made from now on? A thirty-minute lesson would be ⟦NT$800⟧ and a two-hour lesson ⟦NT$3,200⟧. Lessons already booked keep the price they were booked at: **Kai's Thursday, 5 November lesson, 17:00–18:00, stays NT$1,500.**
->
-> **OK** · **Edit**
-
-Kai booked that November lesson last week, from a request I sent him in LINE. I click **OK**. The compatibility check finds no booking outside the new rules. Kai's and Jasmine's pages show **⟦NT$1,600⟧ an hour** to anyone booking from now on; Kai's 5 November booking still reads **NT$1,500**.
-
-> **Matt:** My package prices change too. The new list is ⟦new price list⟧.
-
-> **annnä:** New packages use the new list from today. Mark and Georgina have standing lessons whose packages renew each month, and their November lessons haven't been made yet. Which terms should their future months take?
->
-> **The package price they started on** · **The new price list**
-
-annnä doesn't choose for me, and it doesn't treat my price-list edit as the answer. October's bills are not part of the question; those lessons keep October's terms.
-
-> **Matt:** ⟦which terms Mark's and Georgina's future months take⟧
-
-Both standing series now read **Future months: ⟦Matt's answer⟧ · decided 30 October**. When November's lessons are made, they take those terms.
+I click **OK**. The lesson reads **No-show · Reported by Matt**, with the interval it held. Mark's October package is unchanged.
 
 <a id="s19"></a>
 
@@ -1241,35 +1124,19 @@ I click **OK**. Saturday's Run card moves to **06:30**. The 18:30 version never 
 
 On **Sunday, 1 November**, I do nothing. October closes behind the new month, with every entry as I recorded it.
 
-November opens off the same rules I set once. Kai's and Jasmine's monthly limits stand full again: **4 lessons and 5 hours** each. Kai's Thursday, 5 November lesson, booked in October at NT$1,500, is his **1 of 4**. Jasmine, whose October ended at **4 of 4** with a refusal telling her to choose another month, opens her link and books **Monday, 2 November, 15:30–16:30** at **⟦NT$1,600⟧**. The page lets her; the refusal's promise was simply true.
+November opens off the same rules I set once. Kai's and Jasmine's monthly limits stand full again: **4 lessons and 4 hours** each. Kai's Thursday, 5 November lesson, booked in October, is his **1 of 4**. Jasmine, whose October ended at **4 of 4** with a refusal telling her to choose another month, opens her link and books **Monday, 2 November, 15:30–16:30**. The page lets her; the refusal's promise was simply true.
 
-Mark's and Georgina's packages renew for November under the answer I gave on 30 October: **⟦November package price under S18's answer⟧**. Mark's Thursdays on 5, 12, 19 and 26 November make his 8 hours. Georgina's Mondays on 2, 9, 16 and 23 November and Thursdays on 5, 12, 19 and 26 November make hers. **Monday, 30 November** is her fifth Monday and is skipped by default, the same way October's fifth Thursday was.
+Mark's and Georgina's packages renew for November on the same terms. Mark's Thursdays on 5, 12, 19 and 26 November make his standing lesson. Georgina's Mondays on 2, 9, 16, 23 and 30 November and Thursdays on 5, 12, 19 and 26 November make hers.
 
 ### Mark's Thursday keeps going
 
-Mark's Thursday 09:00 lesson has run since 1 October, and I haven't entered it again once. Each week's lesson appears as its week comes: October's four, the fifth he asked for, the no-show recorded on 22 October, and now November's. The November lessons carry the terms I chose on 30 October; the October ones keep theirs.
-
-### What did October make?
-
-> **Matt:** What did October make?
-
-annnä answers from the record:
-
-| Student | October | What it came from | Recorded |
-|---|---|---|---|
-| Mark | ⟦NT$5,000⟧ | 8-hour package ⟦NT$4,000⟧ + fifth Thursday, 29 October ⟦NT$1,000⟧ | Paid by transfer |
-| Georgina | ⟦NT$4,000⟧ | 8-hour package; 19 October cancelled by me and rebooked on 20 October | Paid late, after a reminder |
-| Kai | NT$5,625 | 15 October, 45 minutes, NT$1,125; 16, 22 and 29 October, one hour each at NT$1,500, the last two no-shows ⟦charged under keep⟧ | ⟦which of Kai's lessons are recorded paid⟧ |
-| Jasmine | NT$6,000 | 12, 16, 18 and 21 October, one hour each at NT$1,500; 17 October cancelled before it started, no charge | ⟦which of Jasmine's lessons are recorded paid⟧ |
-| **Total** | **⟦NT$20,625⟧** | | |
-
-Nothing in the answer is editable from here. October is history: I can read it, and asking about it doesn't change it.
+Mark's Thursday 09:00 lesson has run since 1 October, and I haven't entered it again once. Each week's lesson appears as its week comes: October's five, the no-show recorded on 22 October, and now November's. The package stays the same across both months.
 
 ### The meals
 
 A few days into November, annnä mentions something it has noticed:
 
-> **annnä:** Most of the meals you logged in October were between ⟦the hours Matt's logged meals cluster⟧. Would you like a meal routine at those times? You can keep logging meals as they happen instead.
+> **annnä:** Most of the meals you logged in October were around the same hours. Would you like a meal routine at those times? You can keep logging meals as they happen instead.
 >
 > **Make a routine** · **Keep logging**
 
@@ -1281,15 +1148,15 @@ I click **Keep logging**. Nothing is added to my board. The next meal I log is j
 
 ### The day at rest
 
-**Thursday, 19 November** is full. My Run was at 06:00. Mark's lesson ran **09:00–11:00**. Kai has **17:00–18:00** at **⟦NT$1,600⟧**, with my reminder at **16:45**, and Georgina has **19:00–20:00**, with my reminder at **18:45**.
+**Thursday, 19 November** is full. My Run was at 06:00. Mark's lesson ran **09:00–11:00**. Kai has **17:00–18:00**, with my reminder at **16:45**, and Georgina has **19:00–20:00**, with my reminder at **18:45**.
 
 At **11:10**, after Mark's lesson, I open the day. The board is at rest: every commitment is there, at the level of detail I set, and nothing is flashing, counting down or asking me to sort it. It looks like a full day, held.
 
-While I'm looking, Kai books again from his LINE link. A small note arrives, the kind every booking writes: **Kai booked Thursday, 26 November, 17:00–18:00**. I turn to next Thursday. The new block is simply there, at rest inside the wake scope I set, until my tap opens it: **Kai · English · 17:00 · ⟦NT$1,600⟧ · November: 3 of 4 lessons · 180 of 300 minutes**, counting his 5 and 19 November lessons. I read it and close it, and the day goes quiet again. Nothing woke on its own; the board just holds one more true thing.
+While I'm looking, Kai books again from his LINE link. A small note arrives, the kind every booking writes: **Kai booked Thursday, 26 November, 17:00–18:00**. I turn to next Thursday. The new block is simply there, at rest inside the wake scope I set, until my tap opens it: **Kai · English · 17:00 · November: 3 of 4 lessons · 180 of 240 minutes**, counting his 5 and 19 November lessons. I read it and close it, and the day goes quiet again. Nothing woke on its own; the board just holds one more true thing.
 
 ### A run that stops honestly
 
-By now Jasmine's November is full: Mondays 2, 9 and 16 November at **15:30–16:30** and **Friday, 27 November, 14:00–15:00**, **4 of 4 lessons · 240 of 300 minutes**.
+By now Jasmine's November is full: Mondays 2, 9 and 16 November at **15:30–16:30** and **Friday, 27 November, 14:00–15:00**, **4 of 4 lessons · 240 of 240 minutes**.
 
 At **02:40** on **Monday, 23 November**, a request lands from Jasmine's link: she asks to move her Friday, 27 November lesson to **Monday, 30 November, 13:00–14:00**. It sits on two edges at once. She has no lesson count left in November, so it can only be a move, never an extra lesson, and Monday lessons start at 15:00. The unattended run starts working it and reaches the budget every unattended run carries, its limit on steps and spend, before it has an answer. It doesn't keep going and it doesn't fail. It parks. Nothing is sent, nothing is half-moved, and Jasmine's Friday lesson still stands.
 
@@ -1303,9 +1170,10 @@ I read the tangle in one look and click **OK**. annnä writes a short message wi
 
 > *Hi Jasmine, Monday at 13:00 isn't open, but Monday 30 November at 15:30 is. If that works, you can move your lesson here: **Lesson link***
 
-I paste it into Instagram. At lunchtime Jasmine moves the lesson herself from her own page: **Monday, 30 November, 15:30–16:30**, still **4 of 4 lessons · 240 of 300 minutes**, still **⟦NT$1,600⟧**.
+I paste it into Instagram. At lunchtime Jasmine moves the lesson herself from her own page: **Monday, 30 November, 15:30–16:30**, still **4 of 4 lessons · 240 of 240 minutes**.
 
 The park cleared because I cleared it. The night spent what its budget allows and not a step more, and what could have been a runaway meter was one quiet card on my board.
+
 
 ---
 
