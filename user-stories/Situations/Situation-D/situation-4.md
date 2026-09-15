@@ -6,7 +6,7 @@
 
 Debra sets up an account. The first page is empty, and before anything else the agent asks whether there is anything she already keeps somewhere that she'd like brought in, or whether she wants to start from scratch.
 
-Her appointment book is paper, and it stays paper — nothing on paper is brought in. But for the last year she has also put her office days into the calendar on her phone, ⟦a Google Calendar she keeps for office sessions⟧ — a small invention of this run. She says so; the agent walks the connection in the conversation, no settings wizard, and she connects it once. Her existing office sessions come onto the board as real commitments, at their times and under the names she typed: *Ito 9:30* on Tuesday, *Priya 3:00* on Wednesday, the rest of the fortnight ahead. The phone calendar is only read, never written back to.
+Her appointment book is paper, and it stays paper — nothing on paper is brought in. But for the last year she has also put her office days into the calendar on her phone, a Google Calendar she keeps for office sessions — a small invention of this run. She says so; the agent walks the connection in the conversation, no settings wizard, and she connects it once. Her existing office sessions come onto the board as real commitments, at their times and under the names she typed: *Ito 9:30* on Tuesday, *Priya 3:00* on Wednesday, the rest of the fortnight ahead. The phone calendar is only read, never written back to.
 
 Nothing else comes in. Her patient addresses, her cash notes, and her paper book have no import, and the agent does not offer one. What the import buys her is simple: her first look at the board is not a blank page but the weeks she already has.
 
@@ -16,7 +16,7 @@ With her life and her places set down *(as `story-debra.md` tells it)*, Debra te
 
 ## The preview writes nothing
 
-The template card — ⟦"Free Time Available"⟧ — shows its title, its rule lines in plain language, and the blanked parameters listed as "yours to set," beside a **ghost render of the guest page her own real availability would publish** (`../../../marketplace/SCENARIOS.md` D3): her actual free time, watermarked as a preview. The swim, the book club, and the office sessions she just imported shape the ghost without appearing in it. Nothing has been written; closing the card leaves no trace.
+The template card — "Free Time Available" — shows its title, its rule lines in plain language, and the blanked parameters listed as "yours to set," beside a **ghost render of the guest page her own real availability would publish** (`../../../marketplace/SCENARIOS.md` D3): her actual free time, watermarked as a preview. The swim, the book club, and the office sessions she just imported shape the ghost without appearing in it. Nothing has been written; closing the card leaves no trace.
 
 ## Install is a conversation, not a form
 

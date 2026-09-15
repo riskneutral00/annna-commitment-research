@@ -4,7 +4,7 @@
 
 ## A paid-ahead visit is cancelled — and the credit rides onto the next one
 
-⟦Tom pays for his next four Thursday home visits up front — $560, cash, handed over at the door⟧. Debra tells the agent *"Tom paid for four,"* and his thread shows four $140 visits, each already **settled**.
+Tom pays for his next four Thursday home visits up front — $560, cash, handed over at the door. Debra tells the agent *"Tom paid for four,"* and his thread shows four $140 visits, each already **settled**.
 
 Two weeks later Tom cancels the third of them through his link — a work trip. The visit comes off the board. The $140 he already paid for it is no longer owed for anything, so it does not vanish and it is not handed back: it stays on **his thread as a credit in his favour**, visible to Debra on the board and to Tom on his own page, beside his visits done and paid.
 
@@ -12,7 +12,7 @@ The next Thursday Tom requests a new visit, and the credit **rides onto it**: th
 
 ## A half-built session is abandoned — and stays harmless
 
-On a Wednesday between patients at Eastside, Debra starts authoring a second session type with the agent — ⟦a 30-minute follow-up at $50⟧. It has a title and a length, and the agent is asking its next question — which days and which site should offer it — when Priya arrives for her 3:00. Debra closes the laptop.
+On a Wednesday between patients at Eastside, Debra starts authoring a second session type with the agent — a 30-minute follow-up at $50. It has a title and a length, and the agent is asking its next question — which days and which site should offer it — when Priya arrives for her 3:00. Debra closes the laptop.
 
 Nothing asks her to finish. Nothing finishes for her. The half-made follow-up persists as a **disabled draft**: it publishes nowhere, no patient's link shows a 30-minute follow-up, and no slot on any day is held for it. Priya's page that evening offers exactly what it offered that morning.
 
