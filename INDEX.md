@@ -86,6 +86,7 @@
 | user-stories/COVERAGE.md | derived | Which layer owes each Situation beat, and whether it is covered, owed, deferred, unruled or deliberately empty |
 | user-stories/README.md | SPEC | That the Situations are the probes the `PRD.md` requirements register is tested against, are founder proof scripts, and are never deleted |
 | user-stories/Situations/Situation-A/README.md | SPEC | Matt's storybook: the whole-life probe's files, cast and scenes, and where each beat of Situation A's retired first telling now lives (FD-106) |
+| user-stories/Situations/Situation-A/parked-beats.md | SPEC | Parked beats: money and detail beats extracted from Situation A's retired telling and Matt's draft, held as owed until a story re-homes them (2026-09-15) |
 | user-stories/Situations/Situation-A/story-matt-verification.md | derived | Matt English source transfer, scene trace, 109 cases, 26 CRUD rows, 42 cues, legal research, review dispositions, the October and November ledger and owed layer contracts |
 | user-stories/Situations/Situation-A/story-matt.md | SPEC | Matt’s scripted end-state English-teaching story under the narrow FD-68 exception; authored behavior with explicit implementation debt |
 | user-stories/Situations/Situation-B/README.md | SPEC | The self-service rental probe: interchangeable units, and a customer who pulls rather than books |
