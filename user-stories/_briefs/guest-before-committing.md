@@ -1,14 +1,14 @@
 # Brief — what the guest sees before they commit, and never after
 
-**Readiness.** Ready when the founder opens a sitting on the guest's own page. It touches Situations A, B and C, so it is one sitting across three `customer.md` files rather than three sittings.
+**Readiness.** Ready when the founder opens a sitting on the guest's own page. It touches Situations A, B and C, so it is one sitting across Matt's S11 and two `customer.md` files rather than three sittings.
 
-**The debt this closes.** Four owed beats in `../COVERAGE.md`'s **the guest's pre-commitment view** cluster — from `Situation-A/customer.md`, `Situation-B/customer.md` and `Situation-C/customer.md`.
+**The debt this closes.** Four owed beats in `../COVERAGE.md`'s **the guest's pre-commitment view** cluster — from Situation A's student beats (now Matt's S11, FD-106), `Situation-B/customer.md` and `Situation-C/customer.md`.
 
-**Why nothing covers it.** `../../app/SCENARIOS.md G10` asserts the money and quota render on the **manage-state** page — the page a guest reaches *after* booking, holding their own token. Every story says the guest sees the price and their standing **before** they commit. That is a different page, and no scenario asserts it. Symmetrically, all three `customer.md` files carry a "what he must never see" list, and those lists are compound claims no single scenario asserts whole.
+**Why nothing covers it.** `../../app/SCENARIOS.md G10` asserts the money and quota render on the **manage-state** page — the page a guest reaches *after* booking, holding their own token. Every story says the guest sees the price and their standing **before** they commit. That is a different page, and no scenario asserts it. Symmetrically, the B and C `customer.md` files carry a "what he must never see" list, and those lists are compound claims no single scenario asserts whole.
 
 ## World
 
-Three off-app people, one shape. Bobby opens Sofia's link and sees the price and that he has used four of his ten hours this month. Tom opens Ploy's and sees a fleet with prices. Jun Wang opens the dive booking. In each, **the guest is deciding, and what they are shown is what they decide on.**
+Three off-app people, one shape. Kai opens Matt's link and sees the price and that he has used one of his four lessons this month. Tom opens Ploy's and sees a fleet with prices. Jun Wang opens the dive booking. In each, **the guest is deciding, and what they are shown is what they decide on.**
 
 **Protagonist:** the guests — but a guest is never a user, so this is elicited from the **owners** about their guests. **To confirm the framing at the sitting.**
 
@@ -22,8 +22,8 @@ The second half is the sharper one. `Situation-B/customer.md`'s list is four sep
 
 | Actor | Kind | To ask |
 |---|---|---|
-| Sofia / Ploy / TingTing | operators | Each has a different answer; the sitting wants all three |
-| Bobby / Tom / Jun Wang | customers, **off-app** | Never users. What they see is a *page*, not an account |
+| Matt / Ploy / TingTing | operators | Each has a different answer; the sitting wants all three |
+| Kai / Tom / Jun Wang | customers, **off-app** | Never users. What they see is a *page*, not an account |
 
 ## Rules and their source — to ask
 
@@ -55,4 +55,4 @@ To ask: today, what does a customer know before they book? They ask on the phone
 
 ## Hand-off
 
-`/probe-elicit`, then extend each Situation's existing `customer.md` and the runs that reach it. The customer files describe the off-app party's experience **as an experience** — never as a guarantee made to the owner about them.
+`/probe-elicit`, then extend Matt's S11, Situation B's and C's existing `customer.md`, and the runs that reach them. The customer files describe the off-app party's experience **as an experience** — never as a guarantee made to the owner about them.

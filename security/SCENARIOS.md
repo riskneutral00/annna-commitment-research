@@ -29,7 +29,7 @@
 - **Q3 [import = guest]** Imported text carrying an instruction is quarantined exactly as guest text — `import` grants nothing `guest` lacks.
 - **Q4 [tags survive replay]** A trigger firing that re-assembles context from stored structure re-applies the same quarantine — the tag is stored with the string, not remembered by the session.
 
-## P — Privacy *(SPEC §1 assets; A-derived — Sofia's private life)*
+## P — Privacy *(SPEC §1 assets; A-derived — Matt's private life)*
 - **P1 [diff leak]** Fetching a guest month view before and after the owner adds a private commitment shows only an availability delta — no title, reason, name, or address appears in either response or their diff.
 - **P2 [no cross-recipient existence]** No guest response carries another recipient's token, private contact or standing. Another participant's name/existence is selectable only within the owner-confirmed shared disclosure scope of `SPEC.md §3`; outside that scope it is absent. Assert both the authorized shared-reader control and forbidden other-request/recipient controls on the wire across G-family fixtures, including model input and refusal payloads.
 

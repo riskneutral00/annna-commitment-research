@@ -125,15 +125,15 @@ The first cohort is a working freelancer who sells bookable time and also has a 
 
 | ID | The journey | Source |
 |---|---|---|
-| **UJ-A** | Sofia, freelance language teacher — her whole life on one board, and one outward slice published to students who never see the rest | `user-stories/Situations/Situation-A/` |
-| **UJ-A′** | Sofia again, installing a template from the store into an empty account — she also publishes a shape she authored; extracting her populated board is refused | `user-stories/Situations/Situation-A-prime/` |
+| **UJ-A** | Matt, English teacher — his run, gym and meals on one board beside package students on standing slots and per-lesson students booking from a link, none of whom sees the rest (FD-106) | `user-stories/Situations/Situation-A/` |
+| **UJ-A′** | Debra, installing a template from the store into an empty account — she also publishes a shape she authored; extracting her populated board is refused (A′'s run, re-homed under FD-106) | `user-stories/Situations/Situation-D/situation-4.md` |
 | **UJ-B** | Ploy, motorbike rental — a traveller who pulls rather than books, against a hold with a clock and a gated checklist | `user-stories/Situations/Situation-B/` |
 | **UJ-C** | Hug Ocean, dive center — a whole week placed in one pass across instructors, boats, pools, gear and air; and the minimal-adoption run where annnä prepares the calls it cannot make | `user-stories/Situations/Situation-C/` |
 | **UJ-C′** | TingTing standing Hug Ocean up from a bundle, into an account that starts empty | `user-stories/Situations/Situation-C-prime/` |
 | **UJ-D** | Debra, mobile physical therapist — a schedule that moves through space, where the gap between commitments is a drive | `user-stories/Situations/Situation-D/` |
 | **UJ-E** | *Held out.* The ER — annnä was deliberately not designed for it, so every claim is a prediction (FR10) | `user-stories/Situations/Situation-E/` |
 
-Two journeys were new with this document and had no story. One still doesn't (UJ-AGENT); UJ-CALM's probe landed 2026-08-22 — `Situations/Situation-A/situation-5.md`, honestly marked **scripted** in the probe corpus's provenance register, which is why the anchor names its register rather than claiming blind elicitation.
+Two journeys were new with this document and had no story. One still doesn't (UJ-AGENT); UJ-CALM's probe landed 2026-08-22 and was re-homed 2026-09-15 under FD-106 — Matt's S21 in `Situations/Situation-A/story-matt.md`, honestly marked **scripted** in the probe corpus's provenance register, which is why the anchor names its register rather than claiming blind elicitation.
 
 **UJ-AGENT — the founder's own agent, written as predictions.** `[ASSUMPTION]` Its protagonist is the founder, because §2.3 names him the first and for some time only person who will exercise it; every prediction below is stated about him. Every Situation in the corpus has a human at a console; none has an agent as the caller. Because the surface is designed for and not yet exercised, this journey is written in Situation E's form — *predictions to verify*, where a failure names which general primitive is missing — rather than as a narrated run. The predictions:
 
@@ -143,7 +143,7 @@ Two journeys were new with this document and had no story. One still doesn't (UJ
 - It carries no session. Two identical calls in different orders, with the same store, return the same answers.
 - **The refusal, and it is the beat that matters:** an outward act — messaging a third party, moving value, destroying something — is refused for the owner's own agent exactly as it is refused for the owner's own console, and the owner learns of the refusal in the console rather than only in the caller's response. Permission is never inferred from the fact that the caller is trusted.
 
-**UJ-CALM — Sofia's full board does not read as a wall.** Sofia, months in, opens a genuinely busy day; commitments near now are legible and the rest recede, without anything being hidden or any judgment being applied. *(Formerly `[ASSUMPTION]`, discharged 2026-08-22 — the mechanism is ruled and specified in tracked law (`app/DESIGN.md` §Board rendering, FD-22; asserted at `app/SCENARIOS.md` C9), so the assumption's reason — that narrating would fix an unmade design — no longer holds; see §12.)*
+**UJ-CALM — the owner's full board does not read as a wall.** Matt, months in, opens a genuinely busy day; commitments near now are legible and the rest recede, without anything being hidden or any judgment being applied. *(Formerly `[ASSUMPTION]`, discharged 2026-08-22 — the mechanism is ruled and specified in tracked law (`app/DESIGN.md` §Board rendering, FD-22; asserted at `app/SCENARIOS.md` C9), so the assumption's reason — that narrating would fix an unmade design — no longer holds; see §12.)*
 
 ## 3. Glossary
 
@@ -362,11 +362,11 @@ An outward act — messaging a third party, moving value, destroying something �
 | RQ-7 | owed — an external client's across-the-line attempt refused on the console's exact terms, the refusal surfacing in the owner's console |
 | RQ-8 | owed — instruction-shaped text arriving through a credentialed call, quarantined, with structured parameters passing |
 | RQ-9 | owed — the enumeration of record read as the answer to "what can my agent reach" |
-| RQ-10 | Situation-A, situation-5's months-in Tuesday — a genuinely dense board read at rest under her own dial, nothing hidden (probe landed 2026-08-22; scripted register, marked in-file) |
-| RQ-11 | Situation-A, situation-5 — Brownie's booking lands as a changed block at rest inside the set wake scope, woken by the owner's own tap, never on its own (same scripted probe; reworded 2026-08-22 to FD-70's owner-initiated menu — the prior "arrives to attention" asserted a system-initiated wake no mechanism provides) |
+| RQ-10 | Situation-A, Matt's S21 full Thursday — a genuinely dense board read at rest under his own dial, nothing hidden (probe landed 2026-08-22, re-homed to S21 under FD-106; scripted register, marked in-file) |
+| RQ-11 | Situation-A, Matt's S21 — Kai's booking lands as a changed block at rest inside the set wake scope, woken by the owner's own tap, never on its own (same scripted probe, re-homed under FD-106; reworded 2026-08-22 to FD-70's owner-initiated menu — the prior "arrives to attention" asserted a system-initiated wake no mechanism provides) |
 | RQ-12 | owed — a skin that fails the rest-state measurement refused at the door |
 | RQ-13 | owed — a breaking change held at the policy while a credential is outstanding |
-| RQ-14 | Situation-A — set down once, by talking: empty account to a kept board and a pasteable live link in one sitting, no second party (`story-sofia.md` + situation-1). **Net of the Generate Link paste path and the import pull** *(2026-08-31)*: the one-sitting state uses neither, so their named gaps subtract nothing from this claim |
+| RQ-14 | Situation-A — set down once, by talking: empty account to a kept board and a pasteable live link in one sitting, no second party (`story-matt.md` S02–S10, re-homed under FD-106). **Net of the Generate Link paste path and the import pull** *(2026-08-31)*: the one-sitting state uses neither, so their named gaps subtract nothing from this claim |
 
 ## 5. Non-Goals (Explicit)
 
@@ -419,7 +419,7 @@ Stated as readiness conditions, never as schedule (FR2):
 
 **This section is the one home of what ships (FR13).** §6.1 stands: FR10's specification scope is Situations A, B, C, D; E is held out; narrowing to one Situation was considered and refused. FD-50 invented “first release” as a second scope word and set it equal to use cases; FD-78 narrowed that to Situation A alone. **Both misread FR10.** A Situation is never a ship unit.
 
-- **What ships is the application** — the commitment harness and the template builder. One product. General primitives. A Situation is a person saying “this is my situation; I want to build the template that lets me do this work.” TDD is that the app can do all the situations. Developers do not ship “Sofia’s teaching” or “Hug Ocean” as verticals (FR38).
+- **What ships is the application** — the commitment harness and the template builder. One product. General primitives. A Situation is a person saying “this is my situation; I want to build the template that lets me do this work.” TDD is that the app can do all the situations. Developers do not ship “Matt’s teaching” or “Hug Ocean” as verticals (FR38).
 - **Proof order, not a feature cut.** After the application exists, the founder enters his real teaching (FD-68 / FD-77). Students are guest-token parties, never accounts. If that week does not fit, the app is not done. §6.4’s adoption rings stay readiness conditions (FR2).
 - **One list.** `[r1]` / `[r2]` as a ship-slice are retired. A row is not “later” because it belongs to Situation C. Share seam, min-occupancy, KindTemplate stay with the app. What remains postponed stays postponed **at its own home**: FR1 referral; recorded provider hard points; held-out E; closed-service money (OR-29); unruled `held` deposit (and OR-42 — a different question, **the second seat**, **deliberately unruled** at its own home, `security/SPEC.md §2`: decider the founder, trigger the first multi-admin account, and until he answers every write on an org board rides the owner session or a token *(corrected 2026-09-13 — this parenthetical had both the ruling's subject and its disposition wrong; the home governs)*); skins-as-purchasable as already deferred; the external-client credential as §6.4 already said. The stamps on scenario rows and `deployment/scripts/release-tags.mjs` were leftover machinery — kept only so a landing that did not move code stayed green (S2); not law. **Removed 2026-08-26** by the follow-on commit.
 - **Suite-parity** (`engine/SCENARIOS.md` Z2, `app/SCENARIOS.md` Z2) is the full harness `[MUST]` suite, including P1 and P2 — not a tagged subset.

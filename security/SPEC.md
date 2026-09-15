@@ -22,7 +22,7 @@ Scope anchor — the three named worries this package exists to answer: **PII in
 Plain language, deliberately. Every boundary names the scenario family that patrols it (`SCENARIOS.md`).
 
 **Assets, in order of blast radius:**
-- **The owner's whole life on the board.** Situation A is the proof that privacy is the product, not a feature: Sofia's run blocks a booking without ever being visible. A board leak is a life leak.
+- **The owner's whole life on the board.** Situation A is the proof that privacy is the product, not a feature: Matt's private appointment blocks Kai's booking without ever being visible (S11). A board leak is a life leak.
 - **Guest sensitive data** — admitted structured medical answers, contact details and consent evidence (§4), held for people who never made an account. Participant file uploads and document authentication are excluded; vault custody protections remain.
 - **Contact PII** — names, emails, phones of owners, guests, and counterparties.
 - **Money records** — priced/owed/paid/held/settled marks. Records only, but records people rely on.

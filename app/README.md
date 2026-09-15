@@ -16,7 +16,7 @@ Read in this order:
 4. **`SCENARIOS.md`** — the deterministic acceptance suite (structure and wire, not pixels), ending in stub parity + two story walkthroughs.
 5. **`BUILD.md`** — the ordered plan, Step 0 (scaffold) through Step 8 (**the stub-swap**).
 
-**Definition of done:** every scenario in `SCENARIOS.md` passes, **and** the real app replaces the harness's app stubs with **zero harness changes** — the full harness suite green, plus the Sofia and Debra walkthroughs rendering end-to-end (`SCENARIOS.md` Z1–Z3). The swap is the exam.
+**Definition of done:** every scenario in `SCENARIOS.md` passes, **and** the real app replaces the harness's app stubs with **zero harness changes** — the full harness suite green, plus the Matt and Debra walkthroughs rendering end-to-end (`SCENARIOS.md` Z1–Z3). The swap is the exam.
 
 **Deliberately NOT here:** permission decisions, elicitation, narration (harness/model) · any deterministic math, even for preview (engine) · model calls in any render or write path · calendar sync or write-back (**banned**, not merely unbuilt — `NOTES.md` OR-39, closed 2026-08-06: data flows in, never out; import IN *is* in scope, `SPEC.md §9`) · an unrestricted guest assistant (the scoped request console follows `SPEC.md §5`) · payment rails, and storefront/commerce logic beyond rendering catalog payloads (`../marketplace/` + the closed service) · push notifications, offline-first operation and voice input (`SPEC.md §6`, §9 — each excluded on its own footing; the native-shell deferral this item used to carry is retired, see **Declared platforms** above).
 

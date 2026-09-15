@@ -55,7 +55,7 @@ Grouped by family. One flagship is chosen per surface; the rest are the bench, n
 | **Landing page** | Someone with a crowded week | The feeling first: the board on a photograph, then the week-run-twice proof | Recognition, then relief |
 | **Repo (GitHub)** | An engineer or builder | The discipline: four blind research streams, the model/engine split, adversarial reviews, five falsification-probe situations | Rigor they can check |
 | **Investor / grant** | A capital allocator | Category: **multi-party coordination across employers, for small service businesses** — coordination *inside* one shop is a served market (`BRIEF.md`'s landscape scan names who serves it); the across-employer half is the narrowing annnä claims, and the calendar gets replaced as a side effect. Lead with the week-run-twice proof, not the category. The completeness thesis is stated as a bet to be tested with pilots, never as an achieved moat | Specific mechanism + falsifiable claims — they've seen fifty "AI calendar" decks |
-| **First users** | Tutors, dive pros, the therapist | The mirror: describe *their* week back to them, accurately, before showing anything — and match the proof to the reader (Sofia's week for a tutor, Hug Ocean's for a dive pro, Debra's for a practitioner) in *their* friction unit: calls for a shop, WhatsApp threads for a tutor | "That's exactly my Tuesday" |
+| **First users** | Tutors, dive pros, the therapist | The mirror: describe *their* week back to them, accurately, before showing anything — and match the proof to the reader (Matt's week for a tutor, Hug Ocean's for a dive pro, Debra's for a practitioner) in *their* friction unit: calls for a shop, WhatsApp threads for a tutor | "That's exactly my Tuesday" |
 
 ## Objections, answered in-voice
 

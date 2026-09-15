@@ -1,108 +1,126 @@
-# Situation Life — annnä's whole-life probe (Situation A)
+# Situation Life — Matt's storybook (Situation A)
 
-*A set of user stories that stress-test **annnä** against the shape the whole lock-in thesis rests on: **one person's entire life on one board.** Sofia is a freelance language teacher who runs her meals, runs, yoga, cycle, and her bookable teaching hours in a single place she talks to — and lets her students book the teaching slice around a life they never see. There is no market here and no other business; the protagonist is her own resource **and** her own operator, and most of her board is her own life, not something anyone books. Read this folder like a **storybook**. By the end, an LLM designing annnä should see, concretely, what the product must do: how a single person sets their whole life down by talking, what the scattered-apps world costs today, and where annnä's availability-blocking, self-service booking, and "I won't act for you without asking" have to show up. **annnä is the name of both the app and the agent inside it.***
+*A set of user stories that stress-test **annnä** against the shape the whole lock-in thesis rests on: **one person's entire life on one board.** Matt teaches English online. His run, his gym, his meals and a personal appointment sit on the same board as his students' lessons: two regulars on monthly packages at standing times he enters himself, and two who book one lesson at a time from a link he pastes into their chat. There is no market here and no other business; Matt is his own resource **and** his own operator, and most of his board is his own life, which nobody books. Read this folder like a **storybook**. By the end, an LLM designing annnä should see, concretely, what the product must do: how one person sets a life down by talking, what the scattered week costs today, and where availability-blocking, self-service booking, written-not-sent messages and "I won't act for you without asking" have to show up. **annnä is the name of both the app and the agent inside it.***
+
+**Provenance: scripted, end-state.** Situation A's telling is Matt's story under the narrow [FD-68 amendment](../../../RULINGS.md#fd-68-matt-english) and **FD-106** (`../../../RULINGS.md`, 2026-09-15). It was rebuilt on his real practice beat by beat from the folder's earlier elicited-blind telling, which retired under that ruling; every beat it carried is re-told here, moved to Debra (Situation D), or superseded by name below. A script cannot refute the list it was written from, so nothing here is coverage evidence.
 
 ---
 
-## How to read this folder
+## What the folder holds
 
-1. **Meet the protagonist.** `story-sofia.md` is Sofia's own **first-person** telling — the one immersive file, because a whole-life workflow is best felt from inside it. It doubles as the **setup story**: in a solo world the resource and the operator are the same person.
-2. **Then the customer.** Her students are off-app; they only ever get a link: `customer.md`.
-3. **Then the situations** — three runs of the same week (`situation-1.md … situation-3.md`) plus two later additions (`situation-4.md`, the correction run; `situation-5.md`, months later — both scripted, 2026-08-22), each with a stated purpose, in the standard third-person Situation voice.
+| File | What it is |
+|---|---|
+| [`story-matt.md`](story-matt.md) | Matt's own first-person telling, September to November 2026: invite onboarding, his life on the board, the English template, four students, the edges, the money and the months (immersive; the console gold reference) |
+| [`story-matt-verification.md`](story-matt-verification.md#layer-debt) | the derived companion: layer debt, the scene trace, 109 cases (three retired), 26 CRUD families (two retired), 42 harness cues, LEGAL-01, review dispositions, the quote matrix and the October and November ledger |
 
-*(Sofia's board is mostly her own life — meals, runs, yoga, cycle. Only the **teaching slice** faces outward, and that's the only part a "customer" ever touches.)*
-
-## Matt’s English teaching — a separate authored run
-
-[story-matt.md](story-matt.md) preserves Matt’s 29-scene first-person journey: invite onboarding, personal commitments, console-led English setup, student contacts, individual and shared bookings, two races, a real quota refusal/recovery and reported lesson/payment outcomes. It is **scripted and end-state**, under the narrow [FD-68 amendment](../../../RULINGS.md#fd-68-matt-english), with its own cast, rates and confirmed user choices. Sofia’s story above is unchanged; the two worked configurations are not interchangeable. *(2026-09-14)* The folder holds two first-use tellings and neither restates the other: Sofia’s start on an empty first page is the console gold reference ([`../../README.md`](../../README.md) names `story-sofia.md` “the canonical telling of what *talking to annnä* feels like”), and Matt’s invite onboarding is a scripted end-state under the FD-68 amendment.
-
-Read [story-matt-verification.md](story-matt-verification.md#layer-debt) for the 90 cases, 26 CRUD rows, 33 harness cues, LEGAL-01 research, review dispositions and corrected October ledger. The companion is **derived** and identifies current layer conflicts and work owed. These files claim neither implemented capabilities nor legal clearance; the broader freelance/dive material and held-out ER probe retain their boundaries.
+Neither file claims implemented capability or legal clearance. The companion names what each layer still owes; `../../README.md` item 5 states the census and what a trace does and does not prove.
 
 ---
 
 ## The two kinds of stakeholder (collapsed)
 
-In the dive (Situation C) resources and operators are different businesses. Here they **collapse into one person**:
-
-- **Sofia is her own resource** — her time is the thing being supplied. Her life-commitments (meals, runs, yoga, strength, cycle) sit on the board and **block** her availability without ever revealing themselves.
-- **Sofia is her own operator** — she publishes her bookable teaching hours and manages the bookings, cancellations, and reshuffles herself, by talking to the agent.
-- **The students are the customers** — off-app, form/link only, each reachable through the app they already use.
-
-*There's no agency standard here (no PADI). The "rules" are **Sofia's own** — her lesson's min/max duration, her buffers, which days she teaches, and her price: **NT$1,000 a month base + NT$100 an hour, capped at 10 hours per student per month** — declared by talking, and bounded only by the truth of her own calendar: students are offered **only genuinely free time.***
+- **Matt is his own resource.** His time is what students book. His run, gym, meals and appointments sit on the board and **block** or shape his availability without ever showing themselves to a student.
+- **Matt is his own operator.** He authors the English template, enters agreed lessons, sends links, manages changes and records outcomes and money, by talking to the console.
+- **The students are the customers.** Off-app, each reached through the app they already use; two book through a link, and none sees another or his life.
 
 ---
 
 ## The cast
 
-- **Sofia**, 34, freelance Spanish/English teacher (`story-sofia.md`) — the protagonist; her own resource and operator.
-- **Her life on the board:** breakfast/lunch/dinner (daily-ish), a M/W/F morning run (with a 10-before/15-after buffer), Tue/Thu evening yoga, Saturday strength, and her cycle (imported from **Flow**). These are commitments she keeps with herself; nobody books them, but they carve her availability.
-- **The students** (customers, off-app, one unique link each):
-  - **Bobby** — English, reachable on **WeChat**; the recurring student (a standing weekly thing).
-  - **Millie** — Spanish, reachable on **Messenger**; moves her own lessons herself.
-  - **Brownie** — in-person, reachable by **text**.
+- **Matt**, the protagonist: English teacher, online, Asia/Taipei.
+- **His life on the board:** a **Run** routine at 06:00–06:45 on Monday, Tuesday, Thursday, Friday and Saturday, ten minutes before and fifteen after; the **gym**, a repeating task twice on Monday, Wednesday and Friday with a before-noon and an afternoon window, done or skipped, holding no time; **meals**, logged when eaten, never scheduled; a personal appointment; **Sarah's** house as one Monday's starting point.
+- **The students** (customers, off-app):
+  - **Mark** — hand-entered; standing Thursday 09:00–11:00; two 4-hour packages, 8 hours a month; one Messenger link is both his contact and his meeting link.
+  - **Georgina** — hand-entered; standing Monday and Thursday 19:00–20:00; the same packages; Messenger, plus a second messaging app.
+  - **Kai** — per lesson from his own link, reached on LINE.
+  - **Jasmine** — per lesson from her own link, reached on Instagram.
+
+## The rules and the money
+
+*The rules are **Matt's own**, set by talking: lessons 30 minutes to 2 hours in 15-minute steps, five-minute buffers either side, teaching 09:00–23:00 (Mondays from 15:00 after S13), online. **Packages** come from his price list and are billed by the month whatever the attendance; a fifth lesson day in a month is skipped by default and paid at the package rate if asked for. **Per-lesson** students pay NT$1,500 an hour (⟦NT$1,600⟧ for bookings after S18) under monthly limits of **4 lessons and 5 hours**, counted separately. There is no credit anywhere in Matt's story. Money is **tracked, never moved**: annnä records what is owed and what Matt says he received. Messages to students are **written by annnä and pasted by Matt**. Every ⟦bracketed⟧ value is a founder placeholder.*
 
 ---
 
-## The commitments she runs (the "courses" analog)
+## The scenes
 
-Where the dive center authors three courses, Sofia declares two kinds of commitment — and the interplay between them is the whole point:
-
-| Kind | Examples | Who books it | What it does |
-|---|---|---|---|
-| **Life-commitments** | meals · run (buffer 10/15) · yoga · strength · cycle | nobody — hers | **block** availability silently; students never see them |
-| **Bookable teaching** | "Spanish / English lesson" — min 30 / max 120 min, buffer 5/5, set hours Tue–Thu 2–6pm & Mon/Wed 6–9pm, online or in-person; **NT$1,000/mo base + NT$100/h, max 10 h/student/mo** | students, self-service via link | offers **only** time her life leaves free |
-
-*The teaching template is **generate-once-then-freeze**: she sets it by talking, and every student gets the identical bookable view — a calendar that shows *when she's free*, never *why she isn't*.*
-
-*The money is **tracked, never moved** (the folder-wide rule): each month a student's thread writes its own ledger — the base entry, plus NT$100 × the hours they book — and Sofia marks entries paid when the money reaches her outside the app. The base runs month to month for each **enrolled** student and stops when either side ends the enrollment — ending it retires the student's link, ends any standing series, and closes the ledger with whatever credit is left noted for them to settle outside. The **10-hour monthly allowance** is enforced at the picker like the 30-minute minimum, and it's a shape worth flagging: a **quota over a recurring window, per person** — a general primitive since landed (`../../../harness/SPEC.md` §3.4's quota rule type; the engine's quota row is what refuses the 11th hour) — the same counting that fills a boat's seats, but scoped to one student and one month; staged here, designed there.*
-
----
-
-## The situations (the storybook)
-
-Three runs of the **same week**, each to show one thing — then two scripted extensions (the correction run, and months later).
-
-### Situation 1 — the perfect case → `situation-1.md`
-**Everything on one board, and it just runs.** Sofia's life is set down once by talking; her teaching hours publish; Bobby, Millie, and Brownie each book through their own link into time she's genuinely free; the bookings land pre-labelled on her board beside her runs and meals; a race for one slot resolves silently; and each student's monthly ledger (base + hours) writes itself, marked paid when the money reaches her outside the app. **She copies nothing and answers no messages.**
-**Purpose:** establish the **ceiling** — one place that holds a whole life and its work, coordinating the outward slice on its own.
-
-### Situation 2 — current reality → `situation-2.md`
-The **same week across scattered apps**, the way she lived before annnä: a nutrition app, Flow, a notes file, and a separate student calendar that don't talk to each other. She hand-copies between them, plays message tag to schedule a lesson, double-books herself over a run because the calendar didn't know it was there — and the money (who's paid the base, who's used how many hours) is a fifth truth living only in her head.
-**Purpose:** show the **problem annnä exists to solve** — a life spread across tools with no shared truth. The gap between this and Situation 1 is the product.
-
-### Situation 3 — the edges, held honestly → `situation-3.md`
-The pointed cases: a life-commitment (the buffered run) **blocks** a booking a student tries to make; the **min-duration** floor refuses a 5-minute grab; a **race** for one slot yields one winner; a student **moves her own** lesson with no approval asked of Sofia; a cancelled lesson **credits** its money and hours back; a **rate change** applies only forward, never to booked lessons; *"cancel Bobby's Wednesday"* makes the agent ask — **this one, or the series?**; a student at the **10-hour cap** can't book an eleventh; a **no-show** becomes Sofia's rule to make — asked once, stored; and Sofia cancels a standing lesson but the agent **won't message a real person on her behalf without asking first** — not about a lesson, and not about an unpaid bill.
-**Purpose:** show **the boundaries** — availability told truthfully, the customer's own power over their own time, and annnä's refusal to take an across-the-line action (messaging a person) without consent.
-
-### Situation 4 — the week she got it wrong → `situation-4.md` *(scripted, 2026-08-22)*
-The missing half of the gold reference: **what talking to annnä feels like when someone is wrong.** A plausible-but-wrong normalization dies at the read-back (only Sofia could know "half past six" meant morning); a rule edit shows the live bookings it strands *before* applying and still won't message Millie without a yes; a half-built group class abandons into a harmless disabled draft and resumes — or discards — cleanly.
-**Purpose:** exercise the **correction path** — the attended read-back as the real check on a valid-but-wrong proposal, downstream impact surfaced before a rule edit, and save/resume/abandon as law.
-
-### Situation 5 — months later → `situation-5.md` *(scripted, 2026-08-22)*
-The only run with **time-depth**: the month rolls over (base fees rewrite, allowances reset, last month closes), Bobby's standing Wednesday reaches week twenty and survives a rate change by the recorded law — surfacing one honest open question about a not-yet-materialized instance's terms — a genuinely dense Tuesday finally tests the peace promise: the board **at rest**, every new true thing simply present — changed, inside her set wake scope — when she next looks — and a 3 a.m. firing hits its declared per-firing budget and **parks honestly** (the register's owed unattended-invoice beat, landed 2026-08-22), with March still answerable behind it.
-**Purpose:** probe **a board with a history** — recurring money and quotas over real months, a long-lived series, and the wake policy against actual density instead of a one-week board.
-
-**How the five relate:** 1 ↔ 2 are the same week with-annnä vs. across-scattered-apps (the axis is *one board vs. many*). 3 stress-tests the seams from the outside (the axis is *honest boundaries*). 4 stress-tests the **conversation itself** (the axis is *correctability*). 5 stretches the same board across **months** (the axis is *time*). Together they bound annnä's job here: hold a whole life in one place, publish only its free edges, let the other party own their own slot, stay correctable out loud, keep its promises across month boundaries, and never act *as* Sofia toward a real person without her say-so.
-
----
-
-## The files
-
-| File | What it is |
+| Scene | What happens |
 |---|---|
-| `story-sofia.md` | Sofia's own first-person telling — setup + life + teaching + managing bookings (immersive; the gold-reference) |
-| `customer.md` | the off-app student — Bobby (and Millie, Brownie) |
-| `situation-1.md … situation-3.md` | the three original runs (elicited-blind) |
-| `situation-4.md` · `situation-5.md` | the correction run and the months-later run (scripted, 2026-08-22 — marked in-file) |
+| [S01](story-matt.md#s01) | I follow my invitation |
+| [S01a](story-matt.md#s01a) | The week before annnä — a scattered week, a forgotten lesson, who-paid kept in his head |
+| [S02](story-matt.md#s02) | The onboarding process |
+| [S03](story-matt.md#s03) | I send my first commitment and make it a routine |
+| [S03a](story-matt.md#s03a) | The gym and my meals |
+| [S04](story-matt.md#s04) | September's board, the glass, and an October edit |
+| [S05](story-matt.md#s05) | The console helps me change the origin for Monday, 12 October |
+| [S05a](story-matt.md#s05a) | I remove a run from one day |
+| [S06](story-matt.md#s06) | I ask annnä to help me set up English scheduling |
+| [S07](story-matt.md#s07) | The console walks me through the scheduling details |
+| [S08](story-matt.md#s08) | I save the template and immediately use it for Mark |
+| [S08a](story-matt.md#s08a) | I create a personal appointment with its own details |
+| [S09](story-matt.md#s09) | I put Georgina's standing lessons on my board |
+| [S10](story-matt.md#s10) | I send Kai his link |
+| [S11](story-matt.md#s11) | Kai books through the limited student console |
+| [S12](story-matt.md#s12) | I can see the whole result on my board |
+| [S12a](story-matt.md#s12a) | I distinguish my roles and temporarily hide routines |
+| [S13](story-matt.md#s13) | I resolve a conflicting booking before replacing a rule |
+| [S13a](story-matt.md#s13a) | I supply the joining details for Kai's lesson |
+| [S13b](story-matt.md#s13b) | I try a separate template and a preparation task |
+| [S13f](story-matt.md#s13f) | annnä explains what it can and cannot do |
+| [S13g](story-matt.md#s13g) | Two students want Friday at 14:00 |
+| [S14](story-matt.md#s14) | My first setup has produced a useful schedule |
+| [S14a](story-matt.md#s14a) | The reminder takes me to the lesson, and I record its end |
+| [S14b](story-matt.md#s14b) | Jasmine changes and cancels a later lesson |
+| [S14e](story-matt.md#s14e) | Later, when Kai and Jasmine also use annnä |
+| [S15](story-matt.md#s15) | The packages, and a fifth Thursday |
+| [S16](story-matt.md#s16) | I cancel Georgina's Monday |
+| [S17](story-matt.md#s17) | A student doesn't turn up |
+| [S18](story-matt.md#s18) | I raise my rate |
+| [S19](story-matt.md#s19) | annnä hears me wrong |
+| [S20](story-matt.md#s20) | November writes itself |
+| [S21](story-matt.md#s21) | A full Thursday, read calmly |
+
+Scene IDs are frozen. The six group scenes FD-106 retired (S08b, S13c, S13d, S13e, S14c, S14d) are no longer defined and are never reused; the shared-request law derived from them stands at its homes and is story-owed.
+
+---
+
+## Where the retired telling's beats live now
+
+| Beat of the retired telling | Now |
+|---|---|
+| Setting a whole life down by talking, and the console gold reference | [S02](story-matt.md#s02)–[S08](story-matt.md#s08), [S03a](story-matt.md#s03a); the gold-reference role is `../../README.md`'s |
+| The scattered-apps week before annnä | [S01a](story-matt.md#s01a) |
+| Life commitments that block a booking without showing it | [S08a](story-matt.md#s08a), [S11](story-matt.md#s11) |
+| The off-app student who only ever gets a link | [S10](story-matt.md#s10), [S11](story-matt.md#s11), [S13a](story-matt.md#s13a) |
+| Bookings landing pre-labelled on the board | [S12](story-matt.md#s12), [S14](story-matt.md#s14) |
+| The minimum-duration refusal | [S11](story-matt.md#s11)'s 20-minute refusal |
+| A race for one slot | [S13g](story-matt.md#s13g) |
+| A student moving her own lesson with no approval asked | [S14b](story-matt.md#s14b) |
+| The monthly allowance cap and a cancellation restoring it | [S14b](story-matt.md#s14b) — Matt's 4-lesson and 5-hour limits |
+| A rate change that applies only forward | [S18](story-matt.md#s18) |
+| "This one, or the series?" | [S16](story-matt.md#s16) |
+| A no-show rule asked once and stored | [S17](story-matt.md#s17) |
+| No message to a real person without asking — a cancellation, an unpaid bill | [S16](story-matt.md#s16): annnä writes the text, Matt pastes it |
+| "Who owes me what" and the monthly ledger | [S15](story-matt.md#s15), [S20](story-matt.md#s20) |
+| A wrong hearing caught at the read-back | [S19](story-matt.md#s19) |
+| A rule edit that shows the bookings it affects before it applies | [S13](story-matt.md#s13) |
+| The month rolling over, a long-lived series, a not-yet-made instance's terms | [S18](story-matt.md#s18), [S20](story-matt.md#s20) |
+| A dense day at rest, and the overnight run that parks at its budget | [S21](story-matt.md#s21) |
+| The noticed-pattern offer, owed by A′ | [S20](story-matt.md#s20)'s meal-routine offer, declined |
+| Calendar import at a fresh start | Debra, [`../Situation-D/situation-4.md`](../Situation-D/situation-4.md) |
+| The store install run that was A′ | Debra, [`../Situation-D/situation-4.md`](../Situation-D/situation-4.md) |
+| A cancelled paid lesson becoming a credit that rides onto a rebooking | Debra, [`../Situation-D/situation-5.md`](../Situation-D/situation-5.md) |
+| A half-built draft abandoned harmlessly | Debra, [`../Situation-D/situation-5.md`](../Situation-D/situation-5.md) |
+
+**Superseded, not moved (FD-106 (vii)).** The retired correction run's *"shrink the window, the booking inside it stands"* is gone. [S13](story-matt.md#s13)'s actual-conflict blocker replaced it: a rule change that a live booking contradicts is blocked until the booking is resolved (ST1-R02; `../../../engine/SPEC.md` §Affected-commitment compatibility).
 
 ---
 
 ## The wider life (context)
 
-*Sofia is the **personal-life** persona the whole lock-in thesis rests on: annnä's ambition is a person's *entire* life — meals, workouts, cycle, work — in one place they talk to, so that leaving means giving up the one board that finally holds all of it. Everything commercial (the dive, the rental) is downstream of this: the same primitives that book a scarce instructor also block a booking behind a morning run. Sofia is drawn as one realistic freelancer; the apps she's replacing (a nutrition tracker, **Flow**, a notes file, a booking calendar) are the real, scattered status quo.*
+*Matt is the **personal-life** persona the lock-in thesis rests on: a run with a clock, a gym with a window and meals with no pattern, on the same board as the work that pays for them. Everything commercial (the dive, the rental) is downstream of this: the same primitives that book a scarce instructor also keep a lesson off a run. The freelance and dive material beyond his English teaching stays held out under FD-68.*
 
 ---
 
 ## Stubs (part of the story, deliberately blank)
-- **A second whole-life user booking the first** — two annnä users handshaking (the original "Person A" two-user idea, before Sofia absorbed it). Noted as the natural next probe if this graduates toward mutual booking.
-- **The cycle doing real work** — a life-commitment (imported from Flow) actively shaping suggestions, not just sitting on the board.
+- **A second whole-life user booking the first** — two annnä users handshaking. [S14e](story-matt.md#s14e) shows students sharing availability with Matt; mutual booking between two owners is the natural next probe.
+- **A life commitment actively shaping suggestions** — beyond [S20](story-matt.md#s20)'s declined meal offer, a routine that changes what annnä proposes.

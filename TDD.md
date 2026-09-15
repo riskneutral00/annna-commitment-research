@@ -13,7 +13,7 @@ There are many named testing styles; annnä uses five. One line each:
 - **Unit test** — feed one small function an input, check the output. Fast, thousands of them. *(Engine: "given these bookings, is 3pm free?")*
 - **Property test** — instead of one example, state a rule that must hold for **all** inputs, and let the test tool generate hundreds of random cases trying to break it. *(Engine: "no write, ever, can clear a latch.")*
 - **Behavioral test** — set up a situation, perform an action, check what the *system did* — Given / When / Then. Tests a whole loop of behavior, not one function. *(Harness: "given a stored buffer rule, when the owner books again, then the agent does not re-ask.")*
-- **End-to-end (e2e) test** — drive the real app in a real browser like a user would, click by click. Slow and few — reserved for the stories that matter most. *(App: Sofia's link flow.)*
+- **End-to-end (e2e) test** — drive the real app in a real browser like a user would, click by click. Slow and few — reserved for the stories that matter most. *(App: Matt's link flow.)*
 - **Eval** — for the model only. Not pass/fail: a set of graded items with a **threshold** ("≥95% of utterances normalized correctly"). Models are statistical, so their tests are too.
 
 **Is TDD the right way?** Yes — but TDD is the **method**, not a kind of test. TDD means: write the failing test *first*, then write code until it passes. Any of the five kinds above can be written TDD-style. annnä uses TDD as the method everywhere, with a different kind of test per layer (next section).
@@ -137,7 +137,7 @@ The app renders and transports; it decides nothing. So its tests check **structu
 
 1. **Component & state tests** (C, U, V, O, S families) — render a component or canvas state from a fixed payload, assert the output. Riser completeness and the no-op round-trip (C2, C4), console present in every state (C3), surface stamping (C5), catalog rendering and the rejected-render path (U1–U4), read-only views as *absence of write routes* (V1), starters compiling to seam writes (O2), appearance rendering from stored state with zero model calls (S1), the boring/opacity stash round-trip (S2), the fave-four FIFO (S3), no-flash landing (S4), gallery cards as display projections only (S5). Fast, run on every change — except **S6**, the one behavioral exception in this tier: Given the marketplace stub unreachable, When the store shelf and picker render, Then the shelf shows honest absence and the picker still serves the owner's faves from on-device skins, the fave-four law and Plain's never-a-picker-row rule unchanged.
 2. **Wire tests** (G, D, S families) — real HTTP against the guest routes and the delivery path. The critical one is **G1, the leak test on the wire**: fetch a guest view as the guest and assert the *response payload* contains no commitment titles, names, reasons, or addresses — pixels can lie, payloads can't. Token attribution (G4), dead tokens (G5), consent refusal server-side (G6), delivery recording (D1–D3), no-origination as absence of any endpoint (D5), and **S7** — G1's pattern applied to appearance: a guest page fetched while any skin is active carries zero skin tokens on the wire.
-3. **End-to-end browser tests** (Z3) — Playwright driving the real canvas, exactly **two**: Sofia's link flow and Debra's compaction morning. Slow and precious; they exist to prove the whole surface holds together, not to re-test details the lower tiers already cover. Don't add more without a reason of that size.
+3. **End-to-end browser tests** (Z3) — Playwright driving the real canvas, exactly **two**: Matt's link flow and Debra's compaction morning. Slow and precious; they exist to prove the whole surface holds together, not to re-test details the lower tiers already cover. Don't add more without a reason of that size.
 
 ### What is deliberately NOT automated in the app
 
@@ -215,7 +215,7 @@ Real HTTP / absence-of-route assertions, the app G-family and D5 pattern applied
 
 ### End-to-end: the integration run
 
-- **Z1 [seed round-trips]** — with harness, engine, and app all real: a Sofia-shaped account installs "Free Time Available", publishes a link, a booking lands and appears on the board; a Hug-shaped account installs the dive bundle and the setup Situation C's clean run begins from exists on the board. **Unblocked 2026-08-06**, same root cause as F5: the dive-bundle half is now constructible by install *and* by hand-authoring, given the engine's `min-occupancy` entry and `KindTemplate` (`engine/SPEC.md §3`, `§1.12`). Both halves run once app Z2 and engine Z1–Z2 are green.
+- **Z1 [seed round-trips]** — with harness, engine, and app all real: a Debra-shaped account installs "Free Time Available", publishes a link, a booking lands and appears on the board; a Hug-shaped account installs the dive bundle and the setup Situation C's clean run begins from exists on the board. **Unblocked 2026-08-06**, same root cause as F5: the dive-bundle half is now constructible by install *and* by hand-authoring, given the engine's `min-occupancy` entry and `KindTemplate` (`engine/SPEC.md §3`, `§1.12`). Both halves run once app Z2 and engine Z1–Z2 are green.
 
 **Done when.** All unit and behavioral families green against the mock (`marketplace/BUILD.md` Steps 0–4), the component/state and wire tiers green re-running app **S5–S6** unchanged, then **Z1** — both halves runnable, the dive-bundle half unblocked by the F20 and F7 rulings of 2026-08-06.
 
@@ -302,7 +302,7 @@ The harness is built first, against stubs of everything else, and its behavioral
 
 The only end-to-end browser tests in the project, both straight from `user-stories/`:
 
-- **Sofia's link flow** — generate link → student's board-blind month view → booking lands → the owner's board updates live.
+- **Matt's link flow** (S10 → S11) — generate link → student's board-blind month view → booking lands → the owner's board updates live.
 - **Debra's compaction morning** — cancellation event → direction question → proposal card → move confirmations → the board re-forms → the freed-afternoon question.
 
 Every screen along both paths renders from stored structure with zero model calls.

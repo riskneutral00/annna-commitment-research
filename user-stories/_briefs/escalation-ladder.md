@@ -6,7 +6,7 @@
 
 ## World
 
-Somewhere in a v1 owner's life there is a moment where annnä cannot proceed and must reach a human who is not the owner — or must discover that there is nobody to reach and park. Sofia has no staff. Ploy has a shop but the story never gives her a second person to escalate to. TingTing has a bench of freelancers, but those are *offers*, not an on-call ladder. **No current protagonist has earned the list**, and that fact is the finding, not the failure.
+Somewhere in a v1 owner's life there is a moment where annnä cannot proceed and must reach a human who is not the owner — or must discover that there is nobody to reach and park. Matt has no staff. Ploy has a shop but the story never gives her a second person to escalate to. TingTing has a bench of freelancers, but those are *offers*, not an on-call ladder. **No current protagonist has earned the list**, and that fact is the finding, not the failure.
 
 **Protagonist:** unknown, and that is the first question. **Single or multi:** unknown.
 

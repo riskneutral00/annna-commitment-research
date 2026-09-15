@@ -1,6 +1,6 @@
 # Brief — the noticed-pattern / self-improvement offer
 
-**Readiness.** Ready when `Situations/Situation-A-prime/` is next extended — the register already names that folder as the owed home.
+**Readiness.** The owed beat landed, scripted, at Matt's S20 under FD-106 (`../README.md` register entry 1); this brief is ready when a sitting replaces that scripted beat with elicited content.
 
 **The debt this closes.** `../README.md`'s invented-and-justified register, entry **1**: the noticed-pattern offer (`../../harness/SPEC.md §3.10`/§6) was designed with its restrictions structural and its opt-in explicit, and it owes a beat. The mechanism is covered — `../../harness/SCENARIOS.md B6–B8` and `../../app/SCENARIOS.md C7` — but no story shows a person meeting it.
 
@@ -8,20 +8,20 @@
 
 annnä notices something about how somebody works and offers to change it. That is the most intimate thing in the product and the one with no story at all: every other mechanism is something a user asked for, and this one is something the app says first.
 
-**Protagonist:** Sofia, presumptively, in `Situation-A-prime/` — **to confirm at the sitting.** **Single protagonist.**
+**Protagonist:** Matt, presumptively, in `Situation-A/` — **to confirm at the sitting.** **Single protagonist.**
 
 ## The question that governs the whole sitting
 
-**What would Sofia find helpful here, and what would she find creepy?** The line between those two is the entire design, it is a user's judgement rather than a founder's, and the sitting's job is to find where a real person puts it — not to have the brief place it in advance.
+**What would Matt find helpful here, and what would he find creepy?** The line between those two is the entire design, it is a user's judgement rather than a founder's, and the sitting's job is to find where a real person puts it — not to have the brief place it in advance.
 
-A second question sits underneath it: **does the offer ever get made when she did not ask for anything?** An offer that only appears mid-conversation is a very different product from one that appears on a quiet Tuesday.
+A second question sits underneath it: **does the offer ever get made when he did not ask for anything?** An offer that only appears mid-conversation is a very different product from one that appears on a quiet Tuesday.
 
 ## Actors — to be established
 
 | Actor | Kind | To ask |
 |---|---|---|
-| Sofia | operator-protagonist | Which pattern in her week is worth noticing? Ask her, not the spec |
-| Her students | customers, off-app | Does an accepted offer ever change what *they* experience? If it does, the outward floor binds |
+| Matt | operator-protagonist | Which pattern in his week is worth noticing? Ask him, not the spec |
+| His students | customers, off-app | Does an accepted offer ever change what *they* experience? If it does, the outward floor binds |
 
 ## Rules and their source — to ask
 
@@ -36,8 +36,8 @@ To ask: who, today, tells this owner they are doing something inefficiently? A f
 ## Situations to cover — the questions, not the answers
 
 **To elicit as must-work.**
-- The moment the pattern is noticed and the offer made: what was she doing, and what does the offer say?
-- Accepting it: what changes, and does she see what changed?
+- The moment the pattern is noticed and the offer made: what was he doing, and what does the offer say?
+- Accepting it: what changes, and does he see what changed?
 
 **To elicit as must-be-refused.**
 - What must annnä never notice out loud? Ask directly — the answer is the poka-yoke.
@@ -51,4 +51,4 @@ To ask: who, today, tells this owner they are doing something inefficiently? A f
 
 ## Hand-off
 
-`/probe-elicit`, then extend `Situations/Situation-A-prime/`. The new run declares its provenance register in-file — and since the mechanism already exists, a run written from the register rather than from the founder's own answers is **scripted** by construction and says so.
+`/probe-elicit`, then extend `Situations/Situation-A/`. The new run declares its provenance register in-file — and since the mechanism already exists, a run written from the register rather than from the founder's own answers is **scripted** by construction and says so.

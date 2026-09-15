@@ -85,18 +85,9 @@
 | security/SPEC.md | SPEC | The cross-cutting security law: threat model, token and PII law, the injection quarantine, compliance posture |
 | user-stories/COVERAGE.md | derived | Which layer owes each Situation beat, and whether it is covered, owed, deferred, unruled or deliberately empty |
 | user-stories/README.md | SPEC | That the Situations are the probes the `PRD.md` requirements register is tested against, are founder proof scripts, and are never deleted |
-| user-stories/Situations/Situation-A-prime/README.md | SPEC | The marketplace probe, solo half — what installing from the store must do for one person |
-| user-stories/Situations/Situation-A-prime/situation-1.md | SPEC | The install run: suggestion, ghost preview, blanked-parameter install, first booking, uninstall, one refusal |
-| user-stories/Situations/Situation-A/README.md | SPEC | The whole-life probe: one person's entire life on one board, no market, no other operator |
-| user-stories/Situations/Situation-A/customer.md | SPEC | What the off-app student experiences — a link, and only the outward slice of Sofia's board |
-| user-stories/Situations/Situation-A/situation-1.md | SPEC | The clean run: Sofia's life and work on one board, students booking into time she is genuinely free |
-| user-stories/Situations/Situation-A/situation-2.md | SPEC | The same week before annnä, across four apps that never share a truth |
-| user-stories/Situations/Situation-A/situation-3.md | SPEC | Situation A's edges — what must work, and what must be refused |
-| user-stories/Situations/Situation-A/situation-4.md | SPEC | The correction run: a wrong normalization caught at read-back, a rule edit's blast radius shown first, a draft abandoned harmlessly (scripted) |
-| user-stories/Situations/Situation-A/situation-5.md | SPEC | Months later: the ledger's month rolls over, a series reaches week twenty, and a dense board finally tests the peace promise (scripted) |
-| user-stories/Situations/Situation-A/story-matt-verification.md | derived | Matt English source transfer, 90 cases, 26 CRUD rows, 33 cues, legal research, review dispositions, corrected ledger and owed layer contracts |
+| user-stories/Situations/Situation-A/README.md | SPEC | Matt's storybook: the whole-life probe's files, cast and scenes, and where each beat of Situation A's retired first telling now lives (FD-106) |
+| user-stories/Situations/Situation-A/story-matt-verification.md | derived | Matt English source transfer, scene trace, 109 cases, 26 CRUD rows, 42 cues, legal research, review dispositions, the October and November ledger and owed layer contracts |
 | user-stories/Situations/Situation-A/story-matt.md | SPEC | Matt’s scripted end-state English-teaching story under the narrow FD-68 exception; authored behavior with explicit implementation debt |
-| user-stories/Situations/Situation-A/story-sofia.md | SPEC | Sofia's own first-person telling — the whole-life requirement stated as lived experience |
 | user-stories/Situations/Situation-B/README.md | SPEC | The self-service rental probe: interchangeable units, and a customer who pulls rather than books |
 | user-stories/Situations/Situation-B/customer.md | SPEC | What the off-app traveller does — drives the booking themselves, against a hold with a clock |
 | user-stories/Situations/Situation-B/operator-shop.md | SPEC | How a rental shop sets up: publishes an inventory link and lets the customer pull |
