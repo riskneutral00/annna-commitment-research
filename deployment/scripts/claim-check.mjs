@@ -244,7 +244,7 @@ const CHECKS = [
     // way the sentence itself divides them.
     const src = read("README.md");
     const core = src.match(/([A-Za-z-]+) end-to-end situations in/);
-    const probe = src.match(/plus ([a-z-]+) marketplace install probes/);
+    const probe = src.match(/plus ([a-z-]+) marketplace install probes?/);
     if (!core || !probe) return { ok: false, label: "README situation count", detail: "README.md no longer states its situation counts in a parseable form" };
     const dirs = fs
       .readdirSync(path.join(ROOT, "user-stories/Situations"), { withFileTypes: true })
