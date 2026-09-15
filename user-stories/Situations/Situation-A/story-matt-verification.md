@@ -698,7 +698,7 @@ Matt's price list offers packages — 1, 2, 3 or 4 hours a month, or 10 hours a 
 
 A package student is outside the per-lesson count and time limits of [HR-22](#hr-22); the package's own hours are the terms. Money is recorded, never moved: [S15](story-matt.md#s15) and [S16](story-matt.md#s16) record transfers Matt reports.
 
-**Open engine questions, recorded and not solved (FD-106):** (1) the fifth-lesson-day rule was stated for a fifth Thursday; [S20](story-matt.md#s20) applies it to Georgina's fifth Monday, 30 November, and whether the rule reads per weekday of a multi-day series is unruled; (2) an owner cancellation of a package occurrence offers a rebook “Included in your October package” in [S16](story-matt.md#s16) — no credit is created, and the stored shape of that in-package rebook allowance is unspecified; (3) when the price list changes, [S18](story-matt.md#s18) asks which terms future months take and stores the answer per series, FD-75's shape — its renewal mechanics are owed.
+**Open engine questions, recorded and not solved (FD-106; answers proposed at FD-107 on 2026-09-15, marked there and awaiting the founder):** (1) the fifth-lesson-day rule was stated for a fifth Thursday; [S20](story-matt.md#s20) applies it to Georgina's fifth Monday, 30 November, and whether the rule reads per weekday of a multi-day series is unruled; (2) an owner cancellation of a package occurrence offers a rebook “Included in your October package” in [S16](story-matt.md#s16) — no credit is created, and the stored shape of that in-package rebook allowance is unspecified; (3) when the price list changes, [S18](story-matt.md#s18) asks which terms future months take and stores the answer per series, FD-75's shape — its renewal mechanics are owed.
 
 <a id="hr-36"></a>
 
@@ -756,7 +756,7 @@ The boundary is Matt's Asia/Taipei calendar. The reset is derived from lesson mo
 
 The unattended run on Jasmine's 02:40 request reaches the step-and-spend ceiling every unattended firing carries before it has an answer. It parks: no message, no half-move, and her Friday lesson stands. The parked card names the budget as the reason and lays out the request's two edges — 4 of 4 lessons, and Monday lessons start at 15:00. Only a human clears the park. The per-firing budget is `harness/SPEC.md` §4's fourth termination condition (`user-stories/README.md` register entry 6).
 
-**Open question, recorded (FD-106):** the card proposes an owner offer, “Offer her Monday, 30 November, 15:30–16:30?”. An owner-approved offer from a parked card, with the guest still moving her own lesson, is a composition no home specifies yet.
+**Open question, recorded (FD-106; answer proposed at FD-107 (iv), 2026-09-15):** the card proposes an owner offer, “Offer her Monday, 30 November, 15:30–16:30?”. An owner-approved offer from a parked card, with the guest still moving her own lesson, is a composition no home specifies yet.
 
 <a id="hr-42"></a>
 
