@@ -141,7 +141,6 @@
 | user-stories/_briefs/owner-money-and-quota.md | never | What to ask about the owner's own aggregate money view and the month a quota window turns on |
 | user-stories/_briefs/precondition-provenance.md | never | What to ask about whose "no" a refusal is — the operator's own document, or an outside standard |
 | user-stories/_briefs/qualification-and-language.md | never | What to ask about language, ratings and declared capability as placement limits — the largest coverage subject |
-| user-stories/_briefs/situation-d-debra.md | history | The elicitation brief that produced Situation D, written to pressure-test the engine |
 | user-stories/_briefs/skins-and-appearance.md | never | What to ask about appearance and the rest-state measurement that refuses a skin (RQ-12) |
 | user-stories/_briefs/the-ask-before-the-act.md | never | What to ask about the console hesitating — the ambiguous cancel, and the 3 a.m. budget park's card |
 | user-stories/_briefs/what-the-record-carries.md | never | What to ask about a certification written on completion, and what a cascaded job inherits |

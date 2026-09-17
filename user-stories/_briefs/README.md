@@ -4,10 +4,7 @@
 
 **The one discipline that makes a brief useful.** A brief states what must be **asked**, never what the answer is. A brief that answers its own questions has stopped being an elicitation input and become a **script** — and `../README.md`'s provenance vocabulary already rules that a scripted run "cannot refute" the list it was written from, so it can never count as coverage evidence. Writing the answers in advance is therefore not a shortcut to the same result; it destroys the result.
 
-**Two kinds of brief live here, and they read differently.**
-
-- `situation-d-debra.md` was written **after** its sitting, as the record of one. Its "Situations to cover" lists are answers, because by then they were answers.
-- Every other brief here was written **before** any sitting, from the coverage debt in `../COVERAGE.md`. Their lists are questions. Do not reshape one into the other's voice.
+**Every brief here reads the same way, since 2026-09-17.** Each was written **before** any sitting, from the coverage debt in `../COVERAGE.md`, so its lists are questions to ask. *(A second kind used to live here — one brief written* after *its sitting, as the record of one, whose lists were answers because by then they were answers. Its Situation landed, the file retired, and the warning it earned is kept: do not reshape a question brief into that voice.)*
 
 **Each brief opens with a readiness condition, never a date** (FR2). A condition is a state of the world that can be checked; "later" and "after the next phase" are not conditions.
 
