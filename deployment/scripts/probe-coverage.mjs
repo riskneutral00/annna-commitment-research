@@ -161,8 +161,25 @@ export function registerTags(text) {
 // What it cannot check, printed: whether a cited row asserts the ID's claim.
 // A trace is a pointer, never a pass — scripted prose, a Shown cell and a
 // resolving row are not results.
-export const STORY = "user-stories/Situations/Situation-A/story-matt.md";
-export const COMPANION = "user-stories/Situations/Situation-A/story-matt-verification.md";
+// Stories are DISCOVERED, not listed (FD-109): every `story-<name>.md` under a
+// Situation folder with a sibling `story-<name>-verification.md` is a traced
+// story. A story without a companion is narrative, not a traced obligation.
+export function discoverStories(root = ROOT) {
+  const dir = path.join(root, "user-stories/Situations");
+  const out = [];
+  for (const sit of fs.readdirSync(dir, { withFileTypes: true }).filter((d) => d.isDirectory())) {
+    for (const f of fs.readdirSync(path.join(dir, sit.name)).sort()) {
+      const m = f.match(/^(story-[a-z0-9-]+)\.md$/);
+      if (!m || m[1].endsWith("-verification")) continue;
+      const companion = `${m[1]}-verification.md`;
+      if (fs.existsSync(path.join(dir, sit.name, companion)))
+        out.push({ story: `user-stories/Situations/${sit.name}/${f}`, companion: `user-stories/Situations/${sit.name}/${companion}` });
+    }
+  }
+  return out;
+}
+const DEFAULT_STORY = "user-stories/Situations/Situation-A/story-matt.md";
+const DEFAULT_COMPANION = "user-stories/Situations/Situation-A/story-matt-verification.md";
 export const TRACE_LAYERS = ["harness", "engine", "app", "marketplace", "security"];
 const TRACE_LINKS = {
   harness: { spec: "harness/SPEC.md", seam: "harness/INTERFACES.md", acceptance: "harness/SCENARIOS.md", build: "harness/BUILD.md" },
@@ -182,10 +199,17 @@ const OUTCOME_DEBT = new Map([
   ["CRUD-02 delete/removal", "A required timezone cannot become an unexplained null/default."],
 ]);
 
-export function census(readme) {
-  const m = readme.match(/keeps its (\d+) scene, (\d+) MT, (\d+) CRUD and (\d+) HR IDs/);
-  const s = readme.match(/((?:[A-Z]+-\d+(?:–\d+)?(?:, | and )?)+) stay supplemental obligations/);
-  if (!m || !s) return null;
+// The census sentence for one story: a link to the story followed by
+// "keeps its N scene, N MT, N CRUD and N HR IDs" and, in the same paragraph,
+// the supplemental list. A story with no census is checked without counts.
+export function census(readme, storyFile = DEFAULT_STORY) {
+  const base = path.basename(storyFile).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const linked = readme.match(new RegExp(`\\]\\([^)]*${base}\\)[^\\n]*?keeps its (\\d+) scene, (\\d+) MT, (\\d+) CRUD and (\\d+) HR IDs`));
+  const m = linked ?? readme.match(/keeps its (\d+) scene, (\d+) MT, (\d+) CRUD and (\d+) HR IDs/);
+  if (!m) return null;
+  const paragraph = readme.slice(m.index, readme.indexOf("\n", m.index) < 0 ? undefined : readme.indexOf("\n", m.index));
+  const s = paragraph.match(/((?:[A-Z]+-\d+(?:–\d+)?(?:, | and )?)+) stay supplemental obligations/);
+  if (!s) return null;
   const supplemental = [];
   for (const [, fam, a, b] of s[1].matchAll(/([A-Z]+)-(\d+)(?:–(\d+))?/g))
     for (let n = +a; n <= +(b ?? a); n++) supplemental.push(`${fam}-${String(n).padStart(a.length, "0")}`);
@@ -203,12 +227,14 @@ export function storyIds(story, companion) {
 }
 
 // Every trace in the companion, attributed to the row or HR section it sits in.
-export function storyTraces(companion) {
+export function storyTraces(companion, storyFile = DEFAULT_STORY) {
   const out = [];
   let hr = null;
+  const base = path.basename(storyFile).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const sceneRow = new RegExp(`^\\| \\[(S\\d+[a-z]?)\\]\\(${base}#s\\d+[a-z]?\\) \\| (.+) \\|$`);
   for (const line of companion.split("\n")) {
     if (line.startsWith("## ")) hr = line.match(/^## (HR-\d+) —/)?.[1] ?? null;
-    const scene = line.match(/^\| \[(S\d+[a-z]?)\]\(story-matt\.md#s\d+[a-z]?\) \| (.+) \|$/);
+    const scene = line.match(sceneRow);
     if (scene) {
       out.push({ id: scene[1], body: scene[2] });
       continue;
@@ -258,11 +284,11 @@ export function parseTrace(id, body) {
   return { groups, owed, bad };
 }
 
-export function traceLayerLinks(companion) {
+export function traceLayerLinks(companion, companionFile = DEFAULT_COMPANION) {
   const bad = [];
   const referenced = new Set([...companion.matchAll(/\]\(#trace-([a-z]+)\)/g)].map((m) => m[1]));
   const lines = companion.split("\n");
-  const companionDir = path.dirname(path.join(ROOT, COMPANION));
+  const companionDir = path.dirname(path.join(ROOT, companionFile));
   for (const layer of referenced) {
     const expected = TRACE_LINKS[layer];
     if (!expected) {
@@ -302,22 +328,21 @@ export function closingSteps(id, sections, defs) {
   return gated.length ? gated : sections.filter((s) => buildIds(s.text, defs).has(id)).map((s) => s.step);
 }
 
-// texts: { readme, story, companion, layers: { name: { scen, build } }, model: { evals, build } }
-export function checkStory({ readme, story, companion, layers, model }) {
+// texts: { readme, story, companion, layers: { name: { scen, build } }, model: { evals, build }, storyFile?, companionFile? }
+// A story with no census sentence in the README is checked without counts (FD-109).
+export function checkStory({ readme, story, companion, layers, model, storyFile = DEFAULT_STORY, companionFile = DEFAULT_COMPANION }) {
   const bad = [];
-  const decl = census(readme);
-  if (!decl)
-    return {
-      bad: [`user-stories/README.md item 5 no longer states its story census ("keeps its N scene, N MT, N CRUD and N HR IDs") and supplemental cases in a parseable form — fix this script's contract`],
-    };
-  bad.push(...traceLayerLinks(companion));
+  const decl = census(readme, storyFile) ?? { counts: null, supplemental: [] };
+  bad.push(...traceLayerLinks(companion, companionFile));
   const ids = storyIds(story, companion);
+  const counts = {};
   for (const [fam, list] of Object.entries(ids)) {
-    const want = decl.counts[fam];
     const seen = new Map();
     for (const x of list) seen.set(x, (seen.get(x) || 0) + 1);
     for (const [x, n] of seen) if (n > 1) bad.push(`${x} is defined ${n} times — one ID, one definition`);
-    if (seen.size !== want) bad.push(`user-stories/README.md item 5 declares ${want} ${fam} IDs and ${fam === "S" ? STORY : COMPANION} defines ${seen.size}`);
+    counts[fam] = seen.size;
+    const want = decl.counts ? decl.counts[fam] : seen.size;
+    if (seen.size !== want) bad.push(`user-stories/README.md item 5 declares ${want} ${fam} IDs and ${fam === "S" ? storyFile : companionFile} defines ${seen.size}`);
     if (fam !== "S")
       for (let n = 1; n <= want; n++) {
         const x = `${fam}-${String(n).padStart(2, "0")}`;
@@ -327,7 +352,7 @@ export function checkStory({ readme, story, companion, layers, model }) {
 
   const defined = new Set(Object.values(ids).flat());
   const traced = new Map();
-  for (const t of storyTraces(companion)) {
+  for (const t of storyTraces(companion, storyFile)) {
     if (!defined.has(t.id)) bad.push(`a trace for ${t.id}, which the story census does not define (phantom)`);
     else if (traced.has(t.id)) bad.push(`${t.id} carries two traces — one ID, one trace`);
     else traced.set(t.id, t.body);
@@ -386,12 +411,13 @@ export function checkStory({ readme, story, companion, layers, model }) {
   }
 
   const scenes = new Set(ids.S);
+  const storyBase = path.basename(storyFile);
   for (const m of companion.matchAll(/\[([^\]]+)\]\(([^)]*)\)/g)) {
-    if (!m[2].startsWith("story-matt.md#")) continue;
+    if (!m[2].startsWith(`${storyBase}#`)) continue;
     const id = m[1];
-    const target = m[2].slice("story-matt.md#".length);
+    const target = m[2].slice(storyBase.length + 1);
     if (!/^S\d+[a-z]?$/.test(id) || target !== id.toLowerCase() || !scenes.has(id))
-      bad.push(`the companion links scene ${id} at #${target}, which ${STORY} does not define (phantom or malformed destination)`);
+      bad.push(`the companion links scene ${id} at #${target}, which ${storyFile} does not define (phantom or malformed destination)`);
   }
   let cells = 0;
   const owedCells = [];
@@ -405,7 +431,7 @@ export function checkStory({ readme, story, companion, layers, model }) {
       const shown = [...c.matchAll(/\bShown\s+\[([^\]]+)\]\(([^)]*)\)/g)];
       const malformedShown = shown.filter((m) => {
         const id = m[1];
-        const target = m[2].match(/^story-matt\.md#(s\d+[a-z]?)$/);
+        const target = m[2].startsWith(`${storyBase}#`) ? m[2].slice(storyBase.length + 1).match(/^(s\d+[a-z]?)$/) : null;
         return !/^S\d+[a-z]?$/.test(id) || !target || target[1] !== id.toLowerCase() || !scenes.has(id);
       });
       for (const m of malformedShown)
@@ -429,9 +455,9 @@ export function checkStory({ readme, story, companion, layers, model }) {
     });
   }
   for (const x of decl.supplemental)
-    if (!companion.includes(`<a id="${x.toLowerCase()}"></a>`)) bad.push(`${x}, a supplemental obligation item 5 names, no longer stands in ${COMPANION}`);
+    if (!companion.includes(`<a id="${x.toLowerCase()}"></a>`)) bad.push(`${x}, a supplemental obligation item 5 names, no longer stands in ${companionFile}`);
 
-  return { bad, counts: decl.counts, total: defined.size, cited, owedOnly, cells, owedCells, supplemental: decl.supplemental };
+  return { bad, counts, total: defined.size, cited, owedOnly, cells, owedCells, supplemental: decl.supplemental };
 }
 
 function definedRQs(prd) {
@@ -593,7 +619,7 @@ if (process.argv.includes("--selfcheck")) {
   fails(comp("N-01 → Step 3. |", "N-01 → Step 2. |"), "closes only at Step 3", "a model item closed anywhere but qualification fails");
   fails(comp("N-01 → Step 3. |", "N-09 → Step 3. |"), "model item N-09", "a phantom model item fails");
   fails(comp("no layer row cites MT-02 yet", "no layer row cites MT-01 yet"), "a trace names its own ID", "an owed trace naming another ID fails");
-  fails(story({ readme: "no census here" }), "fix this script's contract", "an unparseable census is a failure, not an empty census");
+  assert.deepStrictEqual(story({ readme: "no census here" }), [], "a story with no README census is checked without counts, never refused (FD-109)");
   fails(story({ readme: sx.readme.replace("2 MT", "3 MT") }), "declares 3 MT IDs", "the declared count and the defined rows cannot drift apart");
 
   console.log("selfcheck OK");
@@ -649,18 +675,25 @@ if (!reg) {
   }
 }
 
-// Check 3 — the story-ID trace arm over the Matt English companion.
+// Check 3 — the story-ID trace arm over every discovered story/companion pair.
 const layerTexts = Object.fromEntries(
   TRACE_LAYERS.map((l) => [l, { scen: readOne(SUITE_FILES[l]), build: readOne(`${l}/BUILD.md`) }]),
 );
-const storyResult = checkStory({
-  readme: readOne("user-stories/README.md"),
-  story: readOne(STORY),
-  companion: readOne(COMPANION),
-  layers: layerTexts,
-  model: { evals: readOne("model/EVALS.md"), build: readOne("model/BUILD.md") },
+const stories = discoverStories();
+if (!stories.length) bad.push("no story/companion pair found under user-stories/Situations/ — a traced story is `story-<name>.md` beside `story-<name>-verification.md`");
+const storyResults = stories.map((s) => {
+  const r = checkStory({
+    readme: readOne("user-stories/README.md"),
+    story: readOne(s.story),
+    companion: readOne(s.companion),
+    layers: layerTexts,
+    model: { evals: readOne("model/EVALS.md"), build: readOne("model/BUILD.md") },
+    storyFile: s.story,
+    companionFile: s.companion,
+  });
+  bad.push(...r.bad.map((b) => `${path.basename(s.story)}: ${b}`));
+  return { ...r, story: s.story };
 });
-bad.push(...storyResult.bad);
 
 if (bad.length) {
   console.log(`\nPROBE-COVERAGE FAIL:`);
@@ -674,10 +707,11 @@ console.log(
     `obligation scope per suite (parsed/guarded): ${perSuite.join(", ")} — summing ${totalParsed}/${totalGuarded}, ${totalExempt} declared exempt; ` +
     `no gating row cites held-out E without FD-59's re-provenance marker; ` +
     `${tagCount} recorded provenance tag(s), every one among the ${reg.names.length} user-stories/README.md declares; ` +
-    `story traces: ${storyResult.total} Matt English IDs (${Object.entries(storyResult.counts).map(([f, n]) => `${n} ${f}`).join(", ")}) each defined once with one trace, ` +
-      `${storyResult.cited} cited layer row/item reference(s) resolving in their suites and closing at a step that names them (model items at qualification only), ` +
-      `${storyResult.owedOnly} ID(s) with no citing row, owed; ${storyResult.cells} CRUD outcome cell(s) stating Shown or Required; ` +
-      `${storyResult.owedCells.length} CRUD outcome debt(s) explicitly owed and not counted as outcomes (${storyResult.owedCells.join(", ")}); supplemental ${storyResult.supplemental.join(", ")} standing. ` +
+    `story traces over ${storyResults.length} discovered story/companion pair(s): ` +
+    storyResults.map((r) => `${path.basename(r.story)} — ${r.total} IDs (${Object.entries(r.counts).map(([f, n]) => `${n} ${f}`).join(", ")}) each defined once with one trace, ` +
+      `${r.cited} cited layer row/item reference(s) resolving in their suites and closing at a step that names them (model items at qualification only), ` +
+      `${r.owedOnly} ID(s) with no citing row, owed; ${r.cells} CRUD outcome cell(s) stating Shown or Required; ` +
+      `${r.owedCells.length} CRUD outcome debt(s) explicitly owed and not counted as outcomes (${r.owedCells.join(", ") || "none"}); supplemental ${r.supplemental.join(", ") || "none"} standing`).join("; ") + ". " +
     `A TRACE IS NOT A PASS: scripted prose, a Shown cell and a resolving row are pointers, not results. ` +
     `NOT CHECKED: whether an anchored beat actually exercises its requirement, whether a register tag is TRUE, or whether a cited row asserts its story ID's claim — existence is mechanical, aboutness is a reading job; ` +
     `nor that a trace lists every step naming a row, since a gate line's cross-layer mention reads like a citation.`,

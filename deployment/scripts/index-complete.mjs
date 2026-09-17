@@ -53,7 +53,7 @@ const INDEX = "INDEX.md";
 
 // The closed tier vocabulary, from INDEX.md's tier legend, which defines what
 // each one means; this is only the spelling.
-const TIERS = new Set(["SPEC", "derived", "index", "history", "never"]);
+const TIERS = new Set(["SPEC", "derived", "index", "never"]);
 const PLACEHOLDER = "TODO — describe what this file decides";
 const isPlaceholder = (what) => /^TODO\b/.test(what);
 

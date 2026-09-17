@@ -427,7 +427,10 @@ const agentsPath = path.join(root, "AGENTS.md");
 const declared = fs.existsSync(agentsPath) ? declaredNotes(fs.readFileSync(agentsPath, "utf8")) : null;
 const notesFaults = [];
 if (!declared) {
-  notesFaults.push(`AGENTS.md no longer declares which packages carry NOTES.md in a parseable form — the "carry \`NOTES.md\`" sentence`);
+  // FD-108 (2026-09-17): no package carries a NOTES.md and AGENTS.md declares none.
+  // An empty declaration is legal exactly while no such file exists; a NOTES.md
+  // reappearing without the sentence is the survivor this refuses.
+  for (const l of LAYERS.filter((l) => fs.existsSync(path.join(root, l, "NOTES.md")))) notesFaults.push(`${l}/NOTES.md exists and AGENTS.md declares no NOTES.md at all — restore the deviations sentence or fold the file`);
 } else {
   const present = LAYERS.filter((l) => fs.existsSync(path.join(root, l, "NOTES.md")));
   for (const l of declared) if (!present.includes(l)) notesFaults.push(`AGENTS.md declares ${l}/NOTES.md and no such file exists — a fold that deleted the file without editing the declaration`);
@@ -480,7 +483,7 @@ if (notesFaults.length) {
 console.log(
   `\nNOTES OK — ${(declared ?? []).length} declared NOTES file(s) (${(declared ?? []).join(", ")}), each present, ` +
     `every open-item heading on contract, ${wants.length} want(s) and ${notes.length} backlog item(s) reported. ` +
-    `Scope: package directories only — PR/NOTES.md is not in a package and AGENTS.md's sentence does not govern it.`,
+    `Scope: package directories only; an empty declaration is legal while no NOTES.md exists (FD-108).`,
 );
 
 if (brokenPrecondition) process.exit(1);

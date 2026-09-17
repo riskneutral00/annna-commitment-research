@@ -11,14 +11,8 @@
 # internals of a repository this repo's readers cannot see.
 patches/
 
-# Session post-mortem on plan authority — process artifact, not a design
-# lock. Cites working documents that were never published.
-.specs/deep-interview-plan-authority.md
-
-# Founder's personal identity interview — private thinking, recorded
-# indecision, and a standing rule whose publication defeats its own purpose.
-# Kept on disk; never published.
-.specs/deep-interview-pr-identity.md
+# Two unpublished interview transcripts that live on the founder's machine.
+.specs/
 
 # BMAD symlinks into the local home directory — machine-specific,
 # meaningless in any other checkout.

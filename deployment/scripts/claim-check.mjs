@@ -29,7 +29,6 @@ import { fileURLToPath } from "node:url";
 // and imported here. It used to be declared locally here AND in
 // `roster-check.mjs` — two copies feeding two counts, agreeing by luck.
 // `gate-wiring.mjs` now asserts there is only the one.
-import { NOT_A_GATE } from "./not-a-gate.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const read = (f) => fs.readFileSync(path.join(ROOT, f), "utf8");
@@ -38,7 +37,6 @@ const read = (f) => fs.readFileSync(path.join(ROOT, f), "utf8");
 // 2026-08-08 and moved to the root because it is a live index and `../../AGENTS.md`
 // declares archive/ non-authoritative — resolving a citation meant first reasoning
 // about whether the hit counted.
-const REGISTRY = "RULINGS.md";
 
 // Claims are written as words, not digits, in this corpus's prose.
 // Compound words are COMPUTED, not enumerated. An earlier version listed them
@@ -61,19 +59,17 @@ export const num = (t) => {
   return TENS[a] !== undefined && ONES[b] !== undefined && ONES[b] < 10 ? TENS[a] + ONES[b] : undefined;
 };
 
-// Parse the distinct `<name>.mjs` tokens out of a stretch of prose, in order.
-const scripts = (s) => [...new Set([...s.matchAll(/`([a-z0-9-]+\.mjs)`/g)].map((m) => m[1]))];
-
 // The parse helpers below are module-level on purpose: the checks and the
 // selfcheck run the SAME code over different input. The two older checks each
 // re-declare their parse inside --selfcheck, which is a second copy that can
 // drift from the one being tested — the exact defect one level down.
 const labels = (s) => [...s.matchAll(/OR-\d+/g)].map((m) => m[0]);
 
-// AGENTS.md's open-ruling sentence: "<word> open — <open list> (<closed list> closed)".
+// AGENTS.md's open-ruling sentence: "Open: <open list> (<closed list> closed)".
+// No count word since FD-109 — the list is the declaration.
 const orSets = (src) => {
-  const m = src.match(/([A-Za-z-]+) open — ([^—]+?) \(([^)]*?) closed\)/);
-  return m && { word: m[1], open: labels(m[2]), closed: labels(m[3]) };
+  const m = src.match(/\b[Oo]pen: ([^(]+?) \(([^)]*?) closed\)/);
+  return m && { open: labels(m[1]), closed: labels(m[2]) };
 };
 
 // The five filenames AGENTS.md's fenced package-shape block promises.
@@ -179,44 +175,6 @@ const CHECKS = [
     return checkStepZeroClaims(read("harness/BUILD.md"), trackedAll());
   },
 
-  function gateInventory() {
-    // AGENTS.md states the count and NOT the roster, deliberately. The division
-    // is roster-check.mjs's: `package.json` owns the wiring and the order,
-    // because it is executable; `deployment/README.md` owns the roster — WHY
-    // each gate exists. A prose copy of either is a copy that goes stale, and
-    // one did, twice in one day. Counting the folder is what makes the
-    // remaining number honest.
-    const m = read("AGENTS.md").match(/([a-z-]+) process gates sit in `deployment\/scripts\/`/);
-    if (!m) return { ok: false, label: "AGENTS.md gate count", detail: "no longer states its gate count in a parseable form" };
-    const actual = fs
-      .readdirSync(path.join(ROOT, "deployment/scripts"))
-      .filter((f) => f.endsWith(".mjs") && !(f in NOT_A_GATE)).length;
-    return num(m[1]) === actual
-      ? { ok: true, label: "AGENTS.md gate count", detail: `${actual} gates, as claimed` }
-      : { ok: false, label: "AGENTS.md gate count", detail: `AGENTS.md claims ${num(m[1])}; deployment/scripts/ holds ${actual} (excluding ${Object.keys(NOT_A_GATE).join(", ")})` };
-  },
-
-  function declaredHosts() {
-    const claim = read("deployment/BUILD.md").match(/any URL outside ([a-z-]+) declared hosts/);
-    if (!claim) return { ok: false, label: "R2 declared hosts", detail: "deployment/BUILD.md no longer states the host count in a parseable form" };
-    const body = read("deployment/scripts/r2-closed-service.mjs").match(/const DECLARED_HOSTS = \[([\s\S]*?)\n\]/);
-    if (!body) return { ok: false, label: "R2 declared hosts", detail: "r2-closed-service.mjs no longer declares DECLARED_HOSTS in a parseable form" };
-    const actual = [...body[1].matchAll(/"[^"]+"/g)].length;
-    return num(claim[1]) === actual
-      ? { ok: true, label: "R2 declared hosts", detail: `${actual}, as claimed` }
-      : { ok: false, label: "R2 declared hosts", detail: `deployment/BUILD.md claims ${num(claim[1])}; the array holds ${actual}` };
-  },
-
-  function deploymentScenarioCount() {
-    // FD-4's headline. Only the right-hand number is checkable — the left counts
-    // a file revision that no longer exists.
-    const claim = read(REGISTRY).match(/re-scoped (\d+)→(\d+) scenarios/);
-    if (!claim) return { ok: false, label: "FD-4 scenario count", detail: `${REGISTRY} no longer states the re-scope in a parseable form` };
-    const actual = read("deployment/SCENARIOS.md").split("\n").filter((l) => /^\s*-\s*\*\*[A-Z]\d+\b/.test(l)).length;
-    return Number(claim[2]) === actual
-      ? { ok: true, label: "FD-4 scenario count", detail: `deployment holds ${actual}, as claimed` }
-      : { ok: false, label: "FD-4 scenario count", detail: `FD-4 claims ${claim[2]} surviving scenarios; deployment/SCENARIOS.md defines ${actual}` };
-  },
 
   function openRulings() {
     // AGENTS.md declares the open set in one sentence and the corpus defines
@@ -228,7 +186,6 @@ const CHECKS = [
     if (!s) return { ok: false, label: "AGENTS.md open rulings", detail: "AGENTS.md no longer states its open-ruling set in a parseable form" };
     const both = s.open.filter((l) => s.closed.includes(l));
     if (both.length) return { ok: false, label: "AGENTS.md open rulings", detail: `${both.join(", ")} listed as open AND closed in the same sentence` };
-    if (num(s.word) !== s.open.length) return { ok: false, label: "AGENTS.md open rulings", detail: `AGENTS.md says ${s.word} open; the list beside it names ${s.open.length} (${s.open.join(", ")})` };
     const corpus = trackedMd().filter((f) => f !== "AGENTS.md");
     const orphan = s.open.filter((l) => !corpus.some((f) => read(f).includes(l)));
     return orphan.length
@@ -236,27 +193,6 @@ const CHECKS = [
       : { ok: true, label: "AGENTS.md open rulings", detail: `${s.open.length} open, none also closed, each defined somewhere in the corpus` };
   },
 
-  function situationCount() {
-    // README.md's front-door sentence states two numbers over one directory,
-    // and the split between them is the whole point: the primes are marketplace
-    // install probes, not end-to-end situations. Counting every Situation-*
-    // directory would make the correct sentence fail, so the check counts the
-    // way the sentence itself divides them.
-    const src = read("README.md");
-    const core = src.match(/([A-Za-z-]+) end-to-end situations in/);
-    const probe = src.match(/plus ([a-z-]+) marketplace install probes?/);
-    if (!core || !probe) return { ok: false, label: "README situation count", detail: "README.md no longer states its situation counts in a parseable form" };
-    const dirs = fs
-      .readdirSync(path.join(ROOT, "user-stories/Situations"), { withFileTypes: true })
-      .filter((d) => d.isDirectory() && d.name.startsWith("Situation-"))
-      .map((d) => d.name);
-    const primes = dirs.filter((d) => d.endsWith("-prime"));
-    const actual = dirs.length - primes.length;
-    if (num(core[1]) !== actual) return { ok: false, label: "README situation count", detail: `README claims ${core[1]} end-to-end situations; user-stories/Situations/ holds ${actual} non-prime director(ies)` };
-    return num(probe[1]) === primes.length
-      ? { ok: true, label: "README situation count", detail: `${actual} situations and ${primes.length} install probes, as claimed` }
-      : { ok: false, label: "README situation count", detail: `README claims ${probe[1]} install probes; ${primes.length} prime director(ies) exist` };
-  },
 
   function shapeFileSet() {
     // AGENTS.md prints the package shape as law and package-shape.mjs enforces
@@ -294,27 +230,13 @@ if (process.argv.includes("--selfcheck")) {
   assert.strictEqual(num("twenty-twenty"), undefined, "a malformed compound is not a number");
   assert.strictEqual(num("three-four"), undefined, "the first half must be a tens word");
 
-  assert.deepStrictEqual(scripts("`a.mjs`, `b.mjs` and `a.mjs`"), ["a.mjs", "b.mjs"], "names dedupe");
-  assert.deepStrictEqual(scripts("no scripts here"), []);
-
-  const hosts = (src) => [...src.match(/const DECLARED_HOSTS = \[([\s\S]*?)\n\]/)[1].matchAll(/"[^"]+"/g)].length;
-  assert.strictEqual(hosts('const DECLARED_HOSTS = [\n  "a.io", // c\n  "b.dev",\n];'.replace("];", "]\n];")), 2);
-
-  const defs = (src) => src.split("\n").filter((l) => /^\s*-\s*\*\*[A-Z]\d+\b/.test(l)).length;
-  assert.strictEqual(defs("- **R1 [x]** y\n- **R2 [x]** y\nprose\n- not a def"), 2);
-  assert.strictEqual(defs("**R1** in prose, not a list item"), 0, "prose mentions are not definitions");
-
-  // --- openRulings, with its three negatives ---
-  const live = "Three open — OR-28, OR-29, OR-42 (OR-39, OR-40, OR-41 closed) — each fully defined";
+  // --- openRulings, with its two negatives ---
+  const live = "Open: OR-28, OR-29, OR-42 (OR-39, OR-40, OR-41 closed) — each fully defined";
   const s = orSets(live);
   assert.deepStrictEqual(s.open, ["OR-28", "OR-29", "OR-42"], "the open list parses");
   assert.deepStrictEqual(s.closed, ["OR-39", "OR-40", "OR-41"], "and the closed list does not bleed into it");
-  assert.strictEqual(num(s.word), s.open.length, "the live sentence agrees with itself");
-  // negative: the count word drifts from the list beside it.
-  const drifted = orSets("Four open — OR-28, OR-29, OR-42 (OR-39 closed)");
-  assert.notStrictEqual(num(drifted.word), drifted.open.length, "a count word ahead of its own list must not read as agreement");
   // negative: one label in both lists at once.
-  const overlap = orSets("Three open — OR-28, OR-29, OR-42 (OR-42, OR-40 closed)");
+  const overlap = orSets("Open: OR-28, OR-29, OR-42 (OR-42, OR-40 closed)");
   assert.deepStrictEqual(overlap.open.filter((l) => overlap.closed.includes(l)), ["OR-42"], "a label declared open AND closed is caught");
   assert.strictEqual(orSets("no such sentence here"), null, "an unparseable declaration is a failure, never a silent pass");
 
@@ -380,4 +302,4 @@ if (bad.length) {
   console.log(`\n  Recount before rewording. The number is the thing that is wrong more often than the prose.`);
   process.exit(1);
 }
-console.log(`\nCLAIM OK — ${results.length} stated counts each equal what they count`);
+console.log(`\nCLAIM OK — ${results.length} stated set(s) each equal what they name`);

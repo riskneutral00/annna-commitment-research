@@ -65,7 +65,7 @@ function scan(files, read) {
 if (process.argv.includes("--selfcheck")) {
   const cases = [
     ["the allowlist parses to a non-empty set", allowed.size > 0],
-    ["the two known callers are on it", allowed.has("engine/scripts/reactive-push-check.mjs") && allowed.has("model/spike/run-nset.mjs")],
+    ["the known caller is on it", allowed.has("engine/scripts/reactive-push-check.mjs")],
     ["a bare fetch( is a call site", CALLS.test("const r = await fetch(url)")],
     ["a node:https import is a call site", CALLS.test('import https from "node:https"')],
     ["prefetch( is not a call site", !CALLS.test("const x = prefetch(url)")],
