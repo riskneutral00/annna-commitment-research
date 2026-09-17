@@ -317,7 +317,7 @@ An outward act — messaging a third party, moving value, destroying something �
 - Text meets WCAG 2.1 AA contrast **in the engaged state**, over the worst-case region of every installed skin's photograph *(a11y A14 ranges the proof over installed, not shipped — no skin is special)*.
 - **Anything that must be read without engagement is measured at rest** — the date row, a settings-pane label, a block's micro-mark — to the same threshold, over the same worst-case region.
 - Every surface is engageable by keyboard as well as pointer, so the readable state is reachable without a mouse.
-- A skin failing any of the three does not ship — **and a marketplace skin failing either of the first two does not install** *(the third is a property of the app, not of a pack — no door can test it)*: the install door runs the same derived-token floors it runs for schema fields (`app/DESIGN.md §Appearance`; a11y A12), because a bought skin arrives after any build and *ship* alone is unenforceable on it *(clause added 2026-08-22)*.
+- A skin failing any of the three does not ship — **and a marketplace skin failing either of the first two does not install** *(the third is a property of the app, not of a pack — no door can test it)*: the install door runs the same derived-token floors it runs for schema fields (`app/DESIGN.md §Appearance`; a11y A12), because a bought skin arrives after any build and *ship* alone is unenforceable on it.
 
 **Notes:** Already law in `app/DESIGN.md` §Accessibility baseline; restated here because it is the ceiling on how faint the muted end can be, and the aesthetic will otherwise be specified past it. **Amended 2026-08-09:** this formerly required AA in *both* states. That could not hold once the wake policy's value was the owner's — a block at rest sits at the floor with fill and ink faded by the owner's own dial, so "AA at rest" requires either a floor high enough to erase the thesis or a line no build could satisfy. The three consequences above are the honest closure; the ceiling they impose is the same one.
 
@@ -327,7 +327,7 @@ An outward act — messaging a third party, moving value, destroying something �
 
 ### 4.5 What the specs owe
 
-*The pathway from these requirements to a buildable corpus, as a map of edits to files that already exist. **No new specification file is created by any row** *(re-read 2026-08-29 — RQ-13's was the one exception: `harness/INTERFACES.md §6` had it land as its own spec-class markdown on the `deployment/egress-allowlist.md` precedent, carrying its own INDEX row and count bump, and that file was **folded** back into `harness/INTERFACES.md §7` when the harness package returned to its ruled five files; the row's law is unchanged and its home is now a section)*; the only new artifact is RQ-2's gate script. `engine/` is untouched throughout, which is the clearest evidence that this PRD adds a door rather than an authority.*
+*The pathway from these requirements to a buildable corpus, as a map of edits to files that already exist. **No new specification file is created by any row**; the only new artifact is RQ-2's gate script. `engine/` is untouched throughout, which is the clearest evidence that this PRD adds a door rather than an authority.*
 
 *Landed: RQ-1's security rows on 2026-08-08 (FD-17, FD-18); the harness rows — RQ-2 through RQ-9 and RQ-13 — on 2026-08-21, at `harness/SPEC.md §5.3`, `harness/INTERFACES.md §6`, `harness/SCENARIOS.md` X1–X7 (X7 is RQ-13's gate), `harness/BUILD.md` Step 8, and `security/SPEC.md §5`'s door list. RQ-2's mechanical gate lands with the enumeration at that Step 8, per the printed-gate posture.*
 
@@ -418,7 +418,7 @@ Stated as readiness conditions, never as schedule (FR2):
 
 - **What ships is the application** — the commitment harness and the template builder. One product. General primitives. A Situation is a person saying “this is my situation; I want to build the template that lets me do this work.” TDD is that the app can do all the situations. Developers do not ship “Matt’s teaching” or “Hug Ocean” as verticals (FR38).
 - **Proof order, not a feature cut.** After the application exists, the founder enters his real teaching (FD-68 / FD-77). Students are guest-token parties, never accounts. If that week does not fit, the app is not done. §6.4’s adoption rings stay readiness conditions (FR2).
-- **One list.** `[r1]` / `[r2]` as a ship-slice are retired. A row is not “later” because it belongs to Situation C. Share seam, min-occupancy, KindTemplate stay with the app. What remains postponed stays postponed **at its own home**: FR1 referral; recorded provider hard points; held-out E; closed-service money (OR-29); unruled `held` deposit (and OR-42 — a different question, **the second seat**, **deliberately unruled** at its own home, `security/SPEC.md §2`: decider the founder, trigger the first multi-admin account, and until he answers every write on an org board rides the owner session or a token *(corrected 2026-09-13 — this parenthetical had both the ruling's subject and its disposition wrong; the home governs)*); skins-as-purchasable as already deferred; the external-client credential as §6.4 already said. The stamps on scenario rows and `deployment/scripts/release-tags.mjs` were leftover machinery — kept only so a landing that did not move code stayed green (S2); not law. **Removed 2026-08-26** by the follow-on commit.
+- **One list.** `[r1]` / `[r2]` as a ship-slice are retired. A row is not “later” because it belongs to Situation C. Share seam, min-occupancy, KindTemplate stay with the app. What remains postponed stays postponed **at its own home**: FR1 referral; recorded provider hard points; held-out E; closed-service money (OR-29); unruled `held` deposit (and OR-42 — a different question, **the second seat**, **deliberately unruled** at its own home, `security/SPEC.md §2`: decider the founder, trigger the first multi-admin account, and until he answers every write on an org board rides the owner session or a token); skins-as-purchasable as already deferred; the external-client credential as §6.4 already said. The stamps on scenario rows and `deployment/scripts/release-tags.mjs` were leftover machinery — kept only so a landing that did not move code stayed green (S2); not law. **Removed 2026-08-26** by the follow-on commit.
 - **Suite-parity** (`engine/SCENARIOS.md` Z2, `app/SCENARIOS.md` Z2) is the full harness `[MUST]` suite, including P1 and P2 — not a tagged subset.
 
 History of the cut: `RULINGS.md` FD-50 and FD-78, annotated from this ruling. RQ-14 (§2.3) is the falsifiable first-value bar for *onboarding*, not a ship slice.
@@ -503,7 +503,7 @@ Two secondary signals, admitted as hard to measure cleanly: time spent looking a
 | Intent in, agent orchestrates, clarifies rather than forms | 9 | 10 — reached when it is equally true from every client (RQ-2, RQ-4) |
 | Agent owns the workflow rather than hardcoded routes | 7 | 8 — capped by FD-16, and the cap is accepted |
 | State lives in the agent's context | 3 | **Refused.** §1.2, refusal one. Excluded from the target and argued in writing |
-| Multiple surfaces collapse into one agent layer | 4 → **6** *(re-scored 2026-08-22 per this section's protocol; what changed: FD-39 retired the islands into the console's settings pane and FD-42 made appearance and text size settable by saying them — the console absorbed every control)* | 10 — RQ-1 through RQ-5 |
+| Multiple surfaces collapse into one agent layer | 4 → **6** | 10 — RQ-1 through RQ-5 |
 | Tools are first-class citizens | 9 | 10 — RQ-2, RQ-3 |
 
 **SM-2 — Agent as consumer.** Target **9/10**.
@@ -513,7 +513,7 @@ Two secondary signals, admitted as hard to measure cleanly: time spent looking a
 | APIs before dashboards | 9 in build order, 0 in exposure | 9 — RQ-1, RQ-2 |
 | Structured outputs guaranteed | 9 | 10 — RQ-4 |
 | Tool-call ready | 9 | 10 — RQ-3 |
-| Stateless by default | 6 → **7** *(re-scored 2026-08-22; what changed: the caller-supplied write id and the resume-or-abandon pair landed as spec — `harness/INTERFACES.md §1.2`, `harness/SCENARIOS.md` X3/X4)* | 9 — RQ-5, RQ-6 |
+| Stateless by default | 6 → **7** | 9 — RQ-5, RQ-6 |
 
 **SM-3 — Parity coverage.** The proportion of enumerated owner capabilities reachable by an external client under the same floor. Validates RQ-2. Target: complete, and mechanically checked rather than asserted.
 

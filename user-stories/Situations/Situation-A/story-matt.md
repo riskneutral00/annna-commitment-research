@@ -1177,4 +1177,4 @@ The park cleared because I cleared it. The night spent what its budget allows an
 
 ---
 
-**Review by scene number.** [Cases](story-matt-verification.md#cases) · [CRUD coverage](story-matt-verification.md#crud) · [Harness cues](story-matt-verification.md#harness-cues) · [Review dispositions](story-matt-verification.md#review-dispositions) · [October ledger](story-matt-verification.md#october-ledger) · [LEGAL-01](story-matt-verification.md#legal-01). These are specification obligations; implementation and legal validation remain owed.
+**Review by scene number.** [Cases](story-matt-verification.md#cases) · [CRUD coverage](story-matt-verification.md#crud) · [Harness cues](story-matt-verification.md#harness-cues) · [October ledger](story-matt-verification.md#october-ledger) · [LEGAL-01](story-matt-verification.md#legal-01). These are specification obligations; implementation and legal validation remain owed.

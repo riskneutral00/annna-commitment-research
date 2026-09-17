@@ -21,7 +21,7 @@ Calendar import is manual, at the owner's request, with no write-back. V1 exclud
 
 1. [Matt schedules English lessons](user-stories/Situations/Situation-A/story-matt.md) — the detailed first-use story, from personal commitments to template authoring and student booking. It is scripted end-state behavior; the [verification companion](user-stories/Situations/Situation-A/story-matt-verification.md#layer-debt) records the contracts and tests still owed.
 2. [Product requirements](PRD.md) — the general capabilities the stories test.
-3. [INDEX.md](INDEX.md) lists the **99 markdown files** tracked in this repository and their authority tiers.
+3. [INDEX.md](INDEX.md) lists every markdown file tracked in this repository with its authority tier.
 
 Agents start with [AGENTS.md](AGENTS.md), then INDEX.md. Builders start with [harness/BUILD.md](harness/BUILD.md), against stubs, following the existing [build dependencies](deployment/SPEC.md).
 
@@ -37,7 +37,7 @@ The established proof script follows one busy week at a small Phuket dive center
 
 Read [the clean run](user-stories/Situations/Situation-C/situation-1.md), [current reality](user-stories/Situations/Situation-C/situation-2.md) and [the middle case](user-stories/Situations/Situation-C/situation-5.md). These are authored accounts, not results from a running app.
 
-Four end-to-end situations in [user-stories](user-stories/README.md), plus one marketplace install probe, test the general commitment model.
+The situations in [user-stories](user-stories/README.md) test the general commitment model.
 
 ## Architecture
 

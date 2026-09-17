@@ -11,7 +11,7 @@
 | File | What it is |
 |---|---|
 | [`story-matt.md`](story-matt.md) | Matt's own first-person telling, September to November 2026: invite onboarding, his life on the board, the English template, four students, the edges, the money and the months (immersive; the console gold reference) |
-| [`story-matt-verification.md`](story-matt-verification.md#layer-debt) | the derived companion: layer debt, the scene trace, 109 cases (12 retired), 26 CRUD families (two retired), 42 harness cues, LEGAL-01, review dispositions, the quote matrix and the October and November ledger (parked 2026-09-15) |
+| [`story-matt-verification.md`](story-matt-verification.md#layer-debt) | the derived companion: layer debt, the scene trace, 109 cases (12 retired), 26 CRUD families (two retired), 42 harness cues, LEGAL-01, the quote matrix and the October and November ledger (parked 2026-09-15) |
 
 Neither file claims implemented capability or legal clearance. The companion names what each layer still owes; `../../README.md` item 5 states the census and what a trace does and does not prove.
 
@@ -110,7 +110,7 @@ Scene IDs are frozen. The six group scenes FD-106 retired (S08b, S13c, S13d, S13
 | A cancelled paid lesson becoming a credit that rides onto a rebooking | Debra, [`../Situation-D/situation-5.md`](../Situation-D/situation-5.md) |
 | A half-built draft abandoned harmlessly | Debra, [`../Situation-D/situation-5.md`](../Situation-D/situation-5.md) |
 
-**Superseded, not moved (FD-106 (vii)).** The retired correction run's *"shrink the window, the booking inside it stands"* is gone. [S13](story-matt.md#s13)'s actual-conflict blocker replaced it: a rule change that a live booking contradicts is blocked until the booking is resolved (ST1-R02; `../../../engine/SPEC.md` §Affected-commitment compatibility).
+**Superseded, not moved (FD-106 (vii)).** The retired correction run's *"shrink the window, the booking inside it stands"* is gone. [S13](story-matt.md#s13)'s actual-conflict blocker replaced it: a rule change that a live booking contradicts is blocked until the booking is resolved (`../../../engine/SPEC.md` §Affected-commitment compatibility).
 
 ---
 

@@ -9,7 +9,6 @@
 | `SPEC` | Source of truth. Build from it. Where anything disagrees with a `SPEC`, the `SPEC` wins. |
 | `derived` | Derived from a `SPEC` or from `user-stories/`. Authoritative about its own subject, never about the law it derives from. |
 | `index` | Says where things live. Never a home itself — follow it to the home and read that. |
-| `history` | Records how the design was reached. There to *justify*, never to build from. |
 | `never` | Explicitly non-authoritative. A scratchpad. Build from the `SPEC` instead. |
 
 *What this file does not do: it does not say whether a description is still accurate. The gate checks that every file has a row, not that the row is true. If a row and its file disagree, the file wins — and fix the row.*
@@ -46,7 +45,7 @@
 | harness/BUILD.md | derived | How a fresh session turns the harness SPEC into a working tested harness, against stubs only |
 | harness/INTERFACES.md | SPEC | The contracts the harness depends on across three seams, the stubs that stand in for them, the inbound external-client surface, and — as §7 — the one home for the RQ-13 compatibility policy and the closed refusal vocabulary |
 | harness/README.md | derived | The harness package's read order — the first thing a builder opens |
-| harness/SCENARIOS.md | derived | The harness acceptance suite in Given/When/Then, tagged `[MUST]` and `[HELD-OUT]` |
+| harness/SCENARIOS.md | derived | The harness acceptance suite in Given/When/Then, tagged `[MUST]` |
 | harness/SPEC.md | SPEC | The harness layer's law: the loop, the tool contract, elicitation, the clarify/permission floor, the assisted off-app path, the external-client surface; §10 carries the harness's open items |
 | marketplace/BUILD.md | derived | That the marketplace builds last, after all four layers, and what must be green first |
 | marketplace/INTERFACES.md | derived | The marketplace's four seams, under the constraint of zero new seam verbs |
@@ -58,7 +57,6 @@
 | model/INTERFACES.md | derived | The model's two seams — harness above, providers below — neither side trusted |
 | model/README.md | derived | The model package's purpose: contract-and-exam level, consumed only by the harness |
 | model/SPEC.md | SPEC | What any candidate model must satisfy, the BYO confinement, and that `summarize` is app-supplied always |
-| model/spike/README.md | derived | What `run-nset.mjs` measures, and that it is one number rather than a qualification |
 | security/BUILD.md | derived | Security's ordered steps, each naming its scenario gate and the foreign build step it rides |
 | security/INTERFACES.md | derived | Who owns each security control, under the constraint of zero new seam verbs |
 | security/README.md | derived | The security package's read order, doubling as the external posture statement |

@@ -9,7 +9,6 @@
 | Path | What it calls, and why it is allowed |
 |---|---|
 | `engine/scripts/reactive-push-check.mjs` | Subscribes to a live Convex deployment to prove the reactive-push criterion (`../engine/BUILD.md` Step 0, I4). It is a **process gate, not product code** — it never ships, and it is the one check that cannot be proven in memory (`SPEC.md §8` DR-6). |
-| `model/spike/run-nset.mjs` | Calls OpenRouter and **spends money on every execution** (FD-5; `SPEC.md §8` DR-7). Deliberately unrun, kept out-of-band from the wave order, and never on a product path. |
 
 ## Reserved — rows that land with a named build step
 
