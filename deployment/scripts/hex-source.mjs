@@ -107,7 +107,10 @@ const palettes = fs
   .map((d) => JSON.parse(fs.readFileSync(path.join(ROOT, "assets/packs", d.name, "palette.json"), "utf8")));
 
 const pipeline = path.join(ROOT, "assets/make-pack.mjs");
-const sourced = known(palettes, fs.existsSync(pipeline) ? fs.readFileSync(pipeline, "utf8") : "");
+// FD-110 (2026-09-17): the design scheme's tokens are a colour source too, so a
+// brand palette lands past this gate. Read only when the reserved file exists.
+const tokens = path.join(ROOT, "app/tokens.json");
+const sourced = known(palettes, [pipeline, tokens].filter((p) => fs.existsSync(p)).map((p) => fs.readFileSync(p, "utf8")).join("\n"));
 
 const tracked = execFileSync("git", ["ls-files", "-z", "*.md"], { encoding: "utf8", maxBuffer: 1 << 28 })
   .split("\0")
