@@ -18,7 +18,7 @@
   BUILD.md       the ordered implementation plan, each step naming its gating scenarios
 ```
 
-Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (visual law) · `deployment/` is a process spec governing the build in this repo (ruled in place 2026-08-07), not a layer.
+Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (the canvas, skins and glass; the rest reserved for the design scheme, FD-110) · `deployment/` is a process spec governing the build in this repo (ruled in place 2026-08-07), not a layer.
 
 ## Citation conventions that will otherwise trip you
 

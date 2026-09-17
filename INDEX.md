@@ -18,13 +18,14 @@
 | File | Tier | What it decides |
 |---|---|---|
 | AGENTS.md | SPEC | The operating law for agents: authority order, package shape, citation conventions, ruling vocabularies. The first read of every session |
+| BRAND.md | SPEC | Reserved home for the identity, vision, voice and marks the design and product scheme will supply; owed, decided nowhere else (FD-110) |
 | INDEX.md | index | This file — every tracked markdown file and its authority tier |
 | PRD.md | SPEC | Agent-first, capability parity, peace requirement; §6.5 is the home of what ships (FD-80) |
 | README.md | derived | The repo's front page: what annnä is, the one-week-run-twice proof, the layer map, current build state |
 | RULINGS.md | index | The FR and FD ruling registry — what each ruling decided and which file holds it. Never a home itself |
 | TDD.md | derived | The testing strategy: the five kinds of test, the four laws, which kind each layer's criteria become, and the swap sequence integration is proven by rather than by a new suite |
 | app/BUILD.md | derived | The app's ordered build steps, each gated by its scenarios and the design-law checklist; ends at the stub-swap |
-| app/DESIGN.md | SPEC | The visual and interaction law for every app surface. Ruled here, not carried — the prior build was released as law 2026-08-09 (FD-20) |
+| app/DESIGN.md | SPEC | What survives of the visual law — the photograph as canvas, the skin model, the glass — and six sections reserved for the design scheme (FD-110) |
 | app/INTERFACES.md | derived | The app's two seams: upward to the harness contract, downward to its substrates |
 | app/README.md | derived | The app package's purpose and read order |
 | app/SCENARIOS.md | derived | The app's deterministic acceptance suite — payloads, mappings, wire contents, state transitions |

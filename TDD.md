@@ -55,7 +55,7 @@ Many fast engine unit/property tests at the bottom · the full harness behaviora
 1. **Tests first.** Every layer's `BUILD.md` step already names its gating scenarios. The build discipline is: turn that step's scenarios into failing executable tests, **then** implement until green. Never the reverse; never delete a red test to pass a step.
 2. **The swap is the exam.** A layer is done only when the real thing replaces its stub and every suite that ran against the stub runs green **unchanged** (§Integration).
 3. **HELD-OUT stays held out.** No scenario currently carries `[HELD-OUT]` (harness J1–J4 retired with Situation E, FD-109). If one is ever written again, it is run and its result **recorded** — the design is never patched to make it pass. It measures generality; it does not gate it.
-4. **Visual law is a checklist, not a test.** The app's design law (`app/DESIGN.md`) gates build steps by human review — pixels are judged, not asserted (§App).
+4. **Visual law is a checklist, not a test.** What survives of the app's design law (`app/DESIGN.md` — the canvas, the skins, the glass) gates build steps by human review — pixels are judged, not asserted (§App). The rest is reserved for the design scheme (FD-110) and gates nothing until it lands.
 
 ## Read order
 
@@ -127,7 +127,7 @@ Same inputs → same run, every time. L2 pins this as a criterion: the same trig
 
 ## App — component/wire tests, plus a few e2e
 
-*Criteria: [`app/SCENARIOS.md`](app/SCENARIOS.md) (every item MUST). Visual law: [`app/DESIGN.md`](app/DESIGN.md). Build order: [`app/BUILD.md`](app/BUILD.md).*
+*Criteria: [`app/SCENARIOS.md`](app/SCENARIOS.md) (every item MUST). Visual law: [`app/DESIGN.md`](app/DESIGN.md), three sections kept and six reserved (FD-110). Build order: [`app/BUILD.md`](app/BUILD.md).*
 
 The app renders and transports; it decides nothing. So its tests check **structure and wiring** — what was rendered from a payload, what went over the wire, what fired into the seam — and only a handful drive a real browser.
 
@@ -139,7 +139,7 @@ The app renders and transports; it decides nothing. So its tests check **structu
 
 ### What is deliberately NOT automated in the app
 
-**Design law is a human checklist, not a test suite.** `app/DESIGN.md` gates the app's visual BUILD steps by review — Step 0's mechanics, Steps 1–3's surfaces, Step 5's guest page and Step 7's views, per `app/BUILD.md`'s design-law coverage table, whose assignment governs *(widened 2026-08-21 — this sentence said "steps 1–3" while the table it defers to assigns sections to Steps 0, 5 and 7 as well)* — breathing glass, board laws, island placement, motion restraint are *judged*, because pixel-diff tests rot and pass/fail can't grade "calm." Two narrow exceptions worth automating because DESIGN.md states them structurally: the **closed material inventory** (any class carrying `backdrop-filter` outside the named list = build error) and the **Route B selector-liveness check** (a components-map key that matches nothing = failure).
+**Design law is a human checklist, not a test suite.** `app/DESIGN.md` gates the app's visual BUILD steps by review, per `app/BUILD.md`'s design-law coverage table — the canvas, the skins and the glass are *judged*, because pixel-diff tests rot and pass/fail can't grade "calm." Everything else is reserved for the design scheme (FD-110) and Steps 1–3 and 5 carry a precondition on it. One narrow exception worth automating because `DESIGN.md` states it structurally: the **closed material inventory** (any class carrying `backdrop-filter` outside the named list = build error).
 
 Zero-model-call is asserted by **instrumentation, not review** (U3): the render path has no model client to call.
 

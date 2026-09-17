@@ -35,7 +35,7 @@ Four obligations before it lands: the `INDEX.md` row goes in `git ls-files` orde
 
 ## 1. Vision
 
-**annnä is an agent-first commitment harness. Its purpose is peace of mind.**
+**annnä is an agent-first commitment harness. Its purpose is peace of mind.** *(The identity and vision that frame this definition are reserved for `BRAND.md` (FD-110); this section states the product, not the brand.)*
 
 A schedule is two burdens carried at once. The first is coordination — the calls, the chasing, the confirming, the rewriting of a manifest for the third time. The second is the load of holding all of it in your head, because nowhere else can be trusted to hold it. annnä takes the first so the second can leave. The order is honest: first the labor leaves, then the load.
 
@@ -67,7 +67,7 @@ When agents become first-class callers, that envelope stops being an internal la
 
 ### 1.4 The third mechanism of peace
 
-annnä engineers peace in three steps — it takes the work, it takes the worry, and it quiets the looking *(the third stated here first, 2026-08-08; the identity file that later carried it retired 2026-09-17, FD-108, and this section is the home)*. The first two are automation; the third is a requirement on the surface itself: **what the owner looks at must not itself be a burden.** A board holding a complete life is, by construction, a board holding a great deal, and the completeness bet and the peace promise pull against each other in exactly that moment. The mechanism is the block **wake policy** (§3, §4), and it is the answer to a tension the corpus otherwise leaves open.
+annnä engineers peace in three steps — it takes the work, it takes the worry, and it quiets the looking. The first two are automation; the third is a requirement on the surface itself: **what the owner looks at must not itself be a burden.** A board holding a complete life is, by construction, a board holding a great deal, and the completeness bet and the peace promise pull against each other in exactly that moment. **The mechanism is owed** *(2026-09-17, FD-110 — the wake policy that answered it was a visual ruling and retired with the visual law)*: the requirement stands as RQ-10, and the design scheme supplies the next answer.
 
 
 ### 1.5 The end-state (founder-ruled 2026-08-22, FD-71 — internal direction; no outward surface carries it until its scenarios exist)
@@ -141,7 +141,7 @@ Two journeys were new with this document and had no story. One still doesn't (UJ
 - It carries no session. Two identical calls in different orders, with the same store, return the same answers.
 - **The refusal, and it is the beat that matters:** an outward act — messaging a third party, moving value, destroying something — is refused for the owner's own agent exactly as it is refused for the owner's own console, and the owner learns of the refusal in the console rather than only in the caller's response. Permission is never inferred from the fact that the caller is trusted.
 
-**UJ-CALM — the owner's full board does not read as a wall.** Matt, months in, opens a genuinely busy day; commitments near now are legible and the rest recede, without anything being hidden or any judgment being applied. *(Formerly `[ASSUMPTION]`, discharged 2026-08-22 — the mechanism is ruled and specified in tracked law (`app/DESIGN.md` §Board rendering, FD-22; asserted at `app/SCENARIOS.md` C9), so the assumption's reason — that narrating would fix an unmade design — no longer holds; see §12.)*
+**UJ-CALM — the owner's full board does not read as a wall.** Matt, months in, opens a genuinely busy day; commitments near now are legible and the rest recede, without anything being hidden or any judgment being applied. *(Formerly `[ASSUMPTION]`, discharged 2026-08-22 — the mechanism is ruled and specified in tracked law (FD-22 and the app suite's C9, both retired 2026-09-17 under FD-110), so the assumption's reason — that narrating would fix an unmade design — no longer holds; see §12.)*
 
 ## 3. Glossary
 
@@ -155,8 +155,8 @@ Two journeys were new with this document and had no story. One still doesn't (UJ
 - **Commitment harness** — annnä itself, named for the governed envelope around the agent: what it may do, what it may not, and on whose explicit basis. The envelope is the product surface once agents are callers. Distinct from — and named after — the `harness/` layer, which is where the envelope is specified.
 - **External client** — any caller of the harness tool contract that is not the app. In v1 this is the owner's own agent and nothing else (§1.2).
 - **Capability parity** — the property that for every capability the app exposes to an owner, a tool exists reaching the same capability, under the same permission floor, callable by an external client. The testable form of *agent as consumer*.
-- **Wake policy** *(owner-facing name: **presence** — one mechanism, two registers; the alias is declared at the mechanism's home)* — the rule governing which blocks render at full legibility at rest. **Ruled 2026-08-09 (FD-22), closing §11 Q1.** It is a mechanism in four parts, all four the owner's: a **value** (0–100, default **80**, fading fill and ink only — spine, urgency edge, border and micro-mark keep full strength), a **scope** (one entry from a closed four-shape menu, evaluated over a block's own stored data, deciding who rests lit — FD-70 cut the original open predicate to this menu 2026-08-22; it may return as a strict superset), a per-commitment **keep-awake** mark, and a **keep-awake toggle**. Attention is senior to all four. Home: `app/DESIGN.md` §Board rendering, *The wake policy*. *(The former `[ASSUMPTION]` on this entry is discharged: the slot is not parameterized as a single value, and the document it depended on has been released as law.)*
-- **Peace** — the product's purpose: annnä exists to bring peace — not productivity, not scale, not output *(the purpose statement's home since 2026-09-17, FD-108)*. In this PRD it is a requirement with three mechanisms: annnä takes the coordination work, holds the record so the owner's head need not, and governs what the owner is asked to look at.
+- **Wake policy** — *retired 2026-09-17 (FD-110)*: the rest-and-wake mechanism that answered RQ-10 was a visual ruling and left with the visual law; the term survives in struck rulings only.
+- **Peace** — the product's purpose, whose statement is reserved for `BRAND.md` (FD-110). In this PRD it is a requirement with three mechanisms: annnä takes the coordination work, holds the record so the owner's head need not, and governs what the owner is asked to look at.
 
 **Terms with homes elsewhere** — used verbatim, defined once, cited here:
 
@@ -166,7 +166,7 @@ Two journeys were new with this document and had no story. One still doesn't (UJ
 - **ShareGrant** — the engine-minted object by which a commitment or board reaches another person or link token; `{holder, rung, scope, edit_mode}`, three rungs, availability by default (FR30). Home: `engine/SPEC.md §7.1`.
 - **Grant** *(the authorization Grant — a different object, same bare word)* — a standing authorization from the owner that satisfies the permission floor without a fresh confirmation; `{action_class, scope, expiry, revocable}`, and what an auto-accept is recorded as (FR6, FR28). Minting or widening one is an `authorization`-class act, console-only (FD-24), with FD-32's `ShareGrant` carve on the stored-accept path. Home: `harness/SPEC.md §7`; stored shape at `engine/SPEC.md §1.6`. **The two are deliberately separate and must not be merged** — a ShareGrant governs *who may see or edit*, an authorization Grant governs *which action class the floor permits*; `engine/SPEC.md §7.1` exists in part to keep them apart.
 - **Permission floor** *(also: the reversibility floor)* — the rule that nothing crossing into the real world happens without an explicit basis from the owner. Home: `harness/SPEC.md`.
-- **Board** — the owner's surface; **default mode: no time axis** (a second mode is a traditional hour-grid, FD-81 — `app/DESIGN.md` §Board rendering), two gravities (events pack to the top, tasks flush to the bottom edge), time is block data. Home: `app/SPEC.md`, visual law `app/DESIGN.md`.
+- **Board** — the owner's surface: every placed commitment on a displayed day, nothing hidden, time and availability never computed by the app. Home: `app/SPEC.md §2`; how it is drawn is reserved for the design scheme (`app/DESIGN.md`, FD-110).
 - **Console** — the conversational surface where the owner talks to their agent and confirms proposals. Home: `app/SPEC.md`.
 - **Situation** — an end-to-end falsification probe in `user-stories/`, never a design target. Home: `user-stories/README.md`.
 - **Template** — the transferable shape of how someone runs bookable time; never anyone's data. Home: `marketplace/SPEC.md`.
@@ -290,36 +290,18 @@ An outward act — messaging a third party, moving value, destroying something �
 
 **Description:** The board holds a complete life, and completeness is the product's central bet. The same completeness is what makes a board heavy to look at. This feature is the third mechanism of peace (§1.4): governing legibility, without hiding anything and without applying judgment. Realizes **UJ-CALM**.
 
-*The UI/UX session named in §11 Q1 **ran on 2026-08-09** and ruled the mechanism (FD-22); the run resumed and closed 2026-08-21/22 (FD-38–FD-43), and §4.3 is stated against that close. §4.3 survived it: the requirement was right and only its first consequence was a placeholder. The `[ASSUMPTION]` that this subsection was written to be cut is discharged — it was written to be **satisfied**, and it was. Mechanism home: `app/DESIGN.md` §Board rendering, *The wake policy*.*
+*Re-cut 2026-09-17 (FD-110). The mechanism this subsection carried — the wake policy, ruled 2026-08-09 and elaborated through FD-70 — retired with the visual law. The requirement survives without its mechanism; the design scheme supplies the next one. RQ-11 and RQ-12 retired with the mechanism; their numbers are never reused.*
 
 #### RQ-10: Legibility at rest is governed, and nothing is hidden
 
 **Consequences (testable):**
-- The wake policy exists in all four parts — a value, a scope, a per-commitment `keep-awake` mark, and a toggle over the holding — and the value defaults to **80**, not to a state where nothing rests legible.
-- **Exactly one scope is active at a time**, carrying exactly one value; setting a new one replaces the old, and no precedence rule is reachable.
-- Every commitment on a displayed day is present on the board; none is removed, collapsed away, or withheld. **The value fades fill and ink only** — a block's spine, urgency edge, border and micro-mark are at full strength at every setting, including 0.
-- No agent judgment selects what is legible. The rule is mechanical and its inputs are the block's own stored data.
-- **Every part is display state.** Setting any of the four writes app settings and never becomes engine truth; no engine value, placement or handle changes, and no part of it is engine-readable. *(The former "emits no seam call" absolute is amended: FD-42's `display.settings` write class rides the ordinary seam into the app-owned store — `app/SPEC.md §7`; **the mechanism half is ratified as `display_settings(diff)` — FD-66, 2026-08-22** — recorded here 2026-08-31 so this restatement stops calling ratified law drafted.)*
+- Every commitment on a displayed day is present on the board; none is removed, collapsed away, or withheld by any legibility mechanism.
+- No agent judgment selects what is legible. Whatever mechanism the design scheme supplies is mechanical over the block's own stored data, with zero model calls on the render path.
+- Every part of that mechanism is display state (`app/SPEC.md §7`): it writes app settings and never becomes engine truth; no engine value, placement or handle changes.
+- Attention reveals: engaging a block — hover, focus, tap — always makes it fully legible, whatever its rest state.
+- Text a person must read meets WCAG 2.1 AA over every installed skin (`app/SPEC.md §11`).
 
-**Notes:** *the placeholder is gone.* The first consequence formerly read *"the wake policy takes a value other than `none`"* and passed with any value including a bad one; it was named as a placeholder when written and is replaced now that §11 Q1 is closed. What still has **no** test is the requirement itself — that a full board does not read as a wall. That is a judgment, it belongs on the design-law checklist (`../TDD.md`), and no green check above should be read as satisfying it.
-
-#### RQ-11: Attention is senior to the rule
-
-**Consequences (testable):**
-- Engaging any block — hover, focus, or explicit engagement — wakes it, whatever the scope says about it. **Out of scope rests at the floor and reveals on attention to `max(value, floor)`** — the floor being the named `presence-floor` token (a11y A3), so `0` is a fill stop, never a legibility stop; in scope rests at the value. Attention never produces a *third* appearance.
-- Engagement remains governed by attention alone; this requirement changes what a block looks like at rest, never what triggers a reaction (`app/DESIGN.md` §Glass).
-- **Engaging adds material, never removes it.** A surface is more frosted engaged than at rest, at every setting.
-- **A `keep-awake` block ignores the scope but not attention** — it rests at the value and still reacts.
-
-#### RQ-12: The muted state is measured, not eyeballed
-
-**Consequences (testable):**
-- Text meets WCAG 2.1 AA contrast **in the engaged state**, over the worst-case region of every installed skin's photograph *(a11y A14 ranges the proof over installed, not shipped — no skin is special)*.
-- **Anything that must be read without engagement is measured at rest** — the date row, a settings-pane label, a block's micro-mark — to the same threshold, over the same worst-case region.
-- Every surface is engageable by keyboard as well as pointer, so the readable state is reachable without a mouse.
-- A skin failing any of the three does not ship — **and a marketplace skin failing either of the first two does not install** *(the third is a property of the app, not of a pack — no door can test it)*: the install door runs the same derived-token floors it runs for schema fields (`app/DESIGN.md §Appearance`; a11y A12), because a bought skin arrives after any build and *ship* alone is unenforceable on it.
-
-**Notes:** Already law in `app/DESIGN.md` §Accessibility baseline; restated here because it is the ceiling on how faint the muted end can be, and the aesthetic will otherwise be specified past it. **Amended 2026-08-09:** this formerly required AA in *both* states. That could not hold once the wake policy's value was the owner's — a block at rest sits at the floor with fill and ink faded by the owner's own dial, so "AA at rest" requires either a floor high enough to erase the thesis or a line no build could satisfy. The three consequences above are the honest closure; the ceiling they impose is the same one.
+**Notes:** the judgment half — that a full board does not read as a wall — belongs on the design-law checklist (`../TDD.md`) and no green check satisfies it. Matt's S21 full Thursday is the probe.
 
 ### 4.4 Agent as interface
 
@@ -341,7 +323,7 @@ An outward act — messaging a third party, moving value, destroying something �
 | RQ-6 | `harness/SPEC.md` + `harness/SCENARIOS.md` — resume-or-abandon. Closes the harness backlog's open item rather than adding one |
 | RQ-7 | `harness/SPEC.md` — the floor binds every client identically; `harness/SCENARIOS.md` gains the refusal |
 | RQ-8 | `security/SPEC.md` §5 — the surface is a door that stamps `import`, and a client-asserted tag is ignored. `harness/INTERFACES.md` — the quarantine applies to free text, not structured parameters |
-| RQ-10–12 | `app/DESIGN.md`, `app/SPEC.md` §2, `app/SCENARIOS.md` — **landed**: the mechanism ruled 2026-08-09 (FD-22, §Board rendering), the wake scenarios `app/SCENARIOS.md` C9/C10 added 2026-08-21 (C10 re-cut 2026-08-22 twice — to the settings pane after FD-39, then to the closed scope menu at FD-70; C9's fixture re-cut with it), and RQ-12's install-door clause landed 2026-08-22 |
+| RQ-10 | `app/SPEC.md` §2 and §11, `app/DESIGN.md` (reserved) — the requirement stands; its mechanism is owed from the design scheme (FD-110) |
 | RQ-13 | `harness/INTERFACES.md` — the compatibility policy, since it is a property of the seam |
 | The claim itself | `README.md` — annnä is an agent-first commitment harness, and the founder's *"APIs before dashboards"* is already true of the build order with no file saying so. `AGENTS.md` — the `RQ-##` series line and the doc count. `INDEX.md` — this document's row. The identity and repo-facade files that also carried it retired 2026-09-17 (FD-108) |
 
@@ -361,8 +343,6 @@ An outward act — messaging a third party, moving value, destroying something �
 | RQ-8 | owed — instruction-shaped text arriving through a credentialed call, quarantined, with structured parameters passing |
 | RQ-9 | owed — the enumeration of record read as the answer to "what can my agent reach" |
 | RQ-10 | Situation-A, Matt's S21 full Thursday — a genuinely dense board read at rest under his own dial, nothing hidden (probe landed 2026-08-22, re-homed to S21 under FD-106; scripted register, marked in-file) |
-| RQ-11 | Situation-A, Matt's S21 — Kai's booking lands as a changed block at rest inside the set wake scope, woken by the owner's own tap, never on its own (same scripted probe, re-homed under FD-106; reworded 2026-08-22 to FD-70's owner-initiated menu — the prior "arrives to attention" asserted a system-initiated wake no mechanism provides) |
-| RQ-12 | owed — a skin that fails the rest-state measurement refused at the door |
 | RQ-13 | owed — a breaking change held at the policy while a credential is outstanding |
 | RQ-14 | Situation-A — set down once, by talking: empty account to a kept board and a pasteable live link in one sitting, no second party (`story-matt.md` S02–S10, re-homed under FD-106). **Net of the Generate Link paste path and the import pull** *(2026-08-31)*: the one-sitting state uses neither, so their named gaps subtract nothing from this claim |
 
@@ -395,7 +375,7 @@ What annnä is not, and will not become. These prevent the "let me also add this
 ### 6.2 What this PRD adds to v1
 
 - **The external client surface** — RQ-1 through RQ-9, plus RQ-13. Specified in v1; exercised when a beta cohort exists.
-- **Governed legibility** — RQ-10 through RQ-12, ruled (FD-22) and landed; the judgment half stays on the design-law checklist per RQ-10's note.
+- **Governed legibility** — RQ-10; the mechanism is owed from the design scheme (FD-110) and the judgment half stays on the design-law checklist per RQ-10's note.
 - **The agent-first claim itself**, which **landed 2026-08-08** on `README.md` (and on two outward files since retired, FD-108). It ships as *specification*, not as exercise: the surface says the external client is specified and opens when a cohort exists, and it sits under the repo's design-specification-not-an-app banner. **SM-C4 binds everything said past that line** — no surface may describe the surface as working until RQ-1 through RQ-9 have green scenarios.
 
 ### 6.3 Out of scope
@@ -454,7 +434,7 @@ The corpus has strong versioning discipline in two places: kind schemas are pinn
 | Determinism and the model's confinement | FD-16; `engine/SPEC.md`, `model/SPEC.md` | Nothing. The external client is another caller of the same floor, not a new authority |
 | Reliability of the model layer | `model/EVALS.md` | The exam grades capability and — since the P-set landed 2026-08-21 — reliability under repetition (`pass^k` over engine state); the P-set first becomes runnable at built-harness Step 3, a build condition rather than an open question |
 | Build discipline, environments, what may land on main | `deployment/SPEC.md` | The inbound-enumeration law landed (RQ-9, `harness/INTERFACES.md §6`); the concrete list is produced at harness BUILD Step 8, mirroring the outbound allowlist |
-| Accessibility — WCAG 2.1 AA on both audiences | `app/DESIGN.md` | RQ-12 makes it the measured ceiling on §4.3's aesthetic |
+| Accessibility — WCAG 2.1 AA on both audiences | `app/SPEC.md §11` | the measured ceiling on any design scheme |
 
 **Monetization is deliberately absent.** FR18 makes commercial silence repo-wide: pricing, payment, revenue and money mechanics appear on no outward surface, and a cost question gets "nothing to announce" *(the outward half's home since 2026-09-17, FD-108)*. This document stays on the product and the problem.
 
@@ -537,7 +517,7 @@ Two secondary signals, admitted as hard to measure cleanly: time spent looking a
    - **Goal-setting attached to tasks** (founder, 2026-08-23, one sentence) — `goal` is load-bearing engine vocabulary (`resolve(goal, …)`), so it needs a different word before any spec text; the candidate framing is a commitment with no counterparty; scenario-first, per §1.
    - **Personal-first native send investigation** (founder, 2026-08-23; G1-2) — research, not a build: for LINE, WhatsApp, Instagram, Messenger, WeChat, KakaoTalk, whether a third party can send *as the owner* from a personal account, the business-API fallback, cost and identity; the roster of record is `app/SPEC.md §6`.
    - **Perceived write-path latency** — an owner utterance costs at least two model round-trips plus engine calls before a confirmation appears, and no layer owns "it must be fast"; the open item is `deployment/SPEC.md §8` DR-10.
-   - **No direct-manipulation path for time in packed mode** — drag-to-move is unconstructable there by design (hour-grid allows it, FD-81); the bet that the gesture becomes rare is untested, and no scenario measures time-to-correct. Suggested, not ruled: a time-to-correct measurement in the Z3 walkthroughs.
+   - **No direct-manipulation path for time** — the board layout that made drag-to-move unconstructable retired with the visual law (FD-110); whether the design scheme's board allows the gesture, and how long a correction takes against a calendar, is still unmeasured. Suggested, not ruled: a time-to-correct measurement in the Z3 walkthroughs.
    - **Four reader questions copy could not answer** (2026-08-06 adversarial pass): what *reachable* means for a freelancer on a boat for days (timeout, fallback order, escalate-to-owner); whether a freelancer can ask or counter before accepting; whether a flagged dive medical routes to a required human conversation; how a tutor's WhatsApp threads and platform bookings (iTalki, Preply) coexist with annnä.
 
 *Agent-initiated speech is deliberately absent from this document. It is unruled, this PRD takes no position on it in either direction, and nothing here is built on the assumption that annnä does or does not speak first.*
@@ -548,6 +528,6 @@ Two secondary signals, admitted as hard to measure cleanly: time spent looking a
 
 - **§2.3** — The founder uses annnä at its own console and admits no external client until a beta cohort exists; the external surface is v1 specification, not v1 exercise.
 - ~~**§3, wake policy**~~ — **DISCHARGED 2026-08-09 (FD-22).** The assumption was that `app/DESIGN.md`'s *"Default wake policy is `none`"* named a parameterized slot that could take a proximity value, and it warned that if the reading was wrong, §1.4, §4.3 and UJ-CALM would need a **different mechanism rather than a different value**. **The reading was wrong, and the warning was right.** The mechanism is four parts rather than a slot, the prior-build document it depended on has since been released as law, and §3, §4.3 and RQ-10–RQ-12 were rewritten to the ruled mechanism rather than re-defaulted. **UJ-CALM stands** — it asked that a full board not read as a wall, and that requirement never depended on which mechanism satisfied it.
-- ~~**§2.4, UJ-CALM**~~ — **DISCHARGED 2026-08-22.** The design has now been made and lives in tracked law (`app/DESIGN.md` §Board rendering, FD-22; `app/SCENARIOS.md` C9); the assumption's reason — narrating would fix an unmade design — no longer holds.
+- ~~**§2.4, UJ-CALM**~~ — **DISCHARGED 2026-08-22.** The design has now been made and lives in tracked law (FD-22 and the app suite's C9, both retired 2026-09-17 under FD-110); the assumption's reason — narrating would fix an unmade design — no longer holds.
 - ~~**§4.3, whole subsection**~~ — **DISCHARGED 2026-08-09.** RQ-10 through RQ-12 were drafted ahead of the UI/UX session and written to be cut by it. The session ran; **none of the three was cut.** RQ-10's placeholder consequence was replaced with the ruled mechanism's, RQ-11 gained the scope/floor distinction, and RQ-12's *"AA in both states"* became AA on the engaged state plus a measured-at-rest clause. The requirement each states was correct as drafted.
 - **§2.4, UJ-AGENT** — its protagonist is the founder, because §2.3 names him the first and for some time only person who will exercise it. Written as predictions; every one carries a question mark until a client exercises it.
