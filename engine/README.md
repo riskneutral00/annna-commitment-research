@@ -17,4 +17,4 @@ Read in this order:
 
 **Deliberately NOT here:** permission decisions (the harness floor — the engine only stores and matches grants), elicitation and narration (harness/model), rendering and delivery (app), payment rails (money is tracked, never moved), any predicate language (the rule menu is closed), storage technology in the SPEC (BUILD names candidates).
 
-Design decisions locked by interview: `../.specs/deep-interview-engine.md`. Location/reshuffle requirements derive from `../user-stories/Situations/Situation-D/` (a falsification probe, generalized — never a design target). Glossary for M1/M2/M3/T2/H1/H2: `../harness/README.md`.
+Location/reshuffle requirements derive from `../user-stories/Situations/Situation-D/` (a falsification probe, generalized — never a design target). Glossary for M1/M2/M3/T2/H1/H2: `../harness/README.md`.

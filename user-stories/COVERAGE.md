@@ -21,7 +21,6 @@ The vocabulary is closed and is defined here.
 
 A family-form citation (`X-family`, the `N`/`A`/`R`/`Z` sets) claims coverage at the family's grain — the family's own rows carry the assertion — and is never shorthand for one specific row; a beat that needs a single row's assertion cites that row's ID *(qualified 2026-08-31)*. **The model column is read at item grain** *(2026-09-14)*: a model `Covered` cell names `../model/EVALS.md` items whose input and expected result carry the beat's own claim, and a set name, or a seed phrase no item carries, is `Gap (owed)` (`README.md` §The bar a story passes, item 5).
 | **Unruled** | The fixture asks the question and no ruling answers it yet. A missing ruling, never a missing scenario. |
-| **Held-out** | Situation E only. Recorded, never gated on (`README.md` §Principles that apply here). |
 | **Setup-only** | A stakeholder type with a setup file and no run of its own. See "Setup-only, no run" below. |
 
 **A citation is `Covered` evidence only if the scenario asserts the beat's own claim.** The standing caveat is `deployment/scripts/probe-coverage.mjs`'s, printed by the gate itself: *"existence is mechanical, aboutness is a reading job."* A cell can resolve and still be wrong, and no gate here catches that.
@@ -165,20 +164,6 @@ Until FD-106 this per-layer map was Situation A's elicited-blind table. Each bea
 
 ---
 
-## Situation E — the ER (held-out)
-
-**Every beat is `Held-out`: record, never gate.** The harness J-family carries the probes when its build step exists. `../engine/SCENARIOS.md P2`'s safe park may *record* a cousin of E's park; type-match admission, competitive bids and live re-solve of an active commitment are never promoted into acceptance. The reason is `README.md`'s, in its own words: *"a target you build toward can only ever confirm you built toward it."*
-
-| Beat | Status |
-|---|---|
-| Type-match before capacity | Held-out. A named limit if it fails, under `README.md`'s failed-probe rule |
-| A competitive losing bid | Held-out |
-| Re-solving an already-active commitment | Held-out |
-| A safe park with no basis and no human | Held-out — a cousin of `../harness/SCENARIOS.md D4` and `../harness/SCENARIOS.md K2` *(suite corrected 2026-08-31 — the unattended-park K2 is the harness's; engine K2 is marks-latched)*; E is never retconned into v1 |
-| Ordering over principals — who the re-solve asks first when the queue moves | Held-out *(row restored 2026-08-31, Q1-16 — the shape E exercises and this table had dropped)* |
-
----
-
 ## Setup-only, no run
 
 Six stakeholder types in Situation C, and one in Situation B, have a setup file and no run told from their own board. This column records the shape honestly rather than minting a rule that says every board-holding type gets one — that rule would be **structurally unsatisfiable while FD-68’s unelicited freelance/dive limit stands**, and a rule the corpus is required to violate is worse than a named exception, because the violation stops being visible. `README.md`'s provenance table already carries FD-68 as the standing exception, in the ruling's own row.
@@ -214,7 +199,7 @@ Each names the home that carries it. None of them is created here.
 2. **Unruled — the second seat, OR-42** (Situation C `situation-6.md`). Home `../security/SPEC.md §2`. The teaching week needs no second seat, and C's row here must not go empty because of that.
 3. **Unruled — the monthly-base start** (Situation A, the enrolled/monthly question). FDR-07's selection (2026-08-30) is the recorded deferral: what act starts a monthly base — and whether it needs a series — is an open ruling, and no start act is invented meanwhile. Home: the founder register's FDR-07 row. Matt's packages (S08, S09) are entered by the owner as standing series; that scripted entry answers no ruling, and FDR-07 stays **Unruled**.
 4. **Deferred — referral to a stranger shop (FR1)**, and other people's agents. The same legal family.
-5. **Deferred — native send.** The floor stays Generate Link and paste; the investigation is open at `../app/NOTES.md`.
+5. **Deferred — native send.** The floor stays Generate Link and paste; the investigation is recorded at `../PRD.md §11` item 4.
 6. **Deferred — non-calendar import.** `README.md` gap 4.
 7. **Deferred — the omniscient week** (FD-60, `README.md` gap 5). `../engine/SCENARIOS.md W1` is the shipped mechanism, never a defect.
 8. **Owed — RQ-12**, a skin failing the rest-state measurement. `README.md` register entry 4.
@@ -244,8 +229,6 @@ The tables above map a Situation's *major* beats. This section is the exhaustive
 | **Beats recorded as owed** | **70** *(recount 2026-08-31: −2 budget-ceiling closed by K11, +1 erasure originator)* |
 
 **A stated bound on this audit** *(the bounded-sentences arm, 2026-08-31 — Q1-17's licensed outcome)*: every count in this section is the audit's own reading tally — corrected where the recount differed, bounding the classification rather than re-deriving it; a checker can hold the cell vocabulary and the citations, never these sums. Beat-versus-emphasis is a reading judgement, and the boundary is genuinely fuzzy at the margin: a bolded configuration value (*"6-hour buffer"*) names a quantity and also implies the rule that applies it. The convention taken is that bolded names, prices, times, quantities and configuration values are emphasis, and only a claim about system behaviour is a beat. Marginal cases were called toward emphasis. What this audit establishes is that 422 beats are individually disposed and 71 debts are visible — not that the boundary is exact. The deeper bound is `probe-coverage.mjs`'s and it applies to every `Covered` cell above too: existence is mechanical, aboutness is a reading job.
-
-**Situation E is disposed `held-out` throughout**, per `README.md`'s principle and this file's E table. Five of its beats name a genuine v1 cousin — all of them the *park-don't-guess* floor, `../harness/SCENARIOS.md D4` — and each is written as *"held-out — cousin of …"* rather than as a citation, because a bare citation would read as E having been promoted into acceptance. The four shapes E was deliberately not designed to are cited to nothing at all.
 
 ### The 71 owed beats, by what each one is — 70 on the 2026-08-31 recount *(−2 budget-ceiling closed by K11, +1 erasure originator; the genuine-gap note below carries the same correction)*
 

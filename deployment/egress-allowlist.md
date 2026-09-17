@@ -2,7 +2,7 @@
 
 *The floor path named in `SPEC.md §7`. Outbound network calls in tracked code are confined to the files listed below; `scripts/egress-lint.mjs` fails the build on any other. **Adding a line here is a floor act** — a human reads it before it lands.*
 
-**Why this file is markdown.** It is spec-class, so S2 (`SCENARIOS.md`) refuses to let a widened allowlist ride in the same commit as the code that widens it. The permission lands first, alone, where it is the only thing to read. A `.json` or `.txt` allowlist would be code-class and an agent could grant itself egress and use it in one commit — which is the exact move this floor exists to catch (`NOTES.md` S4: *a prompt-injected builder needs a network path out*).
+**Why this file is markdown.** It is spec-class, so S2 (`SCENARIOS.md`) refuses to let a widened allowlist ride in the same commit as the code that widens it. The permission lands first, alone, where it is the only thing to read. A `.json` or `.txt` allowlist would be code-class and an agent could grant itself egress and use it in one commit — which is the exact move this floor exists to catch (review finding S4 of the retired `deployment/NOTES.md`: *a prompt-injected builder needs a network path out*).
 
 ## Allowed
 

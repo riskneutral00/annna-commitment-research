@@ -55,7 +55,7 @@ The concrete calculation request is the existing `calculate` taxonomy's **bound-
 - A **multi-member availability composition** is the same read, repeated: one authorized published availability ref per member, each at the rung that member granted (`SPEC.md §7.1`). There is no group-held grant to read through, **no group query member and no new parameter** — a member who granted nothing returns unknown rather than free, and a re-query after a revocation recomputes from current grants. Composing openings adds no verb and carries no consent: the proposal still travels the same offer/accept path above.
 - Pinned harness-side by `../harness/SCENARIOS.md` I1 and engine-side by `SCENARIOS.md` I1–I9, so the parity is testable rather than asserted.
 
-**Zero new seam verbs, zero harness changes.** If building ever demands a new verb here, that contradicts the lock in `../.specs/deep-interview-engine.md` — stop and flag; don't add it silently.
+**Zero new seam verbs, zero harness changes.** If building ever demands a new verb here, that contradicts the ruled seam (`../harness/INTERFACES.md §1`) — stop and flag; don't add it silently.
 
 The round-trip is **pinned on the harness side by `../harness/SCENARIOS.md` P1** (the compaction pass-through — added at engine-design time, before any build, so it is spec completion, not a harness change): direction asked per event → proposal handle narrated from its display facet → floor-gated move requests → token-attributed confirmations → `commit(proposal_ref)` → freed-window question store-routed. Z2 runs the harness suite *including P1*, which is what keeps the zero-changes claim testable rather than vacuous.
 

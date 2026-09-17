@@ -1,12 +1,11 @@
 # AGENTS.md — operating instructions for agents in this repo
 
-**This repo is a specification corpus — its source of truth is markdown.** Code now executes in a few places: `engine/` and `harness/` each carry real TypeScript and a vitest suite (both at Step 0); `engine/scripts/reactive-push-check.mjs` probes the reactive-push criterion against a live Convex deployment (normative home: `engine/BUILD.md` Step 0, I4); `assets/make-pack.mjs` builds the admin asset pack; `model/spike/run-nset.mjs` is an executable OpenRouter runner that **spends money** on every execution and is deliberately unrun (FD-5, and `deployment/SPEC.md §8` DR-7); and thirty-six process gates sit in `deployment/scripts/` — each wired to an `npm` script in `package.json`, which is executable and therefore the only copy that cannot go stale (what each is for: "The one green command"). Everything else is specification, not code: **126** tracked markdown files (`git ls-files '*.md'` — what a clone contains, and the count `README.md` states). A working checkout also carries gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent for every reader and no count of it is asserted (FD-10). Read that as a standing caveat on everything below.
+**This repo is a specification corpus — its source of truth is markdown.** Code now executes in a few places: `engine/` and `harness/` each carry real TypeScript and a vitest suite (both at Step 0); `engine/scripts/reactive-push-check.mjs` probes the reactive-push criterion against a live Convex deployment (normative home: `engine/BUILD.md` Step 0, I4); `assets/make-pack.mjs` builds the admin asset pack; `model/spike/run-nset.mjs` is an executable OpenRouter runner that **spends money** on every execution and is deliberately unrun (FD-5, and `deployment/SPEC.md §8` DR-7); and thirty-six process gates sit in `deployment/scripts/` — each wired to an `npm` script in `package.json`, which is executable and therefore the only copy that cannot go stale (what each is for: "The one green command"). Everything else is specification, not code: **99** tracked markdown files (`git ls-files '*.md'` — what a clone contains, and the count `README.md` states). A working checkout also carries gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent for every reader and no count of it is asserted (FD-10). Read that as a standing caveat on everything below.
 
 ## Authority order
 
 1. **A `SPEC` is the source of truth.** Build from it. `SPEC` is a tier `INDEX.md` grades, not a location — root files carry it too.
 2. **A `history`-tier file is not authority.** It records how the design was reached — there to *justify*, not to build from. Where one disagrees with a `SPEC`, **the SPEC wins**. `INDEX.md`'s Tier column marks them.
-3. **`NOTES.md` is never authoritative** — a backlog scratchpad of items absorbed into the spec, plus anything still open.
 
 ## Package shape
 
@@ -19,7 +18,7 @@
   BUILD.md       the ordered implementation plan, each step naming its gating scenarios
 ```
 
-Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (visual law) · `app/` and `deployment/` carry `NOTES.md` · `deployment/` is a process spec governing the build in this repo (ruled in place 2026-08-07), not a layer.
+Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (visual law) · `deployment/` is a process spec governing the build in this repo (ruled in place 2026-08-07), not a layer.
 
 ## Citation conventions that will otherwise trip you
 

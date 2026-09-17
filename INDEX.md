@@ -18,20 +18,8 @@
 
 | File | Tier | What it decides |
 |---|---|---|
-| .specs/README.md | history | What the `.specs/` interview transcripts are, and that they are neither law nor plan |
-| .specs/deep-interview-app.md | history | The interview that pinned the app's open design decisions before its spec was authored |
-| .specs/deep-interview-engine.md | history | The interview that pinned the engine's open design decisions, incl. location and travel |
 | AGENTS.md | SPEC | The operating law for agents: authority order, package shape, citation conventions, ruling vocabularies. The first read of every session |
 | INDEX.md | index | This file — every tracked markdown file and its authority tier |
-| PR/BRAND.md | SPEC | The visible identity: palette, marks, containment rules. Derives from the koi skin and `app/DESIGN.md` |
-| PR/BRIEF.md | SPEC | The investor/grant compression — mostly pointers to homes, and the corpus's only success criteria and only risk register |
-| PR/IDENTITY.md | SPEC | Who annnä is. The source every outward claim must trace to |
-| PR/LANDING.md | SPEC | The public landing page and the three states it deploys in |
-| PR/MESSAGING.md | SPEC | The reusable outward copy: taglines, pitches, channel angles, objection answers |
-| PR/NOTES.md | never | PR backlog scratchpad |
-| PR/README.md | derived | The PR package's read order and its FROZEN status |
-| PR/REPO-FACADE.md | SPEC | How the repository itself presents as the storefront: description, topics, README's job, commercial silence |
-| PR/VOICE.md | SPEC | The tone law for every outward word — "neutral like water", and the banned registers |
 | PRD.md | SPEC | Agent-first, capability parity, peace requirement; §6.5 is the home of what ships (FD-80) |
 | README.md | derived | The repo's front page: what annnä is, the one-week-run-twice proof, the layer map, current build state |
 | RULINGS.md | index | The FR and FD ruling registry — what each ruling decided and which file holds it. Never a home itself |
@@ -39,23 +27,17 @@
 | app/BUILD.md | derived | The app's ordered build steps, each gated by its scenarios and the design-law checklist; ends at the stub-swap |
 | app/DESIGN.md | SPEC | The visual and interaction law for every app surface. Ruled here, not carried — the prior build was released as law 2026-08-09 (FD-20) |
 | app/INTERFACES.md | derived | The app's two seams: upward to the harness contract, downward to its substrates |
-| app/NOTES.md | never | App backlog scratchpad — the five original ideas are absorbed and calendar import is closed; **the open set is what `npm run check:status` prints (wants first)** *(row un-pinned 2026-08-31, m-05 — the counted "five open / three wants / hour-grid open" snapshot went stale as items closed; the command, not this row, is the census)*: the captured founder wants of 2026-08-23 (the routines page, goal-setting; the hour-grid mode is fenced under FD-81) alongside the untested direct-manipulation bet and perceived write-path latency |
 | app/README.md | derived | The app package's purpose and read order |
 | app/SCENARIOS.md | derived | The app's deterministic acceptance suite — payloads, mappings, wire contents, state transitions |
 | app/SPEC.md | SPEC | The human-facing layer: what it renders, what it collects, and that it holds zero harness logic, engine math, or model calls |
 | assets/README.md | derived | The shipped skin assets, where they came from, and how the pack pipeline builds them |
-| buildpack/FINDINGS.md | history | Register of earlier conclusions about the foundation with the evidence each rested on — hypotheses to re-verify, never authority |
-| buildpack/README.md | index | The product-level entry point and location manifest for a fresh reader — points at every home, states nothing of its own |
-| buildpack/UPGRADES.md | SPEC | The procedure a later model follows to audit and upgrade the product: two-pass review, verify-or-overturn of earlier conclusions, the founder-question filter, named readiness gates |
 | deployment/BUILD.md | derived | Deployment's ordered steps, and that Steps 0–1 close before any layer's build begins |
 | deployment/INTERFACES.md | derived | Deployment's four seams, and that it owns the space *between* layers and nothing inside one |
-| deployment/NOTES.md | never | Deployment backlog scratchpad |
 | deployment/README.md | derived | The deployment package's purpose, and the per-gate roster behind `npm run check` |
 | deployment/SCENARIOS.md | derived | The process suite: what is enforced continuously by a named mechanism, and what is drilled deliberately |
 | deployment/SPEC.md | SPEC | The discipline of the build: repos, environments, the spec/code boundary, what may land on main |
 | deployment/egress-allowlist.md | SPEC | The enumeration of record for outbound network calls — a file not listed here may not make one |
 | deployment/env-manifest.md | SPEC | The enumeration of record for secrets: name, rung, owner, rotation. A variable absent here is a defect wherever it appears |
-| deployment/substrate-swap.md | derived | What the TanStack Start + Cloudflare swap changed, and the five-criterion check it still owes |
 | engine/BUILD.md | derived | The engine's ordered build steps, and that Convex is the substrate from the start |
 | engine/INTERFACES.md | derived | The engine's three seams: the harness contract above, travel and storage below, the display projection sideways |
 | engine/README.md | derived | The engine package's purpose and read order |
@@ -122,15 +104,6 @@
 | user-stories/Situations/Situation-D/situation-4.md | SPEC | The fresh start, scripted: calendar import and the store install, re-homed from Situation A and A′ under FD-106 |
 | user-stories/Situations/Situation-D/situation-5.md | SPEC | The paid-ahead visit and the half-built session, scripted: a credit rides onto a rebooking and an abandoned draft stays harmless, re-homed under FD-106 |
 | user-stories/Situations/Situation-D/story-debra.md | SPEC | Debra's own first-person telling — "a schedule that knows where I am" |
-| user-stories/Situations/Situation-E/README.md | SPEC | The held-out ER probe: annnä was deliberately not designed to this domain, so every claim is a prediction |
-| user-stories/Situations/Situation-E/customer.md | SPEC | The ER case as it arrives — a prediction to verify, not a met requirement |
-| user-stories/Situations/Situation-E/operator-er.md | SPEC | The autonomy envelope an institution authors, so annnä can run the board unattended inside it |
-| user-stories/Situations/Situation-E/resource-room.md | SPEC | The prediction that a room is expressible as an admission rule plus capacity on existing atoms |
-| user-stories/Situations/Situation-E/resource-staff.md | SPEC | Two held-out primitives: an ordering over principals (seniority), and a competitive request that can lose (the bid) |
-| user-stories/Situations/Situation-E/situation-1.md | SPEC | The predicted ceiling — what annnä would make possible if the four primitives are truly general |
-| user-stories/Situations/Situation-E/situation-2.md | SPEC | The same ER today: a human scheduler, a magnetic whiteboard, and a phone tree |
-| user-stories/Situations/Situation-E/situation-3.md | SPEC | The must-work predictions, one primitive at a time — a failure names which general primitive is missing |
-| user-stories/Situations/Situation-E/situation-4.md | SPEC | The must-refuse predictions, and the one that matters most: an autonomous annnä stops at the edge of its authority |
 | user-stories/_briefs/README.md | index | What a brief is, that it states questions and never answers, and which owed subjects deliberately have no brief |
 | user-stories/_briefs/agent-ranked-reach.md | never | What to ask about an agent resolving across a ranked list of other tenants, and where FR1's deferral cuts it off |
 | user-stories/_briefs/escalation-ladder.md | never | What to ask before writing an escalation beat — starting with whether any v1 owner has anyone to escalate to |
