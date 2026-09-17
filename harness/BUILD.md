@@ -4,7 +4,7 @@
 
 **Definition of done:** every `[MUST]` scenario passes against stubs; `[HELD-OUT]` probes are executed and their results recorded (not fixed); no harness code reaches across a seam except through the `INTERFACES.md` contracts. A story ID a scenario cites closes only through that scenario's own green run — never through the story, a scene reference or a companion trace — and a held-out result is never tuning material (`../user-stories/README.md` §The bar a story passes, item 5).
 
-**Readiness (G0-2):** Step 1 begins on the founder's go-word (`../THE-JOB.md`) — a condition, not a date. Step 0 is closed and needed no such word.
+**Readiness (G0-2):** Step 1 begins on the founder's go-word — a condition, not a date. **This line is G0-2's normative home** (FR13): the session job that carried it retired under FD-88, and the gate moved here rather than dying with it. Step 0 is closed and needed no such word.
 
 ---
 

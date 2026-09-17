@@ -16,7 +16,7 @@ This is the product-level entry point for a fresh reader — any model, any runt
 | Which decisions are settled (rulings, provenance) | [`RULINGS.md`](../RULINGS.md), [`AGENTS.md`](../AGENTS.md) §Rulings | `RULINGS.md` is the FR/FD registry and its provenance section; `AGENTS.md` §Rulings is the OR list |
 | Earlier conclusions and the evidence they rested on (findings register) | [`buildpack/FINDINGS.md`](FINDINGS.md) | |
 | How a future model audits and upgrades (protocol) | [`buildpack/UPGRADES.md`](UPGRADES.md) | |
-| Where things live (index) | [`INDEX.md`](../INDEX.md), [`AGENTS.md`](../AGENTS.md) §Authority order, [`THE-JOB.md`](../THE-JOB.md) | |
+| Where things live (index) | [`INDEX.md`](../INDEX.md), [`AGENTS.md`](../AGENTS.md) §Authority order | |
 
 ## Location manifest
 
