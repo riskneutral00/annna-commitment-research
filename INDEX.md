@@ -31,6 +31,7 @@
 | app/SCENARIOS.md | derived | The app's deterministic acceptance suite — payloads, mappings, wire contents, state transitions |
 | app/SPEC.md | SPEC | The human-facing layer: what it renders, what it collects, and that it holds zero harness logic, engine math, or model calls |
 | assets/README.md | derived | The shipped skin assets, where they came from, and how the pack pipeline builds them |
+| blastoff.md | derived | The readiness checklist for the first build commit: twenty scored metrics, the tasks that raise each to 9, the Verify line that re-grades it. Points at homes; states no law |
 | deployment/BUILD.md | derived | Deployment's ordered steps, and that Steps 0–1 close before any layer's build begins |
 | deployment/INTERFACES.md | derived | Deployment's four seams, and that it owns the space *between* layers and nothing inside one |
 | deployment/README.md | derived | The deployment package's purpose, and the per-gate roster behind `npm run check` |
