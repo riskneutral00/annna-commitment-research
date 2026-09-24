@@ -8,6 +8,10 @@
 
 ---
 
+## Phase clarification and planning review — 2026-09-20
+
+Matt explicitly defined the three project phases, confirmed the current phase and authorized revising all Phase 1 planning material. Home: `AGENTS.md` §Project phases. `blastoff.md` now tests documentary readiness rather than requiring development before development may begin. The planning review corrects the model's pleasantness-only overclaim (`model/SPEC.md` §0) and exposes assumptions (`PRD.md` §12). These are planning revisions under that authorization, not new product features, altered language/safety qualification bars, or a Phase 2 go-word. Prior text survives in the local dated review's before snapshots and Git history. No new FR/FD identifier is invented for this review.
+
 ## The numbering, stated plainly (it has a history, and the history bites)
 
 Two series were in play the same day and they were briefly both called `R#`:

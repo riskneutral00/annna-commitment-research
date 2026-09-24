@@ -1,6 +1,6 @@
 # annnä Model — EVALS (the exam)
 
-*This layer's acceptance suite — the analogue of `../harness/SCENARIOS.md`, with one deliberate difference: harness scenarios are **deterministic pass/fail**; model evals are **graded and statistical** (a model passes a *set* at a *threshold*, not every item always). Determinism lives in the harness and engine; this file measures the pleasantness dimensions the design bet says are all a model can affect (SPEC §0).*
+*This layer's acceptance suite — the analogue of `../harness/SCENARIOS.md`, with one deliberate difference: harness scenarios are **deterministic pass/fail**; model evals are **graded and statistical** (a model passes a *set* at a *threshold*, not every item always). Determinism lives in the harness and engine; this file measures semantic correctness, safety-related model behavior and usability within the boundaries in SPEC §0. A finite passing set is qualification evidence, not proof of zero future errors.*
 
 ---
 

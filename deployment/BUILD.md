@@ -49,7 +49,7 @@ The **diff gate**: `git diff harness/` asserted empty in a swap commit, wired as
 - **Three earlier gates canaried retrospectively at the same time**, none of which had been: `R9` (planted `SKIP_AUTH` → refused), `R3` (a workflow lane referencing the model secret with no qualification environment → refused), `S3` (a `curl` in a workflow step → refused). All three bite.
 
 ## Step 4 — The ladder drills (at app Step 0)
-When the first deployable surface lands: the full ladder walked on a trivial change behind R7, and the revert drill. Record both. Gate: **Z1–Z2, R7**. Before this fires, deployment's pre-app definition of done was §0's (DR-8 — Steps 0–1 first, the rest landing with what they gate); harness Step 0 proceeded on that basis, 2026-08-08, history.
+When the first deployable surface lands: the full ladder walked on a trivial change behind R7, and the revert drill. Record both. The ladder is `SPEC.md` §3's three rungs; the walk's exact sequence and the revert's object are defined where this step gates — `SCENARIOS.md` Z1 (change → aggregator green → preview → the human's verdict → main → production) and Z2 (a landed commit reverts clean). Gate: **Z1–Z2, R7**. Before this fires, deployment's pre-app definition of done was §0's (DR-8 — Steps 0–1 first, the rest landing with what they gate); harness Step 0 proceeded on that basis, 2026-08-08, history.
 
 ## Guardrails
 - A rule enforced only by prose has gone wrong — mechanize it, tag it `[DRILL]`, or delete it (`SPEC.md §0`).

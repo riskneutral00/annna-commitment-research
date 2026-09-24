@@ -4,6 +4,8 @@
 
 > **This repository contains specifications and early code, not a working application.** The engine and harness have Step-0 scaffolds and test suites. Product behavior described below remains to be implemented and verified.
 
+**Planning status, 2026-09-20:** project-phase definitions and current authorization are in [AGENTS.md](AGENTS.md#project-phases). The [Phase 1 exit review](blastoff.md) separates complete planning from future build and live-verification evidence.
+
 ## The product
 
 A commitment holds a promise and its conditions. Personal appointments, lessons, routines and shared plans belong on one board, where the people and resources they need can be checked together.
@@ -23,7 +25,7 @@ Calendar import is manual, at the owner's request, with no write-back. V1 exclud
 2. [Product requirements](PRD.md) — the general capabilities the stories test.
 3. [INDEX.md](INDEX.md) lists every markdown file tracked in this repository with its authority tier.
 
-Agents start with [AGENTS.md](AGENTS.md), then INDEX.md. Builders start with [harness/BUILD.md](harness/BUILD.md), against stubs, following the existing [build dependencies](deployment/SPEC.md).
+Agents start with [AGENTS.md](AGENTS.md), then INDEX.md. Once development is explicitly authorized, builders start with [harness/BUILD.md](harness/BUILD.md), against stubs, following the existing [build dependencies](deployment/SPEC.md).
 
 ## One week, run twice
 

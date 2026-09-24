@@ -12,9 +12,9 @@ Settings, student names, teaching windows, route estimates and reminder preferen
 
 I'm Matt. I teach English, and my scheduling conversations are scattered across LINE, Facebook Messenger, Instagram and WeChat. Sometimes the same student talks to me in two of those places. I find myself searching different conversations to remember which time we finally agreed on, then comparing that with my own calendar. I often forget that I have a session, and the student has to ask me if I'm ready. 
 
-I receive an invitation to try annnä. At my desktop, I follow it to the website. The page explains the invite-only trial and shows how a person puts a commitment on the board.
+I receive an invitation to try annnä. At my desktop, I follow it to the website. The page explains the invite-only trial — who is offering it, what the trial includes — and shows a short walkthrough of a commitment landing on a board.
 
-I select **Use my invitation**. The next screen shows the trial invitation and the steps for creating my account.
+I select **Use my invitation**. The next screen shows my trial invitation and lists the steps ahead of me: **Terms and privacy**, **How I'll use annnä**, **Language, region and time**, **Home**, **Board appearance**, **Review**.
 
 <a id="s01a"></a>
 
@@ -36,7 +36,7 @@ The money is in my head too. I can't say who has paid me this month without sear
 
 ## S02 — The onboarding process
 
-I select **Begin onboarding**. A progress indicator shows the steps between opening my invitation and creating my account. I can review my choices before finishing.
+I select **Begin onboarding**. A progress indicator names the steps between my invitation and my account — **Terms and privacy**, **How I'll use annnä**, **Language, region and time**, **Home**, **Board appearance**, **Review** — and marks where I am. Every choice I make appears in the final review before the account exists.
 
 ### Terms and privacy
 
@@ -44,7 +44,7 @@ I reach the terms and privacy step first. I can see the company providing annnä
 
 I open the terms of service and privacy notice. They describe the data collected, its purposes—including the commercial uses being offered—its recipients, retention and the rights available to me. Any choices requiring a separate response are presented alongside the relevant explanation.
 
-I read the documents, make those choices and accept the service terms. The onboarding moves to my profile.
+I read the documents, make those choices and accept the service terms. Refusing an optional purpose would leave the rest of onboarding open to me — only what that purpose governs stops. The required service terms are the one answer that cannot be refused and continue: declining them ends onboarding honestly, and no account is created. The onboarding moves to my profile.
 
 ### How I intend to use annnä
 
@@ -74,7 +74,7 @@ A short explanation tells me that Home can fill the starting-location field when
 
 I reach **Choose your board skin**. Each available skin has a preview showing its background, day columns, commitment blocks and console.
 
-I click different skins and see the same example board change appearance. This lets me compare how the time labels and blocks look against each background. I choose **Koi** and see it selected in the onboarding summary.
+I click different skins and see the same example board change appearance. This lets me compare how the time labels and blocks look against each background. I choose **Koi** — its preview is marked selected and the others are not — and the onboarding summary names **Koi** as my board appearance.
 
 ### Review and create my account
 
@@ -178,9 +178,9 @@ The console has the same glass character. It sits over the picture as a readable
 
 I notice **Conversation** and **Appearance** tabs on the console. I select **Appearance** and see separate controls for the glass opacity of **Board commitments** and **Console and panels**.
 
-I want the routine cards to stand out a little more. I raise **Board commitments** from **80 to 90**. Their frosted backing becomes more substantial, and the Run title, Routine label and time are easier for me to read. The koi remain clear in the open areas around the cards.
+I want the routine cards to stand out a little more. I raise **Board commitments** from **80 to 90** and the same cards visibly change — the frosted backing is denser at 90 than it was at 80, the Run title, Routine label and time sit on a more solid surface, and the koi in the open areas are unchanged. I set it back to **80** to compare, then to **90** again, and the change follows the slider each time.
 
-I compare the result with the previous setting, keep the stronger backing and return to **Conversation**. The settings are now where I can find them when I want to adjust the balance between the photograph and the information on it.
+I keep the stronger backing and return to **Conversation**. Reopening **Appearance** shows **Board commitments** still at **90** — the setting persisted, and this is where I come back to when I want to adjust the balance between the photograph and the information on it.
 
 ### I ask to edit a particular future occurrence
 

@@ -5,7 +5,11 @@
 ## Authority order
 
 1. **A `SPEC` is the source of truth.** Build from it. `SPEC` is a tier `INDEX.md` grades, not a location — root files carry it too.
-2. **A `history`-tier file is not authority.** It records how the design was reached — there to *justify*, not to build from. Where one disagrees with a `SPEC`, **the SPEC wins**. `INDEX.md`'s Tier column marks them.
+2. **Use `INDEX.md`'s closed tier vocabulary:** `SPEC`, `derived`, `index`, `never`. Historical evidence justifies a decision; it does not override its current home. Local working notes are not product law.
+
+## Project phases
+
+**Founder clarification, 2026-09-20:** Phase 1 = planning; Phase 2 = development; Phase 3 = maintaining live annnä. **Current: Phase 1; all planning material is editable.** Preserve history; mark proposals. BUILD steps use separate numbering. Planning exits: `blastoff.md`. Development requires explicit authorization.
 
 ## Package shape
 

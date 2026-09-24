@@ -13,6 +13,8 @@
 
 *What this file does not do: it does not say whether a description is still accurate. The gate checks that every file has a row, not that the row is true. If a row and its file disagree, the file wins — and fix the row.*
 
+**Planning inventory (2026-09-20):** this index covers tracked Markdown, not the entire Phase 1 surface. BUILD files and in-document schemas are planning even when describing later implementation. Local `docs/agents/`, `.specs/` and `.tmp/` also contain plans, decision evidence and interviews; archived copies are historical, not current directions. The optional local review at `docs/agents/phase1-review-2026-09-20/REPORT.md` inventories both surfaces with inspection depth. Its absence from a clone does not change product law. Project phases are defined in `AGENTS.md`.
+
 ---
 
 | File | Tier | What it decides |
@@ -31,7 +33,7 @@
 | app/SCENARIOS.md | derived | The app's deterministic acceptance suite — payloads, mappings, wire contents, state transitions |
 | app/SPEC.md | SPEC | The human-facing layer: what it renders, what it collects, and that it holds zero harness logic, engine math, or model calls |
 | assets/README.md | derived | The shipped skin assets, where they came from, and how the pack pipeline builds them |
-| blastoff.md | derived | The readiness checklist for the first build commit: twenty scored metrics, the tasks that raise each to 9, the Verify line that re-grades it. Points at homes; states no law |
+| blastoff.md | derived | The Phase 1 exit review: twenty documentary conditions, their evidence and later verification; no code, accounts, live inference or aggregate score substitutes for planning readiness |
 | deployment/BUILD.md | derived | Deployment's ordered steps, and that Steps 0–1 close before any layer's build begins |
 | deployment/INTERFACES.md | derived | Deployment's four seams, and that it owns the space *between* layers and nothing inside one |
 | deployment/README.md | derived | The deployment package's purpose, and the per-gate roster behind `npm run check` |
