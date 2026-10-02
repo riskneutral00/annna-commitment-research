@@ -1,24 +1,30 @@
-# Story 1 — Matt schedules English lessons
+# Story 1: Matt schedules English lessons
 
-**Scripted · end-state · first-time web-app use · invite-only trial.** This is an authored demonstration, not independent falsification evidence, implemented behavior or legal clearance. The narrow Matt English exception is recorded at [FD-68](../../../RULINGS.md#fd-68-matt-english); [verification and layer debt](story-matt-verification.md#layer-debt) identify the contracts still owed. All story times use **Asia/Taipei**, except Kai’s explicitly selected Tokyo readback in S11.
+[Matt](#perspective-matt) · [Kai](#perspective-kai) · [Jasmine](#perspective-jasmine) · [Georgina](#perspective-georgina) · [Mark](#perspective-mark) · [Sarah](#perspective-sarah) · [Diver 123](#perspective-diver-123) · [Dive shop 123](#perspective-dive-shop-123)
 
-Settings, student names, teaching windows, route estimates and reminder preferences are story examples for review.
+<a id="perspective-matt"></a>
 
-**My goal:** Put my own commitments and agreed lessons on one schedule, let students choose lesson times that work for both of us, and remember those lessons with the details I need to join them.
+## Matt
+
+### My personal life and English teaching
+
+<a id="perspective-matt-s01-1"></a>
 
 <a id="s01"></a>
 
-## S01 — I follow my invitation
+### S01 — I follow my invitation
 
-I'm Matt. I teach English, and my scheduling conversations are scattered across LINE, Facebook Messenger, Instagram and WeChat. Sometimes the same student talks to me in two of those places. I find myself searching different conversations to remember which time we finally agreed on, then comparing that with my own calendar. I often forget that I have a session, and the student has to ask me if I'm ready. 
+I'm Matt. I teach English, and my scheduling conversations are scattered across LINE, Facebook Messenger, Instagram and WeChat. Sometimes the same student talks to me in two of those places. I find myself searching different conversations to remember which time we finally agreed on, then comparing that with my own calendar. I often forget that I have a session, and the student has to ask me if I'm ready.
 
 I receive an invitation to try annnä. At my desktop, I follow it to the website. The page explains the invite-only trial — who is offering it, what the trial includes — and shows a short walkthrough of a commitment landing on a board.
 
 I select **Use my invitation**. The next screen shows my trial invitation and lists the steps ahead of me: **Terms and privacy**, **How I'll use annnä**, **Language, region and time**, **Home**, **Board appearance**, **Review**.
 
+<a id="perspective-matt-s01a-1"></a>
+
 <a id="s01a"></a>
 
-## S01a — The week before annnä
+### S01a — The week before annnä
 
 Before the invitation, my week lives in four messaging apps, one calendar and my head.
 
@@ -32,13 +38,15 @@ The gym is supposed to be twice on Monday, Wednesday and Friday, once before noo
 
 The money is in my head too. I can't say who has paid me this month without searching my bank app — a payment I could not place. For Kai and Jasmine I count lessons back through LINE and Instagram and hope I haven't missed one.
 
+<a id="perspective-matt-s02-1"></a>
+
 <a id="s02"></a>
 
-## S02 — The onboarding process
+### S02 — The onboarding process
 
 I select **Begin onboarding**. A progress indicator names the steps between my invitation and my account — **Terms and privacy**, **How I'll use annnä**, **Language, region and time**, **Home**, **Board appearance**, **Review** — and marks where I am. Every choice I make appears in the final review before the account exists.
 
-### Terms and privacy
+#### Terms and privacy
 
 I reach the terms and privacy step first. I can see the company providing annnä, the invite-only trial terms and the documents that apply to this signup.
 
@@ -46,13 +54,13 @@ I open the terms of service and privacy notice. They describe the data collected
 
 I read the documents, make those choices and accept the service terms. Refusing an optional purpose would leave the rest of onboarding open to me — only what that purpose governs stops. The required service terms are the one answer that cannot be refused and continue: declining them ends onboarding honestly, and no account is created. The onboarding moves to my profile.
 
-### How I intend to use annnä
+#### How I intend to use annnä
 
 The screen asks **How will you use annnä?** I can select more than one description. The options include **Individual**, **Freelancer**, **Small business**, **Medium business** and **Team / organization**.
 
 I select **Individual** and **Freelancer**. I enter **Matt** as my display name and **English Teacher** as the work I do.
 
-### Languages, region and time
+#### Languages, region and time
 
 I choose the app language I want to use:
 
@@ -62,7 +70,7 @@ I review the country/region setting and select **Taiwan** for this walkthrough. 
 
 The settings preview lets me see the date and time format before continuing. My app language and timezone appear together in the onboarding summary.
 
-### Home — an optional saved location
+#### Home — an optional saved location
 
 The next section offers **Home address — optional** and explains how this will help when I use annnä. I choose to fill it in because I want to use it as a starting point for travel.
 
@@ -70,13 +78,13 @@ I click the address field and enter my home address in the location picker. I ch
 
 A short explanation tells me that Home can fill the starting-location field when I set up travel for a commitment. I can change that starting point for a particular trip.
 
-### The board's appearance
+#### The board's appearance
 
 I reach **Choose your board skin**. Each available skin has a preview showing its background, day columns, commitment blocks and console.
 
 I click different skins and see the same example board change appearance. This lets me compare how the time labels and blocks look against each background. I choose **Koi** — its preview is marked selected and the others are not — and the onboarding summary names **Koi** as my board appearance.
 
-### Review and create my account
+#### Review and create my account
 
 I review one summary: **Matt · Individual + Freelance (English Teacher) · English · Asia/Taipei · 24-hour time · Home · Koi**. I can return to any section to edit that choice.
 
@@ -86,9 +94,11 @@ The app opens my board wearing the selected Koi skin. I see **September 2026** a
 
 The koi photograph fills the board: orange, gold and white fish in deep teal water. The date headings sit clearly over it. My name is visible, and the empty week is ready for my first commitment.
 
+<a id="perspective-matt-s03-1"></a>
+
 <a id="s03"></a>
 
-## S03 — I send my first commitment and make it a routine
+### S03 — I send my first commitment and make it a routine
 
 The console looks like the beginning of a conversation:
 
@@ -118,11 +128,13 @@ The result carries the **Routine** label. Event, Task and Routine are the commit
 
 The send icon settles into its ordinary appearance after submission. Typed replies use **Send** at the edge of the input area; an annnä proposal carries its own **OK** and **Edit** actions inside the conversation.
 
+<a id="perspective-matt-s03a-1"></a>
+
 <a id="s03a"></a>
 
-## S03a — The gym and my meals
+### S03a — The gym and my meals
 
-### The gym, done or skipped
+#### The gym, done or skipped
 
 With the run in place, I tell the console about the gym:
 
@@ -138,7 +150,7 @@ I click **OK inside that console message**. The result carries the **Task** labe
 
 On Monday I go before noon and tap **Done** on that card. I don't go in the afternoon, so I tap **Skip**. annnä doesn't ask why. On Wednesday I skip both, one tap each. On Friday I go before noon and skip the afternoon. Opening the Gym task shows its record: **This week: 2 done · 4 skipped**. Nothing was moved or rescheduled, and nothing nags me about the skips.
 
-### Meals, when they happen
+#### Meals, when they happen
 
 My meals don't have a schedule. On Tuesday morning I tell the console:
 
@@ -160,11 +172,13 @@ Later that day:
 
 I click **OK**. The fast sits on my board as a note. Nothing is blocked for it, no meal times are proposed, and I go on eating whenever I eat.
 
+<a id="perspective-matt-s04-1"></a>
+
 <a id="s04"></a>
 
-## S04 — September's board, the glass, and an October edit
+### S04 — September's board, the glass, and an October edit
 
-### The first routine on my weekly board
+#### The first routine on my weekly board
 
 I am looking at **13–19 September** in Week view. A **Run** occurrence appears at the top of each of Monday, Tuesday, Thursday, Friday and Saturday. Each is the first scheduled item in its own day column.
 
@@ -174,7 +188,7 @@ The cards look like small pieces of frosted glass over the koi photograph. Their
 
 The console has the same glass character. It sits over the picture as a readable panel, with the conversation and its controls belonging to that panel.
 
-### I adjust the appearance for my eyes
+#### I adjust the appearance for my eyes
 
 I notice **Conversation** and **Appearance** tabs on the console. I select **Appearance** and see separate controls for the glass opacity of **Board commitments** and **Console and panels**.
 
@@ -182,7 +196,7 @@ I want the routine cards to stand out a little more. I raise **Board commitments
 
 I keep the stronger backing and return to **Conversation**. Reopening **Appearance** shows **Board commitments** still at **90** — the setting persisted, and this is where I come back to when I want to adjust the balance between the photograph and the information on it.
 
-### I ask to edit a particular future occurrence
+#### I ask to edit a particular future occurrence
 
 From this September view, I type:
 
@@ -196,11 +210,13 @@ The board moves to **11–17 October 2026**. **Week** remains selected. The Run 
 
 The form shows **Routine**, **06:00** start, **06:45** end, the repeating days, **10 minutes before** and **15 minutes after**. The **Location** field is empty.
 
+<a id="perspective-matt-s05-1"></a>
+
 <a id="s05"></a>
 
-## S05 — The console helps me change the origin for Monday, 12 October
+### S05 — The console helps me change the origin for Monday, 12 October
 
-### I choose the park in the location field
+#### I choose the park in the location field
 
 I click the empty **Location** field. A map picker opens with an address/search field, a movable map and zoom controls.
 
@@ -214,13 +230,13 @@ The console follows the change I just made:
 
 I send that reply. The form shows the park as the routine's usual destination.
 
-### Home is already available as my starting point
+#### Home is already available as my starting point
 
 I open the optional travel details and choose **Driving**. The **From** field is already filled with **Home**, using the address I saved during onboarding. The destination is the park and **Arrive by** is **06:00**.
 
 The form shows a route estimate for that origin, destination, mode and date/time. In this example the estimated drive from Home is ten minutes. The **Buffer before** field still contains the ten minutes from the instruction I sent earlier.
 
-### I change the starting address and confirm its scope
+#### I change the starting address and confirm its scope
 
 I click **From**, open the location picker and enter the address where I will be staying. I check it on the map and enter **Sarah's house** in the place-name field. Clicking **Save** in the picker puts that named address into the open run form.
 
@@ -232,7 +248,7 @@ The **From** field now reads **Sarah's house**. The route estimate updates to **
 
 I click **Send**. The form's scope label reads **Monday, 12 October**. I can see the exact occurrence being edited.
 
-### I decide whether to keep Sarah's address for future use
+#### I decide whether to keep Sarah's address for future use
 
 The console asks a separate question about the address itself:
 
@@ -242,7 +258,7 @@ The console asks a separate question about the address itself:
 
 I click **OK inside the message**. Sarah's house is now available as a named saved location. The scope shown on the run form is still **Monday, 12 October**: keeping an address for future use and choosing when a run uses it are two separate choices I have made.
 
-### annnä proposes the departure and buffer in the console
+#### annnä proposes the departure and buffer in the console
 
 The form shows **Estimated driving time: 30 minutes**, **Arrive by: 06:00** and **Buffer before: 10 minutes**.
 
@@ -256,7 +272,7 @@ I read the date, origin, departure and buffer together, then click **OK inside t
 
 The form now shows **Departure: 05:30** and **Buffer before: 30 minutes**, under **Monday, 12 October**. The console keeps the accepted proposal in the conversation so I can see what I agreed to.
 
-### I review and save the dated occurrence
+#### I review and save the dated occurrence
 
 Before the final form Save, I see the pending run settings side by side:
 
@@ -279,9 +295,11 @@ I inspect the next occurrence, **Tuesday, 13 October**. It uses Home and the usu
 
 The dated Monday occurrence reserves **05:30–07:00** around its **06:00–06:45** run. The other occurrences retain the usual **05:50–07:00** reserved interval. The board is still showing the October week as I continue setting up my English scheduling.
 
+<a id="perspective-matt-s05a-1"></a>
+
 <a id="s05a"></a>
 
-## S05a — I remove a run from one day
+### S05a — I remove a run from one day
 
 While the October week is open, I select the Run on **Saturday, 17 October** and tell the console:
 
@@ -295,9 +313,11 @@ I choose **This occurrence**. The proposal names **Run · Saturday, 17 October �
 
 Saturday's Run card leaves the active board. The console shows the dated occurrence as **Cancelled**, and the reserved **05:50–07:00** interval is released. I open the routine and see **17 October skipped**. Its next Monday occurrence is still scheduled; the September runs and Monday's Sarah's-house exception retain their details.
 
+<a id="perspective-matt-s06-1"></a>
+
 <a id="s06"></a>
 
-## S06 — I ask annnä to help me set up English scheduling
+### S06 — I ask annnä to help me set up English scheduling
 
 > **Matt:** I teach English one-on-one. Some students have a standing weekly time and pay me a monthly package; others book one lesson at a time through a link and pay a monthly package too. I want to enter lessons I've already agreed with students, and give students a link where they can choose a time themselves. Help me set up the scheduling rules.
 
@@ -309,17 +329,19 @@ A draft titled **English lesson scheduling** opens beside the console. It shows 
 
 I keep these rows and start answering in the console. The form is the structured view of what we are building together. Its rows update as I send my answers. Selecting a row's **Edit** brings that detail back into the console with its current value ready to change; **Delete** removes that proposed row from the draft.
 
+<a id="perspective-matt-s07-1"></a>
+
 <a id="s07"></a>
 
-## S07 — The console walks me through the scheduling details
+### S07 — The console walks me through the scheduling details
 
-### The reusable fields are ready
+#### The reusable fields are ready
 
 The setup shows **Students per lesson: 1**, reflecting the one-on-one lessons I described. The template is reusable across different students over time.
 
 The **Student** and **Student contact** rows are blank and marked **Filled when used**. I can see their **Edit** and **Delete** controls alongside the other proposed fields. I continue with the lesson settings in the console.
 
-### Lesson duration
+#### Lesson duration
 
 > **annnä:** Lesson duration:
 
@@ -339,7 +361,7 @@ annnä follows up on the duration rule:
 
 I click **15 minutes**. The duration row now shows **30 minutes–2 hours, in 15-minute increments**. The valid lengths are **30, 45, 60, 75, 90, 105 and 120 minutes**.
 
-### Teaching windows
+#### Teaching windows
 
 > **annnä:** Teaching windows:
 
@@ -357,7 +379,7 @@ I click **Send**.
 
 The **Teaching windows** row now shows that rule. I can read its plain-language meaning in the form while continuing the conversation.
 
-### Lesson buffers
+#### Lesson buffers
 
 > **annnä:** Lesson buffers:
 
@@ -365,7 +387,7 @@ The reply box contains **5 minutes before and 5 minutes after**. I keep that ans
 
 The form shows **Before: 5 minutes · After: 5 minutes**. This is the time reserved around an English lesson.
 
-### Lesson format
+#### Lesson format
 
 > **annnä:** Lesson format:
 >
@@ -373,7 +395,7 @@ The form shows **Before: 5 minutes · After: 5 minutes**. This is the time reser
 
 I click **Online inside the console**. That click submits my answer. **Online** appears in the conversation as my choice, and the form's format row updates immediately.
 
-### Meeting link
+#### Meeting link
 
 > **annnä:** Meeting link:
 
@@ -381,13 +403,13 @@ The input contains an example meeting URL. I clear it and choose **Leave blank**
 
 The **Meeting link** row stays in the form with an empty value and its **Edit** and **Delete** controls. I have deliberately left this detail unset.
 
-### Guest-page language
+#### Guest-page language
 
 > **annnä:** Guest-page language:
 
 The reply box suggests **English**. I keep it and click **Send**. The form shows **Guest-page language: English**.
 
-### Packages, not by the lesson
+#### Packages, not by the lesson
 
 I want to include what my students pay, so I type:
 
@@ -416,7 +438,7 @@ annnä asks about the one thing a package has to settle:
 
 The Packages row now reads **Attendance never changes a package bill**.
 
-### A standing weekly slot
+#### A standing weekly slot
 
 > **annnä:** Should a lesson be able to repeat on a standing weekly slot, for students who keep the same time every week?
 >
@@ -424,7 +446,7 @@ The Packages row now reads **Attendance never changes a package bill**.
 
 I click **On**. The form shows **Standing slot: on**. A lesson I enter for a student can now repeat weekly on its days, and each week's lesson becomes its own booking on my board as its date comes.
 
-### I try a field, edit it, then remove it
+#### I try a field, edit it, then remove it
 
 I tell the console:
 
@@ -434,7 +456,7 @@ The new row shows **Preparation note: Bring an article**. I select its **Edit** 
 
 I decide this instruction belongs to individual lessons rather than every use of the template. I select **Delete** on the Preparation note row. The row and its draft value disappear. I review the remaining form and continue with the scheduling rules.
 
-### I set the limits inside a link student's package
+#### I set the limits inside a link student's package
 
 I add the count rule through the console:
 
@@ -468,7 +490,7 @@ annnä asks how these two limits should treat a cancellation:
 
 I choose **Release allowance**. The two limits now show that choice together: **Pre-start cancellation releases the count and booked time**.
 
-### I choose a reminder for myself
+#### I choose a reminder for myself
 
 annnä returns to the problem I mentioned at the beginning:
 
@@ -488,9 +510,11 @@ I can see the destination email beside the proposal. I click **OK**. The form ga
 
 I can now read the scheduling rules we have built together: the duration range and increments, teaching window, buffers, the two packages with their attendance rule, the standing slot, the link-package monthly booking/time limits and my reminder choice.
 
+<a id="perspective-matt-s08-1"></a>
+
 <a id="s08"></a>
 
-## S08 — I save the template and immediately use it for Mark
+### S08 — I save the template and immediately use it for Mark
 
 I select **Save template**. **English lesson scheduling** is saved to my account and immediately opens ready to use.
 
@@ -529,9 +553,11 @@ Mark is saved in Contacts with the **Student** relationship, ready to select for
 
 The template is **Private**: saved for me, without a public catalog listing. An individual booking link I issue later lets one student use the request I prepared; it does not give that student my reusable template or private board. Saving it has taken me directly into the work I wanted to do.
 
+<a id="perspective-matt-s08a-1"></a>
+
 <a id="s08a"></a>
 
-## S08a — I create a personal appointment with its own details
+### S08a — I create a personal appointment with its own details
 
 I return to my board to put a separate personal commitment into the October week. I tell the console:
 
@@ -567,7 +593,7 @@ The console explains the scheduling consequence:
 
 I can understand this from my own board and the rule explanation. The appointment is a dated commitment in my life. The English template supplies the five-minute separation that English bookings must respect around it.
 
-### I change and clear a saved value
+#### I change and clear a saved value
 
 I reopen the personal appointment and choose **Edit** beside **Notes**. The console brings back **Keep this hour for my personal appointment**. I change it to **Have my documents ready** and send it. After I save, reopening the appointment shows that note.
 
@@ -587,9 +613,11 @@ I realize I still need that reminder. With the same appointment selected, I say:
 
 The proposal shows **Notes: empty → Have my documents ready** on this Thursday appointment. I click **OK** and reopen it. The note is there again, recorded as my new edit; the earlier clearing remains attributed in the change record. The appointment was active throughout.
 
+<a id="perspective-matt-s09-1"></a>
+
 <a id="s09"></a>
 
-## S09 — I put Georgina's standing lessons on my board
+### S09 — I put Georgina's standing lessons on my board
 
 Georgina and I agreed in Messenger a long time ago: Monday and Thursday evenings, 19:00–20:00, online. She is on the same package as Mark. I want that agreement on the same board as my own commitments.
 
@@ -609,9 +637,11 @@ The result names Georgina, both weekdays, the interval, Online and the package. 
 
 Selecting one of her lessons opens Georgina's booking details. I have captured the agreement in the place I use to manage my time.
 
+<a id="perspective-matt-s10-1"></a>
+
 <a id="s10"></a>
 
-## S10 — I send Kai his link
+### S10 — I send Kai his link
 
 Kai writes to me on LINE and wants to book lessons one at a time. I open a new use of **English lesson scheduling** and tell the console that the student for this use is **Kai**, with his LINE contact. The use shows **Kai · LINE · Link package · NT$2,000 a month · 4 hours**, with the monthly limits of 4 lessons and 4 hours. Kai is saved in Contacts as a Student.
 
@@ -629,63 +659,9 @@ I supply that contact. The console shows **Georgina** and the existing Messenger
 
 Georgina's student entry now shows both contacts and the same standing lessons. Her meeting link is still the Messenger link. When she writes from either app, I can recognize which conversation belongs to the student already on my board.
 
-<a id="s11"></a>
+<a id="perspective-matt-s11-2"></a>
 
-## S11 — Kai books through the limited student console
-
-I'm Kai. Matt sends me a link in LINE, and I tap it to open the page in my browser.
-
-I see **English lesson with Matt**, **Link package · NT$2,000 a month · 4 hours**, and **30 minutes–2 hours in 15-minute increments**. The calendar shows dates and a time scale labelled **Asia/Taipei**, the timezone for the times I enter in this conversation. Unavailable periods are blocked out, while the open periods indicate where a valid lesson may fit.
-
-Beside the console I can open the booking terms and data-use notice for this request. I review the notice and any required choices before sending my first message.
-
-The page also has a console:
-
-> **annnä:** I can help you fill in this lesson request and check bookable times with Matt. When would you like your lesson?
-
-My name is already **Kai**, and the request carries the student information Matt prepared. I use the console to fill the lesson's time and duration fields.
-
-### I ask about a time
-
-> **Kai:** Is Matt available on Thursday, 15 October, at 15:30 for forty-five minutes?
-
-I click **Send**.
-
-> **annnä:** No. That interval is unavailable for an English lesson. Please choose another time from the available periods.
-
-The calendar reflects the occupied time and required separation. The reply answers the availability question without exposing the private appointment behind it.
-
-### I try a duration outside the rules
-
-> **Kai:** Then Thursday, 15 October, at 16:05 for three hours.
-
-> **annnä:** Lessons must last from thirty minutes to two hours. Choose a duration within that range.
-
-I go the other way:
-
-> **Kai:** Twenty minutes, then, starting at 16:05.
-
-> **annnä:** That is shorter than Matt's minimum. Lessons must last at least thirty minutes. Choose a duration from thirty minutes to two hours.
-
-I try another answer:
-
-> **Kai:** Seventy-two minutes, starting at 16:05.
-
-> **annnä:** This template uses fifteen-minute increments. Choose thirty, forty-five, sixty, seventy-five, ninety, one hundred and five, or one hundred and twenty minutes.
->
-> **30 minutes** · **45 minutes** · **60 minutes** · **75 minutes** · **90 minutes** · **105 minutes** · **120 minutes**
-
-I click **45 minutes**. That option is submitted as my answer, retaining the Thursday date and 16:05 start we were discussing.
-
-### The available time changes while I am choosing
-
-The request form and console show the same selection:
-
-> **Kai · Thursday, 15 October · 16:05–16:50 · Online**
->
-> **Duration: 45 minutes · Link package · NT$2,000 a month · 4 hours**
-
-The calendar marks this as my selected interval. The request is ready for confirmation.
+### S11: Matt
 
 **At Matt's board**, while Kai is reviewing that selection, I learn my personal appointment needs another fifteen minutes. I open the appointment and tell the console:
 
@@ -697,41 +673,13 @@ The draft shows **15:00–16:00 → 15:00–16:15**, with the same Home location
 
 The owner board shows that saved end time. Kai's unconfirmed selection has not become a lesson on my board.
 
-**Back as Kai**, I click **Confirm booking** on the selection I had been reviewing. The calendar refreshes and the console responds:
+**Other perspectives in this interaction:** [Kai](#perspective-kai-s11-1)
 
-> **annnä:** That interval is no longer available. Your booking has not been confirmed. A forty-five-minute lesson is currently available at 16:30. Would you like to select it?
->
-> **16:30** · **Choose another time**
-
-My name, contact, Thursday date and forty-five-minute duration remain filled in. The unavailable selection is clearly marked, and the calendar shows the refreshed choices. I continue from those answers when choosing the replacement time.
-
-I click **16:30**. The form and console update together:
-
-> **Kai · Thursday, 15 October · 16:30–17:15 · Online**
->
-> **Duration: 45 minutes · Link package · NT$2,000 a month · 4 hours**
-
-### I confirm the updated request
-
-The monthly-limit summary shows **October 2026: 0 of 4 lessons · 0 of 4 hours**, counted by when each lesson takes place on Matt's Asia/Taipei calendar. Confirming this lesson would make that **1 of 4 lessons · 45 minutes of 4 hours**.
-
-I review the new interval and applicable booking terms, then choose **Confirm booking** in the console. The request is checked against the current availability, rules and monthly totals again.
-
-I see **Booking confirmed** with **Thursday, 15 October, 16:30–17:15** and the forty-five-minute duration. The monthly summary now shows the one booked lesson and forty-five minutes. I can keep this lesson's link to return to its details. The meeting-link field is still blank.
-
-### I check the time in another timezone
-
-For my travel plans, I tell this page's console, "Show this lesson in Tokyo time." The page's display changes to **Asia/Tokyo**. The same confirmed lesson reads **Thursday, 15 October · 17:30–18:15 Asia/Tokyo**, with **16:30–17:15 Asia/Taipei** beside it. Its forty-five-minute duration is unchanged. Matt's board and reminder still use Asia/Taipei; this display choice has not moved the lesson.
-
-I return the page to **Asia/Taipei** before continuing. All my later requests in this story use that displayed zone.
-
-### The console keeps to this request
-
-The help and answers on this surface concern the template's fields, rules and bookable times. The student console has a much smaller set of permitted actions than Matt's owner console. Its purpose is to complete this authorized lesson request; the harness enforces that boundary on the operations it can perform.
+<a id="perspective-matt-s12-1"></a>
 
 <a id="s12"></a>
 
-## S12 — I can see the whole result on my board
+### S12 — I can see the whole result on my board
 
 Back as Matt, I see **Kai · English · 16:30** in Thursday's column. The morning Run sits at the top, then Mark's 09:00 lesson, my personal appointment at **15:00–16:15**, Kai's lesson and Georgina's 19:00 lesson. The blocks pack together in start-time order.
 
@@ -741,9 +689,11 @@ I can select any lesson and see the student, date, full time range and online fo
 
 Mark's and Georgina's lessons were entered by me from agreements we had already made. Kai's and Jasmine's came through their booking pages. All of them are ordinary lessons on the board I use to organize my time, with their origins visible in their details.
 
+<a id="perspective-matt-s12a-1"></a>
+
 <a id="s12a"></a>
 
-## S12a — I distinguish my roles and temporarily hide routines
+### S12a — I distinguish my roles and temporarily hide routines
 
 With personal commitments and English lessons now on the board, the console offers a useful next action:
 
@@ -759,9 +709,11 @@ I click **Send**. The Run cards leave the current view, and a visible **Routines
 
 The console acknowledges the view change and gives me **Show routines** as the way to restore them. My scheduling rules continue to account for the routines while I focus on the other cards.
 
+<a id="perspective-matt-s13-1"></a>
+
 <a id="s13"></a>
 
-## S13 — I resolve a conflicting booking before replacing a rule
+### S13 — I resolve a conflicting booking before replacing a rule
 
 I want Monday lessons to start at 15:00 instead of 09:00. While using **English lesson scheduling**, I choose **Edit** on the **Teaching windows** row.
 
@@ -787,7 +739,7 @@ The pending rule is marked **Blocked**, with the booking and conflicting times l
 
 The console keeps a **Continue Monday change** action with the pending proposal. I can move to Jasmine's booking and come back to this exact change.
 
-### I manage the affected booking
+#### I manage the affected booking
 
 I choose **Manage Jasmine's booking** and open its details. I use our Instagram conversation to ask Jasmine whether we can move the lesson to **Monday, 12 October, 15:30–16:30**.
 
@@ -799,7 +751,7 @@ The console presents **Monday, 12 October · 13:00–14:00 → 15:30–16:30 · 
 
 I click **OK**. The move is validated and recorded. Monday's Jasmine card changes from **13:00** to **15:30**, and the booking's details show my recorded agreement as its source. Her October summary still counts this as one one-hour lesson.
 
-### The blocker clears, then I apply the rule
+#### The blocker clears, then I apply the rule
 
 I select **Continue Monday change**. The console restores the pending window proposal, with my earlier **Replace existing** choice retained, and rechecks it against the current bookings:
 
@@ -811,9 +763,11 @@ I click **OK**. The template is replaced with the validated settings. Monday's a
 
 The conversation shows the complete sequence: the proposed rule, the booking that blocked it, the action that resolved it, and the accepted replacement.
 
+<a id="perspective-matt-s13a-1"></a>
+
 <a id="s13a"></a>
 
-## S13a — I supply the joining details for Kai's lesson
+### S13a — I supply the joining details for Kai's lesson
 
 Kai's confirmed lesson is on my board, but its **Meeting link** is still empty. Mark's and Georgina's lessons already carry their Messenger link from the day I entered them. I open Kai's lesson and choose **Edit** on that row. The console focuses the meeting-link field for **Kai · Thursday, 15 October, 16:30**.
 
@@ -825,13 +779,17 @@ The form shows the supplied URL. The console proposal names **Kai's Thursday les
 
 I can now open the meeting link from Kai's lesson details. The reusable template's Meeting link remains blank for future uses. Mark's and Georgina's lessons keep their Messenger link, and Jasmine's booking retains its own details.
 
-I copy Kai’s existing authorized link for his confirmed Thursday booking and paste it into our LINE conversation with a note that the joining details are ready. **As Kai**, opening that same page shows the confirmed time, price and a **Join lesson** link pointing to the URL Matt supplied.
+I copy Kai’s existing authorized link for his confirmed Thursday booking and paste it into our LINE conversation with a note that the joining details are ready.
+
+**Other perspectives in this interaction:** [Kai](#perspective-kai-s13a-2)
+
+<a id="perspective-matt-s13b-1"></a>
 
 <a id="s13b"></a>
 
-## S13b — I try a separate template and a preparation task
+### S13b — I try a separate template and a preparation task
 
-### A template I decide I do not need
+#### A template I decide I do not need
 
 Kai asks whether a dedicated forty-five-minute conversation option would make choosing a lesson easier. I open the saved **English lesson scheduling** template and edit Lesson duration through the console:
 
@@ -849,7 +807,7 @@ The saved copy immediately opens ready to use, with Student and Student contact 
 
 I click **OK**. My saved-template list now shows **English lesson scheduling**. I open it and find the duration range, packages and Monday teaching window I kept. Mark's, Georgina's, Kai's and Jasmine's saved bookings are still available on my board.
 
-### A task I can also change and remove
+#### A task I can also change and remove
 
 I tell the console:
 
@@ -859,11 +817,13 @@ The draft shows **Check camera · Task · Due 15 October, 16:20**. I save it and
 
 I test the equipment now and decide I no longer need this future task. With it selected, I say **Remove this task**. The console names the task and explains that it will be removed from my active tasks. I click **OK**. The task leaves that view, while Kai's lesson and its reminder remain in place.
 
+<a id="perspective-matt-s13f-1"></a>
+
 <a id="s13f"></a>
 
-## S13f — annnä explains what it can and cannot do
+### S13f — annnä explains what it can and cannot do
 
-### I ask for a taxi
+#### I ask for a taxi
 
 Jasmine asks in Instagram whether annnä can book her a taxi for when her Monday lesson ends. With her Monday, 12 October lesson open, I say:
 
@@ -877,7 +837,7 @@ I choose that supported next step:
 
 The form shows **Arrange Jasmine's taxi · Task**, linked to her Monday lesson. I save it. Its details identify me as the person arranging the ride. Once Jasmine and I agree on the details, I can enter them here while making the taxi booking outside annnä.
 
-### I ask annnä to accept payment
+#### I ask annnä to accept payment
 
 I return to the lesson and type:
 
@@ -891,41 +851,29 @@ I ask when payment collection will become available.
 
 Payment will happen through the method I arrange with Jasmine; the lesson can carry my record of what I receive.
 
-### A student asks to change my rule
+**Other perspectives in this interaction:** [Kai](#perspective-kai-s13f-2)
 
-**As Kai**, on the page for my Thursday lesson, I ask:
-
-> **Kai:** Can my package be cheaper?
-
-> **annnä:** Matt controls this template's rules. Your package is NT$2,000 a month for 4 hours. I can help you choose a permitted duration or time for your booking.
-
-My confirmed lesson still shows its agreed time. The response explains who can change that rule and the choices available to me on this page.
+<a id="perspective-matt-s13g-1"></a>
 
 <a id="s13g"></a>
 
-## S13g — Two students want Friday at 14:00
+### S13g — Two students want Friday at 14:00
 
 Kai and Jasmine each ask for another lesson that week. I prepare a new one-on-one request for each, select their existing student entries, and paste each link into the conversation I already use with that student: LINE for Kai, Instagram for Jasmine.
 
-**On Kai's page**, **Friday, 16 October, 14:00–15:00** is available when he selects it. His summary shows **Online · 1 hour**.
-
-**On Jasmine's page**, that same interval is available when she selects it. Her summary shows the same terms: **Online · 1 hour**.
-
-Jasmine confirms first. Her page shows the lesson as confirmed. When Kai presses **Confirm booking** on his selection, his console responds:
-
-> **annnä:** That time was just taken. Your booking has not been confirmed. A one-hour lesson is available at 16:00. Would you like to select that time?
->
-> **16:00** · **Choose another time**
-
-His name, online format and one-hour duration remain in the request. He selects **16:00**, reviews **16:00–17:00**, and confirms the refreshed choice. Neither page showed the other student's name.
+<a id="perspective-matt-s13g-5"></a>
 
 **Back as Matt**, Friday shows one **Jasmine · English · 14:00** card and one **Kai · English · 16:00** card. Jasmine's lesson reserves **13:55–15:05**. Kai's lesson reserves **15:55–17:05**. Friday's two gym task cards are still there; they held no time, so neither booking had to get past them.
 
 The October summaries now show Kai with **2 lessons / 1 hour 45 minutes** and Jasmine with **2 lessons / 2 hours**. Kai's failed attempt at 14:00 contributed no booking or usage.
 
+**Other perspectives in this interaction:** [Kai](#perspective-kai-s13g-2) · [Jasmine](#perspective-jasmine-s13g-3)
+
+<a id="perspective-matt-s14-1"></a>
+
 <a id="s14"></a>
 
-## S14 — My first setup has produced a useful schedule
+### S14 — My first setup has produced a useful schedule
 
 I return to **11–17 October** and choose **Show routines**. The board shows my Run routine and its dated travel exception, the personal appointment, Mark's Thursday lesson, Georgina's Monday and Thursday lessons, Jasmine's moved Monday lesson, Kai's Thursday lesson and the two Friday lessons. Saturday's cancelled Run stays skipped. My gym task cards sit on Monday, Wednesday and Friday without holding any time. The English-role borders help me distinguish my teaching from my personal commitments.
 
@@ -935,9 +883,11 @@ The next scheduling message can arrive in LINE, Messenger, Instagram or WeChat. 
 
 My English setup also shows my email reminder choice. Kai's lesson has its joining link, Mark's and Georgina's lessons carry their Messenger link, and my pending Monday template change has been resolved. I can see which details are saved by opening each item from this board.
 
+<a id="perspective-matt-s14a-1"></a>
+
 <a id="s14a"></a>
 
-## S14a — The reminder takes me to the lesson, and I record its end
+### S14a — The reminder takes me to the lesson, and I record its end
 
 On **Thursday, 15 October**, the reminder I requested arrives in my account email at **16:15**. It names **Kai · English lesson · 16:30–17:15 · Asia/Taipei** and includes **Open lesson**.
 
@@ -957,59 +907,39 @@ I click **OK**. Opening the lesson shows **Recorded end: 17:15 · Reported by Ma
 
 I can follow the whole record: Kai chose the time, the booking was confirmed, I supplied the meeting link, my reminder arrived, and I recorded when the lesson ended.
 
+<a id="perspective-matt-s14b-1"></a>
+
 <a id="s14b"></a>
 
-## S14b — Jasmine changes and cancels a later lesson
+### S14b — Jasmine changes and cancels a later lesson
 
 After her Friday lesson, Jasmine asks for another one on **Saturday, 17 October**. I open a new use of my English scheduling template, select the existing Jasmine student entry, and paste that request's new link into Instagram.
 
-**As Jasmine**, I use its console to request **Saturday, 17 October, 10:00, for forty-five minutes**. I review **10:00–10:45** and confirm. My October summary shows **3 of 4 lessons · 2 hours 45 minutes of 4 hours**, including Monday's and Friday's lessons.
+<a id="perspective-matt-s14b-3"></a>
 
-Later, I open this Saturday booking from its own link and say:
+**On Matt's board**, Saturday's lesson now starts at **10:15**, and my owner reminder follows it at **10:00**.
 
-> **Jasmine:** Move this lesson fifteen minutes later.
+<a id="perspective-matt-s14b-4"></a>
 
-> **annnä:** Move your Saturday, 17 October lesson from **10:00–10:45** to **10:15–11:00**? It is available for your forty-five-minute lesson.
->
-> **OK** · **Edit**
-
-I click **OK**. Reopening the booking shows **10:15–11:00**. The monthly count remains three lessons and two hours forty-five minutes. **On Matt's board**, Saturday's lesson now starts at **10:15**, and my owner reminder follows it at **10:00**.
-
-### My fourth request succeeds; a fifth reaches the count limit
+#### My fourth request succeeds; a fifth reaches the count limit
 
 **Back as Matt**, I prepare a separate one-on-one request for Jasmine for **Sunday, 18 October**, and another for **Wednesday, 21 October**. I select the existing Jasmine contact for each and send each its own individual link. Saturday's booking link still manages Saturday alone.
 
-**As Jasmine**, I use the Sunday request to ask for **10:00–11:00**. Confirming would bring my October usage from **3 lessons / 165 minutes** to **4 lessons / 225 minutes**. I confirm, and the fourth lesson is booked.
-
-I open the separate Wednesday request and ask for **21 October, 10:00–11:00**. The interval fits Matt's teaching window and buffers, but my confirmation is refused:
-
-> **annnä:** That would be your fifth English lesson in October. The limit is four, so this request has not been booked. Your usage stays **4 of 4 lessons · 225 of 240 minutes**, with fifteen minutes left — not enough for another lesson either way. You can change an existing booking under its terms, or choose a lesson in another month, where availability and that month's allowance will be checked.
-
-The request remains unconfirmed with my Wednesday choice available to retry. It would have used **5 lessons / 285 minutes**; the count limit stopped it, with barely any time left besides.
-
-### Cancelling Saturday makes room to retry
-
-Then Jasmine's plans change. **As Jasmine**, I return to the Saturday booking's own console:
-
-> **Jasmine:** Delete my Saturday lesson.
-
-> **annnä:** Cancel your English lesson on **Saturday, 17 October, 10:15–11:00**? This will release its reserved time and restore one lesson and forty-five minutes to your monthly allowance under Matt's cancellation setting.
->
-> **Confirm cancellation** · **Keep booking**
-
-I choose **Keep booking** while I check my plans. The page still shows the confirmed Saturday lesson. Once I am sure, I ask again and choose **Confirm cancellation**.
-
-The page shows **Cancelled · Saturday, 17 October, 10:15–11:00**, with me identified as the person who cancelled it. My October summary falls to **3 of 4 lessons · 180 of 240 minutes**. Monday's and Friday's lessons remain in my history; Sunday's one-hour lesson remains booked.
+<a id="perspective-matt-s14b-6"></a>
 
 **Back as Matt**, the console reports Jasmine's cancellation. The Saturday lesson leaves the active schedule, its **10:10–11:05** reservation is released, and its pending reminder is removed. I can open the cancelled booking from the report and read what happened.
 
-**As Jasmine**, I return to the separate Wednesday request and retry **21 October, 10:00–11:00**. The fresh check now permits it. I confirm, and my October usage becomes **4 lessons / 240 minutes**. Saturday remains cancelled; this is a new booking from the Wednesday request, not a restoration of Saturday.
+<a id="perspective-matt-s14b-8"></a>
 
 **On Matt's board**, Sunday's and Wednesday's lessons each reserve **09:55–11:05**, with my reminder at **09:45** on their respective dates. Both fit the every-day 09:00–23:00 window, away from the existing commitments in this fixture. Wednesday's lesson sits across my before-noon gym window; the gym task holds no time, so nothing stopped it. The Monday-only window change does not affect either date.
 
+**Other perspectives in this interaction:** [Jasmine](#perspective-jasmine-s14b-2)
+
+<a id="perspective-matt-s14e-1"></a>
+
 <a id="s14e"></a>
 
-## S14e — Later, when Kai and Jasmine also use annnä
+### S14e — Later, when Kai and Jasmine also use annnä
 
 This whole later path, including verified identity linking, is a capability to build and verify. In this end-state example, Kai and Jasmine each create their own annnä account. Each links that account to their existing student identity through the identity-confirmation process, so their lesson records, monthly summaries and booking links remain connected.
 
@@ -1025,9 +955,11 @@ A proposed opening still needs Jasmine's agreement and a final availability chec
 
 This later account-sharing path is a capability to build and verify. The earlier link path works by what students tell me and choose on their own pages; it does not claim access to their calendars.
 
+<a id="perspective-matt-s15-1"></a>
+
 <a id="s15"></a>
 
-## S15 — The packages
+### S15 — The packages
 
 On **Wednesday, 21 October**, I ask the console:
 
@@ -1044,11 +976,13 @@ annnä opens one tab per student:
 
 Each tab shows the package and the lessons it covers, with no lesson-by-lesson amount and no total. Whatever happens in a lesson, the month's bill is the package.
 
+<a id="perspective-matt-s16-1"></a>
+
 <a id="s16"></a>
 
-## S16 — I cancel Georgina's Monday
+### S16 — I cancel Georgina's Monday
 
-### This one, or the series?
+#### This one, or the series?
 
 I have to cancel on the evening of **Monday, 19 October**. With the week open, I tell the console:
 
@@ -1062,7 +996,7 @@ I choose **This occurrence**. The proposal names **Georgina · Monday, 19 Octobe
 
 Monday's Georgina card leaves the active board. Her standing lessons read **19 October cancelled by Matt**; Thursday, 22 October and Monday, 26 October are still scheduled.
 
-### annnä writes the message; I paste it
+#### annnä writes the message; I paste it
 
 > **annnä:** Georgina doesn't know yet. I can't message her, but I can write the cancellation for you, with a link to choose another time this month inside her package. Write it?
 >
@@ -1074,13 +1008,17 @@ I click **OK**. The console shows the text, with a fresh rebook link for Georgin
 
 I select **Copy message**, open our Messenger conversation and paste it myself. annnä shows no delivery status, because it delivered nothing.
 
-**As Georgina**, I open the link from Messenger. It shows Matt's bookable times for the rest of October and one lesson to place: **1 hour · Online · Included in your October package**. I choose **Tuesday, 20 October, 19:00–20:00** and confirm.
+<a id="perspective-matt-s16-3"></a>
 
 **Back as Matt**, a note tells me Georgina rebooked. **Georgina · English · 19:00** sits in Tuesday's column, and its details show the rebook link as its source. Her October package stays unchanged.
 
+**Other perspectives in this interaction:** [Georgina](#perspective-georgina-s16-2)
+
+<a id="perspective-matt-s17-1"></a>
+
 <a id="s17"></a>
 
-## S17 — A student doesn't turn up
+### S17 — A student doesn't turn up
 
 On **Thursday, 22 October**, I open our Messenger call at 09:00. Mark doesn't join and doesn't answer. After a while, I tell the console:
 
@@ -1092,9 +1030,11 @@ On **Thursday, 22 October**, I open our Messenger call at 09:00. Mark doesn't jo
 
 I click **OK**. The lesson reads **No-show · Reported by Matt**, with the interval it held. Mark's October package is unchanged.
 
+<a id="perspective-matt-s19-1"></a>
+
 <a id="s19"></a>
 
-## S19 — annnä hears me wrong
+### S19 — annnä hears me wrong
 
 Later on Friday, 30 October, over lunch, I tell the console:
 
@@ -1116,11 +1056,13 @@ Evening. I meant morning. My sentence didn't say which, the proposal is valid, a
 
 I click **OK**. Saturday's Run card moves to **06:30**. The 18:30 version never reached the board: it moved no card, held no evening time and changed nothing a student's page offered. The read-back was the check, and I was the one reading it.
 
+<a id="perspective-matt-s20-1"></a>
+
 <a id="s20"></a>
 
-## S20 — November writes itself
+### S20 — November writes itself
 
-### The first of the month
+#### The first of the month
 
 On **Sunday, 1 November**, I do nothing. October closes behind the new month, with every entry as I recorded it.
 
@@ -1128,11 +1070,11 @@ November opens off the same rules I set once. Kai's and Jasmine's monthly limits
 
 Mark's and Georgina's packages renew for November on the same terms. Mark's Thursdays on 5, 12, 19 and 26 November make his standing lesson. Georgina's Mondays on 2, 9, 16, 23 and 30 November and Thursdays on 5, 12, 19 and 26 November make hers.
 
-### Mark's Thursday keeps going
+#### Mark's Thursday keeps going
 
 Mark's Thursday 09:00 lesson has run since 1 October, and I haven't entered it again once. Each week's lesson appears as its week comes: October's five, the no-show recorded on 22 October, and now November's. The package stays the same across both months.
 
-### The meals
+#### The meals
 
 A few days into November, annnä mentions something it has noticed:
 
@@ -1142,11 +1084,13 @@ A few days into November, annnä mentions something it has noticed:
 
 I click **Keep logging**. Nothing is added to my board. The next meal I log is just a log.
 
+<a id="perspective-matt-s21-1"></a>
+
 <a id="s21"></a>
 
-## S21 — A full Thursday, read calmly
+### S21 — A full Thursday, read calmly
 
-### The day at rest
+#### The day at rest
 
 **Thursday, 19 November** is full. My Run was at 06:00. Mark's lesson ran **09:00–11:00**. Kai has **17:00–18:00**, with my reminder at **16:45**, and Georgina has **19:00–20:00**, with my reminder at **18:45**.
 
@@ -1154,7 +1098,7 @@ At **11:10**, after Mark's lesson, I open the day. The board is at rest: every c
 
 While I'm looking, Kai books again from his LINE link. A small note arrives, the kind every booking writes: **Kai booked Thursday, 26 November, 17:00–18:00**. I turn to next Thursday. The new block is simply there, at rest inside the wake scope I set, until my tap opens it: **Kai · English · 17:00 · November: 3 of 4 lessons · 180 of 240 minutes**, counting his 5 and 19 November lessons. I read it and close it, and the day goes quiet again. Nothing woke on its own; the board just holds one more true thing.
 
-### A run that stops honestly
+#### A run that stops honestly
 
 By now Jasmine's November is full: Mondays 2, 9 and 16 November at **15:30–16:30** and **Friday, 27 November, 14:00–15:00**, **4 of 4 lessons · 240 of 240 minutes**.
 
@@ -1173,6 +1117,258 @@ I read the tangle in one look and click **OK**. annnä writes a short message wi
 I paste it into Instagram. At lunchtime Jasmine moves the lesson herself from her own page: **Monday, 30 November, 15:30–16:30**, still **4 of 4 lessons · 240 of 240 minutes**.
 
 The park cleared because I cleared it. The night spent what its budget allows and not a step more, and what could have been a runaway meter was one quiet card on my board.
+
+
+### My scuba instructor life
+
+**Stub for Matt:** Describe how you work as a scuba instructor today and how you want to use annnä. Include how that work connects with your personal commitments and English teaching.
+
+<a id="perspective-kai"></a>
+
+## Kai
+
+<a id="perspective-kai-s11-1"></a>
+
+<a id="s11"></a>
+
+### S11 — Kai books through the limited student console
+
+I'm Kai. Matt sends me a link in LINE, and I tap it to open the page in my browser.
+
+I see **English lesson with Matt**, **Link package · NT$2,000 a month · 4 hours**, and **30 minutes–2 hours in 15-minute increments**. The calendar shows dates and a time scale labelled **Asia/Taipei**, the timezone for the times I enter in this conversation. Unavailable periods are blocked out, while the open periods indicate where a valid lesson may fit.
+
+Beside the console I can open the booking terms and data-use notice for this request. I review the notice and any required choices before sending my first message.
+
+The page also has a console:
+
+> **annnä:** I can help you fill in this lesson request and check bookable times with Matt. When would you like your lesson?
+
+My name is already **Kai**, and the request carries the student information Matt prepared. I use the console to fill the lesson's time and duration fields.
+
+#### I ask about a time
+
+> **Kai:** Is Matt available on Thursday, 15 October, at 15:30 for forty-five minutes?
+
+I click **Send**.
+
+> **annnä:** No. That interval is unavailable for an English lesson. Please choose another time from the available periods.
+
+The calendar reflects the occupied time and required separation. The reply answers the availability question without exposing the private appointment behind it.
+
+#### I try a duration outside the rules
+
+> **Kai:** Then Thursday, 15 October, at 16:05 for three hours.
+
+> **annnä:** Lessons must last from thirty minutes to two hours. Choose a duration within that range.
+
+I go the other way:
+
+> **Kai:** Twenty minutes, then, starting at 16:05.
+
+> **annnä:** That is shorter than Matt's minimum. Lessons must last at least thirty minutes. Choose a duration from thirty minutes to two hours.
+
+I try another answer:
+
+> **Kai:** Seventy-two minutes, starting at 16:05.
+
+> **annnä:** This template uses fifteen-minute increments. Choose thirty, forty-five, sixty, seventy-five, ninety, one hundred and five, or one hundred and twenty minutes.
+>
+> **30 minutes** · **45 minutes** · **60 minutes** · **75 minutes** · **90 minutes** · **105 minutes** · **120 minutes**
+
+I click **45 minutes**. That option is submitted as my answer, retaining the Thursday date and 16:05 start we were discussing.
+
+#### The available time changes while I am choosing
+
+The request form and console show the same selection:
+
+> **Kai · Thursday, 15 October · 16:05–16:50 · Online**
+>
+> **Duration: 45 minutes · Link package · NT$2,000 a month · 4 hours**
+
+The calendar marks this as my selected interval. The request is ready for confirmation.
+
+<a id="perspective-kai-s11-3"></a>
+
+**Back as Kai**, I click **Confirm booking** on the selection I had been reviewing. The calendar refreshes and the console responds:
+
+> **annnä:** That interval is no longer available. Your booking has not been confirmed. A forty-five-minute lesson is currently available at 16:30. Would you like to select it?
+>
+> **16:30** · **Choose another time**
+
+My name, contact, Thursday date and forty-five-minute duration remain filled in. The unavailable selection is clearly marked, and the calendar shows the refreshed choices. I continue from those answers when choosing the replacement time.
+
+I click **16:30**. The form and console update together:
+
+> **Kai · Thursday, 15 October · 16:30–17:15 · Online**
+>
+> **Duration: 45 minutes · Link package · NT$2,000 a month · 4 hours**
+
+#### I confirm the updated request
+
+The monthly-limit summary shows **October 2026: 0 of 4 lessons · 0 of 4 hours**, counted by when each lesson takes place on Matt's Asia/Taipei calendar. Confirming this lesson would make that **1 of 4 lessons · 45 minutes of 4 hours**.
+
+I review the new interval and applicable booking terms, then choose **Confirm booking** in the console. The request is checked against the current availability, rules and monthly totals again.
+
+I see **Booking confirmed** with **Thursday, 15 October, 16:30–17:15** and the forty-five-minute duration. The monthly summary now shows the one booked lesson and forty-five minutes. I can keep this lesson's link to return to its details. The meeting-link field is still blank.
+
+#### I check the time in another timezone
+
+For my travel plans, I tell this page's console, "Show this lesson in Tokyo time." The page's display changes to **Asia/Tokyo**. The same confirmed lesson reads **Thursday, 15 October · 17:30–18:15 Asia/Tokyo**, with **16:30–17:15 Asia/Taipei** beside it. Its forty-five-minute duration is unchanged. Matt's board and reminder still use Asia/Taipei; this display choice has not moved the lesson.
+
+I return the page to **Asia/Taipei** before continuing. All my later requests in this story use that displayed zone.
+
+#### The console keeps to this request
+
+The help and answers on this surface concern the template's fields, rules and bookable times. The student console has a much smaller set of permitted actions than Matt's owner console. Its purpose is to complete this authorized lesson request; the harness enforces that boundary on the operations it can perform.
+
+**Other perspectives in this interaction:** [Matt](#perspective-matt-s11-2)
+
+<a id="perspective-kai-s13a-2"></a>
+
+### S13a: Kai
+
+**As Kai**, opening that same page shows the confirmed time, price and a **Join lesson** link pointing to the URL Matt supplied.
+
+**Other perspectives in this interaction:** [Matt](#perspective-matt-s13a-1)
+
+<a id="perspective-kai-s13f-2"></a>
+
+### S13f: Kai
+
+#### A student asks to change my rule
+
+**As Kai**, on the page for my Thursday lesson, I ask:
+
+> **Kai:** Can my package be cheaper?
+
+> **annnä:** Matt controls this template's rules. Your package is NT$2,000 a month for 4 hours. I can help you choose a permitted duration or time for your booking.
+
+My confirmed lesson still shows its agreed time. The response explains who can change that rule and the choices available to me on this page.
+
+**Other perspectives in this interaction:** [Matt](#perspective-matt-s13f-1)
+
+<a id="perspective-kai-s13g-2"></a>
+
+### S13g: Kai
+
+**On Kai's page**, **Friday, 16 October, 14:00–15:00** is available when he selects it. His summary shows **Online · 1 hour**.
+
+<a id="perspective-kai-s13g-4"></a>
+
+When Kai presses **Confirm booking** on his selection, his console responds:
+
+> **annnä:** That time was just taken. Your booking has not been confirmed. A one-hour lesson is available at 16:00. Would you like to select that time?
+>
+> **16:00** · **Choose another time**
+
+His name, online format and one-hour duration remain in the request. He selects **16:00**, reviews **16:00–17:00**, and confirms the refreshed choice. Neither page showed the other student's name.
+
+**Other perspectives in this interaction:** [Matt](#perspective-matt-s13g-1) · [Jasmine](#perspective-jasmine-s13g-3)
+
+### My own annnä account and shared availability
+
+**Stub for Matt:** Fill in Kai's perspective on creating his own account and choosing what availability to share. Matt's existing telling remains in [S14e](#s14e).
+
+<a id="perspective-jasmine"></a>
+
+## Jasmine
+
+<a id="perspective-jasmine-s13g-3"></a>
+
+### S13g: Jasmine
+
+**On Jasmine's page**, that same interval is available when she selects it. Her summary shows the same terms: **Online · 1 hour**.
+
+Jasmine confirms first. Her page shows the lesson as confirmed.
+
+**Other perspectives in this interaction:** [Matt](#perspective-matt-s13g-1) · [Kai](#perspective-kai-s13g-2)
+
+<a id="perspective-jasmine-s14b-2"></a>
+
+### S14b: Jasmine
+
+**As Jasmine**, I use its console to request **Saturday, 17 October, 10:00, for forty-five minutes**. I review **10:00–10:45** and confirm. My October summary shows **3 of 4 lessons · 2 hours 45 minutes of 4 hours**, including Monday's and Friday's lessons.
+
+Later, I open this Saturday booking from its own link and say:
+
+> **Jasmine:** Move this lesson fifteen minutes later.
+
+> **annnä:** Move your Saturday, 17 October lesson from **10:00–10:45** to **10:15–11:00**? It is available for your forty-five-minute lesson.
+>
+> **OK** · **Edit**
+
+I click **OK**. Reopening the booking shows **10:15–11:00**. The monthly count remains three lessons and two hours forty-five minutes.
+
+<a id="perspective-jasmine-s14b-5"></a>
+
+**As Jasmine**, I use the Sunday request to ask for **10:00–11:00**. Confirming would bring my October usage from **3 lessons / 165 minutes** to **4 lessons / 225 minutes**. I confirm, and the fourth lesson is booked.
+
+I open the separate Wednesday request and ask for **21 October, 10:00–11:00**. The interval fits Matt's teaching window and buffers, but my confirmation is refused:
+
+> **annnä:** That would be your fifth English lesson in October. The limit is four, so this request has not been booked. Your usage stays **4 of 4 lessons · 225 of 240 minutes**, with fifteen minutes left — not enough for another lesson either way. You can change an existing booking under its terms, or choose a lesson in another month, where availability and that month's allowance will be checked.
+
+The request remains unconfirmed with my Wednesday choice available to retry. It would have used **5 lessons / 285 minutes**; the count limit stopped it, with barely any time left besides.
+
+#### Cancelling Saturday makes room to retry
+
+Then Jasmine's plans change. **As Jasmine**, I return to the Saturday booking's own console:
+
+> **Jasmine:** Delete my Saturday lesson.
+
+> **annnä:** Cancel your English lesson on **Saturday, 17 October, 10:15–11:00**? This will release its reserved time and restore one lesson and forty-five minutes to your monthly allowance under Matt's cancellation setting.
+>
+> **Confirm cancellation** · **Keep booking**
+
+I choose **Keep booking** while I check my plans. The page still shows the confirmed Saturday lesson. Once I am sure, I ask again and choose **Confirm cancellation**.
+
+The page shows **Cancelled · Saturday, 17 October, 10:15–11:00**, with me identified as the person who cancelled it. My October summary falls to **3 of 4 lessons · 180 of 240 minutes**. Monday's and Friday's lessons remain in my history; Sunday's one-hour lesson remains booked.
+
+<a id="perspective-jasmine-s14b-7"></a>
+
+**As Jasmine**, I return to the separate Wednesday request and retry **21 October, 10:00–11:00**. The fresh check now permits it. I confirm, and my October usage becomes **4 lessons / 240 minutes**. Saturday remains cancelled; this is a new booking from the Wednesday request, not a restoration of Saturday.
+
+**Other perspectives in this interaction:** [Matt](#perspective-matt-s14b-1)
+
+### My own annnä account and shared availability
+
+**Stub for Matt:** Fill in Jasmine's perspective on creating her own account and choosing what availability to share. Matt's existing telling remains in [S14e](#s14e).
+
+<a id="perspective-georgina"></a>
+
+## Georgina
+
+<a id="perspective-georgina-s16-2"></a>
+
+### S16: Georgina
+
+**As Georgina**, I open the link from Messenger. It shows Matt's bookable times for the rest of October and one lesson to place: **1 hour · Online · Included in your October package**. I choose **Tuesday, 20 October, 19:00–20:00** and confirm.
+
+**Other perspectives in this interaction:** [Matt](#perspective-matt-s16-1)
+
+<a id="perspective-mark"></a>
+
+## Mark
+
+**Stub for Matt:** Fill in Mark's perspective on his standing lessons and his interactions with Matt and annnä. Matt's existing telling remains in [S08](#s08) and [S17](#s17).
+
+<a id="perspective-sarah"></a>
+
+## Sarah
+
+**Stub for Matt:** If Sarah has an interaction to tell, fill in her perspective here. Matt's existing travel example remains in [S05](#s05).
+
+<a id="perspective-diver-123"></a>
+
+## Diver 123
+
+**Stub for Matt:** Replace this placeholder with a diver you want to describe. Fill in how they interact with you today and how you want that interaction to work with annnä.
+
+<a id="perspective-dive-shop-123"></a>
+
+## Dive shop 123
+
+**Stub for Matt:** Replace this placeholder with a dive shop you want to describe. Fill in its perspective on working with you today and with annnä.
+
 
 
 ---

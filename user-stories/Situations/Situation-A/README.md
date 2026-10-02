@@ -13,6 +13,8 @@
 | [`story-matt.md`](story-matt.md) | Matt's own first-person telling, September to November 2026: invite onboarding, his life on the board, the English template, four students, the edges, the money and the months (immersive; the console gold reference) |
 | [`story-matt-verification.md`](story-matt-verification.md#layer-debt) | the derived companion: layer debt, the scene trace, 109 cases (12 retired), 26 CRUD families (two retired), 42 harness cues, LEGAL-01, the quote matrix and the October and November ledger (parked 2026-09-15) |
 
+**Read by person.** [Matt](story-matt.md#perspective-matt), [Kai](story-matt.md#perspective-kai), [Jasmine](story-matt.md#perspective-jasmine), [Georgina](story-matt.md#perspective-georgina), [Mark](story-matt.md#perspective-mark) and [Sarah](story-matt.md#perspective-sarah) have separate sections in the same story. Matt's scuba instructor path and the [diver](story-matt.md#perspective-diver-123) and [dive shop](story-matt.md#perspective-dive-shop-123) perspectives are stubs for him to fill in. Existing scene wording and IDs remain; links reconnect interactions that span people.
+
 Neither file claims implemented capability or legal clearance. The companion names what each layer still owes; `../../README.md` item 5 states the census and what a trace does and does not prove.
 
 ---
