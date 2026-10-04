@@ -1,13 +1,13 @@
 # AGENTS.md — operating instructions for agents in this repo
 
-**This repo is a specification corpus — its source of truth is markdown.** Code now executes in a few places: `engine/` and `harness/` each carry real TypeScript and a vitest suite (both at Step 0); `engine/scripts/reactive-push-check.mjs` probes the reactive-push criterion against a live Convex deployment (normative home: `engine/BUILD.md` Step 0, I4); `assets/make-pack.mjs` builds the admin asset pack; and the process gates sit in `deployment/scripts/` — each wired to an `npm` script in `package.json`, which is executable and therefore the only copy that cannot go stale (what each is for: "The one green command"). Everything else is specification, not code: the tracked markdown files (`git ls-files '*.md'` is what a clone contains). A working checkout also carries gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent for every reader and no count of it is asserted (FD-10). Read that as a standing caveat on everything below.
+This is a markdown specification corpus. Executable code is limited to TypeScript in `engine/` and `harness/` (both have Step 0 suites), `engine/scripts/reactive-push-check.mjs` (home: `engine/BUILD.md` Step 0, I4), `assets/make-pack.mjs`, and process gates in `deployment/scripts/` wired through `package.json` (`deployment/README.md`, “The one green command”). `git ls-files '*.md'` shows what clones contain. Local checkouts carry gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent to readers and excluded from counts (FD-10).
 
 ## Authority order
 
 1. **A `SPEC` is the source of truth.** Build from it. `SPEC` is a tier `INDEX.md` grades, not a location — root files carry it too.
 2. **Use `INDEX.md`'s closed tier vocabulary:** `SPEC`, `derived`, `index`, `never`. Historical evidence justifies a decision; it does not override its current home. Local working notes are not product law.
 
-Ask the founder only platform-architecture questions. User-configurable behavior is a setting, domain-specific behavior is future template configuration under FR37, and UI/UX questions go to a separate session as a handoff marked not a founder question. With Matt, say event, task, lesson and deadline; “commitment” is engine/schema vocabulary only.
+Ask the founder only platform-architecture questions. User-configurable behavior is a setting; domain-specific behavior is future template configuration (FR37); UI/UX gets a separate handoff marked not a founder question. With Matt, say event, task, lesson and deadline; “commitment” is engine/schema vocabulary.
 
 ## Project phases
 
@@ -24,7 +24,7 @@ Ask the founder only platform-architecture questions. User-configurable behavior
   BUILD.md       the ordered implementation plan, each step naming its gating scenarios
 ```
 
-Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (the canvas, skins and glass; the rest reserved for the design scheme, FD-110) · `deployment/` is a process spec governing the build in this repo (ruled in place 2026-08-07), not a layer. Layer folders are not numbered: each `BUILD.md` carries Step 0–9, and `INTERFACES.md` joins the modules; numbering duplicates the order and shifts citations.
+Deviations: `model/` uses graded `EVALS.md`; `app/` adds `DESIGN.md` (canvas, skins and glass; rest reserved under FD-110); `deployment/` is a build-process spec, not a layer. Layer folders are unnumbered; `BUILD.md` numbers steps and `INTERFACES.md` joins modules.
 
 ## Citation conventions that will otherwise trip you
 
@@ -43,11 +43,11 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 
 ## Where to start
 
-**`INDEX.md` lists every tracked file with its authority tier and what it decides — read it before grepping.** To build a layer: `harness/BUILD.md` first, in isolation against stubs. To write tests: `user-stories/`, the top of the hierarchy. To trace a decision: `RULINGS.md`.
+`INDEX.md` lists tracked files, authority tiers and decisions; read it before grepping. Build from `harness/BUILD.md` against stubs, derive tests from `user-stories/`, and trace decisions in `RULINGS.md`.
 
 ## The one green command
 
-`npm run check` from the repo root is the whole gate, and `.githooks/pre-commit` runs it before every commit — `git config core.hooksPath .githooks` once, per checkout, or a fresh clone is ungated. **What it runs and why each step exists: [`deployment/README.md`](deployment/README.md) §The one green command** (the order lives in `package.json`'s chain). That detail is needed once, while debugging a red gate; this file is every session's first read, so it is not kept here.
+`npm run check` is the whole gate. `.githooks/pre-commit` runs it; each checkout needs `git config core.hooksPath .githooks`. See [`deployment/README.md`](deployment/README.md) §The one green command for its steps and why (`package.json` owns the order).
 
 ## Two standing constraints
 
@@ -56,7 +56,7 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 
 ## Standing discipline
 
-After any multi-file pass, before committing, sweep for **survivors** — dead vocabulary a rename left behind, restatements that diverged from their home, citations that no longer resolve, counts the work overtook. Where a survivor is a class a script could catch, write the gate, not just the fix. Before reporting an absence or count, verify the check against a known positive; use `git grep -- <pathspec> <rev>`, save and read complete output with a count, do not carry counts forward, and never use a read limit as evidence that a file ends there.
+Before committing a multi-file pass, sweep for dead terms, diverged restatements, broken citations and stale counts; gate script-detectable survivors. Before claiming absence or count, test a known positive, save and read complete `git grep` output with a count; never truncate it, reuse counts, or treat a read limit as EOF.
 
 ## Agent skills
 
@@ -72,8 +72,8 @@ Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-
 
 ## Corpus language and design discipline
 
-- Write the product name **annnä** (three n's and an umlaut); normalize speech-to-text variants silently. Preserve existing identifiers and append-only logs.
-- When a gap depends on something outside the document, do not choose a default. Add a named **Blocked On** entry with the gap, blocker and what would resolve it; keep it distinct from open questions.
-- Take Matt's plain physical descriptions literally. Do not reformalize them, add a primitive when an existing rule covers the case, or preserve a rule that resolves nonexistent contention.
-- Keep the engine domain-free: no dive, course or student nouns in engine code or FRs. Domain vocabulary ships as deletable content or templates.
-- When convenience conflicts with a guarantee, offer the strict option first and mark it Recommended. Resolve spec collisions by deleting or narrowing the overreaching absolute before adding mechanisms.
+- Spell the product **annnä**; silently normalize speech variants but preserve identifiers and append-only logs.
+- If a document depends on outside input, add **Blocked On** (gap, blocker, resolver); do not guess or conflate it with an open question.
+- Take physical descriptions literally; do not add primitives or preserve rules for nonexistent contention.
+- Keep engine code and FRs domain-free; domain vocabulary belongs in deletable content or templates.
+- Offer the strict option first; resolve spec collisions by deleting or narrowing overreaching absolutes before adding mechanisms.
