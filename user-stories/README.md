@@ -1,5 +1,7 @@
 # User Stories (the situations the product must satisfy)
 
+Every story stays strictly in the first person: only what the character sees, clicks or says. Put mechanisms in the owning layer spec or invented-and-justified register, not in the story narrative.
+
 This folder holds the **real, end-to-end stories of how people actually use annnä.** It is the product's **falsification-probe corpus** — what every scenario must derive from and be refutable against. **The requirements register is [`PRD.md`](../PRD.md)'s `RQ-##` series (FD-35, ruled 2026-08-21)** — this file previously called itself "the requirements source-of-truth" while `AGENTS.md` gave that to the PRD, two SPEC-tier files with no tiebreak; the split is now: requirements live in the PRD, and the Situations are the probes that test them. A Situation beat with no covering scenario is a derivation defect; an RQ no Situation exercises is a probe gap — both directions now have a name. It is deliberately *not* the tests: the per-layer acceptance suites (each layer's `SCENARIOS.md`, and the model's `EVALS.md`) are **derived from these stories**, and [`TDD.md`](../TDD.md) states what kind of executable test each criterion becomes. Stories first, tests after — both now written.
 
 **What these files are:** the full narrative of how each kind of user works with annnä, plus the **situations** that matter — both the things that **must work** and the things that **must be refused** (poka-yoke tested from the outside).

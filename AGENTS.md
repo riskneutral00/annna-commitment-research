@@ -7,6 +7,8 @@
 1. **A `SPEC` is the source of truth.** Build from it. `SPEC` is a tier `INDEX.md` grades, not a location — root files carry it too.
 2. **Use `INDEX.md`'s closed tier vocabulary:** `SPEC`, `derived`, `index`, `never`. Historical evidence justifies a decision; it does not override its current home. Local working notes are not product law.
 
+Ask the founder only platform-architecture questions. User-configurable behavior is a setting, domain-specific behavior is future template configuration under FR37, and UI/UX questions go to a separate session as a handoff marked not a founder question. With Matt, say event, task, lesson and deadline; “commitment” is engine/schema vocabulary only.
+
 ## Project phases
 
 **Founder clarification, 2026-09-20:** Phase 1 = planning; Phase 2 = development; Phase 3 = maintaining live annnä. **Current: Phase 1; all planning material is editable.** Preserve history; mark proposals. BUILD steps use separate numbering. Planning exits: `blastoff.md`. Development requires explicit authorization.
@@ -22,7 +24,7 @@
   BUILD.md       the ordered implementation plan, each step naming its gating scenarios
 ```
 
-Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (the canvas, skins and glass; the rest reserved for the design scheme, FD-110) · `deployment/` is a process spec governing the build in this repo (ruled in place 2026-08-07), not a layer.
+Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rather than built) · `app/` adds `DESIGN.md` (the canvas, skins and glass; the rest reserved for the design scheme, FD-110) · `deployment/` is a process spec governing the build in this repo (ruled in place 2026-08-07), not a layer. Layer folders are not numbered: each `BUILD.md` carries Step 0–9, and `INTERFACES.md` joins the modules; numbering duplicates the order and shifts citations.
 
 ## Citation conventions that will otherwise trip you
 
@@ -54,7 +56,7 @@ Deviations: `model/` uses `EVALS.md` (graded, because models are qualified rathe
 
 ## Standing discipline
 
-After any multi-file pass, before committing, sweep for **survivors** — dead vocabulary a rename left behind, restatements that diverged from their home, citations that no longer resolve, counts the work overtook. Where a survivor is a class a script could catch, write the gate, not just the fix.
+After any multi-file pass, before committing, sweep for **survivors** — dead vocabulary a rename left behind, restatements that diverged from their home, citations that no longer resolve, counts the work overtook. Where a survivor is a class a script could catch, write the gate, not just the fix. Before reporting an absence or count, verify the check against a known positive; use `git grep -- <pathspec> <rev>`, save and read complete output with a count, do not carry counts forward, and never use a read limit as evidence that a file ends there.
 
 ## Agent skills
 
@@ -67,3 +69,11 @@ GitHub Issues in `riskneutral00/annna-commitment-research`. See `docs/agents/iss
 Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
 
 *`docs/agents/` is working material, absent from a clone.*
+
+## Corpus language and design discipline
+
+- Write the product name **annnä** (three n's and an umlaut); normalize speech-to-text variants silently. Preserve existing identifiers and append-only logs.
+- When a gap depends on something outside the document, do not choose a default. Add a named **Blocked On** entry with the gap, blocker and what would resolve it; keep it distinct from open questions.
+- Take Matt's plain physical descriptions literally. Do not reformalize them, add a primitive when an existing rule covers the case, or preserve a rule that resolves nonexistent contention.
+- Keep the engine domain-free: no dive, course or student nouns in engine code or FRs. Domain vocabulary ships as deletable content or templates.
+- When convenience conflicts with a guarantee, offer the strict option first and mark it Recommended. Resolve spec collisions by deleting or narrowing the overreaching absolute before adding mechanisms.

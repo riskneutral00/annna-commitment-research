@@ -101,3 +101,5 @@
 - **The bound is law:** if Step 8 tempts you toward route optimization or week-level moves, re-read SPEC §7/§11 — feasibility and improvement, ≤3 moves, one day, one owner.
 - **No new seam verbs** (INTERFACES §1); no rule type without §3's math + evaluation point; no delete, ever.
 - Determinism is a test: any scenario that flakes under replay is a bug in the engine, not the suite.
+
+Every Convex CLI call is `cd engine && CONVEX_DEPLOYMENT=dev:upbeat-bulldog-541 npx convex ...`; the ambient shell exports a different deployment (`dev:content-ibex-580`) that must never be targeted. Keep `.convex-deployment` pins at both repo root and `engine/` (both are gitignored).

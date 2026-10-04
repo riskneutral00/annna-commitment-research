@@ -8,6 +8,17 @@
 
 ---
 
+## Unnumbered founder direction migrated from memory — 2026-10-05
+
+No FR or FD identifier is assigned here; the approved relocation preserves the original decision dates and puts the normative text in its owning PRD sections.
+
+| Original date and decision | Normative home |
+|---|---|
+| 2026-07-19: public repo as trust surface; closed hosted revenue, FSL intent, trademark, no BYO subscriptions | `PRD.md` §1.5 |
+| 2026-09-03: the founder's own dive-centre scheduler is first-party; third-party restrictions apply only to genuine third parties | `PRD.md` §6.1 |
+| Standards-library fidelity over IP caution; record licensing once and do not gate design or GTM | `PRD.md` §5 |
+| Reject self-modifying code, data-programs, executable extensions, trigger-time model-evaluated natural-language conditions, user-API-key onboarding, optimistic UI and allow-by-default approvals | `PRD.md` §5 |
+
 ## Phase clarification and planning review — 2026-09-20
 
 Matt explicitly defined the three project phases, confirmed the current phase and authorized revising all Phase 1 planning material. Home: `AGENTS.md` §Project phases. `blastoff.md` now tests documentary readiness rather than requiring development before development may begin. The planning review corrects the model's pleasantness-only overclaim (`model/SPEC.md` §0) and exposes assumptions (`PRD.md` §12). These are planning revisions under that authorization, not new product features, altered language/safety qualification bars, or a Phase 2 go-word. Prior text survives in the local dated review's before snapshots and Git history. No new FR/FD identifier is invented for this review.

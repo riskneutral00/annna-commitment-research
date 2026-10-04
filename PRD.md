@@ -74,6 +74,8 @@ annnä engineers peace in three steps — it takes the work, it takes the worry,
 
 **annnä's ambition is category replacement.** The commitment-shaped functions of the software a small operator runs beside their calendar today — the accounting ledger's who-owes-what, the CRM's who-promised-what-to-whom, the contract tool's what-was-agreed — eventually live in annnä, because each is a view over commitments and annnä holds the Commitment as its primitive. The stored money marks, party history, the signed-terms basis, and the template marketplace are that trajectory's seeds, already specced. **Nothing about v1 changes:** FR10's bar, FD-80 (what ships is the application), and every §5 non-goal stand as written — the end-state is direction, not scope, and the path is the rulings cadence: a capability enters when its scenarios and its ruling exist, never before. `user-stories/README.md`'s gap 4 (non-calendar bulk import) is the first post-release rulings program on this path — the migration door.
 
+**Monetization posture (founder, 2026-07-19; internal direction):** the public repository is the trust surface. Revenue is through closed hosted services (skins store, blueprint store, metered brain broker) in a separate private repository, with FSL license intent and a trademark; the in-app agent does not use BYO subscriptions. This is internal direction and carries no outward promise.
+
 ## 2. Target User
 
 ### 2.1 Jobs To Be Done
@@ -362,11 +364,16 @@ What annnä is not, and will not become. These prevent the "let me also add this
 
 **Sorted, since FD-71 named an end-state (2026-08-22) — two kinds of row, and the difference matters when the end-state pulls.** **Identity, never changing:** not a calendar with a chatbot, not an autonomous scheduler, not an agent that holds the truth, not agent-only, not guest-facing, not a dive product — and not a two-way calendar, because the end-state absorbs a category by **replacement, never by sync** (the outbound ban is identity, not a v1 economy). **Scope with a trajectory:** the accounting-class, CRM-class and e-sign-class absences FD-71 names enter only by the rulings cadence, scenario-first; the money posture ("possible future, not a premise") already conforms. **Dated scope:** not-open-to-other-people's-agents is v2 behind FR1's legal review (§1.2 refusal two), not identity.
 
+- **Standards-library fidelity (accepted posture):** prioritize fidelity over IP caution; record licensing once, and do not gate design or go-to-market on it.
+- **Standing rejections:** self-modifying code, data-programs, executable extensions, natural-language conditions evaluated by a model at trigger time, user-API-key onboarding, optimistic UI, and allow-by-default approvals.
+
 ## 6. Scope
 
 ### 6.1 v1 is FR10's v1, and this PRD does not redefine it
 
 **FR10 rules that v1 solves Situations A, B, C and D, with E held out.** FR1 defers the cross-tenant referral beat behind a legal review. That is the scope of record and this document does not narrow it. Introducing a third scope word — "v1", "MVP", and something between them — is the failure this corpus has repeatedly paid for, and it is not worth a section heading.
+
+The founder's own dive-centre website using annnä as a scheduler is a first-party surface on the owner's token, inside the v1 owner-only fence. It is not the third-party operator case in OR-42 or FR18. Third-party vetting and commercial terms apply only to a genuine third-party operator and never block the first-party case (founder ruling, 2026-09-03).
 
 **Confirmed 2026-08-08: FR10 stands and v1 is not narrowed to the cohort.** §2.3 establishes that the first two adoption rings are Situation A shaped; that is an **onboarding order**, not a feature cut. Narrowing was considered and refused for three reasons: all four Situations are already specified, so narrowing would reorder the build rather than reduce the spec, and build order is already held per layer in `BUILD.md`; the cohort straddles A and C rather than sitting inside A, because a freelance instructor receiving and accepting a job is Situation C's other half (`user-stories/Situations/Situation-C/resource-instructor.md`); and the four Situations are the instrument that makes *"design the general capability, not the use case"* checkable — build to one and you build **to** one, and the held-out domain means nothing if the others were never exercised.
 
@@ -436,7 +443,7 @@ The corpus has strong versioning discipline in two places: kind schemas are pinn
 | Build discipline, environments, what may land on main | `deployment/SPEC.md` | The inbound-enumeration law landed (RQ-9, `harness/INTERFACES.md §6`); the concrete list is produced at harness BUILD Step 8, mirroring the outbound allowlist |
 | Accessibility — WCAG 2.1 AA on both audiences | `app/SPEC.md §11` | the measured ceiling on any design scheme |
 
-**Monetization is deliberately absent.** FR18 makes commercial silence repo-wide: pricing, payment, revenue and money mechanics appear on no outward surface, and a cost question gets "nothing to announce" *(the outward half's home since 2026-09-17, FD-108)*. This document stays on the product and the problem.
+**Commercial details stay off outward surfaces.** FR18 keeps pricing, payment terms and money mechanics out of public product copy, and a cost question gets "nothing to announce" *(the outward half's home since 2026-09-17, FD-108)*. The internal strategy in §1.5 is not an outward claim; this document stays on the product and the problem.
 
 ## 9. Risks this PRD adds
 
