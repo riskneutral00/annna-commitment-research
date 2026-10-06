@@ -58,6 +58,8 @@ Deviations: `model/` uses graded `EVALS.md`; `app/` adds `DESIGN.md` (canvas, sk
 
 Before committing a multi-file pass, sweep for dead terms, diverged restatements, broken citations and stale counts; gate script-detectable survivors. Before claiming absence or count, test a known positive, save and read complete `git grep` output with a count; never truncate it, reuse counts, or treat a read limit as EOF.
 
+Never record or publish the origin story of the name "annnä", never ask Matt to re-tell it, and never reconstruct it from context (Matt, 2026-08-06). The only recordable facts are the pronunciation (like "Anna") and that the app is personified (you talk to her).
+
 ## Agent skills
 
 ### Issue tracker
