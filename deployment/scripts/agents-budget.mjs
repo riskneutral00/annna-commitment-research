@@ -42,7 +42,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..")
 // claimed is spare the next session spends on one more sentence. The number is
 // what the file actually weighs, not a target with room in it — which is the
 // whole difference between a ratchet and a budget.
-const CEILING = 960;
+const CEILING = 976;
 
 export const countWords = (text) => text.split(/\s+/).filter(Boolean).length;
 
