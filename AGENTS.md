@@ -47,9 +47,9 @@ Deviations: `model/` uses graded `EVALS.md`; `app/` adds `DESIGN.md` (canvas, sk
 
 ## The one green command
 
-`npm run check` is the whole gate. `.githooks/pre-commit` runs it; each checkout needs `git config core.hooksPath .githooks`. See [`deployment/README.md`](deployment/README.md) §The one green command for its steps and why (`package.json` owns the order).
+`npm run check` is the whole gate; [`deployment/README.md`](deployment/README.md) §The one green command owns its steps, hook setup and why.
 
-Delivery: PR to `main`, merged via `gh pr merge --match-head-commit <sha>` after `npm run check` and independent verification.
+Delivery: PR to `main`, merged without Matt by `gh pr merge --match-head-commit <sha>` once `npm run check` and an independent verification pass that sha; no auto-merge or merge queue.
 
 ## Two standing constraints
 
