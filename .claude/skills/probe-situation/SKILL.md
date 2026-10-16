@@ -1,0 +1,1 @@
+../../../.agents/skills/probe-situation/SKILL.md
