@@ -7,7 +7,7 @@ This is a markdown specification corpus. Executable code is limited to TypeScrip
 1. **A `SPEC` is the source of truth.** Build from it. `SPEC` is a tier `INDEX.md` grades, not a location — root files carry it too.
 2. **Use `INDEX.md`'s closed tier vocabulary:** `SPEC`, `derived`, `index`, `never`. Historical evidence justifies a decision; it does not override its current home. Local working notes are not product law.
 
-Ask the founder only platform-architecture questions. User-configurable behavior is a setting; domain-specific behavior is future template configuration (FR37); UI/UX gets a separate handoff marked not a founder question. With Matt, say event, task, lesson and deadline; “commitment” is engine/schema vocabulary.
+Ask the founder only platform-architecture questions. User-configurable behavior is a setting; domain-specific behavior is future template configuration (FR37); UI/UX gets a separate handoff marked not a founder question. Vocabulary: `GLOSSARY.md`; with Matt, “commitment” covers events, tasks and routines.
 
 ## Project phases
 

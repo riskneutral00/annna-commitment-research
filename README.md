@@ -24,6 +24,7 @@ Calendar import is manual, at the owner's request, with no write-back. V1 exclud
 1. [Matt schedules English lessons](user-stories/Situations/Situation-A/story-matt.md) — the detailed first-use story, from personal commitments to template authoring and student booking. It is scripted end-state behavior; the [verification companion](user-stories/Situations/Situation-A/story-matt-verification.md#layer-debt) records the contracts and tests still owed.
 2. [Product requirements](PRD.md) — the general capabilities the stories test.
 3. [INDEX.md](INDEX.md) lists every markdown file tracked in this repository with its authority tier.
+4. [GLOSSARY.md](GLOSSARY.md) says what commitment, Board, event, task and routine mean today, and what is still open.
 
 Agents start with [AGENTS.md](AGENTS.md), then INDEX.md. Once development is explicitly authorized, builders start with [harness/BUILD.md](harness/BUILD.md), against stubs, following the existing [build dependencies](deployment/SPEC.md).
 
