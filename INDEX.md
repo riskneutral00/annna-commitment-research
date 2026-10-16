@@ -21,6 +21,7 @@
 |---|---|---|
 | AGENTS.md | SPEC | The operating law for agents: authority order, package shape, citation conventions, ruling vocabularies. The first read of every session |
 | BRAND.md | SPEC | Reserved home for the identity, vision, voice and marks the design and product scheme will supply; owed, decided nowhere else (FD-110) |
+| GLOSSARY.md | derived | The vocabulary home: ordinary meanings, dated founder statements, where each term is defined in a SPEC, and what stays open; defines no law |
 | INDEX.md | index | This file — every tracked markdown file and its authority tier |
 | PRD.md | SPEC | Agent-first, capability parity, peace requirement; §6.5 is the home of what ships (FD-80) |
 | README.md | derived | The repo's front page: what annnä is, the one-week-run-twice proof, the layer map, current build state |
