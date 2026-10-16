@@ -64,6 +64,8 @@ Never record or publish the origin story of the name "annnä", never ask Matt to
 
 ## Agent skills
 
+Probe skills: `.agents/skills/probe-elicit`, `probe-situation` (with `METHOD.md`) build `user-stories/`.
+
 ### Issue tracker
 
 GitHub Issues in `riskneutral00/annna-commitment-research`. See `docs/agents/issue-tracker.md`.
@@ -71,8 +73,6 @@ GitHub Issues in `riskneutral00/annna-commitment-research`. See `docs/agents/iss
 ### Triage labels
 
 Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
-
-*`docs/agents/` is working material, absent from a clone.*
 
 ## Corpus language and design discipline
 
