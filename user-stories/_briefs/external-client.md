@@ -2,7 +2,7 @@
 
 **Readiness.** Ready when the founder opens a sitting on the external client. Not before — this brief collects the questions; the sitting supplies the domain.
 
-**Fenced out of this sitting since 2026-10-16 — founder rulings, not questions:** how outside agents connect (an MCP server), whether booking data goes to other apps, and whether the harness is used outside annnä. Their home is `../../RULINGS.md` "2026-10-16 outside-software ruling"; do not ask them. The one part still open there, whether "other people's agents" reaches past each person's own agent, is put to Matt from that ruling, not from this brief.
+**Fenced out of this sitting since 2026-10-16 — founder rulings, not questions:** how outside agents connect (an MCP server), whether booking data goes to other apps, and whether the harness is used outside annnä. Their home is `../../RULINGS.md` "2026-10-16 outside-software ruling"; do not ask them. The one part still open there, whether "other people's agents" reaches past each person's own agent, is put to Matt from that ruling, not from this brief. *(Answered ~19:30 the same day: an outside agent may do exactly what the person it represents, owner or student, can do. Remaining harness questions go to Matt's dedicated harness session, not to this sitting.)*
 
 **The debt this closes.** `../../PRD.md` §4.6 records **RQ-1 through RQ-9** as `owed`, each stating what its probe must show. That is nine of the eleven owed requirements in the register and the single largest probe gap in the corpus.
 

@@ -107,12 +107,12 @@ Matt's 2026-10-16 statements below come from the 17:04 interview answer and the 
 ### Import
 **Founder, 2026-10-16.** "It can intake software from other places. That's something that we have to work on." Calendar examples: iCal and Google Calendar.
 **Spec.** Information flows in only: calendar import law at `app/SPEC.md §9`. Legal **takeout** of a user's own data (`security/SPEC.md §8`) is a duty to that user, not an export to another app.
-**Open.** Whether, and how, a user's own agent may bring that user's information in ("might possibly look at").
+**Open.** Whether, and how, a user's own agent may bring that user's information in ("might possibly look at"). Carried to Matt's dedicated harness session; do not ask piecemeal.
 
 ### MCP, external client
 **Founder, 2026-10-16.** "Annnä will have an MCP exposed so that other people's agents can use it, including the OpenAI subscription."
 **Spec.** MCP is the transport of the external-client surface, the same tool contract under the same floor (`harness/SPEC.md §5.3`; `PRD.md §4.2`).
-**Open.** Whether "other people's agents" reaches past each person's own agent (`PRD.md §1.2`, refusal two).
+**Founder, 2026-10-16, ~19:30.** "The AI doesn't do anything that the student can't do." An outside agent may do exactly what the person it represents can do in the app (`PRD.md §1.2`, refusal two superseded in part). What a provider subscription permits is unverified.
 
 ### Embed, plugin
 **Founder, 2026-10-16.** A business "plug[s] in annnä" to its own website, "just like they have to do web plugins"; a desktop user brings "in a plugin".
@@ -125,7 +125,7 @@ Matt's 2026-10-16 statements below come from the 17:04 interview answer and the 
 ### Service around a commitment
 **Founder, 2026-10-16, 17:04.** "Users can add any service that is around the commitment. But we might need to discuss what this means."
 **Usage.** Read as real-world providers a commitment needs (an instructor, a boat, cylinders, a venue), not as software connections, which the 19:00 ruling excludes.
-**Open.** What else counts as such a service. Matt offered to explain through better user stories.
+**Open.** What else counts as such a service. Matt offered to explain through better user stories. Carried to his dedicated harness session; do not ask piecemeal.
 
 ## Unresolved
 
@@ -136,7 +136,7 @@ Matt's 2026-10-16 statements below come from the 17:04 interview answer and the 
 5. Whether cycle is a term the product uses.
 6. The suggestions toggle and the generative-UI role, both expressed as preference or possibility.
 7. Per-commitment versus per-kind field requiredness.
-8. What counts as a service around a commitment, beyond real-world providers.
+8. What counts as a service around a commitment, beyond real-world providers (carried to Matt's dedicated harness session).
 
 ## Blocked On
 
