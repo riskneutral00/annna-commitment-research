@@ -199,7 +199,7 @@ Each names the home that carries it. None of them is created here.
 2. **Unruled — the second seat, OR-42** (Situation C `situation-6.md`). Home `../security/SPEC.md §2`. The teaching week needs no second seat, and C's row here must not go empty because of that.
 3. **Unruled — the monthly-base start** (Situation A, the enrolled/monthly question). FDR-07's selection (2026-08-30) is the recorded deferral: what act starts a monthly base — and whether it needs a series — is an open ruling, and no start act is invented meanwhile. Home: the founder register's FDR-07 row. Matt's packages (S08, S09) are entered by the owner as standing series; that scripted entry answers no ruling, and FDR-07 stays **Unruled**.
 4. **Deferred — referral to a stranger shop (FR1)**, and other people's agents. The same legal family.
-5. **Deferred — native send.** The floor stays Generate Link and paste; the investigation is recorded at `../PRD.md §11` item 4.
+5. **Deferred — native send.** The floor stays Generate Link and paste; the investigation is recorded at `../PRD.md §11` item 4. *(2026-10-16: its send-as-the-owner-from-a-personal-account half is retired by Matt's outside-software ruling, `../RULINGS.md` "2026-10-16 outside-software ruling"; whether annnä itself sends links over messaging apps is an open question there.)*
 6. **Deferred — non-calendar import.** `README.md` gap 4.
 7. **Deferred — the omniscient week** (FD-60, `README.md` gap 5). `../engine/SCENARIOS.md W1` is the shipped mechanism, never a defect.
 8. **Owed — RQ-10's mechanism**, from the design scheme (FD-110). `README.md` register entry 4.

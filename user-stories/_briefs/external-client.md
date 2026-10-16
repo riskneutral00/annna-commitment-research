@@ -2,6 +2,8 @@
 
 **Readiness.** Ready when the founder opens a sitting on the external client. Not before — this brief collects the questions; the sitting supplies the domain.
 
+**Fenced out of this sitting since 2026-10-16 — founder rulings, not questions:** how outside agents connect (an MCP server), whether booking data goes to other apps, and whether the harness is used outside annnä. Their home is `../../RULINGS.md` "2026-10-16 outside-software ruling"; do not ask them. The one part still open there, whether "other people's agents" reaches past each person's own agent, is put to Matt from that ruling, not from this brief.
+
 **The debt this closes.** `../../PRD.md` §4.6 records **RQ-1 through RQ-9** as `owed`, each stating what its probe must show. That is nine of the eleven owed requirements in the register and the single largest probe gap in the corpus.
 
 **Why no existing Situation reaches it.** `../../PRD.md` §2.4 states the fact plainly: *"Every Situation in the corpus has a human at a console; none has an agent as the caller."* The harness X-family and `../../security/SCENARIOS.md T9` specify the tool contract and the credential — they prove the *foundation* another party's agent would need, and they do not prove that an owner lives inside somebody else's client.
@@ -32,7 +34,7 @@ An owner already running their business on annnä wants to reach it from somewhe
 
 ## The floor (today, without the app)
 
-To ask: what does this owner do today when they want their booking data somewhere else? Export? Retype? Nothing at all, and the want is hypothetical? A brief that assumes the want is real has already answered the question worth asking.
+~~To ask: what does this owner do today when they want their booking data somewhere else? Export? Retype? Nothing at all, and the want is hypothetical? A brief that assumes the want is real has already answered the question worth asking.~~ *Superseded 2026-10-16 by the fenced ruling above.* To ask instead: what does this owner want their own agent to do in annnä that they now do by hand?
 
 ## Situations to cover — the questions, not the answers
 
