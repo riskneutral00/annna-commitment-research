@@ -2,6 +2,8 @@
 
 **Readiness.** The owed beat landed, scripted, at Matt's S20 under FD-106 (`../README.md` register entry 1); this brief is ready when a sitting replaces that scripted beat with elicited content.
 
+**Applicability, 2026-10-16.** "No story shows a person meeting it" below predates FD-106: Matt's S20 (`../Situations/Situation-A/story-matt.md`) now shows the offer, scripted. What is still owed is an elicited telling, as Readiness says. The questions below are unchanged.
+
 **The debt this closes.** `../README.md`'s invented-and-justified register, entry **1**: the noticed-pattern offer (`../../harness/SPEC.md §3.10`/§6) was designed with its restrictions structural and its opt-in explicit, and it owes a beat. The mechanism is covered — `../../harness/SCENARIOS.md B6–B8` and `../../app/SCENARIOS.md C7` — but no story shows a person meeting it.
 
 ## World

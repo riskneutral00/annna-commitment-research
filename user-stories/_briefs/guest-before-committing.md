@@ -2,6 +2,8 @@
 
 **Readiness.** Ready when the founder opens a sitting on the guest's own page. It touches Situations A, B and C, so it is one sitting across Matt's S11 and two `customer.md` files rather than three sittings.
 
+**Applicability, 2026-10-16.** The price half of "Why nothing covers it" is overtaken: `../../app/SCENARIOS.md G3`'s price-timing arm (2026-09-11) asserts the rate before a duration is picked and the exact total before any confirmation. The guest's own standing before committing and the "never see" lists remain unasserted. The questions below are unchanged.
+
 **The debt this closes.** Four owed beats in `../COVERAGE.md`'s **the guest's pre-commitment view** cluster — from Situation A's student beats (now Matt's S11, FD-106), `Situation-B/customer.md` and `Situation-C/customer.md`.
 
 **Why nothing covers it.** `../../app/SCENARIOS.md G10` asserts the money and quota render on the **manage-state** page — the page a guest reaches *after* booking, holding their own token. Every story says the guest sees the price and their standing **before** they commit. That is a different page, and no scenario asserts it. Symmetrically, the B and C `customer.md` files carry a "what he must never see" list, and those lists are compound claims no single scenario asserts whole.
