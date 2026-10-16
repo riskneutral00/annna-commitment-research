@@ -1,6 +1,6 @@
 # AGENTS.md — operating instructions for agents in this repo
 
-This is a markdown specification corpus. Executable code is limited to TypeScript in `engine/` and `harness/` (both have Step 0 suites), `engine/scripts/reactive-push-check.mjs` (home: `engine/BUILD.md` Step 0, I4), `assets/make-pack.mjs`, and process gates in `deployment/scripts/` wired through `package.json` (`deployment/README.md`, “The one green command”). `git ls-files '*.md'` shows what clones contain. Local checkouts carry gitignored material under `.sisyphus/`, `docs/agents/` and `patches/`; it is absent to readers and excluded from counts (FD-10).
+This is a markdown specification corpus. Executable code is limited to TypeScript in `engine/` and `harness/` (both have Step 0 suites), `engine/scripts/reactive-push-check.mjs` (home: `engine/BUILD.md` Step 0, I4), `assets/make-pack.mjs`, and process gates in `deployment/scripts/` wired through `package.json` (`deployment/README.md`, “The one green command”). `git ls-files '*.md'` shows what clones contain. Local checkouts carry gitignored material under `docs/agents/`; it is absent to readers and excluded from counts (FD-10).
 
 ## Authority order
 
@@ -49,7 +49,7 @@ Deviations: `model/` uses graded `EVALS.md`; `app/` adds `DESIGN.md` (canvas, sk
 
 `npm run check` is the whole gate; [`deployment/README.md`](deployment/README.md) §The one green command owns its steps, hook setup and why.
 
-Delivery: PR to `main`, merged without Matt by `gh pr merge --match-head-commit <sha>` once `npm run check` and an independent verification pass that sha; no auto-merge or merge queue.
+Delivery (home `deployment/SPEC.md` §4, FD-111): PR to `main`, merged without Matt by `gh pr merge --rebase --match-head-commit <sha>` once `npm run check` and an independent verification pass that sha; no auto-merge or merge queue.
 
 ## Two standing constraints
 
