@@ -2,6 +2,8 @@
 
 **Readiness.** Ready when the founder opens a sitting on the console's asking behaviour.
 
+**Applicability, 2026-10-16.** The budget-ceiling half of this debt is closed: `../../harness/SCENARIOS.md K11` (2026-08-31) asserts the ceiling park and the card naming the budget, and `../COVERAGE.md` records that cluster at 0. The instance-versus-series beat stays owed. The questions below are unchanged and still worth asking.
+
 **The debt this closes.** Three owed beats in `../COVERAGE.md` — **instance versus series** (1) and the **budget ceiling that produces a park** cluster (2). Both are moments where annnä stops short of acting and says something instead.
 
 **Why nothing covers them.** *"Cancel one, or cancel the series?"* — `../../engine/SCENARIOS.md M2` asserts the *mechanics* of cancelling one instance without touching its siblings, and the harness has a general ambiguity-clarification law; neither asserts that the agent **asks this specific question** before acting on a recurring booking. And the 3 a.m. budget park: `../../harness/SCENARIOS.md C9` asserts only that an existing park **cannot self-clear**. Nothing asserts that hitting the declared step-and-spend ceiling **produces** the park, or that the parked card **names the budget** as the reason. `../README.md`'s register entry 6 records that beat, landed scripted at Matt's S21 under FD-106.
