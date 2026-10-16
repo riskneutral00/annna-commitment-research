@@ -57,6 +57,8 @@ The term carries two live meanings in the industry, and annnä claims both. Stat
 
 **Off-app participation and onboarding (Matt, 2026-10-16).** Give counterparties who do not use annnä the information and response surfaces they need to help the originating user, including appropriate forms, messages or web pages. Participation must work before they join. Introducing annnä and helping them onboard is an additional goal. The concrete delivery and guest-access contracts remain `app/SPEC.md` §§5–6 and `harness/SPEC.md` §2; this goal grants no new contact permission or unimplemented channel.
 
+**Product boundary with Chat Casino (Matt, 2026-10-16).** annnä organizes teachers' and students' English conversation sessions, and those sessions may use Chat Casino. annnä is not a feature inside Chat Casino, and no embedded annnä feature is authorized (`RULINGS.md` "2026-10-16 recommendation answers" item 7).
+
 ### 1.2 The two refusals, stated because absences are invisible
 
 Read literally, the two definitions contradict each other on exactly one point. Agent-as-interface asks that *state live in the agent's context and memory*. Agent-as-consumer asks that the system be *stateless by default*. annnä's most load-bearing architectural decision sits on that seam, and it is a single decision that scores badly against one definition and well against the other.
