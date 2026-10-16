@@ -97,7 +97,7 @@ Founder statements dated 2026-10-16 come from Matt's re-interview about annnä. 
 
 ## Outside software
 
-Matt's 2026-10-16 statements below come from the 17:04 interview answer and the 19:00 direct-session ruling; both are quoted in full at `RULINGS.md` "2026-10-16 outside-software ruling". That ruling settles this vocabulary; do not ask him about it again.
+Matt's 2026-10-16 statements below come from the 17:04 interview answer and the 19:00 direct-session ruling; the 19:00 ruling is quoted in full (as relayed) and the 17:04 answer in excerpt at `RULINGS.md` "2026-10-16 outside-software ruling", whose quotation-fidelity note lists the two altered copies below; the full 17:04 answer is in the local interview record. That ruling settles this vocabulary; do not ask him about it again.
 
 ### Outside software, other apps
 **Founder, 2026-10-16.** "Annnä should not need to be interacting with any other software in the sense that you're talking about." "Anna's scope is only within the application itself." "We're not accommodating other applications."
