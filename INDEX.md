@@ -67,6 +67,12 @@
 | security/README.md | derived | The security package's read order, doubling as the external posture statement |
 | security/SCENARIOS.md | derived | The attack suite: each scenario an adversary move that must fail, or a guarantee that must hold |
 | security/SPEC.md | SPEC | The cross-cutting security law: threat model, token and PII law, the injection quarantine, compliance posture |
+| to-be-continued/AGENTS.md | SPEC | Instructions for retaining parked investigations without activating them |
+| to-be-continued/CONTEXT.md | index | Owner, input, outputs and checks for the parked investigations |
+| to-be-continued/README.md | index | Routes to the investigations Matt wants to revisit |
+| to-be-continued/commitment-relationships.md | never | The proposed Obsidian-style relationship and missing-requirement display |
+| to-be-continued/instruction-routing.md | never | The proposed Jev routing and clarification investigation; no active integration |
+| to-be-continued/subscription-cloud.md | never | Current provider evidence and open questions for subscription-backed device-independent operation |
 | user-stories/COVERAGE.md | derived | Which layer owes each Situation beat, and whether it is covered, owed, deferred, unruled or deliberately empty |
 | user-stories/README.md | SPEC | That the Situations are the probes the `PRD.md` requirements register is tested against, are founder proof scripts, and are never deleted |
 | user-stories/Situations/Situation-A/README.md | SPEC | Matt's storybook: the whole-life probe's files, cast and scenes, and where each beat of Situation A's retired first telling now lives (FD-106) |

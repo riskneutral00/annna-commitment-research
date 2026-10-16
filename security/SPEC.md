@@ -216,7 +216,7 @@ Concrete permitted durations/bounds and provider/time-based execution remain at 
 - **Human dashboard logins live in a separate file no code ever reads.** The two never merge; both are untracked forever.
 - **No secret ever ships in client-exposed configuration** (`NEXT_PUBLIC_`-class env). Publishable client identifiers (auth/backend client IDs, an error-reporter DSN) are *identifiers, not secrets* — named as such so the gate below has an honest allowlist.
 - **Grep-gated in CI** from every layer's Step 0: a planted client-exposed secret turns CI red (X1). It lands on **day one of the build** — it's a grep, it needs no stub, so there is no excuse to defer it.
-- **Provider keys are server-side only** — already law at `../model/SPEC.md §7` (app-supplied keys; subscription-bound access can never power unattended firings). Encryption keys for §4's vault live with the runtime secrets, never in the store they encrypt.
+- **Provider keys are server-side only** — already law at `../model/SPEC.md §7` (existing app-supplied API keys). Subscription credential custody, host eligibility and unattended operation remain qualification work at `../model/BUILD.md` Step 5; they are not categorically impossible. Encryption keys for §4's vault live with the runtime secrets, never in the store they encrypt.
 - **The env manifest is the enumeration of record** (`../deployment/INTERFACES.md §3/§5`): which variables exist, at which rung, lives there; this section governs only how they are handled. A variable absent from the manifest is a defect wherever it appears.
 
 ## §8. Backups, DR & the lawful exits

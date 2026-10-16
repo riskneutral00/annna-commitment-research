@@ -51,6 +51,12 @@ The term carries two live meanings in the industry, and annnä claims both. Stat
 
 **The goal is 9 out of 10 against both.** The scorecard and its targets are §10; the requirements that move the numbers are §4.
 
+**Console as the default (Matt, 2026-10-16).** Creating and managing commitments and their supporting arrangements is primarily a conversation with annnä. Users should not need to navigate a collection of buttons as the default workflow. Familiar direct controls remain appropriate for profile and other settings; the console is preferred across those activities too. This sets the default interaction, not a ban on previews, forms or explicit confirmation controls, and does not remove capability parity below.
+
+**Device-independent coordination (Matt, 2026-10-16).** Authorised commitment coordination must continue when the owner's app is closed or their phone is off or offline. The instructor's example is accepting a job against previously established conditions. The device is not required to be awake for that response. Which work is deterministic and which calls an agent is an implementation question; the permission floor in `harness/SPEC.md §7` still governs every action. Model supply and its unresolved subscription eligibility belong to `model/SPEC.md §7`.
+
+**Off-app participation and onboarding (Matt, 2026-10-16).** Give counterparties who do not use annnä the information and response surfaces they need to help the originating user, including appropriate forms, messages or web pages. Participation must work before they join. Introducing annnä and helping them onboard is an additional goal. The concrete delivery and guest-access contracts remain `app/SPEC.md` §§5–6 and `harness/SPEC.md` §2; this goal grants no new contact permission or unimplemented channel.
+
 ### 1.2 The two refusals, stated because absences are invisible
 
 Read literally, the two definitions contradict each other on exactly one point. Agent-as-interface asks that *state live in the agent's context and memory*. Agent-as-consumer asks that the system be *stateless by default*. annnä's most load-bearing architectural decision sits on that seam, and it is a single decision that scores badly against one definition and well against the other.
@@ -74,7 +80,7 @@ annnä engineers peace in three steps — it takes the work, it takes the worry,
 
 **annnä's ambition is category replacement.** The commitment-shaped functions of the software a small operator runs beside their calendar today — the accounting ledger's who-owes-what, the CRM's who-promised-what-to-whom, the contract tool's what-was-agreed — eventually live in annnä, because each is a view over commitments and annnä holds the Commitment as its primitive. The stored money marks, party history, the signed-terms basis, and the template marketplace are that trajectory's seeds, already specced. **Nothing about v1 changes:** FR10's bar, FD-80 (what ships is the application), and every §5 non-goal stand as written — the end-state is direction, not scope, and the path is the rulings cadence: a capability enters when its scenarios and its ruling exist, never before. `user-stories/README.md`'s gap 4 (non-calendar bulk import) is the first post-release rulings program on this path — the migration door.
 
-**Monetization posture (founder, 2026-07-19; internal direction):** the public repository is the trust surface. Revenue is through closed hosted services (skins store, blueprint store, metered brain broker) in a separate private repository, with FSL license intent and a trademark; the in-app agent does not use BYO subscriptions. This is internal direction and carries no outward promise.
+**Monetization posture (founder, 2026-07-19; internal direction):** the public repository is the trust surface. Revenue is through closed hosted services (skins store, blueprint store, metered brain broker) in a separate private repository, with FSL license intent and a trademark. The July position that the in-app agent does not use BYO subscriptions is historical, superseded by the 2026-10-16 supply direction at `model/SPEC.md §7`; commercial eligibility and pricing remain open there. This is internal direction and carries no outward promise.
 
 ## 2. Target User
 
