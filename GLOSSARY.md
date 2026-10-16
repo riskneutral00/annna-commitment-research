@@ -90,7 +90,7 @@ Founder statements dated 2026-10-16 come from Matt's re-interview about annnä. 
 ## Supporting vocabulary
 
 ### Kind, template, order, rule, grant
-**Spec.** `kind` is the vocabulary layer (`harness/SPEC.md` §3.3). Templates are defined in `marketplace/SPEC.md`. An order groups commitments (`harness/SPEC.md` §3.7). Rules are defined in `harness/SPEC.md` §3.5. A harness authorization `Grant` is defined in `harness/SPEC.md` §7; availability-sharing `ShareGrant` is defined in `engine/SPEC.md` §1.6. Name the particular grant instead of treating these as interchangeable.
+**Spec.** `kind` is the vocabulary layer (`harness/SPEC.md` §3.3). Templates are defined in `marketplace/SPEC.md`. An order groups commitments (`harness/SPEC.md` §3.7). Rules are defined in `harness/SPEC.md` §3.5. A harness authorization `Grant` is defined in `harness/SPEC.md` §7; availability-sharing `ShareGrant` is defined in `engine/SPEC.md` §7.1. Name the particular grant instead of treating these as interchangeable.
 
 ### Lesson, deadline
 **Usage.** Domain words from Matt's own story. A lesson is a kind in Situation A; a deadline is an `end` with the `deadline` role (`harness/SPEC.md` §3.4). Domain vocabulary belongs to stories and templates, never to engine code (`AGENTS.md` §Corpus language and design discipline).
