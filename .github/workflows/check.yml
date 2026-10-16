@@ -42,6 +42,20 @@ jobs:
           else
             SELECT="--commit $TIP"
           fi
+          # A squash merge lands the whole PR as one commit on main, which S2
+          # would refuse even though the PR's own commits were spec-first and
+          # already passed this step on the pull_request run. Classify the
+          # PR's original commits instead; they stay reachable on its head ref.
+          PR=$(git log -1 --format=%s "$TIP" | sed -nE 's/.*\(#([0-9]+)\)$/\1/p')
+          if [ "${{ github.event_name }}" = "push" ] && [ -n "$PR" ] \
+             && git fetch -q origin "refs/pull/$PR/head" 2>/dev/null; then
+            PRHEAD=$(git rev-parse FETCH_HEAD)
+            MB=$(git merge-base "$BASE" "$PRHEAD" 2>/dev/null || true)
+            if [ -n "$MB" ]; then
+              SELECT="--range $MB..$PRHEAD"
+              echo "squash merge of #$PR: classifying its original commits"
+            fi
+          fi
           echo "classifying $SELECT"
           node deployment/scripts/s2-path-class.mjs $SELECT
           node deployment/scripts/q3-swap-diff.mjs $SELECT
