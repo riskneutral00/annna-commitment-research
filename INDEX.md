@@ -19,6 +19,9 @@
 
 | File | Tier | What it decides |
 |---|---|---|
+| .agents/skills/probe-elicit/SKILL.md | never | The `/probe-elicit` agent skill: interviewing a new use case for the probe corpus. Agent tooling; `user-stories/README.md` is the law it applies |
+| .agents/skills/probe-situation/METHOD.md | never | The probe skills' shared method: elicitation discipline and setup-story shape. Agent tooling; `user-stories/README.md` is the law it applies |
+| .agents/skills/probe-situation/SKILL.md | never | The `/probe-situation` agent skill: building a Situation folder from a sitting. Agent tooling; `user-stories/README.md` is the law it applies |
 | AGENTS.md | SPEC | The operating law for agents: authority order, package shape, citation conventions, ruling vocabularies. The first read of every session |
 | BRAND.md | SPEC | Reserved home for the identity, vision, voice and marks the design and product scheme will supply; owed, decided nowhere else (FD-110) |
 | GLOSSARY.md | derived | The vocabulary home: ordinary meanings, dated founder statements, where each term is defined in a SPEC, and what stays open; defines no law |
