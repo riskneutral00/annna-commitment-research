@@ -33,7 +33,7 @@ Two properties of that seam this layer must preserve, never weaken:
 ```
 complete(model_id, messages, output_schema) -> structured JSON | error(malformed|refused|timeout|unavailable)
 ```
-This signature is **the contract an adapter for any `provider` value must satisfy** — `openrouter`, `app-direct` and `byo-key` alike *(reframed 2026-08-29: the section was titled and argued as an OpenRouter contract while the enum had three members, so a builder wiring a direct vendor key invented the adapter boundary)*. OpenRouter's one-API-shape-for-every-model uniformity is **why it is the primary supply** — swapping `model_id` is the whole swap — not what the contract is. The obligations, stated rather than left implicit:
+This signature is **the contract an adapter for any `provider` value must satisfy** — `openrouter`, `app-direct` and `byo-key` alike *(reframed 2026-08-29: the section was titled and argued as an OpenRouter contract while the enum had three members, so a builder wiring a direct vendor key invented the adapter boundary)*. OpenRouter is one optional adapter, not the primary supply. The provider direction and subscription qualification gap live in `SPEC.md §7`; this existing API-key contract does not admit a subscription provider until that gap is resolved. The obligations, stated rather than left implicit:
 
 - **Structured output is enforced server-side**, against the per-call schema (§2.4), by the provider. A provider that merely *requests* a schema and hopes is **not a lawful `app-direct` value**: on `summarize`, `additionalProperties: false` is the **structural** control (§2.4's own argument — a return that validates is the *whole* of what crosses), and a requested-but-unenforced schema is a labeling defense wearing a structural one's clothes. What the schema is, per call type, is §2.4's; this section states only that enforcement is the adapter's obligation.
 - **The error taxonomy is exactly the union above** — four members, nothing outside it. An adapter that cannot distinguish "the provider did not answer" from "the model refused" is not finished; collapsing them is the thing the seam forbids.
@@ -79,9 +79,10 @@ judge: { model_id, provider, prompt_hash, languages_qualified[] }
 //   in an `unattended` binding refuses · any `byo-*` anywhere on `summarize` refuses (FD-3) ·
 //   any unknown `call_type` key refuses — `judgment` included, per the note below.
 // provider = openrouter | app-direct | byo-key
-//   (byo-chatgpt LEFT the enum — FD-65, 2026-08-22: the vendor programme has been identity-only
-//   since 2026-08-02; a slot for a programme that no longer exists is speculative machinery.
-//   One ruling restores it if the programme returns.)
+// Existing API-key adapter values only. Subscription registration remains blocked on BUILD Step 5;
+// do not infer a new provider value, unattended permission or billing fallback from this example.
+//   FD-65 removed byo-chatgpt in August. The 2026-10-16 direction reopens qualification,
+//   not enum admission: SPEC section 7 and BUILD Step 5 own the current gap.
 // timeout_ms defaults: 10_000 attended (a console turn), 30_000 unattended (trigger firings —
 //   nobody is waiting, and the fallback hop still runs). A timeout takes SPEC §8's ladder,
 //   which is the same ladder every other error-union member takes — do not gloss it here.

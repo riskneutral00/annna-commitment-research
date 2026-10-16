@@ -51,6 +51,12 @@ The term carries two live meanings in the industry, and annnä claims both. Stat
 
 **The goal is 9 out of 10 against both.** The scorecard and its targets are §10; the requirements that move the numbers are §4.
 
+**Console as the default (Matt, 2026-10-16).** Creating and managing commitments and their supporting arrangements is primarily a conversation with annnä. Users should not need to navigate a collection of buttons as the default workflow. Familiar direct controls remain appropriate for profile and other settings; the console is preferred across those activities too. This sets the default interaction, not a ban on previews, forms or explicit confirmation controls, and does not remove capability parity below.
+
+**Device-independent coordination (Matt, 2026-10-16).** Authorised commitment coordination must continue when the owner's app is closed or their phone is off or offline. The instructor's example is accepting a job against previously established conditions. The device is not required to be awake for that response. Which work is deterministic and which calls an agent is an implementation question; the permission floor in `harness/SPEC.md §7` still governs every action. Model supply and its unresolved subscription eligibility belong to `model/SPEC.md §7`.
+
+**Off-app participation and onboarding (Matt, 2026-10-16).** Give counterparties who do not use annnä the information and response surfaces they need to help the originating user, including appropriate forms, messages or web pages. Participation must work before they join. Introducing annnä and helping them onboard is an additional goal. The concrete delivery and guest-access contracts remain `app/SPEC.md` §§5–6 and `harness/SPEC.md` §2; this goal grants no new contact permission or unimplemented channel.
+
 ### 1.2 The two refusals, stated because absences are invisible
 
 Read literally, the two definitions contradict each other on exactly one point. Agent-as-interface asks that *state live in the agent's context and memory*. Agent-as-consumer asks that the system be *stateless by default*. annnä's most load-bearing architectural decision sits on that seam, and it is a single decision that scores badly against one definition and well against the other.

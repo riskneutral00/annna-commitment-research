@@ -6,6 +6,8 @@
 
 ## §0. What the app is
 
+Current interaction direction is `../PRD.md §1.1`: the console is the default for commitment work, familiar settings controls remain appropriate, and off-app participation can lead to onboarding. These goals do not change this layer's rendering, permission or delivery contracts.
+
 - **Doors and windows, not rooms.** If you deleted the app, the truth (engine) and the behavior (harness) would survive intact; only the ways in and out would be gone. Nothing is decided here.
 - **Deterministic rendering.** The render path is generate-once-render-forever: any generative composition happens at authoring time through the harness; rendering stored structure calls no model, ever. The same payload renders the same surface, always.
 - **Two audiences, two shapes.** The **owner** gets the one-canvas app (§1) behind sign-in. The **off-app guest** gets traditional token-URL pages (§5) with no account or installed app — a form and the approved request-bound conversation under `../harness/SPEC.md §2` and `../security/SPEC.md §3`'s credential-derived read/operation limits. There is no third shape.

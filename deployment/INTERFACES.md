@@ -32,7 +32,7 @@
 | **TypeScript** | **The 6.x line (`^6.0`) corpus-wide, decided 2026-08-22 (FD-64, superseding the same-day `^5.9` pin)** — both suite-carrying layers' `package.json` hold `^6.0.0` and reversal is one line. TS 7 is a compiler reimplementation, a real decision not a point bump: it gets its own decision point when a layer needs it, never adoption-by-throwaway-rig. Every layer typechecks (`tsc --noEmit`) the way the harness does |
 | **Clerk** | Per-rung auth instances |
 | **Resend** | Mail — sandbox below production |
-| **OpenRouter** | The model key, confined to the qualification environment, **provider-side hard spend cap** (R3/R8) |
+| **Selected model provider** | Supply direction: `../model/SPEC.md §7`. Qualification credentials remain confined to the qualification environment, with the existing spend controls (R3/R8). OpenRouter is an optional adapter, not a required service. Subscription eligibility is not established by this table. |
 | Travel provider *(candidate — unbound)* | The engine's `travel()` seam (`../engine/INTERFACES.md §2.1`). Candidates named at `../engine/BUILD.md` Step 0 (Google Routes API / Mapbox / OSRM); scripted stub below production until bound; key confined like the model key when it is |
 | Closed marketplace service | **Mock only** — no credential, no real endpoint string anywhere below production (R2) |
 

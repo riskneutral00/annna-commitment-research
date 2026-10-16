@@ -29,11 +29,11 @@ Structurally forbidden here, so no row may ever appear (`SPEC.md §3`, the mock 
 
 ## Qualification environment (not a rung)
 
-A protected GitHub environment, manually fired, whose required reviewer is the human identity (R8).
+A protected GitHub environment, manually fired, whose required reviewer is the human identity (R8). The row below records an optional provider path, not a required OpenRouter account. A different selected route must add its real credential inventory with its first consumer, under `../model/SPEC.md §7`; no subscription tokens or credentials are assumed to exist.
 
 | Name | Owner | Rotation | Note |
 |---|---|---|---|
-| `OPENROUTER_API_KEY` | founder | on suspicion | **The only place the *qualification* model-provider key may be referenced** (R3, lint-enforced today) *(narrowed 2026-09-13 — written unqualified, this sentence forbade the production runtime provider key `../model/SPEC.md §7` requires, and R3's lint reads workflow files for named model-secret patterns; it establishes confinement of this credential, never custody of a runtime one)*. Carries a provider-side hard spend cap (R8). Not yet supplied: the model spike is built and deliberately unrun (FD-5). |
+| `OPENROUTER_API_KEY` | founder | on suspicion | **The only place the *qualification* model-provider key may be referenced** (R3, lint-enforced today) *(narrowed 2026-09-13 — written unqualified, this sentence forbade the production runtime provider key `../model/SPEC.md §7` requires, and R3's lint reads workflow files for named model-secret patterns; it establishes confinement of this credential, never custody of a runtime one)*. Carries a provider-side hard spend cap (R8). Optional and not supplied. FD-5's deliberately unrun spike was later deleted under FD-109; this credential is needed only if that provider is selected for qualification. |
 
 ## Vault keys (`../security/SPEC.md §4`)
 
