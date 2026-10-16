@@ -95,6 +95,38 @@ Founder statements dated 2026-10-16 come from Matt's re-interview about annnä. 
 ### Lesson, deadline
 **Usage.** Domain words from Matt's own story. A lesson is a kind in Situation A; a deadline is an `end` with the `deadline` role (`harness/SPEC.md` §3.4). Domain vocabulary belongs to stories and templates, never to engine code (`AGENTS.md` §Corpus language and design discipline).
 
+## Outside software
+
+Matt's 2026-10-16 statements below come from the 17:04 interview answer and the 19:00 direct-session ruling; the 19:00 ruling is quoted in full (as relayed) and the 17:04 answer in excerpt at `RULINGS.md` "2026-10-16 outside-software ruling", whose quotation-fidelity note lists the two altered copies below; the full 17:04 answer is in the local interview record. That ruling settles this vocabulary; do not ask him about it again.
+
+### Outside software, other apps
+**Founder, 2026-10-16.** "Annnä should not need to be interacting with any other software in the sense that you're talking about." "Anna's scope is only within the application itself." "We're not accommodating other applications."
+**Spec.** annnä makes no change inside another app, takes no booking through a third-party platform (Preply, iTalki) and shapes no export for another app (`PRD.md §5`, "Not an integration with other applications"; `harness/SPEC.md §0`).
+**Usage.** Not the same as a **real-world service** around a commitment (an instructor, a boat, a venue), which is a party or resource annnä records. See Service.
+
+### Import
+**Founder, 2026-10-16.** "It can intake software from other places. That's something that we have to work on." Calendar examples: iCal and Google Calendar.
+**Spec.** Information flows in only: calendar import law at `app/SPEC.md §9`. Legal **takeout** of a user's own data (`security/SPEC.md §8`) is a duty to that user, not an export to another app.
+**Open.** Whether, and how, a user's own agent may bring that user's information in ("might possibly look at"). Carried to Matt's dedicated harness session; do not ask piecemeal.
+
+### MCP, external client
+**Founder, 2026-10-16.** "Annnä will have an MCP exposed so that other people's agents can use it, including the OpenAI subscription."
+**Spec.** MCP is the transport of the external-client surface, the same tool contract under the same floor (`harness/SPEC.md §5.3`; `PRD.md §4.2`).
+**Founder, 2026-10-16, ~19:30.** "The AI doesn't do anything that the student can't do." An outside agent may do exactly what the person it represents can do in the app (`PRD.md §1.2`, refusal two superseded in part). What a provider subscription permits is unverified.
+
+### Embed, plugin
+**Founder, 2026-10-16.** A business "plug[s] in annnä" to its own website, "just like they have to do web plugins"; a desktop user brings "in a plugin".
+**Usage.** In Matt's sense a plugin is annnä brought whole into someone else's website or computer. It is not third-party code inside annnä (a standing rejection, `PRD.md §5`) and not the "plugin" of FD-72's answered mechanism question. Where both readings are possible, say which.
+
+### Harness
+**Spec.** annnä's own governing layer: the loop, the tool contract and the permission floor (`harness/SPEC.md`; `PRD.md §1.3`).
+**Founder, 2026-10-16.** "You will not use the Harness outside of annnä." There is no separate harness product; FD-83's domain-blind loop core is a code-structure rule, not a product for others.
+
+### Service around a commitment
+**Founder, 2026-10-16, 17:04.** "Users can add any service that is around the commitment. But we might need to discuss what this means."
+**Usage.** Read as real-world providers a commitment needs (an instructor, a boat, cylinders, a venue), not as software connections, which the 19:00 ruling excludes.
+**Open.** What else counts as such a service. Matt offered to explain through better user stories. Carried to his dedicated harness session; do not ask piecemeal.
+
 ## Unresolved
 
 1. The event/task boundary beyond "has an occupying interval".
@@ -104,6 +136,7 @@ Founder statements dated 2026-10-16 come from Matt's re-interview about annnä. 
 5. Whether cycle is a term the product uses.
 6. The suggestions toggle and the generative-UI role, both expressed as preference or possibility.
 7. Per-commitment versus per-kind field requiredness.
+8. What counts as a service around a commitment, beyond real-world providers (carried to Matt's dedicated harness session).
 
 ## Blocked On
 

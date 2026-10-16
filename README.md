@@ -17,7 +17,7 @@ The approved v1 direction includes:
 - **Scoped guest access:** account-free booking and consent pages, with a template-bound console for completing a request and asking about availability. Guests see the published slice, never the owner's private board.
 - **An owner's own agents** using the same permitted tools, within the authorization boundaries in the [requirements](PRD.md).
 
-Calendar import is manual, at the owner's request, with no write-back. V1 excludes owner and guest file uploads and participant-document verification. The [app specification](app/SPEC.md) and [security specification](security/SPEC.md) are the implementation homes and now carry that exclusion and the scoped guest door; what they describe is specified behavior, still owed at the build gates that name it.
+Calendar import is manual, at the owner's request, with no write-back. annnä works with no other app's bookings or data: other people's agents reach it through an MCP server, messaging apps only carry its links and forms, and a business brings the whole of annnä into its own website rather than using its harness separately ([ruling](RULINGS.md#2026-10-16-outside-software-ruling)). V1 excludes owner and guest file uploads and participant-document verification. The [app specification](app/SPEC.md) and [security specification](security/SPEC.md) are the implementation homes and now carry that exclusion and the scoped guest door; what they describe is specified behavior, still owed at the build gates that name it.
 
 ## Start reading
 
