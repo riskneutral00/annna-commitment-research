@@ -14,7 +14,7 @@ No FR or FD identifier is assigned here; the approved relocation preserves the o
 
 | Original date and decision | Normative home |
 |---|---|
-| 2026-07-19: public repo as trust surface; closed hosted revenue, FSL intent, trademark, no BYO subscriptions | `PRD.md` §1.5 |
+| 2026-07-19: public repo as trust surface; closed hosted revenue, FSL intent, trademark. The no-BYO-subscriptions position is superseded by the 2026-10-16 supply direction. | `PRD.md` §1.5; current supply at `model/SPEC.md §7` |
 | 2026-09-03: the founder's own dive-centre scheduler is first-party; third-party restrictions apply only to genuine third parties | `PRD.md` §6.1 |
 | Standards-library fidelity over IP caution; record licensing once and do not gate design or GTM | `PRD.md` §5 |
 | Reject self-modifying code, data-programs, executable extensions, trigger-time model-evaluated natural-language conditions, user-API-key onboarding, optimistic UI and allow-by-default approvals | `PRD.md` §5 |

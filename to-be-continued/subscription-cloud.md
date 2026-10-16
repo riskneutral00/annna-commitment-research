@@ -26,7 +26,7 @@ An always-available service can receive a request, check saved availability and 
 | Gap | Blocker | Resolver |
 | --- | --- | --- |
 | Commercial subscription route | Public docs do not establish annnä's eligibility or approval | Product owner and provider's documented registration process |
-| Annnä-supplied funding | Personal subscriptions serving customers, billing and permitted account arrangements not established | Product owner and provider agreement |
+| annnä-supplied funding | Personal subscriptions serving customers, billing and permitted account arrangements not established | Product owner and provider agreement |
 | Offline execution | Host, durable event processing, retries, quota exhaustion, revocation and recovery unqualified | Deployment/harness/model planning against the existing scenarios |
 | Pricing | No amounts or approved funding fallback selected | Matt after provider and operating-cost evidence |
 
