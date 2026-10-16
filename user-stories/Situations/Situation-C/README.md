@@ -12,7 +12,7 @@
 2. **Then read how each kind of resource sets up.** The one-of-ones each supply one thing. Their setup is near-identical within a type, so it's told **once per type**, through one representative:
    - `resource-instructor.md` · `resource-divemaster.md` · `resource-pool.md` · `resource-boat.md` · `resource-gear.md` · `resource-air.md`
 3. **Then the operators** — the takers who orchestrate bookings and stand on resources: `operator-dive-center.md`, `operator-agent.md`.
-4. **Then the situations** — five runs of the same world (`situation-1.md … situation-5.md`), each with a stated purpose. That's where the stories collide and annnä's job becomes visible.
+4. **Then the situations** — five runs of the same world (`situation-1.md … situation-5.md`), each with a stated purpose, plus a sixth scripted later (`situation-6.md`, the second seat). That's where the stories collide and annnä's job becomes visible.
 
 *(The customer is off-app in every version: `customer.md`.)*
 

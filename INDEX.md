@@ -13,7 +13,7 @@
 
 *What this file does not do: it does not say whether a description is still accurate. The gate checks that every file has a row, not that the row is true. If a row and its file disagree, the file wins — and fix the row.*
 
-**Planning inventory (2026-09-20):** this index covers tracked Markdown, not the entire Phase 1 surface. BUILD files and in-document schemas are planning even when describing later implementation. Local `docs/agents/`, `.specs/` and `.tmp/` also contain plans, decision evidence and interviews; archived copies are historical, not current directions. The optional local review at `docs/agents/phase1-review-2026-09-20/REPORT.md` inventories both surfaces with inspection depth. Its absence from a clone does not change product law. Project phases are defined in `AGENTS.md`.
+**Planning inventory (2026-09-20):** this index covers tracked Markdown, not the entire Phase 1 surface. BUILD files and in-document schemas are planning even when describing later implementation. Local `docs/agents/`, `.specs/` and `.tmp/` also contain plans, decision evidence and interviews; archived copies are historical, not current directions. Project phases are defined in `AGENTS.md`.
 
 ---
 
