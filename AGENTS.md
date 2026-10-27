@@ -11,7 +11,7 @@ Ask the founder only platform-architecture questions. User-configurable behavior
 
 ## Project phases
 
-**Founder clarification, 2026-09-20:** Phase 1 = planning; Phase 2 = development; Phase 3 = maintaining live annnä. **Current: Phase 1; all planning material is editable.** Preserve history; mark proposals. BUILD steps use separate numbering. Planning exits: `blastoff.md`. Development requires explicit authorization.
+**Founder clarification, 2026-09-20:** Phase 1 = planning; Phase 2 = development; Phase 3 = maintaining live annnä. **Current: development and Commitment Harness are cancelled under [F1](t3-thread://v1/6f0cda2b-403e-4f76-b575-a67f656556ec).** Preserve source. Record reconciliation and inventory only. Planning exits: `blastoff.md`. Development requires explicit authorization.
 
 ## Package shape
 
