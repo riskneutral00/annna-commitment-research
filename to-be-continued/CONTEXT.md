@@ -1,5 +1,7 @@
 # To be continued
 
+Current work selection follows [the project phases](../AGENTS.md#project-phases). These retained investigations are historical inputs, not an active continuation queue.
+
 - Owner: Matt; consumers: annnä planning and development sessions.
 - Inputs: the 2026-10-16 founder re-interview, the existing corpus through [INDEX.md](../INDEX.md), and sources linked by each note.
 - Job: retain investigations Matt wants to return to without treating their possible solutions as decisions.
