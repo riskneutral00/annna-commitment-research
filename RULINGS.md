@@ -674,7 +674,7 @@ That's it. There are not too many other things that annnä has to deal with rega
 
 ### Same-day answers, 17:04 Taipei
 
-*Matt's answer to the "actionable choices" pack, 2026-10-16 17:04 Asia/Taipei, verbatim from the local interview record (`~/Desktop/Harness Harness/inbox/annna-interview-2026-10-16.md`, "Actionable choices: Matt's answer"). Each statement is readable here without that file.*
+*Matt's answer to the "actionable choices" pack, 2026-10-16 17:04 Asia/Taipei, verbatim from the local interview record (`~/Projects/harness-harness/inbox/desktop-2026-10-28/inbox/annna-interview-2026-10-16.md`, "Actionable choices: Matt's answer"). Each statement is readable here without that file.*
 
 | Statement, verbatim | Current home and scope |
 | --- | --- |
