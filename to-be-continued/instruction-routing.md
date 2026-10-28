@@ -8,4 +8,4 @@ Historical background: the vault's ~/Projects/Obsidian/Knowledge/wiki/Jev/Jev Re
 
 Next evidence: establish current availability, compare representative clear and ambiguous annnä requests, measure errors, cost and latency, and test unavailable or uncertain answers. Decide whether any benefit warrants integration only after that evidence exists. No live test or integration is claimed.
 
-Original intake: ~/Desktop/Harness Harness/inbox/annna-future-ideas-2026-10-16/instruction-routing.md. This note is the current investigation home; the intake remains historical evidence.
+Original intake: ~/Projects/harness-harness/inbox/desktop-2026-10-28/inbox/annna-future-ideas-2026-10-16/instruction-routing.md. This note is the current investigation home; the intake remains historical evidence.

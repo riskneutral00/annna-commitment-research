@@ -13,7 +13,7 @@ Labels distinguish the sources of each meaning. Usage notes and tensions explain
 | **Spec** | Where the term is defined or used normatively today, and how. |
 | **Open** | What is undecided. Stated as a question, never answered here. |
 
-Founder statements dated 2026-10-16 come from Matt's re-interview about annnä. Its verbatim record is `~/Desktop/Harness Harness/inbox/annna-interview-2026-10-16.md`. The statements below remain readable without that local record. Conflicting older wording is retained as evidence, not confirmation of Matt's current wishes. Technical rules keep their existing homes under `AGENTS.md` §Two standing constraints.
+Founder statements dated 2026-10-16 come from Matt's re-interview about annnä. Its verbatim record is `~/Projects/harness-harness/inbox/desktop-2026-10-28/inbox/annna-interview-2026-10-16.md`. The statements below remain readable without that local record. Conflicting older wording is retained as evidence, not confirmation of Matt's current wishes. Technical rules keep their existing homes under `AGENTS.md` §Two standing constraints.
 
 ## Core terms
 
